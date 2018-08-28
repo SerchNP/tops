@@ -3,11 +3,23 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './shared/header/header.component';
+import { FooterComponent } from './shared/footer.component';
+import { LoginComponent } from './portal/login/login.component';
+import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    FooterComponent,
+    LoginComponent,
+    BreadcrumbsComponent,
+    SidebarComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule
