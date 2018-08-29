@@ -1,29 +1,32 @@
-<nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
-        <img src="assets/images/logo_sgc.png" width="50" height="50" class="d-inline-block align-top" alt=""> Bootstrap
-    </a>
-
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/images/users/1.jpg" alt="user" class="profile-pic" /></a>
-        <div class="dropdown-menu dropdown-menu-right animated fadeInDown">
-            <ul class="dropdown-user">
-                <li>
-                    <div class="dw-user-box">
-                        <div class="u-img"><img src="assets/images/users/1.jpg" alt="user"></div>
-                        <div class="u-text">
-                            <h4>Steave Jobs</h4>
-                            <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
-                    </div>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
-            </ul>
+<header>
+    <nav class="navbar">
+        <!-- navbar-dark bg-dark-->
+        <a class="navbar-brand" href="#">
+            <img src="assets/images/logo_sgc_gris.png" width="70" height="70" class="d-inline-block align-top" alt="SGC">
+        </a>
+        <div>
+            <h4>Universidad Juárez del Estado de Durango</h4>
+            <h3>Sistema de Gestión de Calidad</h3>
         </div>
-    </li>
-</nav>
+
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <!--<img src="assets/images/users/1.jpg" alt="user" class="profile-pic" />-->
+                <i class="far fa-user fa-2x"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right animated fadeInDown">
+                <!--<ul class="dropdown-user">
+                    <li>
+                        <div class="dw-user-box">
+                            <div class="u-img"></div>
+                            <div class="u-text">
+                                <h4>Steave Jobs</h4>
+                                <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                        </div>
+                    </li>
+				</ul>-->
+                <app-login></app-login>
+            </div>
+        </li>
+    </nav>
+</header>

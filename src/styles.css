@@ -1,1 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+header,
+footer {
+    background-color: #779ABE;
+}
+
+header div {
+    display: inline-table;
+    text-align: center
+}
+
+header li {
+    display: contents;
+}
+
+header li a {
+    color: #eeeeee;
+}
+
+header h3,
+header h4 {
+    color: #eeeeee;
+}
+
+.img-footer {
+    border: 10px solid transparent;
+    margin: 0 auto;
+    display: table;
+}
+
+.info-footer {
+    color: #eeeeee;
+    text-align: center;
+    font-size: 12px;
+}
+
+.info-footer p {
+    font-size: 14px;
+}
+
+.main-container {
+    margin: 20px;
+}
