@@ -1,6 +1,6 @@
 header,
 footer {
-    background-color: #779ABE;
+    background-color: #3e78b2;
 }
 
 header div {
@@ -39,4 +39,8 @@ header h4 {
 
 .main-container {
     margin: 20px;
+}
+
+.dropdown-menu {
+    background: #F7F5F5 !important;
 }

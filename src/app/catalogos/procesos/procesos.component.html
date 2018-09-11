@@ -1,0 +1,33 @@
+<div class="text-right">
+    <button type="button" class="btn btn-primary" [routerLink]="['/catalogos','procesos_form','I',0]">
+		<i class="fas fa-plus"></i> Agregar Proceso
+	</button>
+</div>
+<br>
+<table class="table table-sm table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Proceso</th>
+            <th scope="col">Predecesor</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Abierto/Cerrado</th>
+            <th scope="col">Ent. Datos</th>
+            <th scope="col">Estatus</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let proceso of listadoProcesos">
+            <td>{{proceso.proceso}}</td>
+            <td>{{proceso.predecesor}}</td>
+            <td>{{proceso.descripcion}}</td>
+            <td>{{proceso.estatus}}</td>
+            <td>{{proceso.ent_data}}</td>
+            <td>{{proceso.autoriza_desc}}</td>
+            <td>
+                <button type="button" class="btn btn-success" (click)="editarProceso(proceso)" title="Actualizar"><i class="far fa-edit"></i></button>
+                <button type="button" class="btn btn-danger" (click)="borrarProceso(proceso)" title="Cancelar"><i class="far fa-trash-alt"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+@import '~angular-tree-component/dist/angular-tree-component.css';
+header,
+footer {
+    background-color: #3e78b2;
+}
+
+header div {
+    display: inline-table;
+    text-align: center
+}
+
+header li {
+    display: contents;
+}
+
+header li a {
+    color: #eeeeee;
+}
+
+header h3,
+header h4 {
+    color: #eeeeee;
+}
+
+.img-footer {
+    border: 10px solid transparent;
+    margin: 0 auto;
+    display: table;
+}
+
+.info-footer {
+    color: #eeeeee;
+    text-align: center;
+    font-size: 12px;
+}
+
+.info-footer p {
+    font-size: 14px;
+}
+
+.main-container {
+    margin: 20px;
+}
+
+.dropdown-menu {
+    background: #F7F5F5 !important;
+}

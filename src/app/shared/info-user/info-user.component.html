@@ -1,0 +1,11 @@
+<section id="wrapper" class="user-profile">
+    <div class="card">
+        <h5 class="card-title">{{nombre}}</h5>
+        <div class="card-body text-left">
+            <a class="info-item" [routerLink]="['/usuario','profile']" routerLinkActive="router-link-active"><i class="far fa-address-card"></i> Mi Perfil</a>
+            <a class="info-item"><i class="far fa-envelope"></i> Mis Avisos</a>
+            <div class="info-divider"></div>
+            <a class="info-item" (click)="_usersService.logout()"><i class="fa fa-power-off"></i> Cerrar Sesión</a>
+        </div>
+    </div>
+</section>

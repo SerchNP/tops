@@ -1,0 +1,74 @@
+<h5>{{titulo}}</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}">
+                <small id="procesoHelp" class="form-text text-muted">Clave del Proceso</small>
+                <div *ngIf="forma.controls['proceso'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <div *ngIf="forma.controls['proceso'].errors?.maxlength" class="invalid-feedback">Este campo no debe tener más de {{forma.controls['proceso'].errors.maxlength.requiredLength}} dígitos</div>
+                <div *ngIf="forma.controls['proceso'].errors?.pattern" class="invalid-feedback">No cumple con el formato</div>
+            </div>
+            <label for="descripcion" class="col-sm-2 col-form-label text-right">Descripción</label>
+            <div class="col-sm-6">
+                <input class="form-control" type="text" formControlName="descripcion" aria-describedby="descripcionHelp">
+                <small id="descripcionHelp" class="form-text text-muted">Descripción del Proceso</small>
+                <div *ngIf="forma.controls['descripcion'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="predecesor" class="col-sm-2 col-form-label text-right">Predecesor</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp">
+                <small id="predecesorHelp" class="form-text text-muted">Proceso Predecesor</small>
+                <tree-root [nodes]="nodes" [options]="options"></tree-root>
+            </div>
+        </div>
+        <div class="form-group row">
+
+        </div>
+        <div class="form-group row">
+            <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
+            <div class="col-sm-10">
+                <div class="form-check">
+                    <label class="form-check-label">
+						<input class="form-check-input radio-inline" type="radio" name="ent_data" id="gridRadios1" value="S">
+						Si
+					</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <label class="form-check-label">
+						<input class="form-check-input radio-inline" type="radio" name="ent_data" id="gridRadios2" value="N">
+						No
+					</label>
+                </div>
+                <small id="ent_dataHelp" class="form-text text-muted">El Proceso tiene Entrada de Datos</small>
+            </div>
+        </div>
+
+
+
+        <!--<input style="text-transform: uppercase;" aria-describedby="procesoHelp" [ngClass]="{ 'is-invalid' : forma.controls['rfc'].invalid }">
+        <div *ngIf="forma.controls['rfc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+        <div *ngIf="forma.controls['rfc'].errors?.minlength" class="invalid-feedback">Este campo debe tener al menos {{forma.controls['rfc'].errors.minlength.requiredLength}} carcateres</div>
+        <div *ngIf="forma.controls['rfc'].errors?.maxlength" class="invalid-feedback">Este campo no debe tener más de {{forma.controls['rfc'].errors.maxlength.requiredLength}} carcateres</div>
+        <div *ngIf="forma.controls['rfc'].errors?.pattern" class="invalid-feedback">No cumple con el formato de un R.F.C.</div>
+        <div *ngIf="forma.controls['rfc'].errors?.existe" class="invalid-feedback">Este proveedor ya fue registrado</div>
+
+    </div>
+    <div class="form-group">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" formControlName="correo" style="text-transform: lowercase;" class="form-control" aria-describedby="correoHelp" placeholder="Correo Electrónico" [ngClass]="{'is-invalid': forma.controls['correo'].invalid}">
+        <div *ngIf="forma.controls['correo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+        <div *ngIf="forma.controls['correo'].errors?.pattern" class="invalid-feedback">No cumple con el formato de un correo electrónico</div>
+        <small id="correoHelp" class="form-text text-muted">Correo Electrónico</small>-->
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>
+        <button [routerLink]="['/catalogos','procesos']" class="btn btn-outline-danger">Cancelar</button>
+    </div>
+</form>
