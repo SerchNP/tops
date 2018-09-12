@@ -16,20 +16,12 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	idProceso: number;
 	titulo: string;
 
-	resultado: any;
-	oProceso: Proceso;
-	/*proc: Proceso = {
-		this.proceso : 0,
-		this.pred : 0,
-		this.descrip = '',
-		this.estatus = 'A',
-		this.ent_data = 'N'
-	};*/
+	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
 	forma: FormGroup;
 
 
-	nodes = [
+	/*nodes = [
 		{
 		  id: 1,
 		  name: 'root1',
@@ -53,18 +45,19 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 		  ]
 		}
 	  ];
-	  options = {};
+	  options = {};*/
 
 
 	cargarProceso(idProceso): boolean {
 		let bandera = false;
 		this._procesosService.getProcesoById(idProceso)
 			.subscribe(
-				data => {
-					this.resultado = data;
-					this.oProceso = this.resultado.proceso;
+				proceso => {
+					console.log(proceso);
+					this.proceso = proceso;
+					console.log(this.proceso);
+					this.forma.patchValue(this.proceso);
 					bandera = true;
-					console.log(this.oProceso);
 				},
 				error => {
 					console.error(error);
@@ -79,19 +72,17 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 
 
-	constructor(private route: ActivatedRoute, private _usersService: UsersService, private _procesosService: ProcesosService) {
-		this.sub = this.route.params.subscribe(params => {
+	constructor(private activatesRoute: ActivatedRoute, private _usersService: UsersService, private _procesosService: ProcesosService) {
+		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];
 		});
 
 		this.titulo = (this.accion === 'I' ? 'Registro de Procesos' : 'Actualización de Procesos');
 
-		if (this.accion === 'I') {
-			this.oProceso = new Proceso(null, null, '', null, 'A', 'N');
-		} else {
+		if (this.idProceso !== 0) {
 			this.cargarProceso(this.idProceso);
-			console.log(this.oProceso);
+			console.log(this.proceso);
 		}
 	}
 
@@ -106,10 +97,10 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 											Validators.pattern('[0-9]{1,10}')
 										]
 									),
-
+			'proceso_desc': new FormControl(),
 			'predecesor' : new FormControl('',
 				Validators.required
-				),/*this.proceso.pred,
+				), /*this.proceso.pred,
 			 						// tslint:disable-next-line:indent
 			 						[
 										Validators.required,
@@ -117,15 +108,18 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 										Validators.pattern('([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+\.+([a-z0-9]{2,4})+$')
 										// Validators.email
 									]),*/
-			'descripcion' : new FormControl('',
+			'predecesor_desc' : new FormControl(),
+			'objetivo' : new FormControl('',
 											Validators.required
 											),
+			'apartados': new FormControl(),
+			'responsable': new FormControl(),
 			'ent_data' : new FormControl('',
 										Validators.required
 										)
 		});
-		console.log(this.oProceso);
-		this.forma.setValue(this.oProceso);
+		// console.log(this.proceso);
+		// this.forma.setValue(this.proceso);
 	}
 
 	ngOnDestroy() {

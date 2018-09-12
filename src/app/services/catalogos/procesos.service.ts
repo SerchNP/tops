@@ -36,7 +36,7 @@ export class ProcesosService {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/procesos/getProcesoById.json?id=' + proceso + '&token=' + token;
 		const headers = this.getHeadersGET();
-		return this.http.get(url, {headers}).map(resp => resp);
+		return this.http.get(url, {headers}).map((resp: any) => resp.proceso);
 	}
 
 	cancelaProceso(proceso: number, motivo: string) {

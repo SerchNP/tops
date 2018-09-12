@@ -1,13 +1,20 @@
 export class Proceso {
 	constructor(
 		public proceso: number,
-		public pred: number,
-		public descrip: string,
+		public proceso_desc: string,
 		public autoriza: number,
+		public autoriza_desc: string,
 		public estatus: string,
 		public ent_data: string,
-		public f_captura?: Date,
-		public u_captura?: string,
+		public f_captura: Date,
+		public u_captura: string,
+
+		public predecesor?: number,
+		public predecesor_desc?: string,
+		public objetivo?: string,
+		public apartados?: string,
+		public responsable?: string,
+
 		public f_autoriza?: Date,
 		public u_autoriza?: string,
 		public f_modifica?: Date,
