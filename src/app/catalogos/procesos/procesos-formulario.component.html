@@ -6,7 +6,7 @@
         <div class="form-group row">
             <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
             <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [disabled]="accion === 'U'" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}">
                 <small id="procesoHelp" class="form-text text-muted">Clave del Proceso</small>
                 <div *ngIf="forma.controls['proceso'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
                 <div *ngIf="forma.controls['proceso'].errors?.maxlength" class="invalid-feedback">Este campo no debe tener más de {{forma.controls['proceso'].errors.maxlength.requiredLength}} dígitos</div>
@@ -21,12 +21,12 @@
         <div class="form-group row">
             <label for="predecesor" class="col-sm-2 col-form-label text-right">Predecesor</label>
             <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [disabled]="accion === 'U'">
+                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="accion === 'U'">
                 <small id="predecesorHelp" class="form-text text-muted">Proceso Predecesor</small>
                 <!--<tree-root [nodes]="nodes" [options]="options"></tree-root>-->
             </div>
             <div class="col-sm-8">
-                <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [disabled]="accion === 'U'">
+                <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="accion === 'U'">
                 <small id="predecesorHelp" class="form-text text-muted">Descripción del Proceso Predecesor</small>
             </div>
         </div>

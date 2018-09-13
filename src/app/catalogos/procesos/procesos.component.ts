@@ -24,9 +24,9 @@ export class ProcesosComponent implements OnInit {
 		this._procesosService.getProcesos()
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.jsonData = data;
 					this.listadoProcesos = this.jsonData.procesos;
+					this._usersService.guardarStorage = this.jsonData.token;
 				},
 				error => {
 					// console.error(error);
@@ -73,7 +73,7 @@ export class ProcesosComponent implements OnInit {
 						button: {
 							text: 'Aceptar',
 							closeModal: false,
-						},
+						}
 					}).then(motivo => {
 						console.log(motivo);
 						this._procesosService.cancelaProceso(proceso.proceso, motivo.toUpperCase())

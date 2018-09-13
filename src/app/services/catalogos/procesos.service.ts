@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { URL_SGC, AUTH } from '../../config/config';
+import { Proceso } from '../../models/proceso.model';
 
 
 @Injectable()
@@ -37,6 +38,11 @@ export class ProcesosService {
 		const url = URL_SGC + '/catalogos/procesos/getProcesoById.json?id=' + proceso + '&token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map((resp: any) => resp.proceso);
+	}
+
+	modificaProceso(proceso: Proceso) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
 	}
 
 	cancelaProceso(proceso: number, motivo: string) {

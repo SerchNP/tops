@@ -127,9 +127,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	guardar() {
-		console.log(this.forma.value);
-		console.log(this.forma.valid);
-		console.log(this.forma);
+		this._procesosService.
 	}
 
 }
