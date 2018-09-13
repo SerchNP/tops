@@ -40,11 +40,21 @@ export class ProcesosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	insertaProceso(proceso: Proceso) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/catalogos/procesos/insertaProceso.json?token=' + token;
+		const headers = this.getHeadersPOST();
+		console.log(proceso);
+		const body = JSON.stringify(proceso);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 	modificaProceso(proceso: Proceso) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
+		const url = URL_SGC + '/catalogos/procesos/modificaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
-		const body = JSON.stringify(JSON.parse(proceso));
+		console.log(proceso);
+		const body = JSON.stringify(proceso);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

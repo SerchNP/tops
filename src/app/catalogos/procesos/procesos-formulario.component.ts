@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProcesosService, UsersService } from '../../services/services.index';
 import { Proceso } from '../../models/proceso.model';
@@ -48,17 +48,15 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	  options = {};*/
 
 
-	cargarProceso(idProceso): boolean {
+	cargarProceso(idProceso) {
 		let bandera = false;
 		this._procesosService.getProcesoById(idProceso)
 			.subscribe(
 				(data: any) => {
-					console.log(data);
-					this._usersService.guardarStorage(data.token);
 					this.proceso = data.proceso;
-					console.log(this.proceso);
 					this.forma.patchValue(this.proceso);
-					bandera = true;
+					/*const token: string = data.token;
+					this._usersService.guardarStorage(token);*/
 				},
 				error => {
 					console.error(error);
@@ -73,7 +71,9 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 
 
-	constructor(private activatesRoute: ActivatedRoute, private _usersService: UsersService, private _procesosService: ProcesosService) {
+	// tslint:disable-next-line:max-line-length
+	constructor(private activatesRoute: ActivatedRoute, private router: Router,
+				private _usersService: UsersService, private _procesosService: ProcesosService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];
@@ -83,44 +83,21 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 		if (this.idProceso !== 0) {
 			this.cargarProceso(this.idProceso);
-			console.log(this.proceso);
 		}
 	}
 
 	ngOnInit() {
 		this.forma = new FormGroup({
 			// FormControl ---> Valor default, Reglas de Validacion, Reglas de validación asíncronas
-			'proceso' : new FormControl('',
-										[
-											Validators.required,
-											Validators.minLength(1),
-											Validators.maxLength(10),
-											Validators.pattern('[0-9]{1,10}')
-										]
-									),
-			'proceso_desc': new FormControl(),
-			'predecesor' : new FormControl('',
-				Validators.required
-				), /*this.proceso.pred,
-			 						// tslint:disable-next-line:indent
-			 						[
-										Validators.required,
-										// Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$")
-										Validators.pattern('([a-z0-9_\.\-])+\@(([a-z0-9\-])+\.)+\.+([a-z0-9]{2,4})+$')
-										// Validators.email
-									]),*/
+			'proceso' : new FormControl(),
+			'proceso_desc': new FormControl('', Validators.required),
+			'predecesor' : new FormControl(),
 			'predecesor_desc' : new FormControl(),
-			'objetivo' : new FormControl('',
-											Validators.required
-											),
+			'objetivo' : new FormControl(),
 			'apartados': new FormControl(),
 			'responsable': new FormControl(),
-			'ent_data' : new FormControl('',
-										Validators.required
-										)
+			'ent_data' : new FormControl('', Validators.required)
 		});
-		// console.log(this.proceso);
-		// this.forma.setValue(this.proceso);
 	}
 
 	ngOnDestroy() {
@@ -128,8 +105,33 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	guardar() {
-		console.log(this.forma.value);
-		this._procesosService.modificaProceso(this.forma.value);
+		if (this.accion === 'U') {
+			this._procesosService.modificaProceso(this.forma.value)
+				.subscribe((data: any) => {
+					// this._usersService.guardarStorage(data.token);
+					swal('Atención!!!', data.message, 'success');
+					this.router.navigate(['/catalogos', 'procesos']);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._usersService.logout();
+					}
+				});
+		} else {
+			this._procesosService.insertaProceso(this.forma.value)
+				.subscribe((data: any) => {
+					// this._usersService.guardarStorage(data.token);
+					swal('Atención!!!', data.message, 'success');
+					this.router.navigate(['/catalogos', 'procesos']);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._usersService.logout();
+					}
+				});
+		}
 	}
 
 }

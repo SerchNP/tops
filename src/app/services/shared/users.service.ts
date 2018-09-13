@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import 'rxjs/add/operator/map';
+import { Router } from '@angular/router';
 import { UsuarioLogin } from '../../interfaces/usuarios.interface';
 import { URL_SGC, AUTH } from '../../config/config';
-import { Router } from '@angular/router';
 
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
-
+import * as jwt from 'jsonwebtoken';
 
 
 @Injectable()
@@ -56,7 +52,7 @@ export class UsersService {
 		return userInfo.nombre;
 	}
 
-	guardarStorage(token: string) {
+	guardarStorage(token: string): void {
 		localStorage.setItem('token', token);
 	}
 }

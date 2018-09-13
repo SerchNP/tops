@@ -39,7 +39,7 @@ export class ProcesosComponent implements OnInit {
 
 	editarProceso(proceso: any) {
 		console.log(proceso);
-		if (proceso.estatus === 'C') {
+		if (proceso.autoriza === 7) {
 			swal('ERROR', 'El proceso ya está cancelado', 'error');
 		} else {
 			this.router.navigate(['/catalogos', 'procesos_form', 'U', proceso.proceso]);
@@ -47,7 +47,7 @@ export class ProcesosComponent implements OnInit {
 	}
 
 	borrarProceso(proceso: any) {
-		if (proceso.estatus === 'C') {
+		if (proceso.autoriza === 7) {
 			swal('ERROR', 'El proceso ya está cancelado', 'error');
 		} else {
 			swal({
