@@ -52,9 +52,10 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 		let bandera = false;
 		this._procesosService.getProcesoById(idProceso)
 			.subscribe(
-				proceso => {
-					console.log(proceso);
-					this.proceso = proceso;
+				(data: any) => {
+					console.log(data);
+					this._usersService.guardarStorage(data.token);
+					this.proceso = data.proceso;
 					console.log(this.proceso);
 					this.forma.patchValue(this.proceso);
 					bandera = true;
@@ -127,7 +128,8 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	guardar() {
-		this._procesosService.
+		console.log(this.forma.value);
+		this._procesosService.modificaProceso(this.forma.value);
 	}
 
 }

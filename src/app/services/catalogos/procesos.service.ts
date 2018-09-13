@@ -37,12 +37,15 @@ export class ProcesosService {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/procesos/getProcesoById.json?id=' + proceso + '&token=' + token;
 		const headers = this.getHeadersGET();
-		return this.http.get(url, {headers}).map((resp: any) => resp.proceso);
+		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	modificaProceso(proceso: Proceso) {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
+		const headers = this.getHeadersPOST();
+		const body = JSON.stringify(JSON.parse(proceso));
+		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelaProceso(proceso: number, motivo: string) {

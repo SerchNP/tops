@@ -4,7 +4,6 @@ import 'rxjs/add/operator/map';
 import { UsuarioLogin } from '../../interfaces/usuarios.interface';
 import { URL_SGC, AUTH } from '../../config/config';
 import { Router } from '@angular/router';
-import * as jwt from 'jsonwebtoken';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
