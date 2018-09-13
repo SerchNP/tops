@@ -30,47 +30,40 @@
         <div class="form-group row">
             <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo</label>
             <div class="col-sm-10">
-                <textarea class="form-control" formControlName="objetivo" aria-describedby="objetivoHelp"></textarea>
-                <small id="objetivoHelp" class="form-text text-muted">Objetivo del Proceso</small>
+                <textarea class="form-control" formControlName="objetivo" aria-describedby="objetivoHelp" [ngClass]="{'is-invalid': forma.controls['objetivo'].invalid}"></textarea>
+				<small id="objetivoHelp" class="form-text text-muted">Objetivo del Proceso</small>
+				<div *ngIf="forma.controls['objetivo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
             <label for="apartados" class="col-sm-2 col-form-label text-right">Apartados de la Norma</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="apartados" aria-describedby="apartadosHelp">
-                <small id="apartadosHelp" class="form-text text-muted">Apartados de la Norma ISO aplicables al Proceso</small>
+                <input type="text" class="form-control" formControlName="apartados" aria-describedby="apartadosHelp" [ngClass]="{'is-invalid': forma.controls['apartados'].invalid}">
+				<small id="apartadosHelp" class="form-text text-muted">Apartados de la Norma ISO aplicables al Proceso</small>
+				<div *ngIf="forma.controls['apartados'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
             <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp">
-                <small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
+                <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}">
+				<small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
+				<div *ngIf="forma.controls['responsable'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
-        <div class="form-group row" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}">
+        <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
             <div class="col-sm-10">
-                <input type="radio" value="S" name="ent_data" formControlName="ent_data" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}"> Si
-                <!--[ngModel]="user.gender" required #gender="ngModel"-->
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" value="N" name="ent_data" formControlName="ent_data" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}"> No
-                <!-- [ngModel]="user.gender" required #gender="ngModel"-->
-                <div class="form-check" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}">
-                    <label class="form-check-label">
-						<input class="form-check-input radio-inline" type="radio" name="ent_data" formControlName="ent_data" value="S" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}">
-						Si
-					</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <label class="form-check-label">
-						<input class="form-check-input radio-inline" type="radio" name="ent_data" formControlName="ent_data" value="N" [ngClass]="{'is-invalid': forma.controls['ent_data'].invalid}">
-						No
-					</label>
-                </div>
+				<select name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+					<option value="">Seleccionar</option>
+					<option value="S">Si</option>
+					<option value="N">No</option>
+				</select>
                 <small id="ent_dataHelp" class="form-text text-muted">El Proceso tiene Entrada de Datos</small>
-                <div *ngIf="forma.controls['ent_data'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <div *ngIf="ent_data.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-        </div>
-    </div>
+		</div>
+	</div>
     <div class="text-center">
         <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
 			<i class="fa fa-save"></i>

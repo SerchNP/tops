@@ -15,6 +15,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	accion: string;
 	idProceso: number;
 	titulo: string;
+	select_invalid: string = '';
 
 	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
@@ -55,8 +56,8 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				(data: any) => {
 					this.proceso = data.proceso;
 					this.forma.patchValue(this.proceso);
-					/*const token: string = data.token;
-					this._usersService.guardarStorage(token);*/
+					const token: string = data.token;
+					this._usersService.guardarStorage(token);
 				},
 				error => {
 					console.error(error);
@@ -68,8 +69,6 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				});
 		return bandera;
 	}
-
-
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private activatesRoute: ActivatedRoute, private router: Router,
@@ -93,9 +92,9 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 			'proceso_desc': new FormControl('', Validators.required),
 			'predecesor' : new FormControl(),
 			'predecesor_desc' : new FormControl(),
-			'objetivo' : new FormControl(),
-			'apartados': new FormControl(),
-			'responsable': new FormControl(),
+			'objetivo' : new FormControl('', Validators.required),
+			'apartados': new FormControl('', Validators.required),
+			'responsable': new FormControl('', Validators.required),
 			'ent_data' : new FormControl('', Validators.required)
 		});
 	}
@@ -104,11 +103,15 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 		this.sub.unsubscribe();
 	}
 
+	get ent_data() {
+		return this.forma.get('ent_data');
+	}
+
 	guardar() {
 		if (this.accion === 'U') {
 			this._procesosService.modificaProceso(this.forma.value)
 				.subscribe((data: any) => {
-					// this._usersService.guardarStorage(data.token);
+					this._usersService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/catalogos', 'procesos']);
 				},
@@ -119,13 +122,15 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
+			console.log(this.forma);
 			this._procesosService.insertaProceso(this.forma.value)
 				.subscribe((data: any) => {
-					// this._usersService.guardarStorage(data.token);
+					this._usersService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/catalogos', 'procesos']);
 				},
 				error => {
+					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._usersService.logout();

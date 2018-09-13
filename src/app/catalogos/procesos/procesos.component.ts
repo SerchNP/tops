@@ -17,16 +17,19 @@ export class ProcesosComponent implements OnInit {
 
 	jsonData: any;
 	listadoProcesos: any[] = [];
+	cargando: boolean = false;
 
 	constructor(public _procesosService: ProcesosService, public _usersService: UsersService, private router: Router) { }
 
 	ngOnInit() {
+		this.cargando = true;
 		this._procesosService.getProcesos()
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.listadoProcesos = this.jsonData.procesos;
-					this._usersService.guardarStorage = this.jsonData.token;
+					this._usersService.guardarStorage(this.jsonData.token);
+					this.cargando = false;
 				},
 				error => {
 					// console.error(error);
@@ -40,7 +43,7 @@ export class ProcesosComponent implements OnInit {
 	editarProceso(proceso: any) {
 		console.log(proceso);
 		if (proceso.autoriza === 7) {
-			swal('ERROR', 'El proceso ya está cancelado', 'error');
+			swal('ERROR', 'El proceso no se puede modificar porque está cancelado', 'error');
 		} else {
 			this.router.navigate(['/catalogos', 'procesos_form', 'U', proceso.proceso]);
 		}
@@ -52,7 +55,7 @@ export class ProcesosComponent implements OnInit {
 		} else {
 			swal({
 				title: 'Atención!!!',
-				text: 'Está seguro que desea cancelar el proceso ' + proceso.descrip + '?',
+				text: 'Está seguro que desea cancelar el proceso ' + proceso.proceso_desc + '?',
 				icon: 'warning',
 				dangerMode: true,
 				buttons: {

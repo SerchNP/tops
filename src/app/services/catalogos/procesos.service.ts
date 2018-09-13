@@ -41,6 +41,7 @@ export class ProcesosService {
 	}
 
 	insertaProceso(proceso: Proceso) {
+		console.log(proceso);
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/procesos/insertaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
@@ -62,7 +63,7 @@ export class ProcesosService {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
-		const body = JSON.stringify(JSON.parse('{"proceso": ' + proceso + ', "motivoCancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

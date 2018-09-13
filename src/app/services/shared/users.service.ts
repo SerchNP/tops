@@ -52,7 +52,8 @@ export class UsersService {
 		return userInfo.nombre;
 	}
 
-	guardarStorage(token: string): void {
+	guardarStorage(token: string) {
 		localStorage.setItem('token', token);
+		return;
 	}
 }
