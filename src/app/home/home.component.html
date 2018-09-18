@@ -1,13 +1,18 @@
 <app-header-principal></app-header-principal>
 <div class="main-container">
-    <div class="card-columns" style="column-count: 4;">
-        <div class="card" style="width: 18rem; height: 30rem;" *ngFor="let sist of listadoSistemas">
+    <div class="card mb-3">
+        <div class="card-header"><strong>Política de Calidad</strong></div>
+        <div class="card-body text-dark">
+            <p class="card-text">{{politica}}</p>
+        </div>
+    </div>
+    <div class="card-columns" style="column-count: 7;">
+        <div class="card" style="width: 10rem; height: 23rem;" *ngFor="let sist of listadoSistemas">
             <img class="card-img-top img-thumbnail" src="assets/images/ujed.png" alt="{{sist.siglas}}">
             <div class="card-body" style="height: 8rem;">
-                <h5 class="card-title">{{sist.siglas}}</h5>
-                <p class="card-text text-center">{{sist.nombre}}</p>
+                <p class="card-text text-center"><b>{{sist.descrip}}</b></p>
             </div>
-            <div class="card-footer text-right"><a href="#" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Ver Detalles</a></div>
+            <div class="card-footer text-right"><a [routerLink]="['/detalle', sist.sistema]" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Ver Detalles</a></div>
         </div>
     </div>
 </div>

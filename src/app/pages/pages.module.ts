@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Rutas
 import { PAGES_ROUTES } from './pages.routes';
@@ -27,6 +27,7 @@ import { ProfileComponent } from './profile/profile.component';
 		PAGES_ROUTES,
 		CATALOGOS_ROUTES,
 		FormsModule,
+		ReactiveFormsModule,
 		SharedModule,
 		CatalogosModule
 	]

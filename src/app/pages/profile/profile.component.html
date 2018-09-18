@@ -3,12 +3,69 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Información del Usuario</h4>
-                <form class="form">
+                <form [formGroup]="formaProfile">
+                    <div class=" form-group">
+                        <div class="form-group row">
+                            <label for="usuario" class="col-sm-2 col-form-label text-right">Usuario</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" formControlName="usuario" disabled="disabled">
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
-                        <label for="username">Usuario</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend"><i></i></div>
-                            <input type="text" class="form-control" id="username">
+                        <div class="form-group row">
+                            <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
+                            <div class="col-sm-1">
+                                <input class="form-control" type="text" formControlName="titulo" aria-describedby="tituloHelp" [attr.disabled]="true">
+                                <small id="tituloHelp" class="form-text text-muted">Título</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" [attr.disabled]="true">
+                                <small id="nombreHelp" class="form-text text-muted">Nombre(s)</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="paterno" aria-describedby="paternoHelp" [attr.disabled]="true">
+                                <small id="paternoHelp" class="form-text text-muted">Primer Apellido</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="materno" aria-describedby="maternoHelp" [attr.disabled]="true">
+                                <small id="maternoHelp" class="form-text text-muted">Segundo Apellido</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label text-right">Correo Electrónico</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="email" aria-describedby="emailHelp" [attr.disabled]="true">
+                                <small id="emailHelp" class="form-text text-muted">Principal</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="email2" aria-describedby="email2Help" [attr.disabled]="true">
+                                <small id="email2Help" class="form-text text-muted">Adicional 1</small>
+                            </div>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="email3" aria-describedby="email3Help" [attr.disabled]="true">
+                                <small id="email3Help" class="form-text text-muted">Adicional 2</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group row">
+                            <label for="area" class="col-sm-2 col-form-label text-right">Área</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" type="text" formControlName="area" aria-describedby="areaHelp" [attr.disabled]="true">
+                                <small id="areaHelp" class="form-text text-muted">Área de Trabajo</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-group row">
+                            <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
+                            <div class="col-sm-3">
+                                <input class="form-control" type="text" formControlName="puesto" aria-describedby="puestoHelp" [attr.disabled]="true">
+                                <small id="puestoHelp" class="form-text text-muted">Puesto de Trabajo</small>
+                            </div>
                         </div>
                     </div>
                 </form>

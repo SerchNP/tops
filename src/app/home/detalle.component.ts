@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PrincipalService } from '../services/services.index';
+import { IdentidadService } from '../services/services.index';
+import { Objetivos } from '../interfaces/objetivos.interface';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-detalle',
@@ -9,36 +11,112 @@ import { PrincipalService } from '../services/services.index';
 
 export class DetalleComponent implements OnInit {
 
+	cargando = false;
 	idSistema: number;
-	politica: string;
+	sistema: string;
+	alcance: string;
 	mision: string;
 	vision: string;
-	notas: string;
-	alcance: string;
-	objetivos: string[];
+	objetivos: Objetivos[] = [];
+	nota: string;
 
-	constructor(private activatesRoute: ActivatedRoute, private router: Router, private _principalService: PrincipalService) {
+	constructor(private activatesRoute: ActivatedRoute, private router: Router, private _identidadService: IdentidadService) {
 		this.activatesRoute.params.subscribe(params => {
 			this.idSistema = params['id'];
 		});
 	}
 
-	ngOnInit() { 
-		/*this._principalService.getProcesos()
+	ngOnInit() {
+		this.cargando = true;
+		this.getSistema();
+		this.getAlcance();
+		this.getMision();
+		this.getVision();
+		this.getObjetivos();
+		this.getNota();
+	}
+
+	getSistema() {
+		this._identidadService.getSistemaById(this.idSistema)
 			.subscribe(
 				data => {
-					this.jsonData = data;
-					this.listadoProcesos = this.jsonData.procesos;
-					this._usersService.guardarStorage(this.jsonData.token);
-					this.cargando = false;
+					// console.log(data);
+					this.sistema = data;
 				},
 				error => {
-					// console.error(error);
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._usersService.logout();
-					}
-				});*/
+					console.error(error);
+					swal('ERROR', 'Error al cargar el Sistema', 'error');
+					this.cargando = false;
+				});
+	}
+
+	getAlcance() {
+		this._identidadService.getIdentidad(this.idSistema, 'A')
+			.subscribe(
+				data => {
+					// console.log(data);
+					this.alcance = data;
+				},
+				error => {
+					console.error(error);
+					swal('ERROR', 'Error al cargar el Alcance', 'error');
+					this.cargando = false;
+				});
+	}
+
+	getMision() {
+		this._identidadService.getIdentidad(this.idSistema, 'M')
+			.subscribe(
+				data => {
+					// console.log(data);
+					this.mision = data;
+				},
+				error => {
+					console.error(error);
+					swal('ERROR', 'Error al cargar la Misión', 'error');
+					this.cargando = false;
+				});
+	}
+
+	getVision() {
+		this._identidadService.getIdentidad(this.idSistema, 'V')
+			.subscribe(
+				data => {
+					// console.log(data);
+					this.vision = data;
+				},
+				error => {
+					console.error(error);
+					swal('ERROR', 'Error al cargar la Visión', 'error');
+					this.cargando = false;
+				});
+	}
+
+	getNota() {
+		this._identidadService.getIdentidad(1, 'N')
+			.subscribe(
+				data => {
+					// console.log(data);
+					this.nota = data;
+				},
+				error => {
+					console.error(error);
+					swal('ERROR', 'Error al cargar la Nota', 'error');
+					this.cargando = false;
+				});
+	}
+
+	getObjetivos() {
+		this._identidadService.getObjetivos(this.idSistema)
+			.subscribe(
+				data => {
+					this.objetivos = data;
+				},
+				error => {
+					console.error(error);
+					swal('ERROR', 'Error al cargar los Objetivos', 'error');
+					this.cargando = false;
+				});
 	}
 
 }
