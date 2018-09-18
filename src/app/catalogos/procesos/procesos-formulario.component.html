@@ -20,7 +20,7 @@
             <div class="col-sm-2">
                 <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="accion === 'U'">
                 <small id="predecesorHelp" class="form-text text-muted">Proceso Predecesor</small>
-                <!--<tree-root [nodes]="nodes" [options]="options"></tree-root>-->
+                <app-procesos-tree></app-procesos-tree>
             </div>
             <div class="col-sm-8">
                 <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="accion === 'U'">
@@ -31,30 +31,30 @@
             <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo</label>
             <div class="col-sm-10">
                 <textarea class="form-control" formControlName="objetivo" aria-describedby="objetivoHelp" [ngClass]="{'is-invalid': forma.controls['objetivo'].invalid}"></textarea>
-				<small id="objetivoHelp" class="form-text text-muted">Objetivo del Proceso</small>
-				<div *ngIf="forma.controls['objetivo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <small id="objetivoHelp" class="form-text text-muted">Objetivo del Proceso</small>
+                <div *ngIf="forma.controls['objetivo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
             <label for="apartados" class="col-sm-2 col-form-label text-right">Apartados de la Norma</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" formControlName="apartados" aria-describedby="apartadosHelp" [ngClass]="{'is-invalid': forma.controls['apartados'].invalid}">
-				<small id="apartadosHelp" class="form-text text-muted">Apartados de la Norma ISO aplicables al Proceso</small>
-				<div *ngIf="forma.controls['apartados'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <small id="apartadosHelp" class="form-text text-muted">Apartados de la Norma ISO aplicables al Proceso</small>
+                <div *ngIf="forma.controls['apartados'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
             <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}">
-				<small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
-				<div *ngIf="forma.controls['responsable'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
+                <div *ngIf="forma.controls['responsable'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
             <div class="col-sm-10">
-				<select name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+                <select name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
 					<option value="">Seleccionar</option>
 					<option value="S">Si</option>
 					<option value="N">No</option>
@@ -62,8 +62,20 @@
                 <small id="ent_dataHelp" class="form-text text-muted">El Proceso tiene Entrada de Datos</small>
                 <div *ngIf="ent_data.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-		</div>
-	</div>
+        </div>
+        <div class="form-group row">
+            <label for="estatus" class="col-sm-2 col-form-label text-right">Estatus</label>
+            <div class="col-sm-10">
+                <select name="ent_data" formControlName="estatus" [ngStyle]="{'border-color': (estatus.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+					<option value="">Seleccionar</option>
+					<option value="A">Abierto</option>
+					<option value="C">Cerrado</option>
+				</select>
+                <small id="estatusHelp" class="form-text text-muted">El Proceso tiene Entrada de Datos</small>
+                <div *ngIf="estatus.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
     <div class="text-center">
         <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
 			<i class="fa fa-save"></i>

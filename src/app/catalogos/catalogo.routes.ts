@@ -6,14 +6,14 @@ import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
 
 // Guards
-import { LoginGuardGuard } from '../services/services.index';
+import { LoginGuard } from '../services/services.index';
 
 
 const catalogosRoutes: Routes = [
 	{
 		path: 'catalogos',
 		component: PagesComponent,
-		canActivate: [ LoginGuardGuard ],
+		canActivate: [ LoginGuard ],
 		children: [
 			{ path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Catálogo de Usuarios', padre: 'Catálogos', opcion: 'Usuarios'} },
 			{ path: 'procesos', component: ProcesosComponent, data: {titulo: 'Catálogo de Procesos', padre: 'Catálogos', opcion: 'Procesos'} },

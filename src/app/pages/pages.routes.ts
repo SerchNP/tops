@@ -5,16 +5,22 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 // Guards
-import { LoginGuardGuard } from '../services/guards/login-guard.guard';
+import { LoginGuard } from '../services/guards/login.guard';
+import { TokenGuard } from '../services/guards/token.guard';
 
 const pagesRoutes: Routes = [
 	{
 		path: '',
 		component: PagesComponent,
-		canActivate: [ LoginGuardGuard ],
+		canActivate: [ LoginGuard ],
 		children: [
 			{ path: 'usuario/profile', component: ProfileComponent, data: {titulo: 'Perfil del Usuario', padre: 'Usuario', opcion: 'Perfil'} },
-			{ path: 'dashboard', component: DashboardComponent, data: {titulo: 'Dashboard'} },
+			{
+				path: 'dashboard',
+				component: DashboardComponent,
+				canActivate: [ TokenGuard ],
+				data: {titulo: 'Dashboard'}
+			},
 			{ path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 		]
 	}

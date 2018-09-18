@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { UsersService } from '../../services/services.index';
+import { AccesoService } from '../../services/services.index';
 import { UsuarioLogin } from '../../interfaces/usuarios.interface';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -25,7 +23,7 @@ export class LoginComponent implements OnInit {
 		password : ''
 	};
 
-	constructor(public _usersService: UsersService ) { }
+	constructor(public _accesoService: AccesoService ) { }
 
 	ngOnInit() {
 		this.user = localStorage.getItem('user') || '';
@@ -40,7 +38,7 @@ export class LoginComponent implements OnInit {
 		}
 		this.usuario = forma.value;
 		this.usuario.password = btoa(this.usuario.password);
-		this._usersService.login( this.usuario )
+		this._accesoService.login( this.usuario )
 			.subscribe( data => {},
 			error => {
 				console.error(error);

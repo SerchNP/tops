@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from '../../services/services.index';
+import { AccesoService } from '../../services/services.index';
 
 @Component({
 	selector: 'app-info-user',
@@ -11,10 +11,10 @@ export class InfoUserComponent implements OnInit {
 
 	nombre: string;
 
-	constructor(public _usersService: UsersService) { }
+	constructor(public _accesoService: AccesoService) { }
 
 	ngOnInit() {
-		this.nombre = this._usersService.nombreUsuario();
+		this.nombre = this._accesoService.nombreUsuario();
 	}
 
 }

@@ -18,18 +18,20 @@ import { ServicesModule } from './services/services.module';
 // Componentes
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
+import { DetalleComponent } from './home/detalle.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
-		HomeComponent
+		HomeComponent,
+		DetalleComponent
 	],
 	imports: [
 		BrowserModule,
 		FormsModule,
 		ReactiveFormsModule,
 		APP_ROUTES,
-		TreeModule.forRoot(),
+		TreeModule, // .forRoot()
 		PagesModule,
 		SharedModule,
 		ServicesModule

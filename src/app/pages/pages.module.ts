@@ -24,11 +24,11 @@ import { ProfileComponent } from './profile/profile.component';
 		DashboardComponent
 	],
 	imports: [
-		SharedModule,
-		CatalogosModule,
 		PAGES_ROUTES,
 		CATALOGOS_ROUTES,
-		FormsModule
+		FormsModule,
+		SharedModule,
+		CatalogosModule
 	]
 })
 

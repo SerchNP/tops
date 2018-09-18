@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProcesosService, UsersService } from '../../services/services.index';
+import { ProcesosService, AccesoService } from '../../services/services.index';
 import { Proceso } from '../../models/proceso.model';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-procesos-formulario',
@@ -15,39 +16,11 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	accion: string;
 	idProceso: number;
 	titulo: string;
-	select_invalid: string = '';
+	select_invalid: string;
 
 	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
 	forma: FormGroup;
-
-
-	/*nodes = [
-		{
-		  id: 1,
-		  name: 'root1',
-		  children: [
-			{ id: 2, name: 'child1' },
-			{ id: 3, name: 'child2' }
-		  ]
-		},
-		{
-		  id: 4,
-		  name: 'root2',
-		  children: [
-			{ id: 5, name: 'child2.1' },
-			{
-			  id: 6,
-			  name: 'child2.2',
-			  children: [
-				{ id: 7, name: 'subsub' }
-			  ]
-			}
-		  ]
-		}
-	  ];
-	  options = {};*/
-
 
 	cargarProceso(idProceso) {
 		let bandera = false;
@@ -57,13 +30,13 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					this.proceso = data.proceso;
 					this.forma.patchValue(this.proceso);
 					const token: string = data.token;
-					this._usersService.guardarStorage(token);
+					this._accesoService.guardarStorage(token);
 				},
 				error => {
 					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._usersService.logout();
+						this._accesoService.logout();
 					}
 					bandera = false;
 				});
@@ -72,7 +45,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 	// tslint:disable-next-line:max-line-length
 	constructor(private activatesRoute: ActivatedRoute, private router: Router,
-				private _usersService: UsersService, private _procesosService: ProcesosService) {
+				private _accesoService: AccesoService, private _procesosService: ProcesosService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];
@@ -95,7 +68,8 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 			'objetivo' : new FormControl('', Validators.required),
 			'apartados': new FormControl('', Validators.required),
 			'responsable': new FormControl('', Validators.required),
-			'ent_data' : new FormControl('', Validators.required)
+			'ent_data' : new FormControl('', Validators.required),
+			'estatus' : new FormControl('', Validators.required)
 		});
 	}
 
@@ -107,25 +81,29 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('ent_data');
 	}
 
+	get estatus() {
+		return this.forma.get('estatus');
+	}
+
 	guardar() {
 		if (this.accion === 'U') {
 			this._procesosService.modificaProceso(this.forma.value)
 				.subscribe((data: any) => {
-					this._usersService.guardarStorage(data.token);
+					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/catalogos', 'procesos']);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._usersService.logout();
+						this._accesoService.logout();
 					}
 				});
 		} else {
 			console.log(this.forma);
 			this._procesosService.insertaProceso(this.forma.value)
 				.subscribe((data: any) => {
-					this._usersService.guardarStorage(data.token);
+					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/catalogos', 'procesos']);
 				},
@@ -133,7 +111,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._usersService.logout();
+						this._accesoService.logout();
 					}
 				});
 		}

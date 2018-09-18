@@ -19,6 +19,8 @@ import { PeriodosComponent } from './periodos/periodos.component';
 
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
+import { ProcesosTreeComponent } from '../components/procesos-tree/procesos-tree.component';
+import { TreeModule } from 'angular-tree-component';
 
 
 
@@ -27,7 +29,8 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		CatalogosComponent,
 		UsuariosComponent,
 		ProcesosComponent,
-		ProcesosFormularioComponent
+		ProcesosFormularioComponent,
+		ProcesosTreeComponent
 	],
 	exports: [
 		CatalogosComponent
@@ -36,7 +39,8 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		CommonModule,
 		CATALOGOS_ROUTES,
 		FormsModule,
-		ReactiveFormsModule
+		ReactiveFormsModule,
+		TreeModule.forRoot()
 	]
 })
 export class CatalogosModule { }
