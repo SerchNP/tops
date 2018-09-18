@@ -30,7 +30,9 @@ import { TreeModule } from 'angular-tree-component';
 		UsuariosComponent,
 		ProcesosComponent,
 		ProcesosFormularioComponent,
-		ProcesosTreeComponent
+		ProcesosTreeComponent,
+		AreasComponent,
+		PuestosComponent
 	],
 	exports: [
 		CatalogosComponent

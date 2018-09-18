@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { TokenGuard, LoginGuard } from './services.index';
 import { AccesoService, SidebarService, IdentidadService } from './services.index';
 import { UsuarioService, ProcesosService } from './services.index';
+import { AreasService } from './services.index';
+import { PuestosService } from './services.index';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { UsuarioService, ProcesosService } from './services.index';
 		AccesoService,
 		SidebarService,
 		UsuarioService,
-		ProcesosService
+		ProcesosService,
+		AreasService,
+		PuestosService
 	],
 	declarations: []
 })

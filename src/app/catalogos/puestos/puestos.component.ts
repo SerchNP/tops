@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { PuestosService, AccesoService } from '../../services/services.index';
+import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-puestos',
@@ -8,8 +11,28 @@ import { Component, OnInit } from '@angular/core';
 
 export class PuestosComponent implements OnInit {
 
-	constructor() { }
+	jsonData: any;
+	listadoPuestos: any[] = [];
+	cargando = false;
 
-	ngOnInit() { }
+	constructor(public _puestosService: PuestosService, public _accesoService: AccesoService, private router: Router) { }
+
+	ngOnInit() {
+		this.cargando = true;
+		this._puestosService.getPuestos()
+			.subscribe(
+				data => {
+					this.jsonData = data;
+					this.listadoPuestos = this.jsonData.puestos;
+					this._accesoService.guardarStorage(this.jsonData.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._accesoService.logout();
+					}
+				});
+	}
 
 }

@@ -19,7 +19,7 @@ const pagesRoutes: Routes = [
 				path: 'dashboard',
 				component: DashboardComponent,
 				canActivate: [ TokenGuard ],
-				data: {titulo: 'Dashboard'}
+				data: {titulo: 'Bienvenido'}
 			},
 			{ path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 		]
