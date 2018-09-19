@@ -21,6 +21,9 @@ import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.co
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
 import { ProcesosTreeComponent } from '../components/procesos-tree/procesos-tree.component';
 import { TreeModule } from 'angular-tree-component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+
 
 
 
@@ -42,7 +45,9 @@ import { TreeModule } from 'angular-tree-component';
 		CATALOGOS_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
-		TreeModule.forRoot()
+		TreeModule.forRoot(),
+		PaginationModule.forRoot(),
+		Ng2TableModule
 	]
 })
 export class CatalogosModule { }
