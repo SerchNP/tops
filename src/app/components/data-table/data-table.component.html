@@ -3,7 +3,7 @@
         <input *ngIf="config.filtering" placeholder="Buscar" [ngTableFiltering]="config.filtering" class="form-control" (tableChanged)="onChangeTable(config)" />
     </div>
     <div class="col-md-8 text-right" *ngIf="!cargando">
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)="agregar()">
 			<i class="fas fa-plus"></i> Agregar
 		</button>
     </div>

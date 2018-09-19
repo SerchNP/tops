@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-data-table',
@@ -11,6 +12,7 @@ export class DataTableComponent implements OnInit {
 	@Input() columns: Array<any> = [];
 	@Input() length = 0;
 	@Input() llave: string;
+	@Input() ruta_add: any[];
 
 	public page = 1;
 	public itemsPerPage = 10;
@@ -24,10 +26,14 @@ export class DataTableComponent implements OnInit {
 		className: ['table-striped', 'table-bordered', 'table-hover', 'table-responsive']
 	};
 
-	constructor() {
+	constructor(private router: Router) {
 	}
 
 	ngOnInit() {
+	}
+
+	agregar() {
+		this.router.navigate(this.ruta_add);
 	}
 
 	public changePage(page: any, data: Array<any> = this.data): Array<any> {

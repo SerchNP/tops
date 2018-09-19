@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
+import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -11,9 +12,30 @@ import swal from 'sweetalert2';
 
 export class ProcesosComponent implements OnInit {
 
+	@ViewChild('procesos') dataTable: DataTableComponent;
+
 	jsonData: any;
-	listadoProcesos: any[] = [];
+	listado: any[] = [];
 	cargando = false;
+	llave = 'proceso';
+
+	length = 0;
+	columns: Array<any> = [
+		{title: 'Proceso', name: 'proceso', sort: 'asc', columnName: 'proceso',
+			filtering: {filterString: '', placeholder: 'Filtra proceso'}},
+		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
+			filtering: {filterString: '', placeholder: 'Filtra predecesor'}},
+		{title: 'Descripción', name: 'proceso_desc', columnName: 'proceso_desc',
+			filtering: {filterString: '', placeholder: 'Filtra descripción'}},
+		{title: 'Abierto/Cerrado', name: 'estatus', columnName: 'estatus',
+			filtering: {filterString: '', placeholder: 'Filtra situación'}},
+		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
+			filtering: {filterString: '', placeholder: 'Filtra'}},
+		{title: 'Estatus', name: 'autoriza_desc', columnName: 'autoriza_desc',
+			filtering: {filterString: '', placeholder: 'Filtra estatus'}},
+		{title: '', name: 'action_e', sort: false, filter: false},
+		{title: '', name: 'action_c', sort: false, filter: false}
+	];
 
 	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) { }
 
@@ -23,8 +45,23 @@ export class ProcesosComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					this.listadoProcesos = this.jsonData.procesos;
+					this.listado = this.jsonData.procesos;
 					this._accesoService.guardarStorage(this.jsonData.token);
+
+					for (let i = 0; i < this.listado.length; i ++) {
+						this.listado [+i] ['action_e'] = `<a><span class='editar' data-id='`
+							+ this.listado [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
+						this.listado [+i] ['action_c'] = `<a><span class='cancelar' data-id='`
+							+ this.listado [+i][this.llave] + `'><i class='far fa-trash-alt'></i></span></a>`;
+					}
+
+					this.dataTable.columns = this.columns;
+					this.dataTable.data = this.listado;
+					this.dataTable.length = this.listado.length;
+					this.dataTable.config.sorting.columns = this.columns;
+					this.dataTable.ruta_add = ['/catalogos', 'procesos_form', 'I', 0];
+					this.dataTable.onChangeTable(this.dataTable.config);
+
 					this.cargando = false;
 				},
 				error => {
