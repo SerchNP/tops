@@ -20,15 +20,15 @@ export class AreasComponent implements OnInit {
 
 	columns: Array<any> = [
 		{title: 'Área', name: 'area', columnName: 'puesto',
-			filtering: {filterString: '', placeholder: 'Filtra área'}},
+			filtering: {filterString: '', placeholder: 'Área'}},
 		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'Filtra predecesor'}},
+			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'area_desc', sort: 'asc', columnName: 'area_desc',
-			filtering: {filterString: '', placeholder: 'Filtra descripción'}},
+			filtering: {filterString: '', placeholder: 'Descripción'}},
 		{title: 'Tipo', name: 'tipo_desc', columnName: 'tipo_desc',
-			filtering: {filterString: '', placeholder: 'Filtra tipo'}},
+			filtering: {filterString: '', placeholder: 'Tipo'}},
 		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Filtra situación'}},
+			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: '', name: 'action_e', sort: false, filter: false},
 		{title: '', name: 'action_c', sort: false, filter: false}
 	];

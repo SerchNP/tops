@@ -22,17 +22,17 @@ export class ProcesosComponent implements OnInit {
 	length = 0;
 	columns: Array<any> = [
 		{title: 'Proceso', name: 'proceso', sort: 'asc', columnName: 'proceso',
-			filtering: {filterString: '', placeholder: 'Filtra proceso'}},
+			filtering: {filterString: '', placeholder: 'Proceso'}},
 		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'Filtra predecesor'}},
+			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'proceso_desc', columnName: 'proceso_desc',
 			filtering: {filterString: '', placeholder: 'Filtra descripción'}},
 		{title: 'Abierto/Cerrado', name: 'estatus', columnName: 'estatus',
-			filtering: {filterString: '', placeholder: 'Filtra situación'}},
+			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
-			filtering: {filterString: '', placeholder: 'Filtra'}},
+			filtering: {filterString: '', placeholder: 'Ent. Datos'}},
 		{title: 'Estatus', name: 'autoriza_desc', columnName: 'autoriza_desc',
-			filtering: {filterString: '', placeholder: 'Filtra estatus'}},
+			filtering: {filterString: '', placeholder: 'Estatus'}},
 		{title: '', name: 'action_e', sort: false, filter: false},
 		{title: '', name: 'action_c', sort: false, filter: false}
 	];

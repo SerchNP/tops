@@ -22,13 +22,13 @@ export class PuestosComponent implements OnInit {
 
 	columns: Array<any> = [
 		{title: 'Puesto', name: 'puesto', columnName: 'puesto',
-			filtering: {filterString: '', placeholder: 'Filtra puesto'}},
+			filtering: {filterString: '', placeholder: 'Puesto'}},
 		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'Filtra predecesor'}},
+			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'puesto_desc', sort: 'asc', columnName: 'puesto_desc',
-			filtering: {filterString: '', placeholder: 'Filtra descripción'}},
+			filtering: {filterString: '', placeholder: 'Descripción'}},
 		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Filtra situación'}},
+			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: '', name: 'action_e', sort: false, filter: false},
 		{title: '', name: 'action_c', sort: false, filter: false}
 	];
