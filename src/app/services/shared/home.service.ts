@@ -5,7 +5,7 @@ import { URL_SGC, AUTH } from '../../config/config';
 
 
 @Injectable()
-export class IdentidadService {
+export class HomeService {
 
 	constructor(public http: HttpClient, public router: Router) { }
 
@@ -49,6 +49,15 @@ export class IdentidadService {
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.objetivos;
+		});
+	}
+
+	getIdentidadFull(sistema: number, tipo: string) {
+		const url = URL_SGC + '/sgc/getIdentidadFull.json?s=' + sistema + '&t=' + tipo;
+		const headers = this.getHeadersGET();
+
+		return this.http.get(url, { headers }).map((resp: any) => {
+			return resp.descripcion;
 		});
 	}
 }

@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
 import { Router } from '@angular/router';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
 import swal from 'sweetalert2';
 
 
 @Component({
 	selector: 'app-procesos',
 	templateUrl: './procesos.component.html',
-	styles: []
 })
 
 export class ProcesosComponent implements OnInit {

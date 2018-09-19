@@ -1,4 +1,5 @@
 @import '~angular-tree-component/dist/angular-tree-component.css';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
 header,
 footer {
     background-color: #3e78b2;
@@ -45,4 +46,3 @@ header h4 {
 .dropdown-menu {
     background: #F7F5F5 !important;
 }
-
