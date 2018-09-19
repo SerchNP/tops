@@ -8,6 +8,7 @@ import { APP_ROUTES } from './app.routes';
 
 // Modulos
 import { TreeModule } from 'angular-tree-component';
+
 // import { FontAwesomeModule } from '@fortawesome/fontawesome-free';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
@@ -31,7 +32,7 @@ import { DetalleComponent } from './home/detalle.component';
 		FormsModule,
 		ReactiveFormsModule,
 		APP_ROUTES,
-		TreeModule, // .forRoot()
+		TreeModule,
 		PagesModule,
 		SharedModule,
 		ServicesModule

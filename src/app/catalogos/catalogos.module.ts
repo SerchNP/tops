@@ -8,6 +8,8 @@ import { CATALOGOS_ROUTES } from './catalogo.routes';
 // Modulos
 // import { SharedModule } from '../shared/shared.module';
 import { TreeModule } from 'angular-tree-component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 // Componentes
 import { CatalogosComponent } from './catalogos.component';
@@ -21,8 +23,7 @@ import { PeriodosComponent } from './periodos/periodos.component';
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
 import { ProcesosTreeComponent } from '../components/procesos-tree/procesos-tree.component';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { DataTableComponent } from '../components/data-table/data-table.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
 		ProcesosFormularioComponent,
 		ProcesosTreeComponent,
 		AreasComponent,
-		PuestosComponent
+		PuestosComponent,
+		DataTableComponent
 	],
 	exports: [
 		CatalogosComponent
