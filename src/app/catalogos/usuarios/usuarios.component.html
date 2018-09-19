@@ -9,42 +9,5 @@
         </div>
     </div>
 </div>
-<div class="text-right" *ngIf="!cargando">
-    <button type="button" class="btn btn-primary">
-			<i class="fas fa-plus"></i> Agregar Usuario
-		</button>
-</div>
 <br>
-<table class="table table-sm table-hover" *ngIf="!cargando">
-    <thead>
-        <tr>
-            <th scope="col">Usuario</th>
-            <th scope="col">Nombre (s)</th>
-            <th scope="col">Paterno</th>
-            <th scope="col">Materno</th>
-            <th scope="col">Correo electrónico</th>
-            <th scope="col">Área</th>
-            <th scope="col">Puesto</th>
-            <th scope="col">Tipo de usuario</th>
-            <th scope="col">Estatus</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let usuario of listadoUsuarios">
-            <td>{{usuario.usuario}}</td>
-            <td>{{usuario.nombre}}</td>
-            <td>{{usuario.paterno}}</td>
-            <td>{{usuario.materno}}</td>
-            <td>{{usuario.email}} <br> {{usuario.email2}}</td>
-            <td>{{usuario.area_desc}}</td>
-            <td>{{usuario.puesto_desc}}</td>
-            <td>{{usuario.tipo_desc}}</td>
-            <td>{{usuario.estatus_desc}}</td>
-            <td>
-                <button type="button" class="btn btn-success" title="Actualizar"><i class="far fa-edit"></i></button>
-                <button type="button" class="btn btn-danger" title="Cancelar"><i class="far fa-trash-alt"></i></button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<app-data-table #dtusuarios></app-data-table>

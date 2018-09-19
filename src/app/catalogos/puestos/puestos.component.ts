@@ -13,7 +13,7 @@ import swal from 'sweetalert2';
 
 export class PuestosComponent implements OnInit {
 
-	@ViewChild('puestos') dataTable: DataTableComponent;
+	@ViewChild('dtpuestos') dataTable: DataTableComponent;
 
 	jsonData: any;
 	data: any[] = [];
