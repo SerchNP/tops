@@ -17,6 +17,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	idProceso: number;
 	titulo: string;
 	select_invalid: string;
+	seleccionado = '';
 
 	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
@@ -114,6 +115,17 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 						this._accesoService.logout();
 					}
 				});
+		}
+	}
+
+	asignarPredecesor() {
+		if (this.seleccionado.length > 0) {
+			const json = JSON.parse(this.seleccionado);
+			this.forma.get('predecesor').setValue(json.pred);
+			this.forma.get('predecesor_desc').setValue(json.desc);
+			document.getElementById('close').click();
+		} else {
+			swal('Error', 'No se ha seleccionado el predecesor', 'error');
 		}
 	}
 

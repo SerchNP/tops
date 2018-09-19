@@ -20,7 +20,9 @@
             <div class="col-sm-2">
                 <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="accion === 'U'">
                 <small id="predecesorHelp" class="form-text text-muted">Proceso Predecesor</small>
-                <!--<app-procesos-tree></app-procesos-tree>-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
+					Seleccionar Predecesor
+				</button>
             </div>
             <div class="col-sm-8">
                 <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="accion === 'U'">
@@ -84,3 +86,23 @@
         <a [routerLink]="['/catalogos','procesos']" class="btn btn-outline-danger">Cancelar</a>
     </div>
 </form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Proceso Predecesor</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-procesos-tree (seleccionado)="seleccionado = $event"></app-procesos-tree>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarPredecesor(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

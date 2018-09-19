@@ -1,16 +1,20 @@
-<div class="row fadeIn" *ngIf="tipo !== 'O'">
-    <div class="card" *ngFor="let item of listaIdentidad">
-        <div class="card-header text-primary"><strong>{{item.sistema_desc}}</strong></div>
-        <div class="card-body">
-            <p class="card-text">{{item.descrip}}</p>
+<div *ngIf="tipo !== 'O'">
+    <div class="row fadeIn" style="padding: 15px;" *ngFor="let item of listaIdentidad">
+        <div class="card w-100">
+            <div class="card-header text-primary"><strong>{{item.sistema_desc}}</strong></div>
+            <div class="card-body">
+                <p class="card-text">{{item.descrip}}</p>
+            </div>
         </div>
     </div>
 </div>
-<div class="row fadeIn" *ngIf="tipo === 'O'">
-    <div class="card" *ngFor="let item of listaIdentidad | groupBy: 'sistema'">
-        <div class="card-header text-primary"><strong>{{item.value[0].sistema_desc}}</strong></div>
-        <ol class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let objetivo of item.value">{{objetivo.numero}}. {{objetivo.descrip}}</li>
-        </ol>
+<div *ngIf="tipo === 'O'">
+    <div class="row fadeIn" style="padding: 15px;" *ngFor="let item of listaIdentidad | groupBy: 'sistema'">
+        <div class="card">
+            <div class="card-header text-primary"><strong>{{item.value[0].sistema_desc}}</strong></div>
+            <ol class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let objetivo of item.value">{{objetivo.numero}}. {{objetivo.descrip}}</li>
+            </ol>
+        </div>
     </div>
 </div>
