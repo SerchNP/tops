@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IdentidadService } from '../services/services.index';
+import { HomeService } from '../services/services.index';
 import { Objetivos } from '../interfaces/objetivos.interface';
 import swal from 'sweetalert2';
 
@@ -20,7 +20,7 @@ export class DetalleComponent implements OnInit {
 	objetivos: Objetivos[] = [];
 	nota: string;
 
-	constructor(private activatesRoute: ActivatedRoute, private router: Router, private _identidadService: IdentidadService) {
+	constructor(private activatesRoute: ActivatedRoute, private router: Router, private _homeService: HomeService) {
 		this.activatesRoute.params.subscribe(params => {
 			this.idSistema = params['id'];
 		});
@@ -37,7 +37,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getSistema() {
-		this._identidadService.getSistemaById(this.idSistema)
+		this._homeService.getSistemaById(this.idSistema)
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -51,7 +51,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getAlcance() {
-		this._identidadService.getIdentidad(this.idSistema, 'A')
+		this._homeService.getIdentidad(this.idSistema, 'A')
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -65,7 +65,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getMision() {
-		this._identidadService.getIdentidad(this.idSistema, 'M')
+		this._homeService.getIdentidad(this.idSistema, 'M')
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -79,7 +79,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getVision() {
-		this._identidadService.getIdentidad(this.idSistema, 'V')
+		this._homeService.getIdentidad(this.idSistema, 'V')
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -93,7 +93,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getNota() {
-		this._identidadService.getIdentidad(1, 'N')
+		this._homeService.getIdentidad(1, 'N')
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -107,7 +107,7 @@ export class DetalleComponent implements OnInit {
 	}
 
 	getObjetivos() {
-		this._identidadService.getObjetivos(this.idSistema)
+		this._homeService.getObjetivos(this.idSistema)
 			.subscribe(
 				data => {
 					this.objetivos = data;

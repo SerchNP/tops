@@ -6,21 +6,21 @@
             <ul id="sidebarnav">
                 <div class="bd-toc-item" routerLinkActive="active">
                     <ul class="nav bd-sidenav"> Identidad
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Política de Calidad</a></li>
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Alcance</a></li>
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Misión</a></li>
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Visión</a></li>
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Objetivos de Calidad</a></li>
-                        <li><a [routerLink]="['/dashboard']" routerLinkActive="active">Notas</a></li>
+                        <li><a [routerLink]="['/identidad','politica']" routerLinkActive="active">Política de Calidad</a></li>
+                        <li><a [routerLink]="['/identidad','alcance']" routerLinkActive="active">Alcance</a></li>
+                        <li><a [routerLink]="['/identidad','mision']" routerLinkActive="active">Misión</a></li>
+                        <li><a [routerLink]="['/identidad','vision']" routerLinkActive="active">Visión</a></li>
+                        <li><a [routerLink]="['/identidad','objetivos']" routerLinkActive="active">Objetivos de Calidad</a></li>
+                        <li><a [routerLink]="['/identidad','notas']" routerLinkActive="active">Notas</a></li>
                     </ul>
                 </div>
-                <li class="nav-devider"></li>
+                <li class="nav-devider" *ngIf="_accesoService.tipoUsuario() !== 'N'"></li>
                 <div class="bd-toc-item" routerLinkActive="active">
-                    <ul class="nav bd-sidenav"> Catálogos
-                        <li><a [routerLink]="['/catalogos','usuarios']" routerLinkActive="active">Usuarios</a></li>
-                        <li><a [routerLink]="['/catalogos','areas']" routerLinkActive="active">Áreas</a></li>
-                        <li><a [routerLink]="['/catalogos','procesos']" routerLinkActive="active">Procesos</a></li>
-                        <li><a [routerLink]="['/catalogos','puestos']" routerLinkActive="active">Puestos</a></li>
+                    <ul class="nav bd-sidenav" *ngIf="_accesoService.tipoUsuario() !== 'N'"> Catálogos
+                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','usuarios']" routerLinkActive="active">Usuarios</a></li>
+                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','areas']" routerLinkActive="active">Áreas</a></li>
+                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','procesos']" routerLinkActive="active">Procesos</a></li>
+                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','puestos']" routerLinkActive="active">Puestos</a></li>
                     </ul>
                 </div>
                 <!--<li class="nav-devider"></li>

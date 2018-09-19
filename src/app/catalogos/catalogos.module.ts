@@ -7,6 +7,7 @@ import { CATALOGOS_ROUTES } from './catalogo.routes';
 
 // Modulos
 // import { SharedModule } from '../shared/shared.module';
+import { TreeModule } from 'angular-tree-component';
 
 // Componentes
 import { CatalogosComponent } from './catalogos.component';
@@ -20,11 +21,8 @@ import { PeriodosComponent } from './periodos/periodos.component';
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
 import { ProcesosTreeComponent } from '../components/procesos-tree/procesos-tree.component';
-import { TreeModule } from 'angular-tree-component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
-
-
 
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IdentidadService } from '../services/services.index';
+import { HomeService } from '../services/services.index';
 import { Sistemas } from '../interfaces/sistemas.interface';
 import swal from 'sweetalert2';
 
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 	politica = '';
 	listadoSistemas: Sistemas[] = [];
 
-	constructor(private _identidadService: IdentidadService) { }
+	constructor(private _homeService: HomeService) { }
 
 	ngOnInit() {
 		this.cargando = true;
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	getPoliticaCalidad() {
-		this._identidadService.getIdentidad(1, 'P')
+		this._homeService.getIdentidad(1, 'P')
 			.subscribe(
 				data => {
 					// console.log(data);
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	getSistemasCalidad() {
-		this._identidadService.getSistemas()
+		this._homeService.getSistemas()
 			.subscribe(
 				data => {
 					// console.log(data);

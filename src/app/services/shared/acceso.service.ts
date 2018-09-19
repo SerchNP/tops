@@ -70,6 +70,13 @@ export class AccesoService {
 		return userInfo.nombre;
 	}
 
+	tipoUsuario(): string {
+		const token = localStorage.getItem('token');
+		const payload = JSON.parse(atob(token.split('.')[1]));
+		const userInfo = JSON.parse(payload.usuario);
+		return userInfo.tipo;
+	}
+
 	guardarStorage(token: string) {
 		localStorage.setItem('token', token);
 		return;
