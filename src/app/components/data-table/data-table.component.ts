@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +13,8 @@ export class DataTableComponent implements OnInit {
 	@Input() length = 0;
 	@Input() llave: string;
 	@Input() ruta_add: any[];
+
+	@Output() registro: EventEmitter<any> = new EventEmitter();
 
 	public page = 1;
 	public itemsPerPage = 10;
@@ -48,7 +50,7 @@ export class DataTableComponent implements OnInit {
 		}
 
 		const cols = this.config.sorting.columns || [];
-		console.log(cols);
+		// console.log(cols);
 		let colName: string = void 0;
 		let sort: string = void 0;
 
@@ -137,6 +139,7 @@ export class DataTableComponent implements OnInit {
 
 	public onCellClick(data: any): any {
 		console.log(data);
+		this.registro.emit(data);
 	}
 
 }

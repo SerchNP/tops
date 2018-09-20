@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
@@ -10,10 +10,11 @@ import swal from 'sweetalert2';
 	templateUrl: './procesos.component.html',
 })
 
-export class ProcesosComponent implements OnInit {
+export class ProcesosComponent implements OnInit, OnChanges {
 
 	@ViewChild('procesos') dataTable: DataTableComponent;
 
+	tipoUser: string;
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
@@ -26,21 +27,27 @@ export class ProcesosComponent implements OnInit {
 		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
 			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'proceso_desc', columnName: 'proceso_desc',
-			filtering: {filterString: '', placeholder: 'Filtra descripción'}},
+			filtering: {filterString: '', placeholder: 'Descripción'}},
 		{title: 'Abierto/Cerrado', name: 'estatus', columnName: 'estatus',
 			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
 			filtering: {filterString: '', placeholder: 'Ent. Datos'}},
 		{title: 'Estatus', name: 'autoriza_desc', columnName: 'autoriza_desc',
-			filtering: {filterString: '', placeholder: 'Estatus'}},
+			filtering: {filterString: '', placeholder: 'Estatus'}}/*,
 		{title: '', name: 'action_e', sort: false, filter: false},
-		{title: '', name: 'action_c', sort: false, filter: false}
+		{title: '', name: 'action_c', sort: false, filter: false}*/ ;
 	];
 
 	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) { }
 
 	ngOnInit() {
 		this.cargando = true;
+		this.tipoUser = this._accesoService.tipoUsuario();
+
+		if (this.tipoUser === 'A') {
+			this.columns.push({title: '', name: 'action_e', sort: false, filter: false});
+			this.columns.push({title: '', name: 'action_c', sort: false, filter: false});
+		}
 		this._procesosService.getProcesos()
 			.subscribe(
 				data => {
@@ -70,6 +77,16 @@ export class ProcesosComponent implements OnInit {
 						this._accesoService.logout();
 					}
 				});
+	}
+
+	detectarAccion(accion: any): void {
+		if (accion.column === 'action_e') {
+			this.editarProceso(accion.row);
+		} else if (accion.column === 'action_c') {
+			this.borrarProceso(accion.row);
+		} else {
+			console.log('Columna no botón');
+		}
 	}
 
 	editarProceso(proceso: any) {

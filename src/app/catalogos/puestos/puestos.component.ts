@@ -21,13 +21,13 @@ export class PuestosComponent implements OnInit {
 	llave = 'puesto';
 
 	columns: Array<any> = [
-		{title: 'Puesto', name: 'puesto', columnName: 'puesto',
+		{title: 'Puesto', name: 'puesto', sort: false, columnName: 'puesto',
 			filtering: {filterString: '', placeholder: 'Puesto'}},
-		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
+		{title: 'Predecesor', name: 'predecesor', sort: false, columnName: 'predecesor',
 			filtering: {filterString: '', placeholder: 'Predecesor'}},
-		{title: 'Descripción', name: 'puesto_desc', sort: 'asc', columnName: 'puesto_desc',
+		{title: 'Descripción', name: 'puesto_desc', sort: false, columnName: 'puesto_desc',
 			filtering: {filterString: '', placeholder: 'Descripción'}},
-		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
+		{title: 'Situación', name: 'estatus_desc', sort: false, columnName: 'estatus_desc',
 			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: '', name: 'action_e', sort: false, filter: false},
 		{title: '', name: 'action_c', sort: false, filter: false}
@@ -57,7 +57,7 @@ export class PuestosComponent implements OnInit {
 					this.dataTable.columns = this.columns;
 					this.dataTable.data = this.data;
 					this.dataTable.length = this.jsonData.puestos.length;
-					this.dataTable.config.sorting.columns = this.columns;
+					this.dataTable.config.sorting.columns = [];
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;
