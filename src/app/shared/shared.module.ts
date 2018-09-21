@@ -3,7 +3,6 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common'; // if for pipe
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-// import { NopagefoundComponent } from './nopagefound/nopagefound.component';
 import { HeaderPrincipalComponent } from './header-principal/header-principal.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
@@ -17,10 +16,9 @@ import { InfoUserComponent } from './info-user/info-user.component';
 		RouterModule,
 		CommonModule,
 		FormsModule,
-		ReactiveFormsModule,
+		ReactiveFormsModule
 	],
 	declarations: [
-		// NopagefoundComponent,
 		HeaderPrincipalComponent,
 		HeaderComponent,
 		FooterComponent,
@@ -30,7 +28,6 @@ import { InfoUserComponent } from './info-user/info-user.component';
 		InfoUserComponent
 	],
 	exports: [
-		// NopagefoundComponent,
 		HeaderPrincipalComponent,
 		HeaderComponent,
 		FooterComponent,

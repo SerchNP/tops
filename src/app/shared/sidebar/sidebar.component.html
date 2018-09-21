@@ -1,38 +1,22 @@
 <aside class="left-sidebar">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <div class="bd-toc-item" routerLinkActive="active">
-                    <ul class="nav bd-sidenav"> Identidad
-                        <li><a [routerLink]="['/identidad','politica']" routerLinkActive="active">Política de Calidad</a></li>
-                        <li><a [routerLink]="['/identidad','alcance']" routerLinkActive="active">Alcance</a></li>
-                        <li><a [routerLink]="['/identidad','mision']" routerLinkActive="active">Misión</a></li>
-                        <li><a [routerLink]="['/identidad','vision']" routerLinkActive="active">Visión</a></li>
-                        <li><a [routerLink]="['/identidad','objetivos']" routerLinkActive="active">Objetivos de Calidad</a></li>
-                        <li><a [routerLink]="['/identidad','notas']" routerLinkActive="active">Notas</a></li>
+    <div class="wrapper">
+        <nav id="sidebar">
+            <ul class="list-unstyled components">
+                <li>
+                    <a [routerLink]="['/dashboard']" routerLinkActive="active">
+                        <i class="fas fa-home"></i> Principal
+                    </a>
+                </li>
+                <li *ngFor="let menu of menus">
+                    <a href="#{{menu.name}}" routerLinkActive="active" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i [class]="menu.icono"></i> {{menu.titulo}}
+                    </a>
+                    <ul [id]="menu.name" class="collapse list-unstyled">
+                        <li *ngFor="let child of menu.children">
+                            <a [routerLink]="['/' + child.pred, child.name]" routerLinkActive="active">{{ child.titulo }}</a>
+                        </li>
                     </ul>
-                </div>
-                <li class="nav-devider" *ngIf="_accesoService.tipoUsuario() !== 'N'"></li>
-                <div class="bd-toc-item" routerLinkActive="active">
-                    <ul class="nav bd-sidenav" *ngIf="_accesoService.tipoUsuario() !== 'N'"> Catálogos
-                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','usuarios']" routerLinkActive="active">Usuarios</a></li>
-                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','areas']" routerLinkActive="active">Áreas</a></li>
-                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','procesos']" routerLinkActive="active">Procesos</a></li>
-                        <li *ngIf="_accesoService.tipoUsuario() !== 'N'"><a [routerLink]="['/catalogos','puestos']" routerLinkActive="active">Puestos</a></li>
-                    </ul>
-                </div>
-                <!--<li class="nav-devider"></li>
-                <div class="bd-toc-item" routerLinkActive="active">
-                    <ul class="nav bd-sidenav"> Procesos
-                        <li class="active bd-sidenav"><a href="/docs/4.0/utilities/borders/">Borders</a></li>
-                        <li class="active bd-sidenav"><a href="/docs/4.0/utilities/borders/">Borders</a></li>
-                        <li class="active bd-sidenav"><a href="/docs/4.0/utilities/borders/">Borders</a></li>
-                        <li class="active bd-sidenav"><a href="/docs/4.0/utilities/borders/">Borders</a></li>
-                        <li class="active bd-sidenav"><a href="/docs/4.0/utilities/borders/">Borders</a></li>
-                    </ul>
-                </div>-->
+                </li>
             </ul>
         </nav>
     </div>

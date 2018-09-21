@@ -33,9 +33,7 @@ export class ProcesosComponent implements OnInit, OnChanges {
 		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
 			filtering: {filterString: '', placeholder: 'Ent. Datos'}},
 		{title: 'Estatus', name: 'autoriza_desc', columnName: 'autoriza_desc',
-			filtering: {filterString: '', placeholder: 'Estatus'}}/*,
-		{title: '', name: 'action_e', sort: false, filter: false},
-		{title: '', name: 'action_c', sort: false, filter: false}*/ ;
+			filtering: {filterString: '', placeholder: 'Estatus'}}
 	];
 
 	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) { }
@@ -79,6 +77,9 @@ export class ProcesosComponent implements OnInit, OnChanges {
 				});
 	}
 
+	ngOnChanges() {
+	}
+
 	detectarAccion(accion: any): void {
 		if (accion.column === 'action_e') {
 			this.editarProceso(accion.row);
@@ -90,7 +91,6 @@ export class ProcesosComponent implements OnInit, OnChanges {
 	}
 
 	editarProceso(proceso: any) {
-		// console.log(proceso);
 		if (proceso.autoriza === 7) {
 			swal('ERROR', 'El proceso no se puede modificar porque está cancelado', 'error');
 		} else {
