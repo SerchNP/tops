@@ -13,11 +13,15 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 import { AsignacionesComponent } from './asignaciones.component';
 import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
+import { ProcesoUsuarioComponent } from './proceso-usuario/proceso-usuario/proceso-usuario.component';
+import { MenuUsuarioComponent } from './menu-usuario/menu-usuario.component';
 
 @NgModule ({
 	declarations: [
 		AsignacionesComponent,
-		AreaProcesoComponent
+		AreaProcesoComponent,
+		ProcesoUsuarioComponent,
+		MenuUsuarioComponent
 	],
 	exports: [
 		AsignacionesComponent
