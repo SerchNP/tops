@@ -53,8 +53,8 @@ export class ProcesosComponent implements OnInit {
 					this.dataTable.data = this.listado;
 					this.dataTable.length = this.listado.length;
 					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.insertar = false;
-					this.dataTable.ruta_add = ['/catalogos', 'procesos_form', 'I', 0];
+					this.dataTable.insertar = true;
+					this.dataTable.ruta_add = ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
 					this.dataTable.editar = true;
 					this.dataTable.cancelar = true;
 					this.dataTable.onChangeTable(this.dataTable.config);
@@ -83,7 +83,7 @@ export class ProcesosComponent implements OnInit {
 		if (proceso.autoriza === 7) {
 			swal('ERROR', 'El proceso no se puede modificar porque está cancelado', 'error');
 		} else {
-			this.router.navigate(['/catalogos', 'procesos_form', 'U', proceso.proceso]);
+			this.router.navigate(['/paneladm', 'submenuproc', 'procesos_form', 'U', proceso.proceso]);
 		}
 	}
 

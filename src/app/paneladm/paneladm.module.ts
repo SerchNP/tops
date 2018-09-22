@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Rutas
-import { CATALOGOS_ROUTES } from './catalogo.routes';
+import { PANELADM_ROUTES } from './paneladm.routes';
 
 // Modulos
 // import { SharedModule } from '../shared/shared.module';
@@ -12,7 +12,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 
 // Componentes
-import { CatalogosComponent } from './catalogos.component';
+import { PaneladmComponent } from './paneladm.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
@@ -28,7 +28,7 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 
 @NgModule({
 	declarations: [
-		CatalogosComponent,
+		PaneladmComponent,
 		UsuariosComponent,
 		ProcesosComponent,
 		ProcesosFormularioComponent,
@@ -38,11 +38,11 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 		DataTableComponent
 	],
 	exports: [
-		CatalogosComponent
+		PaneladmComponent
 	],
 	imports: [
 		CommonModule,
-		CATALOGOS_ROUTES,
+		PANELADM_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
 		TreeModule.forRoot(),
@@ -50,4 +50,4 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 		Ng2TableModule
 	]
 })
-export class CatalogosModule { }
+export class PaneladmModule { }

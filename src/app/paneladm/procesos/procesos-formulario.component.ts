@@ -92,7 +92,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
-					this.router.navigate(['/catalogos', 'procesos']);
+					this.router.navigate(['/paneladm', 'submenuproc', 'procesos']);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -106,7 +106,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
-					this.router.navigate(['/catalogos', 'procesos']);
+					this.router.navigate(['/paneladm', 'submenuproc', 'procesos']);
 				},
 				error => {
 					console.error(error);

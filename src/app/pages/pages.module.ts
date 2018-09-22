@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 
 // Rutas
 import { PAGES_ROUTES } from './pages.routes';
-import { CATALOGOS_ROUTES } from '../catalogos/catalogo.routes';
+import { PANELADM_ROUTES } from '../paneladm/paneladm.routes';
 
 // Modulos
 import { SharedModule } from '../shared/shared.module';
-import { CatalogosModule } from '../catalogos/catalogos.module';
-import { AsignacionesModule } from '../asignaciones/asignaciones.module';
+import { PaneladmModule } from '../paneladm/paneladm.module';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -32,12 +31,11 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 	imports: [
 		CommonModule,
 		PAGES_ROUTES,
-		CATALOGOS_ROUTES,
+		PANELADM_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,
-		CatalogosModule,
-		AsignacionesModule
+		PaneladmModule
 	]
 })
 
