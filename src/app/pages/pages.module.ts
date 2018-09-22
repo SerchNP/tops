@@ -9,6 +9,7 @@ import { CATALOGOS_ROUTES } from '../catalogos/catalogo.routes';
 // Modulos
 import { SharedModule } from '../shared/shared.module';
 import { CatalogosModule } from '../catalogos/catalogos.module';
+import { AsignacionesModule } from '../asignaciones/asignaciones.module';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -35,7 +36,8 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,
-		CatalogosModule
+		CatalogosModule,
+		AsignacionesModule
 	]
 })
 

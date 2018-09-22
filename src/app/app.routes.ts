@@ -2,7 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
-// import { NopagefoundComponent } from './shared/nopagefound/nopagefound.component';
 import { LoginComponent } from './shared/login/login.component';
 
 
