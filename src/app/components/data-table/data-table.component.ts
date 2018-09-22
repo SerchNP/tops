@@ -12,7 +12,14 @@ export class DataTableComponent implements OnInit {
 	@Input() columns: Array<any> = [];
 	@Input() length = 0;
 	@Input() llave: string;
+	@Input() insertar: boolean;
 	@Input() ruta_add: any[];
+	@Input() editar: boolean;
+	@Input() cancelar: boolean;
+	@Input() otra_accion1: boolean;
+	@Input() ruta_acc1: any[];
+	@Input() otra_accion2: boolean;
+	@Input() ruta_acc2: any[];
 
 	@Output() registro: EventEmitter<any> = new EventEmitter();
 
@@ -123,6 +130,21 @@ export class DataTableComponent implements OnInit {
 	}
 
 	public onChangeTable(config: any, page: any = {page: this.page, itemsPerPage: this.itemsPerPage}): any {
+		if (this.editar) {
+			this.columns.push({title: '', name: 'action_e', sort: false, filter: false});
+			for (let i = 0; i < this.data.length; i ++) {
+				// tslint:disable-next-line:max-line-length
+				// this.listado [+i] ['action_e'] = `<a><span class='editar' data-id='` + this.listado [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
+				// this.data [+i] ['action_e'] = `<a><span class='editar'><i class='far fa-edit'></i></span></a>`;
+				this.data [i] ['action_e'] = `<a><span class='editar'><i class='far fa-edit'></i></span></a>`;
+			}
+		}
+		if (this.cancelar) {
+			this.columns.push({title: '', name: 'action_c', sort: false, filter: false});
+			for (let i = 0; i < this.data.length; i ++) {
+				this.data [i] ['action_c'] = `<a><span class='cancelar'><i class='far fa-trash-alt'></i></span></a>`;
+			}
+		}
 		if (config.filtering) {
 			Object.assign(this.config.filtering, config.filtering);
 		}

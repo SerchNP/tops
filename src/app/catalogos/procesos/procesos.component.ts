@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import swal from 'sweetalert2';
 	templateUrl: './procesos.component.html',
 })
 
-export class ProcesosComponent implements OnInit, OnChanges {
+export class ProcesosComponent implements OnInit {
 
 	@ViewChild('procesos') dataTable: DataTableComponent;
 
@@ -42,10 +42,6 @@ export class ProcesosComponent implements OnInit, OnChanges {
 		this.cargando = true;
 		this.tipoUser = this._accesoService.tipoUsuario();
 
-		if (this.tipoUser === 'A') {
-			this.columns.push({title: '', name: 'action_e', sort: false, filter: false});
-			this.columns.push({title: '', name: 'action_c', sort: false, filter: false});
-		}
 		this._procesosService.getProcesos()
 			.subscribe(
 				data => {
@@ -53,18 +49,14 @@ export class ProcesosComponent implements OnInit, OnChanges {
 					this.listado = this.jsonData.procesos;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
-					for (let i = 0; i < this.listado.length; i ++) {
-						this.listado [+i] ['action_e'] = `<a><span class='editar' data-id='`
-							+ this.listado [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
-						this.listado [+i] ['action_c'] = `<a><span class='cancelar' data-id='`
-							+ this.listado [+i][this.llave] + `'><i class='far fa-trash-alt'></i></span></a>`;
-					}
-
 					this.dataTable.columns = this.columns;
 					this.dataTable.data = this.listado;
 					this.dataTable.length = this.listado.length;
 					this.dataTable.config.sorting.columns = this.columns;
+					this.dataTable.insertar = false;
 					this.dataTable.ruta_add = ['/catalogos', 'procesos_form', 'I', 0];
+					this.dataTable.editar = true;
+					this.dataTable.cancelar = true;
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;
@@ -75,9 +67,6 @@ export class ProcesosComponent implements OnInit, OnChanges {
 						this._accesoService.logout();
 					}
 				});
-	}
-
-	ngOnChanges() {
 	}
 
 	detectarAccion(accion: any): void {
