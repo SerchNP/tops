@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-tipo-indicadores',
-  templateUrl: './tipo-indicadores.component.html',
-  styles: []
+	selector: 'app-tipo-indicadores',
+	templateUrl: './tipo-indicadores.component.html',
+	styles: []
 })
 export class TipoIndicadoresComponent implements OnInit {
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
 }
