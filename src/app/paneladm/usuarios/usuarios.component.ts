@@ -36,9 +36,7 @@ export class UsuariosComponent implements OnInit {
 		{title: 'Tipo', name: 'tipo_desc', columnName: 'tipo_desc',
 			filtering: {filterString: '', placeholder: 'Tipo'}},
 		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}},
-		{title: '', name: 'action_e', sort: false, filter: false},
-		{title: '', name: 'action_c', sort: false, filter: false}
+			filtering: {filterString: '', placeholder: 'Situación'}}
 	];
 
 	constructor(public _usuarioService: UsuarioService, public _accesoService: AccesoService, private router: Router) { }
@@ -49,20 +47,18 @@ export class UsuariosComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.jsonData = data;
+					console.log(this.jsonData);
 					this.data = this.jsonData.usuarios;
-					this._accesoService.guardarStorage(this.jsonData.token);
-
-					for (let i = 0; i < this.data.length; i ++) {
-						this.data [+i] ['action_e'] = `<a><span class='editar' data-id='`
-							+ this.data [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
-						this.data [+i] ['action_c'] = `<a><span class='cancelar' data-id='`
-							+ this.data [+i][this.llave] + `'><i class='far fa-trash-alt'></i></span></a>`;
-					}
+					// this._accesoService.guardarStorage(this.jsonData.token);
 
 					this.dataTable.columns = this.columns;
 					this.dataTable.data = this.data;
 					this.dataTable.length = this.jsonData.usuarios.length;
 					this.dataTable.config.sorting.columns = this.columns;
+					this.dataTable.insertar = true;
+					this.dataTable.ruta_add = ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
+					this.dataTable.editar = true;
+					this.dataTable.cancelar = true;
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;
@@ -73,6 +69,28 @@ export class UsuariosComponent implements OnInit {
 						this._accesoService.logout();
 					}
 				});
+	}
+
+	detectarAccion(accion: any): void {
+		if (accion.column === 'action_e') {
+			this.editarUsuario(accion.row);
+		} else if (accion.column === 'action_c') {
+			this.cancelarUsuario(accion.row);
+		} else {
+			// console.log('Columna no botón');
+		}
+	}
+
+	editarUsuario(usuario: any) {
+		if (usuario.estatus === 'C') {
+			swal('ERROR', 'El usuario se puede editar porque está cancelado', 'error');
+		} else {
+			this.router.navigate(['/paneladm', 'submenuusu', 'usuarios_form', 'U', usuario.usuario]);
+		}
+	}
+
+	cancelarUsuario(usuario: any) {
+		console.log(usuario);
 	}
 
 }

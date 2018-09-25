@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map';
 import { URL_SGC, AUTH } from '../../config/config';
 
 @Injectable()
-export class PuestosService {
+export class AreasService {
 
 	constructor(private http: HttpClient, private router: Router) { }
 
@@ -16,11 +16,20 @@ export class PuestosService {
 		return headers;
 	}
 
-	getPuestos() {
+	getAreas() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/getPuestos.json?token=' + token;
+		const url = URL_SGC + '/catalogos/areas/getAreas.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getAreasTree() {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/catalogos/areas/getAreasTree.json?token=' + token;
+		const headers = this.getHeadersGET();
+		return this.http.get(url, {headers}).map((resp: any) => {
+			return resp.areas;
+		});
 	}
 
 }

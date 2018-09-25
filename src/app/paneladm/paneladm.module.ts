@@ -6,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PANELADM_ROUTES } from './paneladm.routes';
 
 // Modulos
-// import { SharedModule } from '../shared/shared.module';
 import { TreeModule } from 'angular-tree-component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
@@ -14,6 +13,7 @@ import { Ng2TableModule } from 'ng2-table/ng2-table';
 // Componentes
 import { PaneladmComponent } from './paneladm.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosFormularioComponent } from './usuarios/usuarios-formulario.component';
 import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
 import { AreasComponent } from './areas/areas.component';
@@ -30,6 +30,7 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 	declarations: [
 		PaneladmComponent,
 		UsuariosComponent,
+		UsuariosFormularioComponent,
 		ProcesosComponent,
 		ProcesosFormularioComponent,
 		ArbolComponent,
@@ -50,4 +51,5 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 		Ng2TableModule
 	]
 })
+
 export class PaneladmModule { }

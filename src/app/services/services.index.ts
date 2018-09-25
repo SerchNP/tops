@@ -6,8 +6,8 @@ export { HomeService } from './shared/home.service';
 export { AccesoService } from './shared/acceso.service';
 export { SidebarService } from './shared/sidebar.service';
 // Catálogos
-export { UsuarioService } from './catalogos/usuario.service';
-export { IdentidadService } from './catalogos/identidad.service';
-export { ProcesosService } from './catalogos/procesos.service';
-export { AreasService } from './catalogos/areas.service';
-export { PuestosService } from './catalogos/puestos.service';
+export { UsuarioService } from './paneladm/usuario.service';
+export { IdentidadService } from './paneladm/identidad.service';
+export { ProcesosService } from './paneladm/procesos.service';
+export { AreasService } from './paneladm/areas.service';
+export { PuestosService } from './paneladm/puestos.service';

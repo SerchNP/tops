@@ -1,6 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from './pages.component';
+import { NoPageComponent } from '../shared/no-page/no-page.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { IdentidadComponent } from './identidad/identidad.component';
@@ -8,6 +9,7 @@ import { IdentidadComponent } from './identidad/identidad.component';
 // Guards
 import { LoginGuard } from '../services/guards/login.guard';
 import { TokenGuard } from '../services/guards/token.guard';
+
 
 
 const pagesRoutes: Routes = [
@@ -31,6 +33,7 @@ const pagesRoutes: Routes = [
 			// tslint:disable-next-line:max-line-length
 			{ path: 'identidad/objetivos', component: IdentidadComponent, data: {titulo: 'Objetivos de Calidad', padre: 'Identidad', opcion: 'Objetivos de Calidad'} },
 			{ path: 'identidad/notas', component: IdentidadComponent, data: {titulo: 'Notas', padre: 'Identidad', opcion: 'Notas'} },
+			// { path: '**', component: NoPageComponent },
 			{ path: '', redirectTo: '/dashboard', pathMatch: 'full' }
 		]
 	}

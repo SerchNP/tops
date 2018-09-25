@@ -136,13 +136,13 @@ export class DataTableComponent implements OnInit {
 				// tslint:disable-next-line:max-line-length
 				// this.listado [+i] ['action_e'] = `<a><span class='editar' data-id='` + this.listado [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
 				// this.data [+i] ['action_e'] = `<a><span class='editar'><i class='far fa-edit'></i></span></a>`;
-				this.data [i] ['action_e'] = `<a><span class='editar'><i class='far fa-edit'></i></span></a>`;
+				this.data [i] ['action_e'] = `<a><span class='editar' title='Editar registro'><i class='far fa-edit'></i></span></a>`;
 			}
 		}
 		if (this.cancelar) {
 			this.columns.push({title: '', name: 'action_c', sort: false, filter: false});
 			for (let i = 0; i < this.data.length; i ++) {
-				this.data [i] ['action_c'] = `<a><span class='cancelar'><i class='far fa-trash-alt'></i></span></a>`;
+				this.data [i] ['action_c'] = `<a><span class='cancelar' title='Cancelar registro'><i class='far fa-trash-alt'></i></span></a>`;
 			}
 		}
 		if (config.filtering) {
