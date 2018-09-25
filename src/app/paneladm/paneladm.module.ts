@@ -22,7 +22,7 @@ import { PeriodosComponent } from './periodos/periodos.component';
 
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
-import { ProcesosTreeComponent } from '../components/procesos-tree/procesos-tree.component';
+import { ArbolComponent } from '../components/arbol/arbol.component';
 import { DataTableComponent } from '../components/data-table/data-table.component';
 
 
@@ -32,7 +32,7 @@ import { DataTableComponent } from '../components/data-table/data-table.componen
 		UsuariosComponent,
 		ProcesosComponent,
 		ProcesosFormularioComponent,
-		ProcesosTreeComponent,
+		ArbolComponent,
 		AreasComponent,
 		PuestosComponent,
 		DataTableComponent

@@ -97,7 +97,7 @@
 			  </button>
             </div>
             <div class="modal-body">
-                <app-procesos-tree (seleccionado)="seleccionado = $event"></app-procesos-tree>
+                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

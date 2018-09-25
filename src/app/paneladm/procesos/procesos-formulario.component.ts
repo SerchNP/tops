@@ -18,6 +18,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	titulo: string;
 	select_invalid: string;
 	seleccionado = '';
+	items: any [] = [];
 
 	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
@@ -72,6 +73,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 			'ent_data' : new FormControl('', Validators.required),
 			'estatus' : new FormControl('', Validators.required)
 		});
+		this.getProcesosTree();
 	}
 
 	ngOnDestroy() {
@@ -121,12 +123,18 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	asignarPredecesor() {
 		if (this.seleccionado.length > 0) {
 			const json = JSON.parse(this.seleccionado);
-			this.forma.get('predecesor').setValue(json.pred);
-			this.forma.get('predecesor_desc').setValue(json.desc);
+			this.forma.get('predecesor').setValue(json.id);
+			this.forma.get('predecesor_desc').setValue(json.name);
 			document.getElementById('close').click();
 		} else {
 			swal('Error', 'No se ha seleccionado el predecesor', 'error');
 		}
+	}
+
+	getProcesosTree() {
+		this._procesosService.getProcesosTree().subscribe((data: any) => {
+			this.items = data.procesos;
+		});
 	}
 
 }
