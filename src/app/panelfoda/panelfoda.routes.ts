@@ -8,6 +8,7 @@ import { AmenazasComponent } from './amenazas/amenazas.component';
 import { OportunidadesComponent } from './oportunidades/oportunidades.component';
 import { DebilidadesComponent } from './debilidades/debilidades.component';
 import { FortalezasComponent } from './fortalezas/fortalezas.component';
+import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.component';
 
 
 const panelfodaRoutes: Routes = [
@@ -17,6 +18,8 @@ const panelfodaRoutes: Routes = [
 		canActivate: [LoginGuard],
 		children: [
 			{ path: 'amenazas', component: AmenazasComponent, data: {titulo: 'Amenazas', padre: 'FODA', opcion: 'Amenazas'} },
+			// tslint:disable-next-line:max-line-length
+			{ path: 'amenazas_form/:acc/:id/:t', component: AmenazasFormularioComponent, data: {titulo: 'Mantenimiento de FODA', padre: 'FODA', opcion: 'Amenazas'} },
 			{ path: 'oportunidades', component: OportunidadesComponent, data: {titulo: 'Oportunidades', padre: 'FODA', opcion: 'Oportunidades'} },
 			{ path: 'debilidades', component: DebilidadesComponent, data: {titulo: 'Debilidades', padre: 'FODA', opcion: 'DEbilidades'} },
 			{ path: 'fortalezas', component: FortalezasComponent, data: {titulo: 'Fortalezas', padre: 'FODA', opcion: 'Fortalezas'} }

@@ -3,6 +3,7 @@ import { ProcesosService, AccesoService } from '../../services/services.index';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 
 @Component({
@@ -14,20 +15,22 @@ export class ProcesosComponent implements OnInit {
 
 	@ViewChild('procesos') dataTable: DataTableComponent;
 
-	tipoUser: string;
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	llave = 'proceso';
+	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
 
 	length = 0;
 	columns: Array<any> = [
 		{title: 'Proceso', name: 'proceso', sort: 'asc', columnName: 'proceso',
 			filtering: {filterString: '', placeholder: 'Proceso'}},
-		{title: 'Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'proceso_desc', columnName: 'proceso_desc',
 			filtering: {filterString: '', placeholder: 'Descripción'}},
+		{title: 'ID Predecesor', name: 'predecesor', columnName: 'predecesor',
+			filtering: {filterString: '', placeholder: 'ID Predecesor'}},
+		{title: 'Predecesor', name: 'predecesor_desc', columnName: 'predecesor_desc',
+			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Abierto/Cerrado', name: 'estatus', columnName: 'estatus',
 			filtering: {filterString: '', placeholder: 'Situación'}},
 		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
@@ -36,11 +39,12 @@ export class ProcesosComponent implements OnInit {
 			filtering: {filterString: '', placeholder: 'Estatus'}}
 	];
 
-	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) { }
+	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) {}
 
 	ngOnInit() {
 		this.cargando = true;
-		this.tipoUser = this._accesoService.tipoUsuario();
+		// Para la inicializacion del dataTable
+		this.dataTable.derechos = this.derechos;
 
 		this._procesosService.getProcesos()
 			.subscribe(
@@ -49,14 +53,12 @@ export class ProcesosComponent implements OnInit {
 					this.listado = this.jsonData.procesos;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
+					this.dataTable.derechos = this.derechos;
 					this.dataTable.columns = this.columns;
+					this.dataTable.config.sorting.columns = this.columns;
 					this.dataTable.data = this.listado;
 					this.dataTable.length = this.listado.length;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.insertar = true;
 					this.dataTable.ruta_add = ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
-					this.dataTable.editar = true;
-					this.dataTable.cancelar = true;
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;
@@ -81,7 +83,7 @@ export class ProcesosComponent implements OnInit {
 
 	editarProceso(proceso: any) {
 		if (proceso.autoriza === 7) {
-			swal('ERROR', 'El proceso no se puede modificar porque está cancelado', 'error');
+			swal('ERROR', 'El proceso no se puede modificar, está cancelado', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuproc', 'procesos_form', 'U', proceso.proceso]);
 		}

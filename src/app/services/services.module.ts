@@ -6,6 +6,7 @@ import { AccesoService, SidebarService, HomeService } from './services.index';
 import { UsuarioService, ProcesosService } from './services.index';
 import { AreasService, PuestosService } from './services.index';
 import { IdentidadService } from './services.index';
+import { FodaService } from './panelfoda/foda.service';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { IdentidadService } from './services.index';
 		ProcesosService,
 		AreasService,
 		PuestosService,
-		IdentidadService
+		IdentidadService,
+		FodaService
 	],
 	declarations: []
 })

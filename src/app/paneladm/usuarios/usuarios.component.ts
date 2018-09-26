@@ -3,6 +3,7 @@ import { UsuarioService, AccesoService } from '../../services/services.index';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 @Component({
 	selector: 'app-usuarios',
@@ -11,12 +12,13 @@ import { DataTableComponent } from '../../components/data-table/data-table.compo
 })
 export class UsuariosComponent implements OnInit {
 
-	@ViewChild('dtusuarios') dataTable: DataTableComponent;
+	@ViewChild('usuarios') dataTable: DataTableComponent;
 
 	jsonData: any;
 	data: any[] = [];
 	cargando = false;
 	llave = 'usuario';
+	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
 
 	columns: Array<any> = [
 		{title: 'Usuario', name: 'usuario', columnName: 'usuario',
@@ -43,6 +45,9 @@ export class UsuariosComponent implements OnInit {
 
 	ngOnInit() {
 		this.cargando = true;
+		// Para la inicializacion del dataTable
+		this.dataTable.derechos = this.derechos;
+
 		this._usuarioService.getUsuarios()
 			.subscribe(
 				data => {
@@ -50,14 +55,12 @@ export class UsuariosComponent implements OnInit {
 					this.data = this.jsonData.usuarios;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
+					this.dataTable.derechos = this.derechos;
 					this.dataTable.columns = this.columns;
+					this.dataTable.config.sorting.columns = this.columns;
 					this.dataTable.data = this.data;
 					this.dataTable.length = this.jsonData.usuarios.length;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.insertar = true;
 					this.dataTable.ruta_add = ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
-					this.dataTable.editar = true;
-					this.dataTable.cancelar = true;
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;

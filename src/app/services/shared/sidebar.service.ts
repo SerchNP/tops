@@ -43,10 +43,12 @@ export class SidebarService {
 					data => {
 						const jsonData = data;
 						const derechos = jsonData['derechos'];
-						derechosMenu.consulta = ((derechos.consulta === 'S') ? true : false);
-						derechosMenu.administra = ((derechos.administra === 'S') ? true : false);
-						derechosMenu.descarga = ((derechos.descarga === 'S') ? true : false);
-						derechosMenu.exporta = ((derechos.exporta === 'S') ? true : false);
+						derechosMenu.consultar = ((derechos.consultar === 'S') ? true : false);
+						derechosMenu.insertar = ((derechos.insertar === 'S') ? true : false);
+						derechosMenu.editar = ((derechos.editar === 'S') ? true : false);
+						derechosMenu.cancelar = ((derechos.cancelar === 'S') ? true : false);
+						derechosMenu.descargar = ((derechos.descargar === 'S') ? true : false);
+						derechosMenu.exportar = ((derechos.exportar === 'S') ? true : false);
 					},
 					error => {
 						swal('ERROR', error.error.message, 'error');
@@ -55,10 +57,12 @@ export class SidebarService {
 						}
 					});
 		} else {
-			derechosMenu.consulta = true;
-			derechosMenu.administra = true;
-			derechosMenu.descarga = true;
-			derechosMenu.exporta = true;
+			derechosMenu.consultar = true;
+			derechosMenu.insertar = true;
+			derechosMenu.editar = true;
+			derechosMenu.cancelar = true;
+			derechosMenu.descargar = true;
+			derechosMenu.exportar = true;
 		}
 		return derechosMenu;
 	}

@@ -1,6 +1,8 @@
 export interface Derechosmenu {
-	consulta?: boolean;
-	administra?: boolean;
-	descarga?: boolean;
-	exporta?: boolean;
+	consultar?: boolean;
+	insertar?: boolean;
+	editar?: boolean;
+	cancelar?: boolean;
+	descargar?: boolean;
+	exportar?: boolean;
 }

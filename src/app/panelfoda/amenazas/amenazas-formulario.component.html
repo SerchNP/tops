@@ -1,0 +1,52 @@
+<h5>{{titulo}}</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="cuestion" class="col-sm-2 col-form-label text-right">Tipo</label>
+            <div class="col-sm-10">
+                <select name="cuestion" formControlName="cuestion" class="form-control col-2" [attr.disabled]="true">
+					<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+					<option [value]="tipo.cuestion" *ngFor="let tipo of cuestiones">{{ tipo.cuestion_desc }}</option>
+				</select>
+                <small id="cuestionHelp" class="form-text text-muted">Tipo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="orden" class="col-sm-2 col-form-label text-right">No.</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="orden" aria-describedby="ordenHelp" min="1">
+                <small id="ordenHelp" class="form-text text-muted">no. de la Amenaza</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="foda" class="col-sm-2 col-form-label text-right">Amenaza</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="foda" aria-describedby="fodaHelp" [attr.disabled]="true">
+                <small id="fodaHelp" class="form-text text-muted">Clave de la Amenaza</small>
+            </div>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" formControlName="foda_desc" aria-describedby="foda_descHelp" [ngClass]="{'is-invalid': forma.controls['foda_desc'].invalid}">
+                <small id="foda_descHelp" class="form-text text-muted">Descripcion de la Amenaza</small>
+                <div *ngIf="forma.controls['foda_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-10">
+                <select name="proceso" formControlName="proceso" class="form-control">
+					<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+					<option [ngValue]="proceso.clave" *ngFor="let proceso of procesos">{{ proceso.descrip }}</option>
+				</select>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>
+        <a [routerLink]="['/panelfoda', 'amenazas']" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 @Component({
 	selector: 'app-data-table',
@@ -12,10 +13,8 @@ export class DataTableComponent implements OnInit {
 	@Input() columns: Array<any> = [];
 	@Input() length = 0;
 	@Input() llave: string;
-	@Input() insertar: boolean;
+	@Input() derechos: Derechosmenu;
 	@Input() ruta_add: any[];
-	@Input() editar: boolean;
-	@Input() cancelar: boolean;
 	@Input() otra_accion1: boolean;
 	@Input() ruta_acc1: any[];
 	@Input() otra_accion2: boolean;
@@ -57,7 +56,6 @@ export class DataTableComponent implements OnInit {
 		}
 
 		const cols = this.config.sorting.columns || [];
-		// console.log(cols);
 		let colName: string = void 0;
 		let sort: string = void 0;
 
@@ -130,16 +128,13 @@ export class DataTableComponent implements OnInit {
 	}
 
 	public onChangeTable(config: any, page: any = {page: this.page, itemsPerPage: this.itemsPerPage}): any {
-		if (this.editar) {
+		if (this.derechos.editar) {
 			this.columns.push({title: '', name: 'action_e', sort: false, filter: false});
 			for (let i = 0; i < this.data.length; i ++) {
-				// tslint:disable-next-line:max-line-length
-				// this.listado [+i] ['action_e'] = `<a><span class='editar' data-id='` + this.listado [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
-				// this.data [+i] ['action_e'] = `<a><span class='editar'><i class='far fa-edit'></i></span></a>`;
 				this.data [i] ['action_e'] = `<a><span class='editar' title='Editar registro'><i class='far fa-edit'></i></span></a>`;
 			}
 		}
-		if (this.cancelar) {
+		if (this.derechos.cancelar) {
 			this.columns.push({title: '', name: 'action_c', sort: false, filter: false});
 			for (let i = 0; i < this.data.length; i ++) {
 				this.data [i] ['action_c'] = `<a><span class='cancelar' title='Cancelar registro'><i class='far fa-trash-alt'></i></span></a>`;

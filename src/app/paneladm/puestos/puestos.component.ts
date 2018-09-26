@@ -3,6 +3,7 @@ import { PuestosService, AccesoService } from '../../services/services.index';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 
 @Component({
@@ -13,51 +14,48 @@ import swal from 'sweetalert2';
 
 export class PuestosComponent implements OnInit {
 
-	@ViewChild('dtpuestos') dataTable: DataTableComponent;
+	@ViewChild('puestos') dataTable: DataTableComponent;
 
 	jsonData: any;
-	data: any[] = [];
+	listado: any[] = [];
 	cargando = false;
 	llave = 'puesto';
+	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
 
 	columns: Array<any> = [
 		{title: 'Puesto', name: 'puesto', sort: false, columnName: 'puesto',
 			filtering: {filterString: '', placeholder: 'Puesto'}},
-		{title: 'Predecesor', name: 'predecesor', sort: false, columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Descripción', name: 'puesto_desc', sort: false, columnName: 'puesto_desc',
 			filtering: {filterString: '', placeholder: 'Descripción'}},
+		{title: 'ID Predecesor', name: 'predecesor', columnName: 'predecesor',
+			filtering: {filterString: '', placeholder: 'ID Predecesor'}},
+		{title: 'Predecesor', name: 'predecesor_desc', columnName: 'predecesor_desc',
+			filtering: {filterString: '', placeholder: 'Predecesor'}},
 		{title: 'Situación', name: 'estatus_desc', sort: false, columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}},
-		{title: '', name: 'action_e', sort: false, filter: false},
-		{title: '', name: 'action_c', sort: false, filter: false}
+			filtering: {filterString: '', placeholder: 'Situación'}}
 	];
-
-	length = 0;
 
 	constructor(public _puestosService: PuestosService, public _accesoService: AccesoService, private router: Router) {
 	}
 
 	ngOnInit() {
 		this.cargando = true;
+		// Para la inicializacion del dataTable
+		this.dataTable.derechos = this.derechos;
+
 		this._puestosService.getPuestos()
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					this.data = this.jsonData.puestos;
+					this.listado = this.jsonData.puestos;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
-					for (let i = 0; i < this.data.length; i ++) {
-						this.data [+i] ['action_e'] = `<a><span class='editar' data-id='`
-							+ this.data [+i][this.llave] + `'><i class='far fa-edit'></i></span></a>`;
-						this.data [+i] ['action_c'] = `<a><span class='cancelar' data-id='`
-							+ this.data [+i][this.llave] + `'><i class='far fa-trash-alt'></i></span></a>`;
-					}
-
+					this.dataTable.derechos = this.derechos;
 					this.dataTable.columns = this.columns;
-					this.dataTable.data = this.data;
-					this.dataTable.length = this.jsonData.puestos.length;
-					this.dataTable.config.sorting.columns = [];
+					this.dataTable.config.sorting.columns = this.columns;
+					this.dataTable.data = this.listado;
+					this.dataTable.length = this.listado.length;
+					// this.dataTable.ruta_add = ['/paneladm', 'puestos_form', 'I', 0];
 					this.dataTable.onChangeTable(this.dataTable.config);
 
 					this.cargando = false;

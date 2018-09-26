@@ -11,3 +11,5 @@ export { IdentidadService } from './paneladm/identidad.service';
 export { ProcesosService } from './paneladm/procesos.service';
 export { AreasService } from './paneladm/areas.service';
 export { PuestosService } from './paneladm/puestos.service';
+// FODA
+export { FodaService } from './panelfoda/foda.service';
