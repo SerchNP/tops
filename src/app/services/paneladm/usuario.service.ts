@@ -39,10 +39,7 @@ export class UsuarioService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	insertarUsuario(usuario: Usuario, matriz: any) {
-		console.log(usuario);
-		console.log(matriz);
-
+	insertarUsuario(usuario: Usuario) {
 		if (usuario.materno === null) {
 			delete usuario['materno'];
 		}
@@ -56,43 +53,64 @@ export class UsuarioService {
 			delete usuario['email3'];
 		}
 
-		matriz['contexto'] = (matriz.contexto === null ? 'N' : 'S');
-		matriz.liderazgo = (matriz.liderazgo === null ? 'N' : 'S');
-		matriz.riesgo = (matriz.riesgo === null ? 'N' : 'S');
-		matriz.oportunidad = (matriz.oportunidad === null ? 'N' : 'S');
-		matriz.infraestructura = (matriz.infraestructura === null ? 'N' : 'S');
-		matriz.clima = (matriz.clima === null ? 'N' : 'S');
-		matriz.capacitacion = (matriz.capacitacion === null ? 'N' : 'S');
-		matriz.control = (matriz.control === null ? 'N' : 'S');
-		matriz.salidanc = (matriz.salidanc === null ? 'N' : 'S');
-		matriz.quejas = (matriz.quejas === null ? 'N' : 'S');
-		matriz.satisfaccion = (matriz.satisfaccion === null ? 'N' : 'S');
-		matriz.indicadores = (matriz.indicadores === null ? 'N' : 'S');
-		matriz.auditor = (matriz.auditor === null ? 'N' : 'S');
-		matriz.revision = (matriz.revision === null ? 'N' : 'S');
-		matriz.noconf = (matriz.noconf === null ? 'N' : 'S');
-		matriz.mejora = (matriz.mejora === null ? 'N' : 'S');
-		const bodym = JSON.stringify(matriz);
-		console.log(bodym);
-		const token = ''; // localStorage.getItem('token');
+		usuario.matriz.contexto = (usuario.matriz.b_contexto === true ? 'S' : 'N');
+		usuario.matriz.liderazgo = (usuario.matriz.b_liderazgo === true ? 'S' : 'N');
+		usuario.matriz.riesgo = (usuario.matriz.b_riesgo === true ? 'S' : 'N');
+		usuario.matriz.oportunidad = (usuario.matriz.b_oportunidad === true ? 'S' : 'N');
+		usuario.matriz.infraestruc = (usuario.matriz.b_infraestruc === true ? 'S' : 'N');
+		usuario.matriz.clima_laboral = (usuario.matriz.b_clima_laboral === true ? 'S' : 'N');
+		usuario.matriz.capacitacion = (usuario.matriz.b_capacitacion === true ? 'S' : 'N');
+		usuario.matriz.control_doctos = (usuario.matriz.b_control_doctos === true ? 'S' : 'N');
+		usuario.matriz.salida_nc = (usuario.matriz.b_salida_nc === true ? 'S' : 'N');
+		usuario.matriz.queja = (usuario.matriz.b_queja === true ? 'S' : 'N');
+		usuario.matriz.satisfaccion = (usuario.matriz.b_satisfaccion === true ? 'S' : 'N');
+		usuario.matriz.indicador = (usuario.matriz.b_indicador === true ? 'S' : 'N');
+		usuario.matriz.auditor = (usuario.matriz.b_auditor === true ? 'S' : 'N');
+		usuario.matriz.revision_dir = (usuario.matriz.b_revision_dir === true ? 'S' : 'N');
+		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
+		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
+
+		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/usuarios/insertarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(usuario);
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	editarUsuario(usuario: Usuario) {
+		if (usuario.materno === null) {
+			delete usuario['materno'];
+		}
+		if (usuario.email === null) {
+			delete usuario['email'];
+		}
 		if (usuario.email2 === null) {
 			delete usuario['email2'];
 		}
 		if (usuario.email3 === null) {
 			delete usuario['email3'];
 		}
+
+		usuario.matriz.contexto = (usuario.matriz.b_contexto === true ? 'S' : 'N');
+		usuario.matriz.liderazgo = (usuario.matriz.b_liderazgo === true ? 'S' : 'N');
+		usuario.matriz.riesgo = (usuario.matriz.b_riesgo === true ? 'S' : 'N');
+		usuario.matriz.oportunidad = (usuario.matriz.b_oportunidad === true ? 'S' : 'N');
+		usuario.matriz.infraestruc = (usuario.matriz.b_infraestruc === true ? 'S' : 'N');
+		usuario.matriz.clima_laboral = (usuario.matriz.b_clima_laboral === true ? 'S' : 'N');
+		usuario.matriz.capacitacion = (usuario.matriz.b_capacitacion === true ? 'S' : 'N');
+		usuario.matriz.control_doctos = (usuario.matriz.b_control_doctos === true ? 'S' : 'N');
+		usuario.matriz.salida_nc = (usuario.matriz.b_salida_nc === true ? 'S' : 'N');
+		usuario.matriz.queja = (usuario.matriz.b_queja === true ? 'S' : 'N');
+		usuario.matriz.satisfaccion = (usuario.matriz.b_satisfaccion === true ? 'S' : 'N');
+		usuario.matriz.indicador = (usuario.matriz.b_indicador === true ? 'S' : 'N');
+		usuario.matriz.auditor = (usuario.matriz.b_auditor === true ? 'S' : 'N');
+		usuario.matriz.revision_dir = (usuario.matriz.b_revision_dir === true ? 'S' : 'N');
+		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
+		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
+
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/catalogos/usuarios/editarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
-		console.log(usuario);
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}

@@ -47,9 +47,8 @@ export class UsuariosComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					console.log(this.jsonData);
 					this.data = this.jsonData.usuarios;
-					// this._accesoService.guardarStorage(this.jsonData.token);
+					this._accesoService.guardarStorage(this.jsonData.token);
 
 					this.dataTable.columns = this.columns;
 					this.dataTable.data = this.data;
