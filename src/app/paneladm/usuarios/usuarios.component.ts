@@ -55,7 +55,6 @@ export class UsuariosComponent implements OnInit {
 					this.data = this.jsonData.usuarios;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
-					this.dataTable.derechos = this.derechos;
 					this.dataTable.columns = this.columns;
 					this.dataTable.config.sorting.columns = this.columns;
 					this.dataTable.data = this.data;

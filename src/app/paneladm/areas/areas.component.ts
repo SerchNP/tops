@@ -49,7 +49,6 @@ export class AreasComponent implements OnInit {
 					this.listado = this.jsonData.areas;
 					this._accesoService.guardarStorage(this.jsonData.token);
 
-					this.dataTable.derechos = this.derechos;
 					this.dataTable.columns = this.columns;
 					this.dataTable.config.sorting.columns = this.columns;
 					this.dataTable.data = this.listado;
