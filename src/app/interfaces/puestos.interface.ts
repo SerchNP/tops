@@ -2,7 +2,7 @@ export interface Puestos {
 	puesto: number;
 	puesto_desc: string;
 	predecesor?: string;
-	// predecesor_desc?: string;
+	predecesor_desc?: string;
 	activo: string;
 	// activo_desc: string;
 	f_captura: Date;

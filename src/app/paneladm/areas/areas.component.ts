@@ -32,7 +32,8 @@ export class AreasComponent implements OnInit {
 		{title: 'Tipo', name: 'tipo_desc', columnName: 'tipo_desc',
 			filtering: {filterString: '', placeholder: 'Tipo'}},
 		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}}
+			filtering: {filterString: '', placeholder: 'Situación'}},
+		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data'}
 	];
 
 	constructor(public _areasService: AreasService, public _accesoService: AccesoService, private router: Router) { }

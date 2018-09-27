@@ -16,6 +16,7 @@ import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
 import { AreasComponent } from './areas/areas.component';
 import { PuestosComponent } from './puestos/puestos.component';
+import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 import { PeriodosComponent } from './periodos/periodos.component';
 
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
@@ -31,7 +32,8 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		ProcesosComponent,
 		ProcesosFormularioComponent,
 		AreasComponent,
-		PuestosComponent
+		PuestosComponent,
+		PuestosFormularioComponent
 	],
 	exports: [
 		PaneladmComponent

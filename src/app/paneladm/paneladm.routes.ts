@@ -7,6 +7,7 @@ import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
 import { AreasComponent } from './areas/areas.component';
 import { PuestosComponent } from './puestos/puestos.component';
+import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 
 // Guards
 import { LoginGuard } from '../services/services.index';
@@ -29,6 +30,8 @@ const paneladmRoutes: Routes = [
 				]
 			},
 			{ path: 'puestos', component: PuestosComponent, data: {titulo: 'Catálogo de Puestos', padre: 'Administración', opcion: 'Puestos'} },
+			// tslint:disable-next-line:max-line-length
+			{ path: 'puestos_form/:acc/:id', component: PuestosFormularioComponent, data: {titulo: 'Mantenimiento de Puestos', padre: 'Administración', opcion: 'Puestos'} },
 			{
 				path: 'submenuusu',
 				children: [

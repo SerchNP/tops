@@ -17,7 +17,6 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	idProceso: number;
 	titulo: string;
 
-	select_invalid: string;
 	seleccionado = '';
 	items: any [] = [];
 

@@ -74,7 +74,8 @@
             <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Usuario</label>
             <div class="col-sm-3">
                 <select class="form-control" name="tipo" formControlName="tipo" aria-describedby="tipoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && tipo.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'U' ? 'disabled' : null)">
-					<option value="A" *ngIf="_accesoService.tipoUsuario() === 'A'">Administrador</option>
+					<option value="S" *ngIf="_accesoService.tipoUsuario() === 'S'">Superusuario</option>
+					<option value="A">Auditor</option>
 					<option value="C">Coordinador</option>
 					<option value="N">Normal</option>
 				</select>
@@ -83,7 +84,7 @@
             </div>
         </div>
     </div>
-    <div formGroupName="matriz" class="form-group" *ngIf="tipo.value === 'N'">
+    <div formGroupName="matriz" class="form-group" *ngIf="tipo.value === 'N' || tipo.value == 'A'">
         <div class="card border-secondary bg-light" id="matriz">
             <div class="card-header">Matriz de Responsabilidades</div>
             <div class="card-body" id="matriz_body">
