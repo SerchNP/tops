@@ -115,12 +115,13 @@ export class UsuarioService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	/*cancelaProceso(usuario: string, motivo: string) {
+	cancelarUsuario(usuario: string, motivo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
+		const url = URL_SGC + '/catalogos/usuarios/cancelarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
-		const body = JSON.stringify(JSON.parse('{"proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "motivo_cancela": "' + motivo + '"}'));
+		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
-	}*/
+	}
 
 }

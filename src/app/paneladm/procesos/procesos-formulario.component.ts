@@ -16,6 +16,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	accion: string;
 	idProceso: number;
 	titulo: string;
+
 	select_invalid: string;
 	seleccionado = '';
 	items: any [] = [];
@@ -23,6 +24,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
 
 	forma: FormGroup;
+	cancelar: any[] = ['/paneladm', 'submenuproc', 'procesos'];
 
 	cargarProceso(idProceso) {
 		let bandera = false;

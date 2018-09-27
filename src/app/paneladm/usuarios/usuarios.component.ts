@@ -84,14 +84,52 @@ export class UsuariosComponent implements OnInit {
 
 	editarUsuario(usuario: any) {
 		if (usuario.estatus === 'C') {
-			swal('ERROR', 'El usuario se puede editar porque está cancelado', 'error');
+			swal('ERROR', 'El usuario no se puede editar porque está bloqueado', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuusu', 'usuarios_form', 'U', usuario.usuario]);
 		}
 	}
 
-	cancelarUsuario(usuario: any) {
+	async cancelarUsuario(usuario: any) {
 		console.log(usuario);
+		if (usuario.estatus === 'C') {
+			swal('ERROR', 'El usuario ya esta previamente bloqueado', 'error');
+		} else {
+			const {value: respuesta} = await swal({
+				title: 'Atención!!!',
+				text: 'Está seguro que desea cancelar el usuario ' + usuario.usuario + '?',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Aceptar',
+				confirmButtonColor: '#B22222'
+			});
+			if (respuesta) {
+				const {value: motivo} = await swal({
+					title: 'Ingrese el motivo de bloqueo del usuario ' + usuario.usuario,
+					input: 'text',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return !value && 'Necesita ingresar el motivo de bloqueo';
+					}
+				});
+				console.log(motivo);
+				if (motivo !== undefined) {
+					this._usuarioService.cancelarUsuario(usuario.usuario, motivo.toUpperCase())
+						.subscribe((data: any) => {
+							console.log(data);
+							swal('Atención!!!', data.message, 'success');
+							this.ngOnInit();
+						},
+						error => {
+							console.log(error);
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._accesoService.logout();
+							}
+						});
+				}
+			}
+		}
 	}
 
 }
