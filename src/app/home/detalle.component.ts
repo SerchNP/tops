@@ -40,7 +40,6 @@ export class DetalleComponent implements OnInit {
 		this._homeService.getSistemaById(this.idSistema)
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.sistema = data;
 				},
 				error => {
@@ -54,7 +53,6 @@ export class DetalleComponent implements OnInit {
 		this._homeService.getIdentidad(this.idSistema, 'A')
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.alcance = data;
 				},
 				error => {
@@ -68,7 +66,6 @@ export class DetalleComponent implements OnInit {
 		this._homeService.getIdentidad(this.idSistema, 'M')
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.mision = data;
 				},
 				error => {
@@ -82,7 +79,6 @@ export class DetalleComponent implements OnInit {
 		this._homeService.getIdentidad(this.idSistema, 'V')
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.vision = data;
 				},
 				error => {
@@ -96,7 +92,6 @@ export class DetalleComponent implements OnInit {
 		this._homeService.getIdentidad(1, 'N')
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.nota = data;
 				},
 				error => {

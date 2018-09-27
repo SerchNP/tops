@@ -77,8 +77,6 @@ export class UsuariosComponent implements OnInit {
 			this.editarUsuario(accion.row);
 		} else if (accion.column === 'action_c') {
 			this.cancelarUsuario(accion.row);
-		} else {
-			// console.log('Columna no botón');
 		}
 	}
 
@@ -91,7 +89,6 @@ export class UsuariosComponent implements OnInit {
 	}
 
 	async cancelarUsuario(usuario: any) {
-		console.log(usuario);
 		if (usuario.estatus === 'C') {
 			swal('ERROR', 'El usuario ya esta previamente bloqueado', 'error');
 		} else {
@@ -112,16 +109,13 @@ export class UsuariosComponent implements OnInit {
 						return !value && 'Necesita ingresar el motivo de bloqueo';
 					}
 				});
-				console.log(motivo);
 				if (motivo !== undefined) {
 					this._usuarioService.cancelarUsuario(usuario.usuario, motivo.toUpperCase())
 						.subscribe((data: any) => {
-							console.log(data);
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
 						},
 						error => {
-							console.log(error);
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
 								this._accesoService.logout();

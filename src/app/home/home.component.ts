@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
 		this._homeService.getIdentidad(1, 'P')
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.politica = data;
 				},
 				error => {
@@ -41,7 +40,6 @@ export class HomeComponent implements OnInit {
 		this._homeService.getSistemas()
 			.subscribe(
 				data => {
-					// console.log(data);
 					this.listadoSistemas = data;
 				},
 				error => {

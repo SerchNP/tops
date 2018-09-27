@@ -72,8 +72,6 @@ export class PuestosComponent implements OnInit {
 			this.editarPuesto(accion.row);
 		} else if (accion.column === 'action_c') {
 			this.borrarPuesto(accion.row);
-		} else {
-			// console.log('Columna no botón');
 		}
 	}
 
@@ -114,7 +112,6 @@ export class PuestosComponent implements OnInit {
 							this.ngOnInit();
 						},
 						error => {
-							// console.log(error);
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
 								this._accesoService.logout();

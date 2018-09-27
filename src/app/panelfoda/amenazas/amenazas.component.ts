@@ -44,7 +44,7 @@ export class AmenazasComponent implements OnInit {
 	ngOnInit() {
 		this.cargando = true;
 		this.derechos = this._sidebarService.getDerechos('amenazas');
-
+		// Para la inicializacion del dataTable
 		this.dataTable.derechos = this.derechos;
 
 		this._fodaService.getFODA('A')

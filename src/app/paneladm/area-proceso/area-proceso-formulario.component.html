@@ -1,0 +1,58 @@
+<h5>{{ titulo }}</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-1 col-form-label text-right">Proceso</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}">
+                <small id="procesoHelp" class="form-text text-muted">Proceso</small>
+                <div *ngIf="forma.controls['proceso'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
+					Seleccionar proceso
+				</button>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="accion === 'U'">
+                <small id="procesoHelp" class="form-text text-muted">Descripción del Proceso</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="area" class="col-sm-1 col-form-label text-right">Área</label>
+            <div class="col-sm-9">
+                <select name="area" formControlName="area" class="form-control" [ngStyle]="{'border-color': (area.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+					<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+					<option [ngValue]="area.area" *ngFor="let area of areas">{{ area.area_desc }}</option>
+				</select>
+                <div *ngIf="area.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+			<i class="fa fa-save"></i> Guardar
+		</button>
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Proceso</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="procesos" (seleccionado)="seleccionado = $event"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarProceso(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -75,8 +75,6 @@ export class ProcesosComponent implements OnInit {
 			this.editarProceso(accion.row);
 		} else if (accion.column === 'action_c') {
 			this.borrarProceso(accion.row);
-		} else {
-			console.log('Columna no botón');
 		}
 	}
 
@@ -109,16 +107,13 @@ export class ProcesosComponent implements OnInit {
 						return !value && 'Necesita ingresar el motivo de cancelación';
 					}
 				});
-				console.log(motivo);
 				if (motivo !== undefined) {
 					this._procesosService.cancelaProceso(proceso.proceso, motivo.toUpperCase())
 						.subscribe((data: any) => {
-							console.log(data);
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
 						},
 						error => {
-							console.log(error);
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
 								this._accesoService.logout();

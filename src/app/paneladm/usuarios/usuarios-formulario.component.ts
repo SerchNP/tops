@@ -160,10 +160,8 @@ export class UsuariosFormularioComponent implements OnInit {
 
 	guardar() {
 		if (this.accion === 'U') {
-			console.log(this.formaUsuarios.value);
 			this._usuario.editarUsuario(this.formaUsuarios.value)
 				.subscribe((data: any) => {
-					console.log(data);
 					// this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/paneladm', 'submenuusu', 'usuarios']);

@@ -18,7 +18,7 @@ export class IdentidadService {
 
 	getIdentidad(sistema: number, tipo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/identidad/getIdentidad.json?s=' + sistema + '&t=' + tipo + '&token=' + token;
+		const url = URL_SGC + '/paneladm/identidad/getIdentidad.json?s=' + sistema + '&t=' + tipo + '&token=' + token;
 		const headers = this.getHeadersGET();
 
 		return this.http.get(url, { headers }).map((resp: any) => {

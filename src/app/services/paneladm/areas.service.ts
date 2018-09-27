@@ -18,14 +18,14 @@ export class AreasService {
 
 	getAreas() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/areas/getAreas.json?token=' + token;
+		const url = URL_SGC + '/paneladm/areas/getAreas.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getAreasTree() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/areas/getAreasTree.json?token=' + token;
+		const url = URL_SGC + '/paneladm/areas/getAreasTree.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map((resp: any) => {
 			return resp.areas;

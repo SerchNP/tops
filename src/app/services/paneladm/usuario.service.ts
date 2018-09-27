@@ -27,14 +27,14 @@ export class UsuarioService {
 
 	getUsuarios() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/usuarios/getUsuarios.json?token=' + token;
+		const url = URL_SGC + '/paneladm/usuarios/getUsuarios.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getUsuarioById(usuario: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/usuarios/getUsuarioById.json?user=' + usuario + '&token=' + token;
+		const url = URL_SGC + '/paneladm/usuarios/getUsuarioById.json?user=' + usuario + '&token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -71,7 +71,7 @@ export class UsuarioService {
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/usuarios/insertarUsuario.json?token=' + token;
+		const url = URL_SGC + '/paneladm/usuarios/insertarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
@@ -109,7 +109,7 @@ export class UsuarioService {
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/usuarios/editarUsuario.json?token=' + token;
+		const url = URL_SGC + '/paneladm/usuarios/editarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
@@ -117,10 +117,9 @@ export class UsuarioService {
 
 	cancelarUsuario(usuario: string, motivo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/usuarios/cancelarUsuario.json?token=' + token;
+		const url = URL_SGC + '/paneladm/usuarios/cancelarUsuario.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "motivo_cancela": "' + motivo + '"}'));
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

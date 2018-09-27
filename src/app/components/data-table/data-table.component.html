@@ -1,8 +1,13 @@
-<div class="row">
-    <div class="col-md-5">
-        <input *ngIf="config.filtering" placeholder="Buscar" [ngTableFiltering]="config.filtering" class="form-control" (tableChanged)="onChangeTable(config)" />
+<div class="row" *ngIf="!cargando">
+    <div class="col-md-5 input-group">
+        <input #filtro class="form-control" *ngIf="config.filtering" placeholder="Buscar" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" />
+        <div class="input-group-btn">
+            <button class="btn btn-xs btn-secondary" type="button" (click)="clearFilter()">
+				<i class="fas fa-search-minus"></i>
+			  </button>
+        </div>
     </div>
-    <div class="col-md-7 text-right" *ngIf="!cargando">
+    <div class="col-md-7 text-right">
         <button type="button" class="btn btn-primary" (click)="agregar()" *ngIf="derechos.insertar">
 			<i class="fas fa-plus"></i> Agregar
 		</button>

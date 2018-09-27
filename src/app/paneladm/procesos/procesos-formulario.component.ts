@@ -104,7 +104,6 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			console.log(this.forma);
 			this._procesosService.insertaProceso(this.forma.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);

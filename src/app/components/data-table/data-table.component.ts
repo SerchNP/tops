@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
@@ -8,6 +8,8 @@ import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 	styles: []
 })
 export class DataTableComponent implements OnInit {
+
+	@ViewChild ('filtro') filtro: ElementRef;
 
 	@Input() data: any[] = [];
 	@Input() columns: Array<any> = [];
@@ -147,7 +149,6 @@ export class DataTableComponent implements OnInit {
 		if (config.sorting) {
 			Object.assign(this.config.sorting, config.sorting);
 		}
-
 		const filteredData = this.changeFilter(this.data, this.config);
 		const sortedData = this.changeSort(filteredData, this.config);
 		this.rows = page && config.paging ? this.changePage(page, sortedData) : sortedData;
@@ -155,8 +156,14 @@ export class DataTableComponent implements OnInit {
 	}
 
 	public onCellClick(data: any): any {
-		console.log(data);
 		this.registro.emit(data);
+	}
+
+	clearFilter() {
+		this.filtro.nativeElement.value = '';
+		this.config.filtering = {filterString: ''};
+		this.onChangeTable(this.config);
+		// this.changeFilter(this.data, this.config);
 	}
 
 }

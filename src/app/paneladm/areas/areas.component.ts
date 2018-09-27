@@ -21,7 +21,7 @@ export class AreasComponent implements OnInit {
 	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
 
 	columns: Array<any> = [
-		{title: 'Área', name: 'area', columnName: 'puesto',
+		{title: 'Área', name: 'area', columnName: 'area',
 			filtering: {filterString: '', placeholder: 'Área'}},
 		{title: 'Descripción', name: 'area_desc', sort: 'asc', columnName: 'area_desc',
 			filtering: {filterString: '', placeholder: 'Descripción'}},

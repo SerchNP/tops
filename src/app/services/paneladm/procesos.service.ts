@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { URL_SGC, AUTH } from '../../config/config';
 import { Proceso } from '../../models/proceso.model';
+import { AreaProceso } from '../../interfaces/procesos.interface';
 
 
 @Injectable()
@@ -28,27 +29,33 @@ export class ProcesosService {
 
 	getProcesos() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/getProcesos.json?token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/getProcesos.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getProcesoById(proceso: number) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/getProcesoById.json?id=' + proceso + '&token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/getProcesoById.json?id=' + proceso + '&token=' + token;
+		const headers = this.getHeadersGET();
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getAreasAsignadas(proceso: number) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/paneladm/procesos/getAreasAsignadas.json?id=' + proceso + '&token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getProcesosTree() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/getProcesosTree.json?token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/getProcesosTree.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	insertaProceso(proceso: Proceso) {
-		console.log(proceso);
 		if (proceso.proceso === null) {
 			proceso.proceso = 0;
 		}
@@ -60,10 +67,9 @@ export class ProcesosService {
 		}
 
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/insertaProceso.json?token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/insertaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(proceso);
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
@@ -75,7 +81,7 @@ export class ProcesosService {
 			proceso.predecesor_desc = '';
 		}
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/modificaProceso.json?token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/modificaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(proceso);
 		return this.http.post(url, body, { headers }).map(resp => resp);
@@ -83,9 +89,17 @@ export class ProcesosService {
 
 	cancelaProceso(proceso: number, motivo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/procesos/cancelaProceso.json?token=' + token;
+		const url = URL_SGC + '/paneladm/procesos/cancelaProceso.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(JSON.parse('{"proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	asignaAreaProceso(areaProceso: AreaProceso) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/paneladm/procesos/asignaAreaProceso.json?token=' + token;
+		const headers = this.getHeadersPOST();
+		const body = JSON.stringify(areaProceso);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

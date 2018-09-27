@@ -30,14 +30,11 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idPuesto = params['id'];
-			console.log(this.idPuesto);
 		});
 
 		this.titulo = (this.accion === 'I' ? 'Registro de Puestos' : 'Actualización de Puestos');
 
-		console.log('X' + this.idPuesto);
 		if (this.idPuesto > 0) {
-			console.log('entro');
 			this.cargarPuesto(this.idPuesto);
 		}
 	}
@@ -105,7 +102,6 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.accion === 'U') {
-			console.log(this.formaPuestos.value);
 			this._puestosService.modificarPuesto(this.formaPuestos.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
@@ -119,7 +115,6 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			console.log(this.formaPuestos.value);
 			this._puestosService.insertarPuesto(this.formaPuestos.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);

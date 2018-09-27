@@ -27,21 +27,21 @@ export class PuestosService {
 
 	getPuestos() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/getPuestos.json?token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/getPuestos.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getPuestosTree() {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/getPuestosTree.json?token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/getPuestosTree.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map((resp: any) => resp.puestos);
 	}
 
 	getPuestoById(idPuesto: number) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/getPuestoById.json?id=' + idPuesto + '&token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/getPuestoById.json?id=' + idPuesto + '&token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -58,10 +58,9 @@ export class PuestosService {
 		}
 
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/insertarPuesto.json?token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/insertarPuesto.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(puesto);
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
@@ -73,16 +72,15 @@ export class PuestosService {
 			delete puesto['predecesor_desc'];
 		}
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/modificarPuesto.json?token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/modificarPuesto.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(puesto);
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelarPuesto(puesto: number, motivo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/catalogos/puestos/cancelarPuesto.json?token=' + token;
+		const url = URL_SGC + '/paneladm/puestos/cancelarPuesto.json?token=' + token;
 		const headers = this.getHeadersPOST();
 		const body = JSON.stringify(JSON.parse('{"puesto": ' + puesto + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);

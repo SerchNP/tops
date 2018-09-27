@@ -37,7 +37,7 @@ export class SidebarService {
 		const derechosMenu: Derechosmenu = {};
 		const tipoUser = this._accesoService.tipoUsuario();
 
-		if (tipoUser === 'N') {
+		if ((tipoUser === 'N') || (tipoUser === 'A')) {
 			this.getDerechosMenu(menuID)
 				.subscribe(
 					data => {

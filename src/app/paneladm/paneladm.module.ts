@@ -14,6 +14,9 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { UsuariosFormularioComponent } from './usuarios/usuarios-formulario.component';
 import { ProcesosComponent } from './procesos/procesos.component';
 import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
+import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
+import { AreaProcesoFormularioComponent } from './area-proceso/area-proceso-formulario.component';
+
 import { AreasComponent } from './areas/areas.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
@@ -31,6 +34,8 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		UsuariosFormularioComponent,
 		ProcesosComponent,
 		ProcesosFormularioComponent,
+		AreaProcesoComponent,
+		AreaProcesoFormularioComponent,
 		AreasComponent,
 		PuestosComponent,
 		PuestosFormularioComponent
