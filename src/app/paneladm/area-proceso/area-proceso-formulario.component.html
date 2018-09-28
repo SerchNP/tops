@@ -5,24 +5,28 @@
     <div class="form-group">
         <div class="form-group row">
             <label for="proceso" class="col-sm-1 col-form-label text-right">Proceso</label>
-            <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}">
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'" [ngClass]="{'is-invalid': forma.controls['proceso'].invalid}" />
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
+							<i class="fas fa-search"></i> Seleccionar
+							</button>
+                    </div>
+                    <div *ngIf="forma.controls['proceso'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                </div>
                 <small id="procesoHelp" class="form-text text-muted">Proceso</small>
-                <div *ngIf="forma.controls['proceso'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
-					Seleccionar proceso
-				</button>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-5">
                 <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="accion === 'U'">
                 <small id="procesoHelp" class="form-text text-muted">Descripción del Proceso</small>
             </div>
         </div>
         <div class="form-group row">
             <label for="area" class="col-sm-1 col-form-label text-right">Área</label>
-            <div class="col-sm-9">
+            <div class="col-sm-6">
                 <select name="area" formControlName="area" class="form-control" [ngStyle]="{'border-color': (area.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
-					<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+					<option value="-1" disabled="disabled" selected="selected">Seleccionar</option>
 					<option [ngValue]="area.area" *ngFor="let area of areas">{{ area.area_desc }}</option>
 				</select>
                 <div *ngIf="area.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>

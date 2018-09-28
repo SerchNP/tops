@@ -103,4 +103,12 @@ export class ProcesosService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
+	cancelaAreaAsignada(clave: number, motivo: string) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/paneladm/procesos/cancelaAreaAsignada.json?token=' + token;
+		const headers = this.getHeadersPOST();
+		const body = JSON.stringify(JSON.parse('{"clave": ' + clave + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }
