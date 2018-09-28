@@ -42,10 +42,11 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.cargando = true;
 		this.tipo = this.getTipo(this.path);
-		this._identidadService.getIdentidad(0, this.tipo)
+		this._identidadService.getIdentidad('I', 0, this.tipo)
 			.subscribe(
-				data => {
-					this.listaIdentidad = data;
+				(data: any) => {
+					this.listaIdentidad = data.identidad;
+					this._accesoService.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {
