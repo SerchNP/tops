@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { URL_SGC, AUTH } from '../../config/config';
+import { Foda } from '../../interfaces/foda.interface';
 
 @Injectable()
 export class FodaService {
@@ -12,6 +13,14 @@ export class FodaService {
 	private getHeadersGET(): HttpHeaders {
 		const headers = new HttpHeaders({
 			'authorization': 'Basic ' + AUTH
+		});
+		return headers;
+	}
+
+	private getHeadersPOST(): HttpHeaders {
+		const headers = new HttpHeaders({
+			'authorization': 'Basic ' + AUTH,
+			'Content-Type' : 'application/json'
 		});
 		return headers;
 	}
@@ -35,5 +44,13 @@ export class FodaService {
 		const url = URL_SGC + '/foda/getTipoFODA.json?token=' + token;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	insertaFODA(foda: Foda) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/foda/insertaFODA.json?token=' + token;
+		const headers = this.getHeadersPOST();
+		const body = JSON.stringify(foda);
+		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }

@@ -22,7 +22,6 @@ export class AmenazasComponent implements OnInit {
 	llave = 'clave';
 	derechos: Derechosmenu = {};
 
-	length = 0;
 	columns: Array<any> = [
 		{title: 'ID Proceso', name: 'proceso', columnName: 'proceso',
 			filtering: {filterString: '', placeholder: 'Proceso ID'}},

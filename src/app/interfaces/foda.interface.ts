@@ -1,4 +1,5 @@
 export interface Foda {
+	clave: number;
 	proceso: number;
 	proceso_desc: string;
 	foda: number;

@@ -26,8 +26,10 @@ export class AmenazasFormularioComponent implements OnInit {
 
 	forma: FormGroup;
 
-	constructor(private activatesRoute: ActivatedRoute, private router: Router,
-				private _accesoService: AccesoService, private _fodaService: FodaService) {
+	constructor(private activatesRoute: ActivatedRoute,
+				private router: Router,
+				private _accesoService: AccesoService,
+				private _fodaService: FodaService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idFoda = params['id'];
@@ -51,6 +53,22 @@ export class AmenazasFormularioComponent implements OnInit {
 		});
 		this.getProcesos();
 		this.getCuestiones();
+	}
+
+	guardar() {
+		this._fodaService.insertaFODA(this.forma.value)
+			.subscribe((data: any) => {
+				this._accesoService.guardarStorage(data.token);
+				swal('Atención!!!', data.message, 'success');
+				this.forma.reset();
+			},
+			error => {
+				console.error(error);
+				swal('ERROR', error.error.message, 'error');
+				if (error.error.code === 401) {
+					this._accesoService.logout();
+				}
+			});
 	}
 
 	getProcesos() {
