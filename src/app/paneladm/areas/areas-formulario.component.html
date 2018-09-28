@@ -1,0 +1,92 @@
+<h5>{{titulo}}</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="formaAreas" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="area" class="col-sm-2 col-form-label text-right">Área</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="area" aria-describedby="areaHelp" [attr.disabled]="'disabled'">
+                <small id="areaHelp" class="form-text text-muted">Clave del Área</small>
+            </div>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" formControlName="area_desc" aria-describedby="area_descHelp" [ngClass]="{'is-invalid': formaAreas.controls['area_desc'].touched && formaAreas.controls['area_desc'].invalid}">
+                <small id="area_descHelp" class="form-text text-muted">Descripción del Área</small>
+                <div *ngIf="formaAreas.controls['area_desc'].touched && formaAreas.controls['area_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="predecesor" class="col-sm-2 col-form-label text-right">Predecesor</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="accion === 'U'">
+                <small id="predecesorHelp" class="form-text text-muted">Área Predecesor</small>
+            </div>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="accion === 'U'">
+                <small id="predecesorHelp" class="form-text text-muted">Descripción del Área Predecesor</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal">
+					Seleccionar Predecesor
+				</button>
+                <button type="button" class="btn btn-danger" (click)="borrarPredecesor()" *ngIf="formaAreas.controls['predecesor'].value !== null">
+					Borrar Predecesor
+				</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Área</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (formaAreas.touched && tipo.invalid ? '#dc3545' : '#ced4da')}">
+						<option value="">Seleccionar</option>
+						<option value="I">Interna</option>
+						<option value="E">Externa</option>
+					</select>
+                <small id="tipoHelp" class="form-text text-muted">Tipo de Área</small>
+                <div *ngIf="formaAreas.touched && tipo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (formaAreas.touched && ent_data.invalid ? '#dc3545' : '#ced4da')}">
+					<option value="">Seleccionar</option>
+					<option value="S">Si</option>
+					<option value="N">No</option>
+				</select>
+                <small id="ent_dataHelp" class="form-text text-muted">El Área tiene Entrada de Datos</small>
+                <div *ngIf="formaAreas.touched && ent_data.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!formaAreas.valid">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Área Predecesor</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarPredecesor(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

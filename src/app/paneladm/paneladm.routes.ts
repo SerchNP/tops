@@ -8,6 +8,7 @@ import { ProcesosFormularioComponent } from './procesos/procesos-formulario.comp
 import { AreaProcesoFormularioComponent } from './area-proceso/area-proceso-formulario.component';
 import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
 import { AreasComponent } from './areas/areas.component';
+import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 
@@ -22,6 +23,8 @@ const paneladmRoutes: Routes = [
 		canActivate: [LoginGuard],
 		children: [
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },
+			// tslint:disable-next-line:max-line-length
+			{ path: 'areas_form/:acc/:id', component: AreasFormularioComponent, data: {titulo: 'Mantenimiento de Áreas', padre: 'Administración', opcion: 'Áreas'} },
 			{
 				path: 'submenuproc',
 				children: [

@@ -37,18 +37,6 @@
 				</button>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="estatus" class="col-sm-2 col-form-label text-right">Activo</label>
-            <div class="col-sm-10">
-                <select name="activo" formControlName="activo" [ngStyle]="{'border-color': ((activo.touched && activo.invalid) ? '#dc3545' : '#ced4da')}">
-					<option value="" selected="selected">--</option>
-					<option value="S">Si</option>
-					<option value="N">No</option>
-				</select>
-                <small id="activoHelp" class="form-text text-muted">El Puesto esta activo</small>
-                <div *ngIf="(activo.touched && activo.invalid)" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-            </div>
-        </div>
     </div>
     <div class="text-center">
         <button type="submit" class="btn btn-outline-primary" [disabled]="!formaPuestos.valid">

@@ -18,10 +18,10 @@ import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
 import { AreaProcesoFormularioComponent } from './area-proceso/area-proceso-formulario.component';
 
 import { AreasComponent } from './areas/areas.component';
+import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 import { PeriodosComponent } from './periodos/periodos.component';
-
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
 
@@ -37,6 +37,7 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		AreaProcesoComponent,
 		AreaProcesoFormularioComponent,
 		AreasComponent,
+		AreasFormularioComponent,
 		PuestosComponent,
 		PuestosFormularioComponent
 	],

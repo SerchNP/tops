@@ -45,18 +45,13 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 			'puesto' : new FormControl(),
 			'puesto_desc': new FormControl('', Validators.required),
 			'predecesor' : new FormControl(),
-			'predecesor_desc' : new FormControl(),
-			'activo' : new FormControl('', Validators.required)
+			'predecesor_desc' : new FormControl()
 		});
 		this.getPuestosTree();
 	}
 
 	ngOnDestroy() {
 		this.sub.unsubscribe();
-	}
-
-	get activo() {
-		return this.formaPuestos.get('activo');
 	}
 
 	cargarPuesto(idPuesto: number) {
@@ -70,7 +65,6 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 					this._accesoService.guardarStorage(token);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
@@ -122,7 +116,6 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 					this.router.navigate(['/paneladm', 'puestos']);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
