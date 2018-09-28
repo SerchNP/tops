@@ -7,16 +7,17 @@ import { PANELFODA_ROUTES } from './panelfoda.routes';
 
 // Modulos
 import { ComponentModule } from '../components/component.module';
-import { DragulaModule } from 'ng2-dragula';
 
 // Componentes
 import { PanelfodaComponent } from './panelfoda.component';
 import { AmenazasComponent } from './amenazas/amenazas.component';
+import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.component';
 import { OportunidadesComponent } from './oportunidades/oportunidades.component';
+import { OportunidadesFormularioComponent } from './oportunidades/oportunidades-formulario.component';
 import { DebilidadesComponent } from './debilidades/debilidades.component';
 import { DebilidadesFormularioComponent } from './debilidades/debilidades-formulario.component';
 import { FortalezasComponent } from './fortalezas/fortalezas.component';
-import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.component';
+import { FortalezasFormularioComponent } from './fortalezas/fortalezas-formulario.component';
 
 
 @NgModule({
@@ -25,17 +26,18 @@ import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.comp
 		PANELFODA_ROUTES,
 		ComponentModule,
 		FormsModule,
-		ReactiveFormsModule,
-		DragulaModule.forRoot()
+		ReactiveFormsModule
 	],
 	declarations: [
 		PanelfodaComponent,
 		AmenazasComponent,
+		AmenazasFormularioComponent,
 		OportunidadesComponent,
+		OportunidadesFormularioComponent,
 		DebilidadesComponent,
 		DebilidadesFormularioComponent,
 		FortalezasComponent,
-		AmenazasFormularioComponent
+		FortalezasFormularioComponent
 	]
 })
 export class PanelfodaModule { }

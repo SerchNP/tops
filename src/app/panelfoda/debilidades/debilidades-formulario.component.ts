@@ -6,14 +6,8 @@ import { Foda } from '../../interfaces/foda.interface';
 import swal from 'sweetalert2';
 
 @Component({
-	selector: 'app-foda-formulario',
-	template: `
-		<div class="container" dragula="HANDLES" [(dragulaModel)]="cuestiones">
-			<div *ngFor="let item of cuestiones">
-			  	<span class="handle">{{ item.foda_desc }}</span>
-				<p>{{ item.proceso_desc }}<p>
-			</div>
-		</div>`
+	selector: 'app-debilidades-formulario',
+	template: ``
 })
 export class DebilidadesFormularioComponent implements OnInit {
 
@@ -25,15 +19,17 @@ export class DebilidadesFormularioComponent implements OnInit {
 	seleccionado = '';
 	jsonData: any;
 	procesos: any [] = [];
-	cuestiones: any [] = [];
+	listado: any [] = [];
 	cuestion: string;
 
 	foda: Foda;
 
 	forma: FormGroup;
 
-	constructor(private activatesRoute: ActivatedRoute, private router: Router,
-				private _accesoService: AccesoService, private _fodaService: FodaService) {
+	constructor(private activatesRoute: ActivatedRoute,
+				private router: Router,
+				private _accesoService: AccesoService,
+				private _fodaService: FodaService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idFoda = params['id'];
@@ -58,8 +54,9 @@ export class DebilidadesFormularioComponent implements OnInit {
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					this.cuestiones = this.jsonData.foda;
+					this.listado = this.jsonData.foda;
 					this._accesoService.guardarStorage(this.jsonData.token);
+
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
