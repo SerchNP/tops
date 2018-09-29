@@ -10,8 +10,8 @@ import { ComponentModule } from '../components/component.module';
 
 // Componentes
 import { PanelfodaComponent } from './panelfoda.component';
-import { AmenazasComponent } from './amenazas/amenazas.component';
-import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.component';
+import { FodaComponent } from './foda/foda.component';
+import { FodaFormularioComponent } from './foda/foda-formulario.component';
 import { OportunidadesComponent } from './oportunidades/oportunidades.component';
 import { OportunidadesFormularioComponent } from './oportunidades/oportunidades-formulario.component';
 import { DebilidadesComponent } from './debilidades/debilidades.component';
@@ -30,8 +30,8 @@ import { FortalezasFormularioComponent } from './fortalezas/fortalezas-formulari
 	],
 	declarations: [
 		PanelfodaComponent,
-		AmenazasComponent,
-		AmenazasFormularioComponent,
+		FodaComponent,
+		FodaFormularioComponent,
 		OportunidadesComponent,
 		OportunidadesFormularioComponent,
 		DebilidadesComponent,

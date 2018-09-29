@@ -43,7 +43,8 @@ export class SidebarService {
 					data => {
 						const jsonData = data;
 						const derechos = jsonData['derechos'];
-						derechosMenu.consultar = ((derechos.consultar === 'S') ? true : false);
+						derechosMenu.consultar = true; // Siempre tiene opcion de ver
+						// derechosMenu.consultar = ((derechos.consultar === 'S') ? true : false);
 						derechosMenu.insertar = ((derechos.insertar === 'S') ? true : false);
 						derechosMenu.editar = ((derechos.editar === 'S') ? true : false);
 						derechosMenu.cancelar = ((derechos.cancelar === 'S') ? true : false);

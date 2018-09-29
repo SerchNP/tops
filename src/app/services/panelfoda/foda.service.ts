@@ -32,6 +32,13 @@ export class FodaService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getFODAByProceso (proceso: number) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/foda/getFODAByProceso.json?token=' + token + '&p=' + proceso;
+		const headers = this.getHeadersGET();
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getProcesosFODA() {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/foda/getProcesosFODA.json?token=' + token;

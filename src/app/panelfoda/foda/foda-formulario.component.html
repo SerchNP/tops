@@ -1,0 +1,13 @@
+<h5> {{titulo}}</h5>
+<div class="row">
+    <div class="col-md-11">
+        <p class="lead text-muted"><small><i class="far fa-arrow-alt-circle-right"></i></small> {{proceso_desc}}</p>
+    </div>
+    <div class="col-md-1">
+        <a [routerLink]="['/panelfoda', 'foda']" class="btn btn-outline-dark">Regresar</a>
+    </div>
+</div>
+<hr>
+<ul *ngFor=" let item of listadoFODA">
+    <li>{{ item.cuestion_desc}} No. {{ item.orden }} {{ item.foda_desc }}</li>
+</ul>

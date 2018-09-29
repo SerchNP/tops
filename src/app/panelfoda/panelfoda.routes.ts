@@ -4,11 +4,11 @@ import { PagesComponent } from '../pages/pages.component';
 
 // Guards
 import { LoginGuard } from '../services/services.index';
-import { AmenazasComponent } from './amenazas/amenazas.component';
+import { FodaComponent } from './foda/foda.component';
 import { OportunidadesComponent } from './oportunidades/oportunidades.component';
 import { DebilidadesComponent } from './debilidades/debilidades.component';
 import { FortalezasComponent } from './fortalezas/fortalezas.component';
-import { AmenazasFormularioComponent } from './amenazas/amenazas-formulario.component';
+import { FodaFormularioComponent } from './foda/foda-formulario.component';
 import { FortalezasFormularioComponent } from './fortalezas/fortalezas-formulario.component';
 import { DebilidadesFormularioComponent } from './debilidades/debilidades-formulario.component';
 import { OportunidadesFormularioComponent } from './oportunidades/oportunidades-formulario.component';
@@ -20,9 +20,9 @@ const panelfodaRoutes: Routes = [
 		component: PagesComponent,
 		canActivate: [LoginGuard],
 		children: [
-			{ path: 'amenazas', component: AmenazasComponent, data: {titulo: 'Amenazas', padre: 'FODA', opcion: 'Amenazas'} },
+			{ path: 'foda', component: FodaComponent, data: {titulo: 'FODA', padre: 'FODA'} },
 			// tslint:disable-next-line:max-line-length
-			{ path: 'amenazas_form/:acc/:id/:t', component: AmenazasFormularioComponent, data: {titulo: 'Mantenimiento de FODA', padre: 'FODA', opcion: 'Amenazas'} },
+			{ path: 'foda_form/:acc/:p/:d', component: FodaFormularioComponent, data: {titulo: 'FODA', padre: 'FODA'} },
 			{ path: 'oportunidades', component: OportunidadesComponent, data: {titulo: 'Oportunidades', padre: 'FODA', opcion: 'Oportunidades'} },
 			// tslint:disable-next-line:max-line-length
 			{ path: 'oportunidades_form/:acc/:id/:t', component: OportunidadesFormularioComponent, data: {titulo: 'Mantenimiento de FODA', padre: 'FODA', opcion: 'Oportunidades'} },
