@@ -8,16 +8,13 @@ import { PANELFODA_ROUTES } from './panelfoda.routes';
 // Modulos
 import { ComponentModule } from '../components/component.module';
 
+import { FiltraFodaPipe } from '../pipes/filtra-foda.pipe';
+
 // Componentes
 import { PanelfodaComponent } from './panelfoda.component';
 import { FodaComponent } from './foda/foda.component';
 import { FodaFormularioComponent } from './foda/foda-formulario.component';
-import { OportunidadesComponent } from './oportunidades/oportunidades.component';
-import { OportunidadesFormularioComponent } from './oportunidades/oportunidades-formulario.component';
-import { DebilidadesComponent } from './debilidades/debilidades.component';
-import { DebilidadesFormularioComponent } from './debilidades/debilidades-formulario.component';
-import { FortalezasComponent } from './fortalezas/fortalezas.component';
-import { FortalezasFormularioComponent } from './fortalezas/fortalezas-formulario.component';
+import { CardFodaComponent } from './card-foda/card-foda.component';
 
 
 @NgModule({
@@ -29,15 +26,11 @@ import { FortalezasFormularioComponent } from './fortalezas/fortalezas-formulari
 		ReactiveFormsModule
 	],
 	declarations: [
+		FiltraFodaPipe,
 		PanelfodaComponent,
 		FodaComponent,
 		FodaFormularioComponent,
-		OportunidadesComponent,
-		OportunidadesFormularioComponent,
-		DebilidadesComponent,
-		DebilidadesFormularioComponent,
-		FortalezasComponent,
-		FortalezasFormularioComponent
+		CardFodaComponent
 	]
 })
 export class PanelfodaModule { }

@@ -16,7 +16,6 @@ export class FodaComponent implements OnInit {
 	jsonData: any;
 	procesos: any[] = [];
 	cargando = false;
-	derechos: Derechosmenu = {};
 
 	constructor(private _sidebarService: SidebarService,
 				private _accesoService: AccesoService,
@@ -24,8 +23,6 @@ export class FodaComponent implements OnInit {
 
 	ngOnInit() {
 		this.cargando = true;
-		this.derechos = this._sidebarService.getDerechos('foda');
-
 		this._fodaService.getProcesosFODA()
 			.subscribe(
 				data => {

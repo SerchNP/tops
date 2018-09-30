@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <i class="{{icono}}"></i> {{cuestion_desc}}
+        </h5>
+        <h6 class="card-subtitle mb-2 text-right" *ngIf="derechos.insertar">
+            <button type="button" class="btn btn-sm btn-link text-success" (click)="agregar()">
+		  		<i class="fas fa-plus-circle"></i> Agregar
+			</button>
+        </h6>
+        <div class="list-group">
+            <div class="list-group-item list-group-item-light" *ngFor="let item of listado; let i = index">
+                <i class="fas fa-ellipsis-v"></i> {{item.foda_desc}}
+                <br />
+                <div class="row" *ngIf="derechos.editar || derechos.cancelar">
+                    <div class="col">
+                        <small>
+							<button type="button" class="btn btn-sm btn-link text-info" (click)="editar(item, i)" *ngIf="derechos.editar">
+								<i class="far fa-edit"></i> Editar
+							</button>
+							<button type="button" class="btn btn-sm btn-link text-danger" (click)="cancelar(item, i)" *ngIf="derechos.cancelar">
+								<i class="fas fa-trash-alt"></i> Cancelar
+							</button>
+						</small>
+                    </div>
+                    <div class="col text-right" *ngIf="derechos.editar">
+                        <a (click)="mover(listado, item, i, -1)" *ngIf="i > 0">
+                            <i class="far fa-arrow-alt-circle-up"></i>
+                        </a>&nbsp;
+                        <a (click)="mover(listado, item, i, +1)" *ngIf="i < (listado.length - 1)">
+                            <i class="far fa-arrow-alt-circle-down"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer" *ngIf="derechos.editar">
+        <div class="text-right">
+            <button type="button" class="btn btn-sm btn-link" [attr.disabled]="(!bandera? 'disabled': null)" (click)="editarPrioridad(proceso, cuestion)">
+				  <i class="fas fa-save"></i> Actualizar prioridad
+			  </button>
+        </div>
+    </div>
+</div>
