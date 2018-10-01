@@ -5,6 +5,7 @@ export { TokenGuard } from './guards/token.guard';
 export { HomeService } from './shared/home.service';
 export { AccesoService } from './shared/acceso.service';
 export { SidebarService } from './shared/sidebar.service';
+export { CatalogosService } from './shared/catalogos.service';
 // Catálogos
 export { UsuarioService } from './paneladm/usuario.service';
 export { IdentidadService } from './paneladm/identidad.service';

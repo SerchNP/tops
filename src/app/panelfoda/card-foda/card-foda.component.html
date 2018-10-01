@@ -12,8 +12,13 @@
             <div class="list-group-item list-group-item-light" *ngFor="let item of listado; let i = index">
                 <i class="fas fa-ellipsis-v"></i> {{item.foda_desc}}
                 <br />
-                <div class="row" *ngIf="derechos.editar || derechos.cancelar">
+                <div class="row">
                     <div class="col">
+                        {{item.autoriza_desc}}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col" *ngIf="(derechos.editar || derechos.cancelar) &&(item.autoriza !== 7 && item.autoriza !== 6 && item.autoriza !== 5 && item.autoriza !== 4)">
                         <small>
 							<button type="button" class="btn btn-sm btn-link text-info" (click)="editar(item, i)" *ngIf="derechos.editar">
 								<i class="far fa-edit"></i> Editar
@@ -23,13 +28,23 @@
 							</button>
 						</small>
                     </div>
-                    <div class="col text-right" *ngIf="derechos.editar">
+                    <div class="col text-right" *ngIf="derechos.editar && (item.autoriza !== 7 && item.autoriza !== 6 && item.autoriza !== 5 && item.autoriza !== 4)">
                         <a (click)="mover(listado, item, i, -1)" *ngIf="i > 0">
                             <i class="far fa-arrow-alt-circle-up"></i>
                         </a>&nbsp;
                         <a (click)="mover(listado, item, i, +1)" *ngIf="i < (listado.length - 1)">
                             <i class="far fa-arrow-alt-circle-down"></i>
                         </a>
+                    </div>
+                </div>
+                <div class="row" *ngIf="(item.autoriza === 7 || item.autoriza === 6)">
+                    <div class="col">
+                        {{item.motivo_cancela}}
+                    </div>
+                </div>
+                <div class="row" *ngIf="(item.autoriza === 5 || item.autoriza === 4)">
+                    <div class="col">
+                        {{item.motivo_rechaza}}
                     </div>
                 </div>
             </div>

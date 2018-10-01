@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { SidebarService, AccesoService, FodaService } from '../../services/services.index';
+import { AccesoService, ProcesosService } from '../../services/services.index';
 import swal from 'sweetalert2';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 @Component({
 	selector: 'app-foda',
@@ -16,14 +15,14 @@ export class FodaComponent implements OnInit {
 	jsonData: any;
 	procesos: any[] = [];
 	cargando = false;
+	cat_autoriza: any[] = [];
 
-	constructor(private _sidebarService: SidebarService,
-				private _accesoService: AccesoService,
-				private _fodaService: FodaService) {}
+	constructor(private _accesoService: AccesoService,
+				private _procesosService: ProcesosService) {}
 
 	ngOnInit() {
 		this.cargando = true;
-		this._fodaService.getProcesosFODA()
+		this._procesosService.getProcesosByUserArea()
 			.subscribe(
 				data => {
 					this.jsonData = data;
@@ -42,5 +41,4 @@ export class FodaComponent implements OnInit {
 	clearFilter() {
 		this.filtro.nativeElement.value = '';
 	}
-
 }

@@ -7,6 +7,7 @@ import { UsuarioService, ProcesosService } from './services.index';
 import { AreasService, PuestosService } from './services.index';
 import { IdentidadService } from './services.index';
 import { FodaService } from './panelfoda/foda.service';
+import { CatalogosService } from './shared/catalogos.service';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { FodaService } from './panelfoda/foda.service';
 		HomeService,
 		AccesoService,
 		SidebarService,
+		CatalogosService,
 		UsuarioService,
 		ProcesosService,
 		AreasService,

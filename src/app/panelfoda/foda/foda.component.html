@@ -12,21 +12,11 @@
 <div class="card-columns">
     <div class="card border-1 bg-light" *ngFor="let proceso of procesos">
         <div class="card-body text-dark">
-            <div class="card-title">
-                <h5 clas="font-weight-bold">{{proceso.proceso_desc}}</h5>
-            </div>
+            <h5 clas="card-title font-weight-bold"><i class="fas fa-project-diagram"></i> {{proceso.proceso_desc}}</h5>
             <h6 class="card-subtitle mb-2 text-muted">ID {{proceso.proceso}}</h6>
             <div class="card-footer text-right">
-                <small>
-					<a class="card-link" [routerLink]="['/panelfoda', 'foda_form', proceso.proceso, proceso.proceso_desc]">
-						<i class="far fa-eye"></i> Ver</a>
-					<!-- <a class="card-link" *ngIf="derechos.insertar" [routerLink]="['/panelfoda', 'foda_form', 'I', proceso.proceso, proceso.proceso_desc]">
-						<i class="fas fa-plus-circle"></i> Agregar</a>
-					<a class="card-link" *ngIf="derechos.editar" [routerLink]="['/panelfoda', 'foda_form', 'E', proceso.proceso, proceso.proceso_desc]">
-						<i class="far fa-edit"></i> Editar</a>
-					<a class="card-link" *ngIf="derechos.cancelar" [routerLink]="['/panelfoda', 'foda_form', 'C', proceso.proceso, proceso.proceso_desc]">
-						<i class="far fa-trash-alt"></i> Cancelar</a> -->
-				</small>
+                <a class="card-link" [routerLink]="['/panelfoda', 'foda_form', proceso.proceso, proceso.proceso_desc]">
+                    <i class="far fa-eye"></i> Ver FODA</a>
             </div>
         </div>
     </div>

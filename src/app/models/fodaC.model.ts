@@ -1,5 +1,4 @@
 export class FodaC {
-	clave: number;
 	proceso: number;
 	proceso_desc: string;
 	foda: number;

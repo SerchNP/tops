@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AccesoService, FodaService, SidebarService } from '../../services/services.index';
+import { AccesoService, FodaService, SidebarService, CatalogosService } from '../../services/services.index';
 import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 import swal from 'sweetalert2';
 
@@ -17,6 +17,7 @@ export class FodaFormularioComponent implements OnInit {
 	proceso: number;
 	proceso_desc: string;
 	derechos: Derechosmenu = {};
+	cat_autoriza: any[] = [];
 
 	cargando = false;
 	jsonData: any;
@@ -28,12 +29,19 @@ export class FodaFormularioComponent implements OnInit {
 				private router: Router,
 				private _sidebarService: SidebarService,
 				private _accesoService: AccesoService,
-				private _fodaService: FodaService) {
+				private _fodaService: FodaService,
+				private _catalogos: CatalogosService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.proceso = params['p'];
 			this.proceso_desc = params['d'];
 			this.titulo = this.proceso_desc;
 		});
+	}
+
+	getDescAutoriza: any = (autoriza: number) => {
+		const arr = this.cat_autoriza.filter(
+			value => value.autoriza === autoriza);
+		return arr[0].autoriza_desc;
 	}
 
 	ngOnInit() {
@@ -53,6 +61,26 @@ export class FodaFormularioComponent implements OnInit {
 						this._accesoService.logout();
 					}
 				});
+
+		this._catalogos.getCatalogoAutoriza()
+				.subscribe(
+					data => {
+						this.jsonData = data;
+						this.cat_autoriza = this.jsonData.cat_autoriza;
+					},
+					error => {
+						console.log(error);
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._accesoService.logout();
+						}
+					});
+	}
+
+	getDescAutorizaFunc (autoriza: number): string {
+		const arr = this.cat_autoriza.filter(
+			value => value.autoriza === autoriza);
+		return arr[0].autoriza_desc;
 	}
 
 }

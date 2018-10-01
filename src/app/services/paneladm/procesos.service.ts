@@ -41,6 +41,13 @@ export class ProcesosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getProcesosByUserArea() {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + '/paneladm/procesos/getProcesosByUserArea.json?token=' + token;
+		const headers = this.getHeadersGET();
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getAreasAsignadas(proceso: number) {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/paneladm/procesos/getAreasAsignadas.json?id=' + proceso + '&token=' + token;
