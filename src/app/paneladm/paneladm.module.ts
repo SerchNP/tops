@@ -21,10 +21,10 @@ import { AreasComponent } from './areas/areas.component';
 import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
+import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
+import { ObjetivosCalidadFormComponent } from './objetivos-calidad/objetivos-calidad-form.component';
 import { PeriodosComponent } from './periodos/periodos.component';
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
-import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
-
 
 
 @NgModule({
@@ -39,7 +39,9 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 		AreasComponent,
 		AreasFormularioComponent,
 		PuestosComponent,
-		PuestosFormularioComponent
+		PuestosFormularioComponent,
+		ObjetivosCalidadComponent,
+		ObjetivosCalidadFormComponent
 	],
 	exports: [
 		PaneladmComponent

@@ -6,8 +6,9 @@
             <p class="card-text">{{politica}}</p>
         </div>
     </div>
-    <div class="card-columns" style="column-count: 7;">
-        <div class="card" style="width: 10rem; height: 23rem;" *ngFor="let sist of listadoSistemas">
+    <!--<div class="card-columns" style="column-count: 7;">-->
+    <div class="card-group">
+        <div class="card" style="height: 25rem;" *ngFor="let sist of listadoSistemas">
             <img class="card-img-top img-thumbnail" src="assets/images/ujed.png" alt="{{sist.siglas}}">
             <div class="card-body" style="height: 8rem;">
                 <p class="card-text text-center"><b>{{sist.descrip}}</b></p>

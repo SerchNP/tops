@@ -1,27 +1,71 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import { URL_SGC, AUTH } from '../../config/config';
+import { URL_SGC, HeadersPOST, HeadersGET } from '../../config/config';
+import { Identidad } from '../../interfaces/identidad.interface';
 
 
 @Injectable()
 export class IdentidadService {
 
-	constructor(public http: HttpClient) { }
+	private RUTA = '/paneladm/identidad/';
 
-	private getHeadersGET(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH
-		});
-		return headers;
-	}
+	constructor(public http: HttpClient) { }
 
 	getIdentidad(consulta: string, sistema: number, tipo: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/identidad/getIdentidad.json?c=' + consulta + '&s=' + sistema + '&t=' + tipo + '&token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getIdentidad.json?c=' + consulta + '&s=' + sistema + '&t=' + tipo + '&token=' + token;
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map(resp => resp);
+	}
+
+	getIdentidadById(clave: number) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'getIdentidadById.json?clave=' + clave + '&token=' + token;
+		const headers = HeadersGET;
+
+		return this.http.get(url, { headers }).map(resp => resp);
+	}
+
+	insertarIdentidad(identidad: Identidad) {
+		/*if (proceso.proceso === null) {
+			proceso.proceso = 0;
+		}
+		if (proceso.predecesor === null) {
+			proceso.predecesor = 0;
+		}
+		if (proceso.predecesor_desc === null) {
+			proceso.predecesor_desc = '';
+		}*/
+
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'insertarIdentidad.json?token=' + token;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(identidad);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	modificarIdentidad(identidad: Identidad) {
+		/*if (proceso.predecesor === null) {
+			proceso.predecesor = 0;
+		}
+		if (proceso.predecesor_desc === null) {
+			proceso.predecesor_desc = '';
+		}*/
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'modificarIdentidad.json?token=' + token;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(identidad);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	cancelarIdentidad(identidad: number, motivo: string) {
+		const token = localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'cancelarIdentidad.json?token=' + token;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"identidad": ' + identidad + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 }

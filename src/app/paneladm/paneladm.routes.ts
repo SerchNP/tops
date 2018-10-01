@@ -11,6 +11,8 @@ import { AreasComponent } from './areas/areas.component';
 import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
+import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
+import { ObjetivosCalidadFormComponent } from './objetivos-calidad/objetivos-calidad-form.component';
 
 // Guards
 import { LoginGuard } from '../services/services.index';
@@ -48,6 +50,17 @@ const paneladmRoutes: Routes = [
 					{ path: 'usuarios', component: UsuariosComponent, data: {titulo: 'Catálogo de Usuarios', padre: 'Administración', opcion: 'Usuarios'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'usuarios_form/:acc/:id', component: UsuariosFormularioComponent, data: {titulo: 'Mantenimiento de Usuarios', padre: 'Administración', opcion: 'Usuarios'} }
+				]
+			},
+			{
+				path: 'submenuident',
+				children: [
+					// tslint:disable-next-line:max-line-length
+					{ path: 'ident_gral', component: UsuariosComponent, data: {titulo: 'Catálogo PC, M, V, A, N', padre: 'Administración', opcion: 'Generales de Identidad'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'ident_objetivos', component: ObjetivosCalidadComponent, data: {titulo: 'Catálogo de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'objetivos_form/:acc/:id', component: ObjetivosCalidadFormComponent, data: {titulo: 'Mantenimiento de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} }
 				]
 			}
 		]
