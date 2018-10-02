@@ -13,9 +13,12 @@ import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
 import { ObjetivosCalidadFormComponent } from './objetivos-calidad/objetivos-calidad-form.component';
+import { IdentidadComponent } from './identidad/identidad.component';
+import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 
 // Guards
 import { LoginGuard } from '../services/services.index';
+
 
 
 const paneladmRoutes: Routes = [
@@ -56,9 +59,20 @@ const paneladmRoutes: Routes = [
 				path: 'submenuident',
 				children: [
 					// tslint:disable-next-line:max-line-length
-					{ path: 'ident_gral', component: UsuariosComponent, data: {titulo: 'Catálogo PC, M, V, A, N', padre: 'Administración', opcion: 'Generales de Identidad'} },
+					{ path: 'identidad_p', component: IdentidadComponent, data: {titulo: 'Catálogo de Políticas de Calidad', padre: 'Administración', opcion: 'Políticas de Calidad'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'ident_objetivos', component: ObjetivosCalidadComponent, data: {titulo: 'Catálogo de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} },
+					{ path: 'identidad_a', component: IdentidadComponent, data: {titulo: 'Catálogo de Alcances', padre: 'Administración', opcion: 'Alcance'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'identidad_m', component: IdentidadComponent, data: {titulo: 'Catálogo de Misión', padre: 'Administración', opcion: 'Misión'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'identidad_v', component: IdentidadComponent, data: {titulo: 'Catálogo de Visión', padre: 'Administración', opcion: 'Visión'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'identidad_o', component: IdentidadComponent, data: {titulo: 'Catálogo de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'identidad_n', component: IdentidadComponent, data: {titulo: 'Catálogo de Notas', padre: 'Administración', opcion: 'Notas'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'identidad_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Catálogos de Identidad', padre: 'Administración', opcion: 'Identidad'} },
+
 					// tslint:disable-next-line:max-line-length
 					{ path: 'objetivos_form/:acc/:id', component: ObjetivosCalidadFormComponent, data: {titulo: 'Mantenimiento de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} }
 				]

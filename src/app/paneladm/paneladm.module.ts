@@ -25,6 +25,8 @@ import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad
 import { ObjetivosCalidadFormComponent } from './objetivos-calidad/objetivos-calidad-form.component';
 import { PeriodosComponent } from './periodos/periodos.component';
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
+import { IdentidadComponent } from './identidad/identidad.component';
+import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.co
 		PuestosComponent,
 		PuestosFormularioComponent,
 		ObjetivosCalidadComponent,
-		ObjetivosCalidadFormComponent
+		ObjetivosCalidadFormComponent,
+		IdentidadComponent,
+		IdentidadFormularioComponent
 	],
 	exports: [
 		PaneladmComponent

@@ -4,7 +4,7 @@ import { AccesoService, UsuarioService, AreasService, PuestosService } from '../
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Usuario } from '../../interfaces/usuarios.interface';
-import { correoValidator, correo2Validator, correo3Validator } from './correo-validator.directive';
+import { correoValidator, correo2Validator, correo3Validator } from '../../directivas/correo-validator.directive';
 
 @Component({
 	selector: 'app-usuarios-formulario',

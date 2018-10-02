@@ -9,22 +9,19 @@ import { Identidad } from '../../interfaces/identidad.interface';
 export class IdentidadService {
 
 	private RUTA = '/paneladm/identidad/';
+	private TOKEN = 'token=' + localStorage.getItem('token');
 
 	constructor(public http: HttpClient) { }
 
 	getIdentidad(consulta: string, sistema: number, tipo: string) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + this.RUTA + 'getIdentidad.json?c=' + consulta + '&s=' + sistema + '&t=' + tipo + '&token=' + token;
+		const url = URL_SGC + this.RUTA + 'getIdentidad.json?c=' + consulta + '&s=' + sistema + '&t=' + tipo + '&' + this.TOKEN;
 		const headers = HeadersGET;
-
 		return this.http.get(url, { headers }).map(resp => resp);
 	}
 
 	getIdentidadById(clave: number) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + this.RUTA + 'getIdentidadById.json?clave=' + clave + '&token=' + token;
+		const url = URL_SGC + this.RUTA + 'getIdentidadById.json?clave=' + clave + '&' + this.TOKEN;
 		const headers = HeadersGET;
-
 		return this.http.get(url, { headers }).map(resp => resp);
 	}
 

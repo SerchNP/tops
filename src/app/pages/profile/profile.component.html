@@ -2,73 +2,85 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Información del Usuario</h4>
+                <h4 class="card-title"><i class="fas fa-user-circle"></i> Mis Datos</h4>
                 <form [formGroup]="formaProfile">
                     <div class=" form-group">
                         <div class="form-group row">
                             <label for="usuario" class="col-sm-2 col-form-label text-right">Usuario</label>
                             <div class="col-sm-4">
-                                <input class="form-control" type="text" formControlName="usuario" disabled="disabled">
+                                <input class="form-control" type="text" formControlName="username" [attr.disabled]="true">
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <div class="form-group row">
                             <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
                             <div class="col-sm-1">
-                                <input class="form-control" type="text" formControlName="titulo" aria-describedby="tituloHelp" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="titulo" aria-describedby="tituloHelp" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.get('titulo').invalid)}">
                                 <small id="tituloHelp" class="form-text text-muted">Título</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.controls['titulo'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.get('nombre').invalid)}">
                                 <small id="nombreHelp" class="form-text text-muted">Nombre(s)</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.controls['nombre'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="paterno" aria-describedby="paternoHelp" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="paterno" aria-describedby="paternoHelp" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.get('paterno').invalid)}">
                                 <small id="paternoHelp" class="form-text text-muted">Primer Apellido</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.controls['paterno'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="materno" aria-describedby="maternoHelp" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="materno" aria-describedby="maternoHelp" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)">
                                 <small id="maternoHelp" class="form-text text-muted">Segundo Apellido</small>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <div class="form-group row">
                             <label for="email" class="col-sm-2 col-form-label text-right">Correo Electrónico</label>
-                            <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="email" aria-describedby="emailHelp" [attr.disabled]="true">
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" formControlName="email" aria-describedby="emailHelp" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.errors?.correoValidator)}">
                                 <small id="emailHelp" class="form-text text-muted">Principal</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.errors?.correoValidator)" class="invalid-feedback">Formato incorrecto</div>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="email2" aria-describedby="email2Help" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="email2" aria-describedby="email2Help" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.errors?.correo2Validator)}">
                                 <small id="email2Help" class="form-text text-muted">Adicional 1</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.errors?.correo2Validator)" class="invalid-feedback">Formato incorrecto</div>
                             </div>
                             <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="email3" aria-describedby="email3Help" [attr.disabled]="true">
+                                <input class="form-control" type="text" formControlName="email3" aria-describedby="email3Help" autocomplete="given-name" [attr.disabled]="(!banderaActualizar ? 'disabled' : null)" [ngClass]="{'is-invalid': (formaProfile.touched && formaProfile.errors?.correo3Validator)}">
                                 <small id="email3Help" class="form-text text-muted">Adicional 2</small>
+                                <div *ngIf="(formaProfile.touched && formaProfile.errors?.correo3Validator)" class="invalid-feedback">Formato incorrecto</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <div class="form-group row">
                             <label for="area" class="col-sm-2 col-form-label text-right">Área</label>
-                            <div class="col-sm-9">
-                                <input class="form-control" type="text" formControlName="area" aria-describedby="areaHelp" [attr.disabled]="true">
+                            <div class="col-sm-10">
+                                <select class="form-control" formControlName="area" aria-describedby="areaHelp" [attr.disabled]="true">
+									<option value="0" *ngIf="_acceso.tipoUsuario()==='S'">SIN AREA</option>	
+									<option value="{{area.area}}" *ngFor="let area of listadoArea">{{area.area_desc}}</option>
+								</select>
                                 <small id="areaHelp" class="form-text text-muted">Área de Trabajo</small>
                             </div>
                         </div>
-                    </div>
-                    <div class="form-group">
                         <div class="form-group row">
                             <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
-                            <div class="col-sm-3">
-                                <input class="form-control" type="text" formControlName="puesto" aria-describedby="puestoHelp" [attr.disabled]="true">
+                            <div class="col-sm-10">
+                                <select class="form-control" formControlName="puesto" aria-describedby="puestoHelp" [attr.disabled]="true">
+									<option value="0" *ngIf="_acceso.tipoUsuario()==='S'">SIN PUESTO</option>	
+									<option value="{{puesto.puesto}}" *ngFor="let puesto of listadoPuesto">{{puesto.puesto_desc}}</option>-->
+								</select>
                                 <small id="puestoHelp" class="form-text text-muted">Puesto de Trabajo</small>
                             </div>
                         </div>
                     </div>
                 </form>
+            </div>
+            <div class="card-footer">
+                <div class="col-sm-12 text-center">
+                    <button class="btn btn-outline-primary" (click)="banderaActualizar = true" *ngIf="!banderaActualizar">Actualizar Mis Datos</button> &nbsp;
+                    <button class="btn btn-outline-primary" (click)="guardarCambios()" type="submit" *ngIf="banderaActualizar" [disabled]="!formaProfile.valid"><i class="far fa-save"></i> Guardar</button> &nbsp;
+                    <button class="btn btn-outline-warning" (click)="validarPass()" *ngIf="!banderaActualizar">Actualizar Contraseña</button> &nbsp;
+                    <button class="btn btn-outline-success" [routerLink]="[ '/dashboard']"><i class="fas fa-home"></i></button>
+                </div>
             </div>
         </div>
     </div>

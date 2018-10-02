@@ -2,40 +2,27 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { URL_SGC, AUTH } from '../../config/config';
+import { URL_SGC, HeadersPOST, HeadersGET } from '../../config/config';
 import { Usuario } from '../../interfaces/usuarios.interface';
 
 @Injectable()
 export class UsuarioService {
 
+	private RUTA = '/paneladm/usuarios/';
+	private TOKEN = 'token=' + localStorage.getItem('token');
+
 	constructor(private http: HttpClient, private router: Router) { }
 
-	private getHeadersPOST(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH,
-			'Content-Type' : 'application/json'
-		});
-		return headers;
-	}
-
-	private getHeadersGET(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH
-		});
-		return headers;
-	}
-
 	getUsuarios() {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/usuarios/getUsuarios.json?token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getUsuarios.json?' + this.TOKEN;
+		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getUsuarioById(usuario: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/usuarios/getUsuarioById.json?user=' + usuario + '&token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getUsuarioById.json?user=' + usuario + '&' + this.TOKEN;
+		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
@@ -70,9 +57,8 @@ export class UsuarioService {
 		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/usuarios/insertarUsuario.json?token=' + token;
-		const headers = this.getHeadersPOST();
+		const url = URL_SGC + this.RUTA + 'insertarUsuario.json?' + this.TOKEN;
+		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
@@ -108,18 +94,50 @@ export class UsuarioService {
 		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/usuarios/editarUsuario.json?token=' + token;
-		const headers = this.getHeadersPOST();
+		const url = URL_SGC + this.RUTA + 'editarUsuario.json?' + this.TOKEN;
+		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelarUsuario(usuario: string, motivo: string) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/usuarios/cancelarUsuario.json?token=' + token;
-		const headers = this.getHeadersPOST();
+		const url = URL_SGC + this.RUTA + 'cancelarUsuario.json?' + this.TOKEN;
+		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	validarPassword(usuario: string, password: string) {
+		const url = URL_SGC + this.RUTA + 'validarPass.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "password": "' + btoa(password) + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	actualizarPassword(usuario: string, password: string) {
+		const url = URL_SGC + this.RUTA + 'actualizarPass.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "password": "' + btoa(password) + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	actualizarPerfil(usuario: Usuario) {
+		if (usuario.materno === null) {
+			delete usuario['materno'];
+		}
+		if (usuario.email === null) {
+			delete usuario['email'];
+		}
+		if (usuario.email2 === null) {
+			delete usuario['email2'];
+		}
+		if (usuario.email3 === null) {
+			delete usuario['email3'];
+		}
+
+		const url = URL_SGC + this.RUTA + 'actualizarPerfil.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
