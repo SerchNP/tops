@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PuestosService, AccesoService } from '../../services/services.index';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -12,51 +13,43 @@ import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 	styles: []
 })
 
-export class PuestosComponent implements OnInit {
+export class PuestosComponent implements OnInit, OnDestroy {
 
-	@ViewChild('puestos') dataTable: DataTableComponent;
+	private subscription: Subscription;
 
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	llave = 'puesto';
-	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 
-	columns: Array<any> = [
-		{title: 'Puesto', name: 'puesto', sort: false, columnName: 'puesto',
-			filtering: {filterString: '', placeholder: 'Puesto'}},
-		{title: 'Descripción', name: 'puesto_desc', sort: false, columnName: 'puesto_desc',
-			filtering: {filterString: '', placeholder: 'Descripción'}},
-		{title: 'ID Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'ID Predecesor'}},
-		{title: 'Predecesor', name: 'predecesor_desc', columnName: 'predecesor_desc',
-			filtering: {filterString: '', placeholder: 'Predecesor'}},
-		{title: 'Situación', name: 'estatus_desc', sort: false, columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}}
+	ruta_add =  ['/paneladm', 'puestos_form', 'I', 0];
+	select = false;
+	allowMultiSelect = false;
+
+	columns = [
+		{ columnDef: 'puesto', 			header: 'Puesto',		 cell: (puesto: any) => `${puesto.puesto}`},
+		{ columnDef: 'puesto_desc',   	header: 'Descripción', 	 cell: (puesto: any) => `${puesto.puesto_desc}`},
+		{ columnDef: 'predecesor', 		header: 'ID Predecesor', cell: (puesto: any) => `${puesto.predecesor}`},
+		{ columnDef: 'predecesor_desc', header: 'Predecesor', 	 cell: (puesto: any) => `${puesto.predecesor_desc}`},
+		{ columnDef: 'estatus_desc',	header: 'Situación',	 cell: (puesto: any) => `${puesto.estatus_desc}`}
 	];
 
-	constructor(public _puestosService: PuestosService, public _accesoService: AccesoService, private router: Router) {
+	selection = new SelectionModel<{}>(true, []);
+
+	constructor(public _accesoService: AccesoService,
+				public _puestosService: PuestosService,
+				private router: Router) {
 	}
 
 	ngOnInit() {
 		this.cargando = true;
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
-
-		this._puestosService.getPuestos()
+		this.subscription = this._puestosService.getPuestos()
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.listado = this.jsonData.puestos;
 					this._accesoService.guardarStorage(this.jsonData.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.listado;
-					this.dataTable.length = this.listado.length;
-					this.dataTable.ruta_add = ['/paneladm', 'puestos_form', 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
-
 					this.cargando = false;
 				},
 				error => {
@@ -67,11 +60,11 @@ export class PuestosComponent implements OnInit {
 				});
 	}
 
-	detectarAccion(accion: any): void {
-		if (accion.column === 'action_e') {
-			this.editarPuesto(accion.row);
-		} else if (accion.column === 'action_c') {
-			this.borrarPuesto(accion.row);
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'E') {
+			this.editarPuesto(datos.row);
+		} else if (datos.accion === 'C') {
+			this.borrarPuesto(datos.row);
 		}
 	}
 
@@ -84,8 +77,9 @@ export class PuestosComponent implements OnInit {
 	}
 
 	async borrarPuesto(puesto: any) {
+		console.log(puesto);
 		if (puesto.estatus === 'N') {
-			swal('ERROR', 'El puesto ya está previamente cancelado', 'error');
+			swal('ERROR', 'El puesto ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
@@ -105,7 +99,7 @@ export class PuestosComponent implements OnInit {
 					}
 				});
 				if (motivo !== undefined) {
-					this._puestosService.cancelarPuesto(puesto.puesto, motivo.toUpperCase())
+					this.subscription = this._puestosService.cancelarPuesto(puesto.puesto, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							this._accesoService.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
@@ -120,6 +114,11 @@ export class PuestosComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

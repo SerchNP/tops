@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
-import swal from 'sweetalert2';
+import { FodaService, AccesoService } from '../../services/services.index';
+import { Derechos } from '../../interfaces/derechos.interface';
 import { FodaC } from '../../models/fodaC.model';
-import { FodaService, AccesoService, CatalogosService } from '../../services/services.index';
-import { FodaComponent } from '../foda/foda.component';
-import { FodaFormularioComponent } from '../foda/foda-formulario.component';
+import swal from 'sweetalert2';
+
 
 @Component({
 	selector: 'app-card-foda',
@@ -16,15 +15,15 @@ export class CardFodaComponent implements OnInit {
 	@Input() cuestion: string;
 	@Input() cuestion_desc: string;
 	@Input() proceso: number;
-	@Input() derechos: Derechosmenu = {};
+	@Input() derechos: Derechos = {};
 	@Input() icono: string;
 
 	bandera: boolean;
 	jsonData: any;
+	cat_autoriza: any [] = [];
 
 	constructor(private _accesoService: AccesoService,
-				private _fodaService: FodaService,
-				public _fodaComp: FodaFormularioComponent) {}
+				private _fodaService: FodaService) {}
 
 	ngOnInit() {
 	}
@@ -42,11 +41,10 @@ export class CardFodaComponent implements OnInit {
 			const foda: FodaC = new FodaC();
 			foda.cuestion = this.cuestion;
 			foda.cuestion_desc = this.cuestion_desc;
-			foda.foda = -1;
 			foda.foda_desc = fodaDESC;
 			foda.proceso = this.proceso;
 			foda.autoriza = 1;
-			foda.autoriza_desc = this._fodaComp.getDescAutoriza(foda.autoriza);
+			foda.autoriza_desc = 'PENDIENTE';
 
 			this._fodaService.insertaFODA(foda)
 				.subscribe((data: any) => {
@@ -65,67 +63,7 @@ export class CardFodaComponent implements OnInit {
 		}
 	}
 
-	async editarPrioridad(foda: FodaC, posicion) {
-		const { value: fodaDESC } = await swal({
-			title: '¡Atención!',
-			text: '¿Está seguro que desea actualizar la prioridad en la sección ' + this.cuestion_desc + '?',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Aceptar',
-			confirmButtonColor: '#B22222'
-		});
-		if (fodaDESC !== undefined) {
-			console.log('actualiza prioridad');
-			this.bandera = false;
-			/*this._procesosService.cancelaProceso(proceso.proceso, motivo.toUpperCase())
-				.subscribe((data: any) => {
-				  swal('Atención!!!', data.message, 'success');
-				  this.ngOnInit();
-				},
-				  error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-					  this._accesoService.logout();
-					}
-				  });*/
-		}
-	}
-
-	async editar(foda: FodaC, posicion) {
-		if (foda.autoriza === 7 || foda.autoriza === 6) {
-			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra cancelada', 'error'
-			);
-		} else if (foda.autoriza === 5 || foda.autoriza === 4) {
-			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra rechazada', 'error'
-			);
-		} else {
-			const { value: fodaDESC } = await swal({
-				title: 'Ingrese los nuevos foda de la ' + this.cuestion_desc,
-				input: 'textarea',
-				showCancelButton: true,
-				inputValue: foda.foda_desc,
-				inputValidator: value => {
-					return (!value && 'Debe ingresar los nuevos foda de la ' + this.cuestion_desc);
-				}
-			});
-			if (fodaDESC !== undefined) {
-				this._fodaService.editaFODA(foda.foda, fodaDESC, this.cuestion_desc)
-						.subscribe((data: any) => {
-							swal('Atención!!!', data.message, 'success');
-							this.ngOnInit();
-							this.listado[posicion]['foda_desc'] = fodaDESC;
-						},
-						error => {
-							swal('ERROR', error.error.message, 'error');
-							if (error.error.code === 401) {
-								this._accesoService.logout();
-							}
-						});
-			}
-		}
-	}
-
-	async cancelar(foda: FodaC, posicion) {
+	async cancelar(foda: FodaC, index) {
 		if (foda.autoriza === 7 || foda.autoriza === 6) {
 			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra cancelada', 'error'
 			);
@@ -142,23 +80,49 @@ export class CardFodaComponent implements OnInit {
 				confirmButtonColor: '#B22222'
 			});
 			if (objFoda) {
-				const { value: motivo } = await swal({
-					title: 'Ingrese el motivo de cancelación de la ' + this.cuestion_desc,
-					input: 'text',
-					showCancelButton: true,
-					inputValidator: value => {
-						return (!value && 'Debe ingresar el motivo de cancelación'
-						);
+				if (foda.autoriza === 1) {
+					this.cancelaFoda (foda, 'D', index);
+				} else {
+					const { value: motivo } = await swal({
+						title: 'Ingrese el motivo de cancelación de la ' + this.cuestion_desc,
+						input: 'text',
+						showCancelButton: true,
+						inputValidator: value => {
+							return (!value && 'Debe ingresar el motivo de cancelación'
+							);
+						}
+					});
+					if (motivo !== undefined) {
+						this.cancelaFoda (foda, 'C', index, motivo.toUpperCase());
 					}
-				});
-				if (motivo !== undefined) {
-					this._fodaService.cancelaFODA(foda.foda, motivo.toUpperCase(), this.cuestion_desc)
+				}
+			}
+		}
+	}
+
+	async editar(foda: FodaC, index) {
+		if (foda.autoriza === 7 || foda.autoriza === 6) {
+			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra cancelada', 'error'
+			);
+		} else if (foda.autoriza === 5 || foda.autoriza === 4) {
+			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra rechazada', 'error'
+			);
+		} else {
+			const { value: fodaDESC } = await swal({
+				title: 'Ingrese los nuevos datos de la ' + this.cuestion_desc,
+				input: 'textarea',
+				showCancelButton: true,
+				inputValue: foda.foda_desc,
+				inputValidator: value => {
+					return (!value && 'Debe ingresar los nuevos datos de la ' + this.cuestion_desc);
+				}
+			});
+			if (fodaDESC !== undefined) {
+				this._fodaService.editaFODA(foda.foda, fodaDESC, this.cuestion_desc)
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
-							foda.autoriza = 6;
-							foda.autoriza_desc = this._fodaComp.getDescAutoriza(foda.autoriza);
-							foda.motivo_cancela = motivo.toUpperCase();
+							this.listado[index]['foda_desc'] = fodaDESC;
 						},
 						error => {
 							swal('ERROR', error.error.message, 'error');
@@ -166,8 +130,21 @@ export class CardFodaComponent implements OnInit {
 								this._accesoService.logout();
 							}
 						});
-				}
 			}
+		}
+	}
+
+	async editarPrioridad(foda: FodaC, index) {
+		const { value: fodaDESC } = await swal({
+			title: '¡Atención!',
+			text: '¿Está seguro que desea actualizar la prioridad en la sección ' + this.cuestion_desc + '?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (fodaDESC !== undefined) {
+			this.bandera = false;
 		}
 	}
 
@@ -177,5 +154,26 @@ export class CardFodaComponent implements OnInit {
 		if (!this.bandera) {
 			this.bandera = true;
 		}
+	}
+
+	cancelaFoda (foda: FodaC, modo: string, index: number, motivo?: string) {
+		this._fodaService.cancelaFODA(foda.foda, motivo, this.cuestion_desc)
+			.subscribe((data: any) => {
+				swal('Atención!!!', data.message, 'success');
+				this.ngOnInit();
+				if (modo === 'D') {
+					this.listado.splice(index, 1);
+				} else {
+					foda.autoriza = 6;
+					foda.autoriza_desc = 'CANCELACIÓN PENDIENTE';
+					foda.motivo_cancela = motivo.toUpperCase();
+				}
+			},
+			error => {
+				swal('ERROR', error.error.message, 'error');
+				if (error.error.code === 401) {
+					this._accesoService.logout();
+				}
+			});
 	}
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AccesoService, ProcesosService } from '../../services/services.index';
+import { AccesoService, ProcesosService, DerechosService } from '../../services/services.index';
 import swal from 'sweetalert2';
+import { Derechos } from '../../interfaces/derechos.interface';
 
 @Component({
 	selector: 'app-foda',
@@ -14,8 +15,10 @@ export class FodaComponent implements OnInit {
 	tipoUser: string;
 	jsonData: any;
 	procesos: any[] = [];
+	procesosMostrar: any[] = [];
 	cargando = false;
 	cat_autoriza: any[] = [];
+	derechos: Derechos;
 
 	constructor(private _accesoService: AccesoService,
 				private _procesosService: ProcesosService) {}
@@ -27,6 +30,7 @@ export class FodaComponent implements OnInit {
 				data => {
 					this.jsonData = data;
 					this.procesos = this.jsonData.procesos;
+					this.procesosMostrar = this.jsonData.procesos;
 					this._accesoService.guardarStorage(this.jsonData.token);
 					this.cargando = false;
 				},
@@ -40,5 +44,22 @@ export class FodaComponent implements OnInit {
 
 	clearFilter() {
 		this.filtro.nativeElement.value = '';
+		this.procesosMostrar = this.procesos;
+	}
+
+	filtraProcesos(filtro: string) {
+		this.procesosMostrar = [];
+		if (!filtro) {
+			this.procesosMostrar = this.procesos;
+		} else {
+			filtro = filtro.toLowerCase();
+			// tslint:disable-next-line:prefer-const
+			for (let proc of this.procesos) {
+				const procDesc = proc.proceso_desc.toLowerCase();
+				if (procDesc.indexOf(filtro) >= 0) {
+					this.procesosMostrar.push(proc);
+				}
+			}
+		}
 	}
 }

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UsuarioService, AccesoService } from '../../services/services.index';
+import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
 
 @Component({
 	selector: 'app-usuarios',
@@ -18,7 +18,7 @@ export class UsuariosComponent implements OnInit {
 	data: any[] = [];
 	cargando = false;
 	llave = 'usuario';
-	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 
 	columns: Array<any> = [
 		{title: 'Usuario', name: 'usuario', columnName: 'usuario',

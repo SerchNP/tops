@@ -1,4 +1,6 @@
-<div class="row" *ngIf="!cargando">
+<p>Se está implementando un nuevo DataTable</p>
+<!--
+	<div class="row" *ngIf="!cargando">
     <div class="col-md-5 input-group">
         <input #filtro class="form-control" *ngIf="config.filtering" placeholder="Buscar" [ngTableFiltering]="config.filtering" (tableChanged)="onChangeTable(config)" />
         <div class="input-group-btn">
@@ -18,4 +20,4 @@
 </ng-table>
 <pagination *ngIf="config.paging" class="pagination-sm" [(ngModel)]="page" [totalItems]="length" [itemsPerPage]="itemsPerPage" [maxSize]="maxSize" [boundaryLinks]="true" [rotate]="false" (pageChanged)="onChangeTable(config, $event)" (numPages)="numPages = $event">
 </pagination>
-<pre *ngIf="config.paging" class="card card-block card-header">Página {{page}} de {{numPages}}</pre>
+<pre *ngIf="config.paging" class="card card-block card-header">Página {{page}} de {{numPages}}</pre> -->

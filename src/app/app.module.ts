@@ -18,6 +18,7 @@ import { ServicesModule } from './services/services.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
 	declarations: [
@@ -33,7 +34,8 @@ import { DetalleComponent } from './home/detalle.component';
 		TreeModule,
 		PagesModule,
 		SharedModule,
-		ServicesModule
+		ServicesModule,
+		BrowserAnimationsModule
 	],
 	schemas: [ NO_ERRORS_SCHEMA ],
 	providers: [],

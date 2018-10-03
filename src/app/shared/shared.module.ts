@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { InfoUserComponent } from './info-user/info-user.component';
 import { NoPageComponent } from './no-page/no-page.component';
 
+
 @NgModule({
 	imports: [
 		RouterModule,

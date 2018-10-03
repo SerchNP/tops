@@ -1,39 +1,39 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AccesoService } from '../../services/shared/acceso.service';
-import swal from 'sweetalert2';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { Derechos } from '../../interfaces/derechos.interface';
 import { ProcesosService } from '../../services/services.index';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { SelectionModel } from '@angular/cdk/collections';
+import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component ({
 	selector: 'app-area-proceso',
-	templateUrl: './area-proceso.component.html',
-	styles: []
+	templateUrl: './area-proceso.component.html'
 })
-export class AreaProcesoComponent implements OnInit {
+export class AreaProcesoComponent implements OnInit, OnDestroy {
 
-	@ViewChild('areas_asignadas') dataTable: DataTableComponent;
+	private subscription: Subscription;
 
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	llave = 'clave';
-	derechos: Derechosmenu = {insertar: true, editar: false, cancelar: true}; // No tiene opcion de editar
+	derechos: Derechos = {insertar: true, editar: false, cancelar: true}; // No tiene opcion de editar
+	ruta_add =  ['/paneladm', 'submenuproc', 'area_proceso_form', 'I', 0];
+	select = false;
+	allowMultiSelect = false;
 
-	columns: Array<any> = [
-		{title: 'Clave', name: 'clave', columnName: 'clave'},
-		{title: 'ID Proceso', name: 'proceso', columnName: 'proceso',
-			filtering: {filterString: '', placeholder: 'ID Proceso'}},
-		{title: 'Proceso', name: 'proceso_desc', sort: 'asc', columnName: 'proceso_desc',
-			filtering: {filterString: '', placeholder: 'Proceso'}},
-		{title: 'ID Área', name: 'area', columnName: 'area',
-			filtering: {filterString: '', placeholder: 'ID Área'}},
-		{title: 'Área', name: 'area_desc', columnName: 'area_desc',
-			filtering: {filterString: '', placeholder: 'Área'}},
-		{title: 'Tipo Área', name: 'tipo_area_desc', columnName: 'tipo_area_desc',
-			filtering: {filterString: '', placeholder: 'Tipo Área'}},
-		{title: 'Situación', name: 'activa_desc', columnName: 'activa_desc'}
+	columns = [
+		{ columnDef: 'clave', 			header: 'Clave',		cell: (area_proceso: any) => `${area_proceso.clave}`},
+		{ columnDef: 'proceso',     	header: 'ID Proceso',	cell: (area_proceso: any) => `${area_proceso.proceso}`},
+		{ columnDef: 'proceso_desc',   	header: 'Proceso', 		cell: (area_proceso: any) => `${area_proceso.proceso_desc}`},
+		{ columnDef: 'area',			header: 'ID Área', 		cell: (area_proceso: any) => `${area_proceso.area}`},
+		{ columnDef: 'area_desc',   	header: 'Área',			cell: (area_proceso: any) => `${area_proceso.area_desc}`},
+		{ columnDef: 'tipo_area_desc',  header: 'Tipo Área',	cell: (area_proceso: any) => `${area_proceso.tipo_area_desc}`},
+		{ columnDef: 'activa_desc',		header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.activa_desc}`}
 	];
+
+	selection = new SelectionModel<{}>(true, []);
 
 	constructor(private _accesoService: AccesoService,
 				private _procesosService: ProcesosService) {
@@ -41,23 +41,12 @@ export class AreaProcesoComponent implements OnInit {
 
 	ngOnInit() {
 		this.cargando = true;
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
-
-		this._procesosService.getAreasAsignadas(0)
+		this.subscription = this._procesosService.getAreasAsignadas(0)
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.listado = this.jsonData.areas_asignadas;
 					this._accesoService.guardarStorage(this.jsonData.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.listado;
-					this.dataTable.length = this.listado.length;
-					this.dataTable.ruta_add = ['/paneladm', 'submenuproc', 'area_proceso_form', 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
-
 					this.cargando = false;
 				},
 				error => {
@@ -66,12 +55,6 @@ export class AreaProcesoComponent implements OnInit {
 						this._accesoService.logout();
 					}
 				});
-	}
-
-	detectarAccion(accion: any): void {
-		if (accion.column === 'action_c') {
-			this.cancelaAreaAsignada(accion.row);
-		}
 	}
 
 	async cancelaAreaAsignada(areaPproceso: any) {
@@ -110,6 +93,17 @@ export class AreaProcesoComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'C') {
+			this.cancelaAreaAsignada(datos.row);
+		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

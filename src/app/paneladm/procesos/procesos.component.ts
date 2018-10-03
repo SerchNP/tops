@@ -3,7 +3,7 @@ import { ProcesosService, AccesoService } from '../../services/services.index';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { Derechos } from '../../interfaces/derechos.interface';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class ProcesosComponent implements OnInit {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'proceso';
-	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 
 	length = 0;
 	columns: Array<any> = [

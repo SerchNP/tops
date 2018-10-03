@@ -3,7 +3,7 @@ import { AreasService, AccesoService } from '../../services/services.index';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { DataTableComponent } from '../../components/data-table/data-table.component';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { Derechos } from '../../interfaces/derechos.interface';
 
 @Component({
 	selector: 'app-areas',
@@ -18,7 +18,7 @@ export class AreasComponent implements OnInit {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'area';
-	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 
 	columns: Array<any> = [
 		{title: 'Área', name: 'area', columnName: 'area',

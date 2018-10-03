@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { Derechos } from '../../interfaces/derechos.interface';
 
 @Component({
 	selector: 'app-data-table',
@@ -15,7 +15,7 @@ export class DataTableComponent implements OnInit {
 	@Input() columns: Array<any> = [];
 	@Input() length = 0;
 	@Input() llave: string;
-	@Input() derechos: Derechosmenu;
+	@Input() derechos: Derechos;
 	@Input() ruta_add: any[];
 	@Input() otra_accion1: boolean;
 	@Input() ruta_acc1: any[];

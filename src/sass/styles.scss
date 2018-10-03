@@ -56,9 +56,19 @@ ng-table>table>tbody>tr>td {
 }
 
 .angular-tree-component {
-	padding: 10px !important;
+    padding: 10px !important;
 }
 
 .toggle-children {
-	background-image: url('../../src/assets/images/icons/arrow.png') !important;
+    background-image: url('../../src/assets/images/icons/arrow.png') !important;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
 }

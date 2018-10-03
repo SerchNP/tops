@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AccesoService, FodaService, SidebarService, CatalogosService } from '../../services/services.index';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
+import { FormGroup } from '@angular/forms';
+import { AccesoService, FodaService, CatalogosService, DerechosService } from '../../services/services.index';
+import { Derechos } from '../../interfaces/derechos.interface';
 import swal from 'sweetalert2';
 
 @Component({
@@ -12,11 +12,10 @@ import swal from 'sweetalert2';
 export class FodaFormularioComponent implements OnInit {
 
 	private sub: any;
-	fodaID: number;
 	titulo: string;
 	proceso: number;
 	proceso_desc: string;
-	derechos: Derechosmenu = {};
+	derechos: Derechos = {};
 	cat_autoriza: any[] = [];
 
 	cargando = false;
@@ -26,8 +25,7 @@ export class FodaFormularioComponent implements OnInit {
 	forma: FormGroup;
 
 	constructor(private activatesRoute: ActivatedRoute,
-				private router: Router,
-				private _sidebarService: SidebarService,
+				private _derechosService: DerechosService,
 				private _accesoService: AccesoService,
 				private _fodaService: FodaService,
 				private _catalogos: CatalogosService) {
@@ -38,15 +36,9 @@ export class FodaFormularioComponent implements OnInit {
 		});
 	}
 
-	getDescAutoriza: any = (autoriza: number) => {
-		const arr = this.cat_autoriza.filter(
-			value => value.autoriza === autoriza);
-		return arr[0].autoriza_desc;
-	}
-
 	ngOnInit() {
 		this.cargando = true;
-		this.derechos = this._sidebarService.getDerechos('foda');
+		this.derechos = this._derechosService.getDerechosProceso(this.proceso);
 		this._fodaService.getFODAByProceso(this.proceso)
 			.subscribe(
 				data => {
@@ -61,26 +53,6 @@ export class FodaFormularioComponent implements OnInit {
 						this._accesoService.logout();
 					}
 				});
-
-		this._catalogos.getCatalogoAutoriza()
-				.subscribe(
-					data => {
-						this.jsonData = data;
-						this.cat_autoriza = this.jsonData.cat_autoriza;
-					},
-					error => {
-						console.log(error);
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._accesoService.logout();
-						}
-					});
-	}
-
-	getDescAutorizaFunc (autoriza: number): string {
-		const arr = this.cat_autoriza.filter(
-			value => value.autoriza === autoriza);
-		return arr[0].autoriza_desc;
 	}
 
 }

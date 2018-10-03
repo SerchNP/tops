@@ -5,30 +5,40 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Modulos
 import { TreeModule } from 'angular-tree-component';
-import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { MatTableModule, MatSortModule, MatCheckboxModule,
+		MatPaginatorModule, MatFormFieldModule, MatInputModule,
+		MatProgressSpinnerModule } from '@angular/material';
 
 // Componentes
 import { DataTableComponent } from './data-table/data-table.component';
 import { ArbolComponent } from '../components/arbol/arbol.component';
+import { MatDataTableComponent } from './mat-data-table/mat-data-table.component';
+
 
 
 @NgModule({
 	declarations: [
 		ArbolComponent,
-		DataTableComponent
+		DataTableComponent,
+		MatDataTableComponent
 	],
 	exports: [
 		ArbolComponent,
-		DataTableComponent
+		DataTableComponent,
+		MatDataTableComponent
 	],
 	imports: [
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
 		TreeModule.forRoot(),
-		PaginationModule.forRoot(),
-		Ng2TableModule
+		MatTableModule,
+		MatSortModule,
+		MatCheckboxModule,
+		MatPaginatorModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatProgressSpinnerModule
 	]
 })
 

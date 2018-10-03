@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { URL_SGC, AUTH } from '../../config/config';
 import { FodaC } from '../../models/fodaC.model';
+import 'rxjs/add/observable/of';
 
 @Injectable()
 export class FodaService {
@@ -25,13 +26,6 @@ export class FodaService {
 		return headers;
 	}
 
-	getFODA (tipo: string) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/foda/getFODA.json?token=' + token + '&t=' + tipo;
-		const headers = this.getHeadersGET();
-		return this.http.get(url, {headers}).map(resp => resp);
-	}
-
 	getFODAByProceso (proceso: number) {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + '/foda/getFODAByProceso.json?token=' + token + '&p=' + proceso;
@@ -39,9 +33,9 @@ export class FodaService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getTipoFODA() {
+	getFODAByProcesoP (proceso: number) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/foda/getTipoFODA.json?token=' + token;
+		const url = URL_SGC + '/foda/getFODAByProcesoP.json?token=' + token + '&p=' + proceso;
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
