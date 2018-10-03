@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
-import { Derechosmenu } from '../../interfaces/derechosmenu.interface';
-import { IdentidadService, AccesoService } from '../../services/services.index';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IdentidadService, AccesoService } from '../../services/services.index';
+import { Derechos } from '../../interfaces/derechos.interface';
+import { SelectionModel } from '@angular/cdk/collections';
 import swal from 'sweetalert2';
+
 
 @Component({
 	selector: 'app-identidad',
@@ -12,59 +13,47 @@ import swal from 'sweetalert2';
 
 export class IdentidadComponent implements OnInit, OnDestroy {
 
-	@ViewChild('dtIdentidad') dataTable: DataTableComponent;
-
 	private sub: any;
 	path = '';
 	tipo = '';
-
 	cargando = false;
-	derechos: Derechosmenu = {insertar: true, editar: true, cancelar: true};
 	listado: any[] = [];
-	columns: Array<any> = [
-		{title: 'Id Sistema', name: 'sistema', columnName: 'sistema',
-			filtering: {filterString: '', placeholder: 'Id S'}},
-		{title: 'Sistema', name: 'sistema_desc', columnName: 'sistema_desc',
-			filtering: {filterString: '', placeholder: 'Sistema'}},
-		// {title: 'Número', name: 'numero', columnName: 'numero'},
-		{title: 'Descripción', name: 'descrip', columnName: 'descrip',
-			filtering: {filterString: '', placeholder: 'Descripción'}},
-		{title: 'Situación', name: 'autoriza_desc', columnName: 'autoriza_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}},
-		{title: 'Estatus', name: 'activo_desc', columnName: 'activo_desc',
-			filtering: {filterString: '', placeholder: 'Estatus'}}
+	ruta_add: any[] = [];
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	select = false;
+	allowMultiSelect = false;
+	selection = new SelectionModel<{}>(true, []);
+	columns = [
+		{columnDef: 'sistema',			header: 'Id Sistema',	cell: (identidad: any) => `${identidad.sistema}`},
+		{columnDef: 'sistema_desc',		header: 'Sistema',		cell: (identidad: any) => `${identidad.sistema_desc}`},
+		{columnDef: 'descrip',			header: 'Descripción',  cell: (identidad: any) => `${identidad.descrip}`},
+		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.sistema_desc}`},
+		{columnDef: 'activo_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.sistema_desc}`}
 	];
 
 	constructor(private activatedRoute: ActivatedRoute, private router: Router,
 				public _acceso: AccesoService, public _identidad: IdentidadService) {
 		this.sub = this.activatedRoute.url.subscribe(url => {
 			this.path = url[0].path;
+			this.tipo = this.getTipo(this.path);
+			if (this.tipo === 'O') {
+				this.columns.splice(2, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
+			}
+			this.ruta_add = ['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'I', 0];
 		});
 	}
 
 	ngOnInit() {
 		this.cargando = true;
-		this.tipo = this.getTipo(this.path);
-		if (this.tipo === 'O') {
-			this.columns.splice(2, 0, {title: 'Número', name: 'numero', columnName: 'numero'});
-		}
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
 		this._identidad.getIdentidad('C', 0, this.tipo)
 			.subscribe(
 				(data: any) => {
 					this.listado = data.identidad;
 					this._acceso.guardarStorage(data.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.listado;
-					this.dataTable.length = this.listado.length;
-					this.dataTable.ruta_add = ['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
 					this.cargando = false;
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -90,10 +79,10 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	}
 
 	detectarAccion(accion: any): void {
-		if (accion.column === 'action_e') {
+		if (accion.accion === 'E') {
 			this.editarIdentidad(accion.row);
-		} else if (accion.column === 'action_c') {
-			// this.borrarArea(accion.row);
+		} else if (accion.accion === 'C') {
+			this.cancelarIdentidad(accion.row);
 		}
 	}
 
@@ -102,6 +91,46 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 			swal('ERROR', 'El registro seleccionado no se puede modificar porque está cancelado', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'U', identidad.clave]);
+		}
+	}
+
+	async cancelarIdentidad(identidad: any) {
+		if (identidad.activo === 'N') {
+			swal('ERROR', 'El registro seleccionado ya se encuentra cancelado', 'error');
+		} else {
+			const {value: respuesta} = await swal({
+				title: 'Atención!!!',
+				text: 'Está seguro que desea cancelar el registro seleccionado?',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Aceptar',
+				confirmButtonColor: '#B22222'
+			});
+			if (respuesta) {
+				const {value: motivo} = await swal({
+					title: 'Ingrese el motivo de cancelación del registro seleccionado',
+					input: 'text',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return !value && 'Necesita ingresar el motivo de cancelación';
+					}
+				});
+				if (motivo !== undefined) {
+					console.log(identidad.clave);
+					this._identidad.cancelarIdentidad(identidad.clave, motivo.toUpperCase())
+						.subscribe((data: any) => {
+							this._acceso.guardarStorage(data.token);
+							swal('Atención!!!', data.message, 'success');
+							this.ngOnInit();
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+				}
+			}
 		}
 	}
 

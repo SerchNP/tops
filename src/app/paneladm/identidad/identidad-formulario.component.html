@@ -13,7 +13,7 @@
         <div class="form-group row">
             <label for="sistema" class="col-sm-2 col-form-label text-right">Sistema</label>
             <div class="col-sm-5">
-                <select class="form-control" name="sistema" formControlName="sistema" [attr.disabled]="(accion === 'U' ? 'disabled' : null" [ngStyle]="{'border-color': (forma.touched && sistema.invalid ? '#dc3545' : '#ced4da')}">
+                <select class="form-control" name="sistema" formControlName="sistema" [attr.disabled]="(accion === 'U' || sis_default !== '' ? 'disabled' : null)" [ngStyle]="{'border-color': (forma.touched && sistema.invalid ? '#dc3545' : '#ced4da')}">
 					<option value="">Seleccionar</option>
 					<option value="{{item.sistema}}" *ngFor="let item of sistemas">{{item.descrip}}</option>
 				</select>
@@ -24,7 +24,7 @@
         <div class="form-group row">
             <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Elemento</label>
             <div class="col-sm-5">
-                <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (forma.touched && tipo.invalid ? '#dc3545' : '#ced4da')}">
+                <select class="form-control" name="tipo" formControlName="tipo" [attr.disabled]="'disabled'" [ngStyle]="{'border-color': (forma.touched && tipo.invalid ? '#dc3545' : '#ced4da')}">
 					<option value="">Seleccionar</option>
 					<option value="P">Política de Calidad</option>
 					<option value="A">Alcance</option>
@@ -39,27 +39,28 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="predecesor" class="col-sm-2 col-form-label text-right">Descripción</label>
-            <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="numero" aria-describedby="numeroHelp">
+            <label for="descrip" class="col-sm-2 col-form-label text-right">Descripción</label>
+            <div class="col-sm-1">
+                <input class="form-control" type="number" formControlName="numero" aria-describedby="numeroHelp" [attr.disabled]="(tipo_i !== 'O' ? 'disabled' : null)" [ngClass]="{'is-invalid': forma.controls['numero'].touched && forma.controls['numero'].invalid}">
                 <small id="numeroHelp" class="form-text text-muted">Consecutivo</small>
+                <div *ngIf="forma.touched && forma.controls['numero'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-            <div class="col-sm-8">
-                <input class="form-control" type="text" formControlName="descrip" aria-describedby="descripHelp">
+            <div class="col-sm-9">
+                <textarea class="form-control" formControlName="descrip" aria-describedby="descripHelp" rows="6" [ngClass]="{'is-invalid': forma.controls['descrip'].touched && forma.controls['descrip'].invalid}"></textarea>
                 <small id="descripHelp" class="form-text text-muted">Descripción del Elemento de Identidad de tipo {{titulo}}</small>
+                <div *ngIf="forma.touched && forma.controls['descrip'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Vigencia</label>
             <div class="col-sm-2">
-                <input class="form-control" type="date" formControlName="f_inicial" aria-describedby="f_inicialHelp">
-                <!--[ngClass]="{'is-invalid': forma.controls['f_inicial'].touched && forma.controls['f_inicial'].invalid}"-->
+                <input class="form-control" type="date" formControlName="f_inicial" aria-describedby="f_inicialHelp" [ngClass]="{'is-invalid': forma.controls['f_inicial'].touched && forma.controls['f_inicial'].invalid}">
                 <small id="f_inicialHelp" class="form-text text-muted">Fecha Inicial</small>
-                <!--<div *ngIf="forma.touched && forma.controls['f_inicial'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>-->
+                <div *ngIf="forma.touched && forma.controls['f_inicial'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
             <div class="col-sm-2">
-                <input class="form-control" type="date" formControlName="f_final" aria-describedby="f_finalHelp">
+                <input class="form-control" type="date" formControlName="f_final" aria-describedby="f_finalHelp" [attr.disabled]="(tipo_i !== 'E' ? 'disabled' : null)">
                 <small id="f_finalHelp" class="form-text text-muted">Fecha Final</small>
             </div>
         </div>

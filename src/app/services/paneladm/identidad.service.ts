@@ -26,16 +26,12 @@ export class IdentidadService {
 	}
 
 	insertarIdentidad(identidad: Identidad) {
-		/*if (proceso.proceso === null) {
-			proceso.proceso = 0;
+		if (identidad.clave === null) {
+			delete identidad['clave'];
 		}
-		if (proceso.predecesor === null) {
-			proceso.predecesor = 0;
+		if (identidad.f_final === null) {
+			delete identidad['f_final'];
 		}
-		if (proceso.predecesor_desc === null) {
-			proceso.predecesor_desc = '';
-		}*/
-
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + this.RUTA + 'insertarIdentidad.json?token=' + token;
 		const headers = HeadersPOST;
@@ -44,12 +40,9 @@ export class IdentidadService {
 	}
 
 	modificarIdentidad(identidad: Identidad) {
-		/*if (proceso.predecesor === null) {
-			proceso.predecesor = 0;
+		if (identidad.f_final === null) {
+			delete identidad['f_final'];
 		}
-		if (proceso.predecesor_desc === null) {
-			proceso.predecesor_desc = '';
-		}*/
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + this.RUTA + 'modificarIdentidad.json?token=' + token;
 		const headers = HeadersPOST;
@@ -61,7 +54,7 @@ export class IdentidadService {
 		const token = localStorage.getItem('token');
 		const url = URL_SGC + this.RUTA + 'cancelarIdentidad.json?token=' + token;
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"identidad": ' + identidad + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"clave": ' + identidad + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

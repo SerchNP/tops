@@ -16,12 +16,14 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 	tipo_i: string;
 	accion: string;
 	clave: number;
-	descrip: string;
+	descripcion_sub: string;
 	titulo: string;
 	identidad: Identidad;
 	forma: FormGroup;
 	cancelar: any[];
 	sistemas: any [] = [];
+	sis_default: string;
+	consec_default: string;
 	seleccionado = '';
 
 	constructor(private activatesRoute: ActivatedRoute, private router: Router,
@@ -30,11 +32,23 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 			this.tipo_i = params['tipo'];
 			this.accion = params['acc'];
 			this.clave = params['id'];
+			if (this.tipo_i === 'P' || this.tipo_i === 'N' || this.tipo_i === 'E') {
+				this.sis_default = '1';
+				this.consec_default = '0';
+			} else {
+				if (this.tipo_i === 'M' || this.tipo_i === 'V' || this.tipo_i === 'A') {
+					this.sis_default = '';
+					this.consec_default = '0';
+				} else {
+					this.sis_default = '';
+					this.consec_default = '';
+				}
+			}
 		});
 		this.cancelar = ['/paneladm', 'submenuident', 'identidad_' + this.tipo_i.toLowerCase()];
 
-		this.descrip = this.getDescripcion(this.tipo_i);
-		this.titulo = (this.accion === 'I' ? 'Registro de ' + this.descrip : 'Actualización de ' + this.descrip);
+		this.descripcion_sub = this.getDescripcion(this.tipo_i);
+		this.titulo = (this.accion === 'I' ? 'Registro de ' + this.descripcion_sub : 'Actualización de ' + this.descripcion_sub);
 
 		if (this.clave > 0) {
 			this.cargarIdentidad(this.clave);
@@ -45,9 +59,9 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 		this.forma = new FormGroup({
 			// FormControl ---> Valor default, Reglas de Validacion, Reglas de validación asíncronas
 			'clave' : new FormControl(),
-			'sistema': new FormControl('', Validators.required),
-			'tipo' : new FormControl('', Validators.required),
-			'numero' : new FormControl('', Validators.required),
+			'sistema': new FormControl(this.sis_default, Validators.required),
+			'tipo' : new FormControl(this.tipo_i, Validators.required),
+			'numero' : new FormControl(this.consec_default, Validators.required),
 			'descrip' : new FormControl('', Validators.required),
 			'f_inicial' : new FormControl('', Validators.required),
 			'f_final' : new FormControl()

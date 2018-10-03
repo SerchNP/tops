@@ -11,8 +11,6 @@ import { AreasComponent } from './areas/areas.component';
 import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
-import { ObjetivosCalidadComponent } from './objetivos-calidad/objetivos-calidad.component';
-import { ObjetivosCalidadFormComponent } from './objetivos-calidad/objetivos-calidad-form.component';
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 
@@ -71,10 +69,7 @@ const paneladmRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'identidad_n', component: IdentidadComponent, data: {titulo: 'Catálogo de Notas', padre: 'Administración', opcion: 'Notas'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'identidad_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Catálogos de Identidad', padre: 'Administración', opcion: 'Identidad'} },
-
-					// tslint:disable-next-line:max-line-length
-					{ path: 'objetivos_form/:acc/:id', component: ObjetivosCalidadFormComponent, data: {titulo: 'Mantenimiento de Objetivos de Calidad', padre: 'Administración', opcion: 'Objetivos de Calidad'} }
+					{ path: 'identidad_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Catálogos de Identidad', padre: 'Administración', opcion: 'Identidad'} }
 				]
 			}
 		]

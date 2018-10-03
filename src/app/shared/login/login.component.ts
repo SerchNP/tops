@@ -31,12 +31,14 @@ export class LoginComponent implements OnInit {
 	}
 
 	ingresar(forma: NgForm) {
+		this.usuario = forma.value;
 		if (this.recuerdame) {
-			localStorage.setItem('user', this.usuario.username||this.user);
+			console.log(this.usuario.username);
+			console.log(this.user);
+			localStorage.setItem('user', this.usuario.username || this.user);
 		} else {
 			localStorage.removeItem('user');
 		}
-		this.usuario = forma.value;
 		this.usuario.password = btoa(this.usuario.password);
 		this._accesoService.login( this.usuario )
 			.subscribe( data => {},

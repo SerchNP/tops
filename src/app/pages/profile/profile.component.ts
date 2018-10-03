@@ -134,8 +134,8 @@ export class ProfileComponent implements OnInit {
 			focusConfirm: false,
 			preConfirm: () => {
 				return [
-					document.getElementById('input1').value,
-					document.getElementById('input2').value
+					(<HTMLInputElement>document.getElementById('input1')).value,
+					(<HTMLInputElement>document.getElementById('input2')).value
 				];
 			}
 		});
