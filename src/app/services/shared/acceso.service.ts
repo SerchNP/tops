@@ -34,7 +34,7 @@ export class AccesoService {
 		const headers = this.getHeadersPOST();
 
 		return this.http.post(url, body, { headers }).map((resp: any) => {
-			this.guardarStorage(resp.token);
+			localStorage.setItem('token', resp.token);
 			const toast = swal.mixin({
 				toast: true,
 				position: 'top-end',
@@ -45,7 +45,6 @@ export class AccesoService {
 				type: 'success',
 				title: resp.message
 			});
-			// swal('Atención!', resp.message, 'success');
 			this.router.navigate(['/dashboard']);
 		});
 	}

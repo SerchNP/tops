@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IdentidadService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
@@ -24,8 +24,6 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 	selection = new SelectionModel<{}>(true, []);
 	columns = [
-		{columnDef: 'sistema',			header: 'Id Sistema',	cell: (identidad: any) => `${identidad.sistema}`},
-		{columnDef: 'sistema_desc',		header: 'Sistema',		cell: (identidad: any) => `${identidad.sistema_desc}`},
 		{columnDef: 'descrip',			header: 'Descripción',  cell: (identidad: any) => `${identidad.descrip}`},
 		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.sistema_desc}`},
 		{columnDef: 'activo_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.sistema_desc}`}
@@ -36,10 +34,20 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 		this.sub = this.activatedRoute.url.subscribe(url => {
 			this.path = url[0].path;
 			this.tipo = this.getTipo(this.path);
-			if (this.tipo === 'O') {
-				this.columns.splice(2, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
+			if (this.tipo !== 'E') {
+				this.columns.splice(0, 0, {columnDef: 'sistema',				header: 'Id Sistema',		cell: (identidad: any) => `${identidad.numero}`});
+				this.columns.splice(1, 0, {columnDef: 'sistema_desc',			header: 'Sistema',			cell: (identidad: any) => `${identidad.numero}`});
+				if (this.tipo === 'O') {
+					this.columns.splice(2, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
+				}
+			} else {
+				this.columns.splice(0, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
 			}
-			this.ruta_add = ['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'I', 0];
+			if (this.tipo === 'E') {
+				this.ruta_add = ['/paneladm', 'ejes_form', this.tipo, 'I', 0];
+			} else {
+				this.ruta_add = ['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'I', 0];
+			}
 		});
 	}
 
@@ -73,6 +81,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 			case 'identidad_v' : valor = 'V'; break;
 			case 'identidad_n' : valor = 'N'; break;
 			case 'identidad_o' : valor = 'O'; break;
+			case 'identidad_e' : valor = 'E'; break;
 		}
 		return valor;
 	}
@@ -89,7 +98,11 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 		if (identidad.activo === 'N') {
 			swal('ERROR', 'El registro seleccionado no se puede modificar porque está cancelado', 'error');
 		} else {
-			this.router.navigate(['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'U', identidad.clave]);
+			if (this.tipo === 'E') {
+				this.router.navigate(['/paneladm', 'ejes_form', this.tipo, 'U', identidad.clave]);
+			} else {
+				this.router.navigate(['/paneladm', 'submenuident', 'identidad_form', this.tipo, 'U', identidad.clave]);
+			}
 		}
 	}
 

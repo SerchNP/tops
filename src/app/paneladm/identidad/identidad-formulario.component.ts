@@ -32,20 +32,22 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 			this.tipo_i = params['tipo'];
 			this.accion = params['acc'];
 			this.clave = params['id'];
-			if (this.tipo_i === 'P' || this.tipo_i === 'N' || this.tipo_i === 'E') {
-				this.sis_default = '1';
-				this.consec_default = '0';
-			} else {
-				if (this.tipo_i === 'M' || this.tipo_i === 'V' || this.tipo_i === 'A') {
-					this.sis_default = '';
-					this.consec_default = '0';
-				} else {
-					this.sis_default = '';
-					this.consec_default = '';
-				}
+
+			switch (this.tipo_i) {
+				case 'P' :
+				case 'N' : this.sis_default = '1';	this.consec_default = '0';	break;
+				case 'A' :
+				case 'M' :
+				case 'V' : this.sis_default = '';	this.consec_default = '0';	break;
+				case 'E' : this.sis_default = '1';	this.consec_default = '';	break;
+				case 'O' : this.sis_default = '';	this.consec_default = '';	break;
 			}
 		});
-		this.cancelar = ['/paneladm', 'submenuident', 'identidad_' + this.tipo_i.toLowerCase()];
+		if (this.tipo_i === 'E') {
+			this.cancelar = ['/paneladm', 'identidad_' + this.tipo_i.toLowerCase()];
+		} else {
+			this.cancelar = ['/paneladm', 'submenuident', 'identidad_' + this.tipo_i.toLowerCase()];
+		}
 
 		this.descripcion_sub = this.getDescripcion(this.tipo_i);
 		this.titulo = (this.accion === 'I' ? 'Registro de ' + this.descripcion_sub : 'Actualización de ' + this.descripcion_sub);
@@ -90,6 +92,7 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 			case 'V' : desc = 'Vision'; break;
 			case 'N' : desc = 'Notas'; break;
 			case 'O' : desc = 'Objetivos de Calidad'; break;
+			case 'E' : desc = 'Ejes Estratégicos'; break;
 		}
 		return desc;
 	}

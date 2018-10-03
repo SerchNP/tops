@@ -32,7 +32,7 @@
 					<option value="V">Visión</option>
 					<option value="O">Objetivos de Calidad</option>
 					<option value="N">Nota</option>
-					<!--E-Eje estrategico-->
+					<option value="E">Eje Estratégico</option>
 				</select>
                 <small id="tipoHelp" class="form-text text-muted">Tipo de Elemento de Identidad</small>
                 <div *ngIf="forma.touched && tipo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
@@ -41,7 +41,7 @@
         <div class="form-group row">
             <label for="descrip" class="col-sm-2 col-form-label text-right">Descripción</label>
             <div class="col-sm-1">
-                <input class="form-control" type="number" formControlName="numero" aria-describedby="numeroHelp" [attr.disabled]="(tipo_i !== 'O' ? 'disabled' : null)" [ngClass]="{'is-invalid': forma.controls['numero'].touched && forma.controls['numero'].invalid}">
+                <input class="form-control" type="number" formControlName="numero" aria-describedby="numeroHelp" [attr.disabled]="(tipo_i !== 'O' && tipo_i !== 'E' ? 'disabled' : null)" [ngClass]="{'is-invalid': forma.controls['numero'].touched && forma.controls['numero'].invalid}">
                 <small id="numeroHelp" class="form-text text-muted">Consecutivo</small>
                 <div *ngIf="forma.touched && forma.controls['numero'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>

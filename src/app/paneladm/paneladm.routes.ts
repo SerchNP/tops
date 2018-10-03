@@ -17,8 +17,6 @@ import { IdentidadFormularioComponent } from './identidad/identidad-formulario.c
 // Guards
 import { LoginGuard } from '../services/services.index';
 
-
-
 const paneladmRoutes: Routes = [
 	{
 		path: 'paneladm',
@@ -71,7 +69,11 @@ const paneladmRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'identidad_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Catálogos de Identidad', padre: 'Administración', opcion: 'Identidad'} }
 				]
-			}
+			},
+			// tslint:disable-next-line:max-line-length
+			{ path: 'identidad_e', component: IdentidadComponent, data: {titulo: 'Catálogo de Ejes Estratégicos', padre: 'Administración', opcion: 'Ejes Estratégicos'} },
+			// tslint:disable-next-line:max-line-length
+			{ path: 'ejes_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Ejes Estratégicos', padre: 'Administración', opcion: 'Ejes Estratégicos'} }
 		]
 	}
 ];

@@ -17,7 +17,6 @@ export class BreadcrumbsComponent implements OnInit {
 
 	constructor(private router: Router, private title: Title, private meta: Meta) {
 		this.getDataRoute().subscribe( event => {
-			// console.log(event);
 			this.padre = event.padre;
 			this.opcion = event.opcion;
 			this.titulo = event.titulo;
