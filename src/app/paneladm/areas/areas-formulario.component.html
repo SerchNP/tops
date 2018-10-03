@@ -39,7 +39,7 @@
         </div>
         <div class="form-group row">
             <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Área</label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (formaAreas.touched && tipo.invalid ? '#dc3545' : '#ced4da')}">
 						<option value="">Seleccionar</option>
 						<option value="I">Interna</option>
@@ -51,7 +51,7 @@
         </div>
         <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <select class="form-control" name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (formaAreas.touched && ent_data.invalid ? '#dc3545' : '#ced4da')}">
 					<option value="">Seleccionar</option>
 					<option value="S">Si</option>
@@ -66,7 +66,7 @@
         <button type="submit" class="btn btn-outline-primary" [disabled]="!formaAreas.valid">
 			<i class="fa fa-save"></i>
 			Guardar
-		</button>
+		</button>&nbsp;
         <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
     </div>
 </form>

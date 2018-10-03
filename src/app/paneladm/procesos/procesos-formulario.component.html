@@ -55,7 +55,7 @@
         </div>
         <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
-            <div class="col-sm-10">
+            <div class="col-sm-2">
                 <select class="form-control" name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
 					<option value="">Seleccionar</option>
 					<option value="S">Si</option>
@@ -67,7 +67,7 @@
         </div>
         <div class="form-group row">
             <label for="estatus" class="col-sm-2 col-form-label text-right">Estatus</label>
-            <div class="col-sm-10">
+            <div class="col-sm-2">
                 <select class="form-control" name="estatus" formControlName="estatus" [ngStyle]="{'border-color': (estatus.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
 					<option value="">Seleccionar</option>
 					<option value="A">Abierto</option>
@@ -82,7 +82,7 @@
         <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
 			<i class="fa fa-save"></i>
 			Guardar
-		</button>
+		</button>&nbsp;
         <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
     </div>
 </form>

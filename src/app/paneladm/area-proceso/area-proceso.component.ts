@@ -24,10 +24,10 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'clave', 			header: 'Clave',		cell: (area_proceso: any) => `${area_proceso.clave}`},
-		{ columnDef: 'proceso',     	header: 'ID Proceso',	cell: (area_proceso: any) => `${area_proceso.proceso}`},
+		{ columnDef: 'clave', 			header: 'Clave',		cell: (area_proceso: any) => `${area_proceso.clave}`, 	align: 'center'},
+		{ columnDef: 'proceso',     	header: 'ID Proceso',	cell: (area_proceso: any) => `${area_proceso.proceso}`,	align: 'center'},
 		{ columnDef: 'proceso_desc',   	header: 'Proceso', 		cell: (area_proceso: any) => `${area_proceso.proceso_desc}`},
-		{ columnDef: 'area',			header: 'ID Área', 		cell: (area_proceso: any) => `${area_proceso.area}`},
+		{ columnDef: 'area',			header: 'ID Área', 		cell: (area_proceso: any) => `${area_proceso.area}`,	align: 'center'},
 		{ columnDef: 'area_desc',   	header: 'Área',			cell: (area_proceso: any) => `${area_proceso.area_desc}`},
 		{ columnDef: 'tipo_area_desc',  header: 'Tipo Área',	cell: (area_proceso: any) => `${area_proceso.tipo_area_desc}`},
 		{ columnDef: 'activa_desc',		header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.activa_desc}`}

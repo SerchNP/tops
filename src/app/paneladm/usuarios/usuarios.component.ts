@@ -1,67 +1,57 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService, AccesoService } from '../../services/services.index';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
 import { Derechos } from '../../interfaces/derechos.interface';
+import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-usuarios',
 	templateUrl: './usuarios.component.html',
 	styles: []
 })
-export class UsuariosComponent implements OnInit {
+export class UsuariosComponent implements OnInit, OnDestroy {
 
-	@ViewChild('usuarios') dataTable: DataTableComponent;
+	private subscription: Subscription;
 
 	jsonData: any;
-	data: any[] = [];
+	listado: any[] = [];
 	cargando = false;
 	llave = 'usuario';
 	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 
-	columns: Array<any> = [
-		{title: 'Usuario', name: 'usuario', columnName: 'usuario',
-			filtering: {filterString: '', placeholder: 'Usuario'}},
-		{title: 'Nombre', name: 'nombre', sort: 'asc', columnName: 'nombre',
-			filtering: {filterString: '', placeholder: 'Nombre'}},
-		{title: 'Paterno', name: 'paterno', sort: 'asc', columnName: 'paterno',
-			filtering: {filterString: '', placeholder: 'Paterno'}},
-		{title: 'Materno', name: 'materno', sort: 'asc', columnName: 'materno',
-			filtering: {filterString: '', placeholder: 'Materno'}},
-		{title: 'E-mail', name: 'email', columnName: 'email'},
-		{title: 'E-mail Adicional', name: 'email2', columnName: 'email2'},
-		{title: 'Área', name: 'area_desc', columnName: 'area_desc',
-			filtering: {filterString: '', placeholder: 'Área'}},
-		{title: 'Puesto', name: 'puesto_desc', columnName: 'puesto_desc',
-			filtering: {filterString: '', placeholder: 'Puesto'}},
-		{title: 'Tipo', name: 'tipo_desc', columnName: 'tipo_desc',
-			filtering: {filterString: '', placeholder: 'Tipo'}},
-		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}}
+	ruta_add =  ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
+	select = false;
+	allowMultiSelect = false;
+
+	columns = [
+		{ columnDef: 'usuario', 	 header: 'Usuario',			 cell: (usuario: any) => `${usuario.usuario}`},
+		{ columnDef: 'nombre',     	 header: 'Nombre',			 cell: (usuario: any) => `${usuario.nombre}`},
+		{ columnDef: 'paterno',   	 header: 'Apellido Paterno', cell: (usuario: any) => `${usuario.paterno}`},
+		{ columnDef: 'materno',   	 header: 'Apellido Materno', cell: (usuario: any) => `${usuario.materno}`},
+		{ columnDef: 'email',   	 header: 'E-mail', 			 cell: (usuario: any) => `${usuario.email}`},
+		{ columnDef: 'email2',   	 header: 'E-mail Adicional', cell: (usuario: any) => `${usuario.email2}`},
+		{ columnDef: 'area_desc',    header: 'Área',			 cell: (usuario: any) => `${usuario.area_desc}`},
+		{ columnDef: 'puesto_desc',  header: 'Puesto',			 cell: (usuario: any) => `${usuario.puesto_desc}`},
+		{ columnDef: 'tipo_desc',    header: 'Tipo',			 cell: (usuario: any) => `${usuario.tipo_desc}`},
+		{ columnDef: 'estatus_desc', header: 'Situación',		 cell: (usuario: any) => `${usuario.estatus_desc}`}
 	];
 
-	constructor(public _usuarioService: UsuarioService, public _accesoService: AccesoService, private router: Router) { }
+	selection = new SelectionModel<{any}>(true, []);
+
+	constructor(public _usuarioService: UsuarioService,
+				public _accesoService: AccesoService,
+				private router: Router) {}
 
 	ngOnInit() {
 		this.cargando = true;
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
-
-		this._usuarioService.getUsuarios()
+		this.subscription = this._usuarioService.getUsuarios()
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					this.data = this.jsonData.usuarios;
+					this.listado = this.jsonData.usuarios;
 					this._accesoService.guardarStorage(this.jsonData.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.data;
-					this.dataTable.length = this.jsonData.usuarios.length;
-					this.dataTable.ruta_add = ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
-
 					this.cargando = false;
 				},
 				error => {
@@ -72,17 +62,17 @@ export class UsuariosComponent implements OnInit {
 				});
 	}
 
-	detectarAccion(accion: any): void {
-		if (accion.column === 'action_e') {
-			this.editarUsuario(accion.row);
-		} else if (accion.column === 'action_c') {
-			this.cancelarUsuario(accion.row);
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'E') {
+			this.editarUsuario(datos.row);
+		} else if (datos.accion === 'C') {
+			this.cancelarUsuario(datos.row);
 		}
 	}
 
 	editarUsuario(usuario: any) {
 		if (usuario.estatus === 'C') {
-			swal('ERROR', 'El usuario no se puede editar porque está bloqueado', 'error');
+			swal('ERROR', 'No es posible editar, el usuario ya se encuentra bloqueado', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuusu', 'usuarios_form', 'U', usuario.usuario]);
 		}
@@ -90,7 +80,7 @@ export class UsuariosComponent implements OnInit {
 
 	async cancelarUsuario(usuario: any) {
 		if (usuario.estatus === 'C') {
-			swal('ERROR', 'El usuario ya esta previamente bloqueado', 'error');
+			swal('ERROR', 'El usuario ya se encuentra bloqueado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
@@ -110,7 +100,7 @@ export class UsuariosComponent implements OnInit {
 					}
 				});
 				if (motivo !== undefined) {
-					this._usuarioService.cancelarUsuario(usuario.usuario, motivo.toUpperCase())
+					this.subscription = this._usuarioService.cancelarUsuario(usuario.usuario, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -124,6 +114,11 @@ export class UsuariosComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

@@ -46,7 +46,7 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._fodaService.getFODAByProceso(this.proceso)
+		this.subscription = this._fodaService.getFODAByProcesoP(this.proceso)
 			.subscribe(
 				data => {
 					this.jsonData = data;

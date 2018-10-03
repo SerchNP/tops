@@ -33,8 +33,6 @@ export class LoginComponent implements OnInit {
 	ingresar(forma: NgForm) {
 		this.usuario = forma.value;
 		if (this.recuerdame) {
-			console.log(this.usuario.username);
-			console.log(this.user);
 			localStorage.setItem('user', this.usuario.username || this.user);
 		} else {
 			localStorage.removeItem('user');

@@ -47,8 +47,10 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private activatesRoute: ActivatedRoute, private router: Router,
-				private _accesoService: AccesoService, private _procesosService: ProcesosService) {
+	constructor(private activatesRoute: ActivatedRoute,
+				private router: Router,
+				private _accesoService: AccesoService,
+				private _procesosService: ProcesosService) {
 		this.sub = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];

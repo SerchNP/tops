@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { AccesoService, AreasService } from '../../services/services.index';
 import { Areas } from '../../interfaces/areas.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { Areas } from '../../interfaces/areas.interface';
 
 export class AreasFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
 	accion: string;
 	titulo: string;
 	idArea: number;
@@ -25,7 +26,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 
 	constructor(private activatesRoute: ActivatedRoute, private router: Router,
 				private _accesoService: AccesoService, private _areasService: AreasService) {
-		this.sub = this.activatesRoute.params.subscribe(params => {
+		this.subscription = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idArea = params['id'];
 		});
@@ -51,7 +52,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	get tipo() {
@@ -63,7 +64,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	cargarArea(idArea: number) {
-		this._areasService.getAreaById(idArea)
+		this.subscription = this._areasService.getAreaById(idArea)
 			.subscribe(
 				(data: any) => {
 					this.area = data.area;
@@ -79,7 +80,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getAreasTree() {
-		this._areasService.getAreasTree().subscribe((data: any) => this.items = data);
+		this.subscription = this._areasService.getAreasTree().subscribe((data: any) => this.items = data);
 	}
 
 	asignarPredecesor() {
@@ -100,7 +101,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.accion === 'U') {
-			this._areasService.modificarArea(this.formaAreas.value)
+			this.subscription = this._areasService.modificarArea(this.formaAreas.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -113,7 +114,7 @@ export class AreasFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			this._areasService.insertarArea(this.formaAreas.value)
+			this.subscription = this._areasService.insertarArea(this.formaAreas.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');

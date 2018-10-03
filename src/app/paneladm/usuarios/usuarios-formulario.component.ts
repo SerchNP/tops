@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AccesoService, UsuarioService, AreasService, PuestosService } from '../../services/services.index';
+import { correoValidator, correo2Validator, correo3Validator } from '../../directivas/correo-validator.directive';
+import { Usuario } from '../../interfaces/usuarios.interface';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
-import { Usuario } from '../../interfaces/usuarios.interface';
-import { correoValidator, correo2Validator, correo3Validator } from '../../directivas/correo-validator.directive';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-usuarios-formulario',
@@ -12,9 +13,9 @@ import { correoValidator, correo2Validator, correo3Validator } from '../../direc
 	styleUrls: ['./usuarios.component.css']
 })
 
-export class UsuariosFormularioComponent implements OnInit {
+export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
 	accion: string;
 	idUsuario: string;
 	titulo: string;
@@ -25,9 +26,13 @@ export class UsuariosFormularioComponent implements OnInit {
 	usuario: Usuario;
 	cancelar: any[] = ['/paneladm', 'submenuusu', 'usuarios'];
 
-	constructor(private router: Router, private activated: ActivatedRoute, public _accesoService: AccesoService,
-				private _usuario: UsuarioService, private _areas: AreasService, private _puestos: PuestosService) {
-		this.sub = this.activated.params.subscribe(params => {
+	constructor(private router: Router,
+				private activated: ActivatedRoute,
+				public _accesoService: AccesoService,
+				private _usuario: UsuarioService,
+				private _areas: AreasService,
+				private _puestos: PuestosService) {
+		this.subscription = this.activated.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idUsuario = params['id'];
 		});
@@ -90,9 +95,8 @@ export class UsuariosFormularioComponent implements OnInit {
 	}
 
 	getAreas() {
-		this._areas.getAreasTree()
-			.subscribe(
-				data => {
+		this.subscription = this._areas.getAreasTree()
+			.subscribe(data => {
 					this.areas = data;
 				},
 				error => {
@@ -104,9 +108,8 @@ export class UsuariosFormularioComponent implements OnInit {
 	}
 
 	getPuestos() {
-		this._puestos.getPuestosTree()
-			.subscribe(
-				data => {
+		this.subscription = this._puestos.getPuestosTree()
+			.subscribe(data => {
 					this.puestos = data;
 				},
 				error => {
@@ -119,7 +122,7 @@ export class UsuariosFormularioComponent implements OnInit {
 
 	cargarUsuario(idUsuario: string) {
 		let bandera = false;
-		this._usuario.getUsuarioById(idUsuario)
+		this.subscription = this._usuario.getUsuarioById(idUsuario)
 			.subscribe(
 				(data: any) => {
 					this.usuario = data.usuario;
@@ -129,7 +132,6 @@ export class UsuariosFormularioComponent implements OnInit {
 					this._accesoService.guardarStorage(token);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
@@ -160,9 +162,8 @@ export class UsuariosFormularioComponent implements OnInit {
 
 	guardar() {
 		if (this.accion === 'U') {
-			this._usuario.editarUsuario(this.formaUsuarios.value)
+			this.subscription = this._usuario.editarUsuario(this.formaUsuarios.value)
 				.subscribe((data: any) => {
-					// this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/paneladm', 'submenuusu', 'usuarios']);
 				},
@@ -173,20 +174,23 @@ export class UsuariosFormularioComponent implements OnInit {
 					}
 				});
 		} else {
-			this._usuario.insertarUsuario(this.formaUsuarios.value)
+			this.subscription = this._usuario.insertarUsuario(this.formaUsuarios.value)
 				.subscribe((data: any) => {
-					// this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(['/paneladm', 'submenuusu', 'usuarios']);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
 					}
 				});
 		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

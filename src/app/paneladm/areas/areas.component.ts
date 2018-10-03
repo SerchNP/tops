@@ -1,62 +1,54 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AreasService, AccesoService } from '../../services/services.index';
+import { Derechos } from '../../interfaces/derechos.interface';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
-import { Derechos } from '../../interfaces/derechos.interface';
+
 
 @Component({
 	selector: 'app-areas',
 	templateUrl: './areas.component.html',
 	styles: []
 })
-export class AreasComponent implements OnInit {
+export class AreasComponent implements OnInit, OnDestroy {
 
-	@ViewChild('areas') dataTable: DataTableComponent;
+	private subscription: Subscription;
 
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	llave = 'area';
 	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	ruta_add = ['/paneladm', 'areas_form', 'I', 0];
+	select = false;
+	allowMultiSelect = false;
 
-	columns: Array<any> = [
-		{title: 'Área', name: 'area', columnName: 'area',
-			filtering: {filterString: '', placeholder: 'Área'}},
-		{title: 'Descripción', name: 'area_desc', sort: 'asc', columnName: 'area_desc',
-			filtering: {filterString: '', placeholder: 'Descripción'}},
-		{title: 'ID Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'ID Predecesor'}},
-		{title: 'Predecesor', name: 'predecesor_desc', columnName: 'predecesor_desc',
-			filtering: {filterString: '', placeholder: 'Predecesor'}},
-		{title: 'Tipo', name: 'tipo_desc', columnName: 'tipo_desc',
-			filtering: {filterString: '', placeholder: 'Tipo'}},
-		{title: 'Situación', name: 'estatus_desc', columnName: 'estatus_desc',
-			filtering: {filterString: '', placeholder: 'Situación'}},
-		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data'}
+	columns = [
+		{ columnDef: 'area', 			header: 'Área',			 cell: (area: any) => `${area.area}`, 		align: 'center'},
+		{ columnDef: 'area_desc',   	header: 'Descripción',	 cell: (area: any) => `${area.area_desc}`},
+		{ columnDef: 'predecesor',  	header: 'ID Predecesor', cell: (area: any) => `${area.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor_desc',	header: 'Predecesor',	 cell: (area: any) => `${area.predecesor_desc}`},
+		{ columnDef: 'tipo_desc',		header: 'Tipo',	 		 cell: (area: any) => `${area.tipo_desc}`},
+		{ columnDef: 'estatus_desc',	header: 'Situación',	 cell: (area: any) => `${area.estatus_desc}`},
+		{ columnDef: 'ent_data',		header: 'en. Datos',	 cell: (area: any) => `${area.ent_data}`}
 	];
 
-	constructor(public _areasService: AreasService, public _accesoService: AccesoService, private router: Router) { }
+	selection = new SelectionModel<{}>(true, []);
+
+	constructor(public _areasService: AreasService,
+				public _accesoService: AccesoService,
+				private router: Router) {}
 
 	ngOnInit() {
 		this.cargando = true;
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
-
-		this._areasService.getAreas()
+		this.subscription = this._areasService.getAreas()
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.listado = this.jsonData.areas;
 					this._accesoService.guardarStorage(this.jsonData.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.listado;
-					this.dataTable.length = this.listado.length;
-					this.dataTable.ruta_add = ['/paneladm', 'areas_form', 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
-
 					this.cargando = false;
 				},
 				error => {
@@ -67,17 +59,17 @@ export class AreasComponent implements OnInit {
 				});
 	}
 
-	detectarAccion(accion: any): void {
-		if (accion.column === 'action_e') {
-			this.editarArea(accion.row);
-		} else if (accion.column === 'action_c') {
-			this.borrarArea(accion.row);
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'E') {
+			this.editarArea(datos.row);
+		} else if (datos.accion === 'C') {
+			this.borrarArea(datos.row);
 		}
 	}
 
 	editarArea(area: any) {
 		if (area.estatus === 'N') {
-			swal('ERROR', 'El área no se puede modificar porque está cancelada', 'error');
+			swal('ERROR', 'No es posible modificar el área, ya se encuentra cancelada', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'areas_form', 'U', area.area]);
 		}
@@ -85,7 +77,7 @@ export class AreasComponent implements OnInit {
 
 	async borrarArea(area: any) {
 		if (area.estatus === 'N') {
-			swal('ERROR', 'El área ya está previamente cancelado', 'error');
+			swal('ERROR', 'El área ya se encuentra cancelada', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
@@ -105,7 +97,7 @@ export class AreasComponent implements OnInit {
 					}
 				});
 				if (motivo !== undefined) {
-					this._areasService.cancelarArea(area.area, motivo.toUpperCase())
+					this.subscription = this._areasService.cancelarArea(area.area, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							this._accesoService.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
@@ -120,6 +112,11 @@ export class AreasComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

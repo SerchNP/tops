@@ -77,7 +77,6 @@ export class PuestosComponent implements OnInit, OnDestroy {
 	}
 
 	async borrarPuesto(puesto: any) {
-		console.log(puesto);
 		if (puesto.estatus === 'N') {
 			swal('ERROR', 'El puesto ya se encuentra cancelado', 'error');
 		} else {

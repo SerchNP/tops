@@ -53,7 +53,6 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 					this.cargando = false;
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();

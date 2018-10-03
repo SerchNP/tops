@@ -10,4 +10,5 @@
     </div>
 </div>
 <br>
-<app-data-table #areas (registro)="detectarAccion($event)"></app-data-table>
+<app-mat-data-table (registro)="detectarAccion($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect" [selection]="selection" [ruta_add]="ruta_add">
+</app-mat-data-table>

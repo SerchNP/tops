@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
-import { DataTableComponent } from '../../components/data-table/data-table.component';
+import { Derechos } from '../../interfaces/derechos.interface';
+import { SelectionModel } from '@angular/cdk/collections';
+import { Proceso } from '../../models/proceso.model';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { Derechos } from '../../interfaces/derechos.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,55 +13,43 @@ import { Derechos } from '../../interfaces/derechos.interface';
 	templateUrl: './procesos.component.html',
 })
 
-export class ProcesosComponent implements OnInit {
+export class ProcesosComponent implements OnInit, OnDestroy {
 
-	@ViewChild('procesos') dataTable: DataTableComponent;
+	private subscription: Subscription;
 
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	llave = 'proceso';
 	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	ruta_add =  ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
+	select = false;
+	allowMultiSelect = false;
 
-	length = 0;
-	columns: Array<any> = [
-		{title: 'Proceso', name: 'proceso', sort: 'asc', columnName: 'proceso',
-			filtering: {filterString: '', placeholder: 'Proceso'}},
-		{title: 'Descripción', name: 'proceso_desc', columnName: 'proceso_desc',
-			filtering: {filterString: '', placeholder: 'Descripción'}},
-		{title: 'ID Predecesor', name: 'predecesor', columnName: 'predecesor',
-			filtering: {filterString: '', placeholder: 'ID Predecesor'}},
-		{title: 'Predecesor', name: 'predecesor_desc', columnName: 'predecesor_desc',
-			filtering: {filterString: '', placeholder: 'Predecesor'}},
-		{title: 'Abierto/Cerrado', name: 'estatus', columnName: 'estatus',
-			filtering: {filterString: '', placeholder: 'Situación'}},
-		{title: 'Ent. Datos', name: 'ent_data', columnName: 'ent_data',
-			filtering: {filterString: '', placeholder: 'Ent. Datos'}},
-		{title: 'Estatus', name: 'autoriza_desc', columnName: 'autoriza_desc',
-			filtering: {filterString: '', placeholder: 'Estatus'}}
+	columns = [
+		{ columnDef: 'proceso',     	header: 'ID Proceso',		cell: (proceso: Proceso) => `${proceso.proceso}`},
+		{ columnDef: 'proceso_desc',   	header: 'Proceso', 			cell: (proceso: Proceso) => `${proceso.proceso_desc}`},
+		{ columnDef: 'predecesor',		header: 'ID Predecesor',	cell: (proceso: Proceso) => `${proceso.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor_desc', header: 'Predecesor',		cell: (proceso: Proceso) => `${proceso.predecesor_desc}`},
+		{ columnDef: 'estatus',  		header: 'Abierto/Cerrado',	cell: (proceso: Proceso) => `${proceso.estatus}`, 		align: 'center'},
+		{ columnDef: 'ent_data',  		header: 'Ent. Datos',		cell: (proceso: Proceso) => `${proceso.ent_data}`, 		align: 'center'},
+		{ columnDef: 'autoriza_desc',	header: 'Estatus',			cell: (proceso: Proceso) => `${proceso.autoriza_desc}`}
 	];
 
-	constructor(public _procesosService: ProcesosService, public _accesoService: AccesoService, private router: Router) {}
+	selection = new SelectionModel<{}>(true, []);
+
+	constructor(private _procesosService: ProcesosService,
+				private _accesoService: AccesoService,
+				private router: Router) {}
 
 	ngOnInit() {
 		this.cargando = true;
-		// Para la inicializacion del dataTable
-		this.dataTable.derechos = this.derechos;
-
-		this._procesosService.getProcesos()
+		this.subscription = this._procesosService.getProcesos()
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.listado = this.jsonData.procesos;
 					this._accesoService.guardarStorage(this.jsonData.token);
-
-					this.dataTable.columns = this.columns;
-					this.dataTable.config.sorting.columns = this.columns;
-					this.dataTable.data = this.listado;
-					this.dataTable.length = this.listado.length;
-					this.dataTable.ruta_add = ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
-					this.dataTable.onChangeTable(this.dataTable.config);
-
 					this.cargando = false;
 				},
 				error => {
@@ -70,25 +60,25 @@ export class ProcesosComponent implements OnInit {
 				});
 	}
 
-	detectarAccion(accion: any): void {
-		if (accion.column === 'action_e') {
-			this.editarProceso(accion.row);
-		} else if (accion.column === 'action_c') {
-			this.borrarProceso(accion.row);
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'E') {
+			this.editarProceso(datos.row);
+		} else if (datos.accion === 'C') {
+			this.borrarProceso(datos.row);
 		}
 	}
 
-	editarProceso(proceso: any) {
+	editarProceso(proceso: Proceso) {
 		if (proceso.autoriza === 7) {
-			swal('ERROR', 'El proceso no se puede modificar, está cancelado', 'error');
+			swal('ERROR', 'No es posible modificar, el proceso ya se encuentra cancelado', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuproc', 'procesos_form', 'U', proceso.proceso]);
 		}
 	}
 
-	async borrarProceso(proceso: any) {
+	async borrarProceso(proceso: Proceso) {
 		if (proceso.autoriza === 7) {
-			swal('ERROR', 'El proceso ya está cancelado', 'error');
+			swal('ERROR', 'El proceso ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
@@ -108,7 +98,7 @@ export class ProcesosComponent implements OnInit {
 					}
 				});
 				if (motivo !== undefined) {
-					this._procesosService.cancelaProceso(proceso.proceso, motivo.toUpperCase())
+					this.subscription = this._procesosService.cancelaProceso(proceso.proceso, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -122,6 +112,11 @@ export class ProcesosComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
 	}
 
 }

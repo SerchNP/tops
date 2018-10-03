@@ -36,7 +36,6 @@ export class CatalogosService {
 					return cat_autoriza;
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
