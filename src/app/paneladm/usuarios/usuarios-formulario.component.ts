@@ -95,9 +95,10 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getAreas() {
-		this.subscription = this._areas.getAreasTree()
-			.subscribe(data => {
-					this.areas = data;
+		this.subscription = this._areas.getAreas()
+			.subscribe((data: any) => {
+					this.areas = data.areas;
+					this._accesoService.guardarStorage(data.token);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -108,9 +109,10 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getPuestos() {
-		this.subscription = this._puestos.getPuestosTree()
-			.subscribe(data => {
-					this.puestos = data;
+		this.subscription = this._puestos.getPuestos()
+			.subscribe((data: any) => {
+					this.puestos = data.puestos;
+					this._accesoService.guardarStorage(data.token);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');

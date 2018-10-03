@@ -54,7 +54,7 @@
             <label for="area" class="col-sm-2 col-form-label text-right">Área</label>
             <div class="col-sm-10">
                 <select class="form-control" name="area" formControlName="area" aria-describedby="areaHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && area.invalid) ? '#dc3545' : '#ced4da')}">
-					<option *ngFor="let area of areas" value="{{area.id}}">{{area.name}}</option>
+					<option *ngFor="let area of areas" value="{{area.area}}">{{area.area_desc}}</option>
 				</select>
                 <small id="areaHelp" class="form-text text-muted">Área de Trabajo</small>
                 <div *ngIf="(formaUsuarios.touched && area.invalid)" class="invalid-feedback" style="display: block">Este campo es requerido</div>
@@ -64,7 +64,7 @@
             <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
             <div class="col-sm-10">
                 <select class="form-control" name="puesto" formControlName="puesto" aria-describedby="puestoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && puesto.invalid) ? '#dc3545' : '#ced4da')}">
-					<option *ngFor="let puesto of puestos" value="{{puesto.id}}">{{puesto.name}}</option>
+					<option *ngFor="let puesto of puestos" value="{{puesto.puesto}}">{{puesto.puesto_desc}}</option>
 				</select>
                 <small id="puestoHelp" class="form-text text-muted">Puesto de Trabajo</small>
                 <div *ngIf="(formaUsuarios.touched && puesto.invalid)" class="invalid-feedback" style="display: block">Este campo es requerido</div>
