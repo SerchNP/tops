@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // Rutas
-import { PANELFODA_ROUTES } from './panelfoda.routes';
+import { PANELCONTEXTO_ROUTES } from './panelcontexto.routes';
 
 // Modulos
 import { ComponentModule } from '../components/component.module';
@@ -12,7 +12,7 @@ import { MatExpansionModule } from '@angular/material';
 import { FiltraFodaPipe } from '../pipes/filtra-foda.pipe';
 
 // Componentes
-import { PanelfodaComponent } from './panelfoda.component';
+import { PanelContextoComponent } from './panelcontexto.component';
 import { FodaComponent } from './foda/foda.component';
 import { FodaFormularioComponent } from './foda/foda-formulario.component';
 import { CardFodaComponent } from './card-foda/card-foda.component';
@@ -22,7 +22,7 @@ import { AutfodaFormularioComponent } from './foda/autfoda-formulario.component'
 @NgModule({
 	imports: [
 		CommonModule,
-		PANELFODA_ROUTES,
+		PANELCONTEXTO_ROUTES,
 		ComponentModule,
 		FormsModule,
 		ReactiveFormsModule,
@@ -31,11 +31,11 @@ import { AutfodaFormularioComponent } from './foda/autfoda-formulario.component'
 	],
 	declarations: [
 		FiltraFodaPipe,
-		PanelfodaComponent,
+		PanelContextoComponent,
 		FodaComponent,
 		FodaFormularioComponent,
 		CardFodaComponent,
 		AutfodaFormularioComponent
 	]
 })
-export class PanelfodaModule { }
+export class PanelContextoModule { }

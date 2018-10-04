@@ -5,12 +5,12 @@ import { CommonModule } from '@angular/common';
 // Rutas
 import { PAGES_ROUTES } from './pages.routes';
 import { PANELADM_ROUTES } from '../paneladm/paneladm.routes';
-import { PANELFODA_ROUTES } from '../panelfoda/panelfoda.routes';
+import { PANELCONTEXTO_ROUTES } from '../panelcontexto/panelcontexto.routes';
 
 // Modulos
 import { SharedModule } from '../shared/shared.module';
 import { PaneladmModule } from '../paneladm/paneladm.module';
-import { PanelfodaModule } from '../panelfoda/panelfoda.module';
+import { PanelContextoModule } from '../panelcontexto/panelcontexto.module';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -34,12 +34,12 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 		CommonModule,
 		PAGES_ROUTES,
 		PANELADM_ROUTES,
-		PANELFODA_ROUTES,
+		PANELCONTEXTO_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,
 		PaneladmModule,
-		PanelfodaModule
+		PanelContextoModule
 	]
 })
 
