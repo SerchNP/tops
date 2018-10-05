@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { AccesoService, ProcesosService, DerechosService } from '../../services/services.index';
-import swal from 'sweetalert2';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { AccesoService, ProcesosService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
+import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-foda',
-	templateUrl: './foda.component.html',
-	styles: []
+	templateUrl: './foda.component.html'
 })
-export class FodaComponent implements OnInit {
+export class FodaComponent implements OnInit, OnDestroy {
+
+	private subscription: Subscription;
 
 	@ViewChild ('filtro') filtro: ElementRef;
 
@@ -25,12 +27,12 @@ export class FodaComponent implements OnInit {
 
 	ngOnInit() {
 		this.cargando = true;
-		this._procesosService.getProcesosByUserArea()
+		this.subscription = this._procesosService.getProcesosByUserArea()
 			.subscribe(
 				data => {
 					this.jsonData = data;
 					this.procesos = this.jsonData.procesos;
-					this.procesosMostrar = this.jsonData.procesos;
+					this.procesosMostrar = this.jsonData.procesos; // Para el filtro
 					this._accesoService.guardarStorage(this.jsonData.token);
 					this.cargando = false;
 				},
@@ -61,5 +63,9 @@ export class FodaComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
 	}
 }

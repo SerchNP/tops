@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AccesoService } from '../../services/shared/acceso.service';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { ProcesosService } from '../../services/services.index';
-import { SelectionModel } from '@angular/cdk/collections';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 
