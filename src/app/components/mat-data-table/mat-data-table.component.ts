@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
@@ -8,7 +9,14 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-mat-data-table',
 	templateUrl: './mat-data-table.component.html',
-	styleUrls: ['./mat-data-table.component.scss']
+	styleUrls: ['./mat-data-table.component.scss'],
+	animations: [
+	trigger('detailExpand', [
+		state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+		state('expanded', style({height: '*'})),
+		transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+		]),
+	]
 })
 export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
@@ -22,6 +30,8 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() derechos: Derechos;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
+
+	expandedElement;
 
 	@Output() registro: EventEmitter<any> = new EventEmitter();
 

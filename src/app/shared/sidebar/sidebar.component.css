@@ -202,6 +202,10 @@ a.active {
     font-weight: bold !important;
 }
 
+.child2 {
+    padding-left: 15px;
+}
+
 
 /* ---------------------------------------------------
     MEDIAQUERIES

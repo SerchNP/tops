@@ -69,3 +69,15 @@
 .columnAlign {
     text-align: center;
 }
+
+::ng-deep .mat-checkbox .mat-checkbox-frame {
+    border-color: #7a7a7a; // rgba(55, 163, 55, 0.719);
+}
+
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #949494 !important; //rgba(55, 163, 55, 0.719) !important;
+}
+
+::ng-deep .mat-checkbox-indeterminate .mat-checkbox-background {
+    background-color: rgba(55, 163, 55, 0.719) !important;
+}

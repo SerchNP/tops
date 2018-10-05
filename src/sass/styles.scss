@@ -63,6 +63,11 @@ ng-table>table>tbody>tr>td {
     background-image: url('../../src/assets/images/icons/arrow.png') !important;
 }
 
+.mat-badge-accent .mat-badge-content {
+    background-color: darkorange;
+    color: #fff;
+}
+
 html,
 body {
     height: 100%;

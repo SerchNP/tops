@@ -13,11 +13,11 @@
                     </a>
                     <ul [id]="menu.name" class="collapse list-unstyled">
                         <li *ngFor="let child of menu.children">
-                            <a routerLinkActive="active" *ngIf="!child.children" [routerLink]="['/' + menu.name, child.name]">{{ child.titulo }}</a>
-                            <a routerLinkActive="active" *ngIf="child.children?.length > 0" href="#{{ child.name }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">{{ child.titulo }}</a>
+                            <a routerLinkActive="active" *ngIf="!child.children" [routerLink]="['/' + menu.name, child.name]"><i [class]="child.icono"></i>  {{ child.titulo }}</a>
+                            <a routerLinkActive="active" *ngIf="child.children?.length > 0" href="#{{ child.name }}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i [class]="child.icono"></i> {{ child.titulo }}</a>
                             <ul [id]="child.name" class="collapse list-unstyled" *ngIf="child.children?.length > 0">
                                 <li *ngFor="let child2 of child.children">
-                                    <a routerLinkActive="active" [routerLink]="['/' + menu.name, child.name, child2.name]">{{ child2.titulo }}</a>
+                                    <a routerLinkActive="active" [routerLink]="['/' + menu.name, child.name, child2.name]"><i [class]="child2.icono"></i> {{ child2.titulo }}</a>
                                 </li>
                             </ul>
                         </li>

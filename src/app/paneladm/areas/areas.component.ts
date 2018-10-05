@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AreasService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
