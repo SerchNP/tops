@@ -41,9 +41,14 @@ export class ProcesosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getProcesosByUserArea() {
+	getProcesosByUserArea(usuario?: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/procesos/getProcesosByUserArea.json?token=' + token;
+		let url = '';
+		if (usuario !== undefined) {
+			url = URL_SGC + '/paneladm/procesos/getProcesosByUserArea.json?u=' + usuario + '&token=' + token;
+		} else {
+			url = URL_SGC + '/paneladm/procesos/getProcesosByUserArea.json?token=' + token;
+		}
 		const headers = this.getHeadersGET();
 		return this.http.get(url, {headers}).map(resp => resp);
 	}

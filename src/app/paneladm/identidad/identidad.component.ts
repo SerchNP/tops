@@ -128,7 +128,6 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					console.log(identidad.clave);
 					this._identidad.cancelarIdentidad(identidad.clave, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							this._acceso.guardarStorage(data.token);

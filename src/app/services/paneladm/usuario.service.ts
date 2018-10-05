@@ -13,8 +13,8 @@ export class UsuarioService {
 
 	constructor(private http: HttpClient, private router: Router) { }
 
-	getUsuarios() {
-		const url = URL_SGC + this.RUTA + 'getUsuarios.json?' + this.TOKEN;
+	getUsuarios(tipo: string, estatus: string) {
+		const url = URL_SGC + this.RUTA + 'getUsuarios.json?t=' + tipo + '&e=' + estatus + '&' + this.TOKEN;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -139,6 +139,12 @@ export class UsuarioService {
 		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	getUsuariosProcesos() {
+		const url = URL_SGC + this.RUTA + 'getUsuariosProcesos.json?' + this.TOKEN;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 }

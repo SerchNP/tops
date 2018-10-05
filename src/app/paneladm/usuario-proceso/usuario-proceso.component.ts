@@ -1,67 +1,61 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UsuarioService, AccesoService } from '../../services/services.index';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
+import { UsuarioService, AccesoService } from '../../services/services.index';
 import swal from 'sweetalert2';
-import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-usuarios',
-	templateUrl: './usuarios.component.html',
-	styles: []
+	selector: 'app-usuario-proceso',
+	templateUrl: './usuario-proceso.component.html'
 })
-export class UsuariosComponent implements OnInit, OnDestroy {
+
+export class UsuarioProcesoComponent implements OnInit {
 
 	private subscription: Subscription;
 
-	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'usuario';
 	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
-
-	ruta_add =  ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
+	ruta_add =  ['/paneladm', 'submenuusu', 'userproc_form', 'I'];
 	select = false;
 	allowMultiSelect = false;
-
-	columns = [
-		{ columnDef: 'usuario', 	 header: 'Usuario',			 cell: (usuario: any) => `${usuario.usuario}`},
-		{ columnDef: 'nombre',     	 header: 'Nombre',			 cell: (usuario: any) => `${usuario.nombre}`},
-		{ columnDef: 'paterno',   	 header: 'Apellido Paterno', cell: (usuario: any) => `${usuario.paterno}`},
-		{ columnDef: 'materno',   	 header: 'Apellido Materno', cell: (usuario: any) => `${usuario.materno}`},
-		{ columnDef: 'email',   	 header: 'E-mail', 			 cell: (usuario: any) => `${usuario.email}`},
-		{ columnDef: 'email2',   	 header: 'E-mail Adicional', cell: (usuario: any) => `${usuario.email2}`},
-		{ columnDef: 'area_desc',    header: 'Área',			 cell: (usuario: any) => `${usuario.area_desc}`},
-		{ columnDef: 'puesto_desc',  header: 'Puesto',			 cell: (usuario: any) => `${usuario.puesto_desc}`},
-		{ columnDef: 'tipo_desc',    header: 'Tipo',			 cell: (usuario: any) => `${usuario.tipo_desc}`},
-		{ columnDef: 'estatus_desc', header: 'Situación',		 cell: (usuario: any) => `${usuario.estatus_desc}`}
-	];
-
 	selection = new SelectionModel<{any}>(true, []);
 
-	constructor(public _usuarioService: UsuarioService,
-				public _accesoService: AccesoService,
-				private router: Router) {}
+	columns = [
+		{ columnDef: 'usuario',			header: 'Usuario',		cell: (usuproc: any) => `${usuproc.usuario}` },
+		{ columnDef: 'nombre',			header: 'Nombre',		cell: (usuproc: any) => `${usuproc.nombre}` },
+		{ columnDef: 'area',			header: 'Id Área',		cell: (usuproc: any) => `${usuproc.area}` },
+		{ columnDef: 'area_desc',		header: 'Área',			cell: (usuproc: any) => `${usuproc.area_desc}` },
+		{ columnDef: 'proceso',			header: 'Id Proceso',	cell: (usuproc: any) => `${usuproc.proceso}` },
+		{ columnDef: 'proceso_desc',	header: 'Proceso',		cell: (usuproc: any) => `${usuproc.proceso_desc}` },
+		{ columnDef: 'activo',			header: 'Activo',		cell: (usuproc: any) => `${usuproc.activo}` },
+		{ columnDef: 'administra',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administra}` },
+		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}` }// ,
+		// { columnDef: 'responsable',		header: 'Responsable',	cell: (usuproc: any) => `${usuproc.responsable}` }
+	];
+
+	constructor(private router: Router, private _usuario: UsuarioService, private _acceso: AccesoService) { }
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._usuarioService.getUsuarios('X', 'X')
+		this.subscription = this._usuario.getUsuariosProcesos()
 			.subscribe(
-				data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.usuarios;
-					this._accesoService.guardarStorage(this.jsonData.token);
+				(data: any) => {
+					this.listado = data.listado;
+					this._acceso.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 	}
 
+	/*
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
 			this.editarUsuario(datos.row);
@@ -115,10 +109,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 			}
 		}
 	}
-
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
-	}
+	*/
 
 }

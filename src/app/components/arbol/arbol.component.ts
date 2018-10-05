@@ -35,7 +35,7 @@ export class ArbolComponent  {
 
 	onEvent = ($event) => {
 		const seleccion = $event.node.data;
-		const algo = '{"id":' + seleccion.id + ', "name": "' + seleccion.name + '"}';
+		const algo = '{"id":"' + seleccion.id + '", "name": "' + seleccion.name + '"}';
 		this.seleccionado.emit(algo);
 	}
 

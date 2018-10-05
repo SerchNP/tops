@@ -25,6 +25,8 @@ import { PeriodosComponent } from './periodos/periodos.component';
 import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
+import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
+import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { IdentidadFormularioComponent } from './identidad/identidad-formulario.c
 		PuestosComponent,
 		PuestosFormularioComponent,
 		IdentidadComponent,
-		IdentidadFormularioComponent
+		IdentidadFormularioComponent,
+		UsuarioProcesoComponent,
+		UsuarioProcesoFormularioComponent
 	],
 	exports: [
 		PaneladmComponent

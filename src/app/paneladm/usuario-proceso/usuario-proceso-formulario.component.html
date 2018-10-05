@@ -1,0 +1,102 @@
+<h5>{{ titulo }}</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="card">
+        <div class="card-header">Datos del Usuario</div>
+        <div class="card-body">
+            <div class="form-group">
+                <div class="form-group row">
+                    <label for="usuario" class="col-sm-1 col-form-label text-right">Usuario</label>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <input class="form-control" type="text" formControlName="usuario" aria-describedby="usuarioHelp" [attr.disabled]="true" [ngClass]="{'is-invalid': forma.controls['usuario'].invalid}" />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
+									<i class="fas fa-search"></i> Seleccionar
+								</button>
+                            </div>
+                            <div *ngIf="forma.controls['usuario'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                        </div>
+                        <small id="usuarioHelp" class="form-text text-muted">Usuario</small>
+                    </div>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" [attr.disabled]="true">
+                        <small id="nombreHelp" class="form-text text-muted">Nombre del Usuario</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="area" class="col-sm-1 col-form-label text-right">Área</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" type="text" formControlName="area" aria-describedby="areaHelp" [attr.disabled]="true">
+                        <small id="areaHelp" class="form-text text-muted">Clave del Área</small>
+                    </div>
+                    <div class="col-sm-8">
+                        <input class="form-control" type="text" formControlName="area_desc" aria-describedby="area_desceHelp" [attr.disabled]="true">
+                        <small id="area_descHelp" class="form-text text-muted">Nombre del Área</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">Procesos Asignados</div>
+                <div class="col-md-2">
+                    <button class="btn btn-success" type="button" *ngIf="accion === 'I'" (click)="addProceso()">
+						<i class="far fa-plus-square"></i> Agregar Proceso
+					</button>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <table #proceso>
+                <thead *ngIf="procesos.length > 0">
+                    <tr>
+                        <th>Clave</th>
+                        <th>Proceso</th>
+                        <th>Administra</th>
+                        <th>Autoriza</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let proc of procesos">
+                        <td>{{proc.proceso}}<input type="hidden" name="proceso" value="{{proc.proceso}}"></td>
+                        <td>{{proc.proceso_desc}}</td>
+                        <td>{{proc.insertar}}</td>
+                        <td>{{proc.autorizar}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br/>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+				<i class="fa fa-save"></i> Guardar
+			</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Usuario</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="usuarios" (seleccionado)="seleccionado = $event" *ngIf="usuarios.length > 0"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarUsuario(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
