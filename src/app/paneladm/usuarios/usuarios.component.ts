@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UsuarioService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
@@ -37,8 +36,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'tipo_desc',    header: 'Tipo',			 cell: (usuario: any) => `${usuario.tipo_desc}`},
 		{ columnDef: 'estatus_desc', header: 'Situación',		 cell: (usuario: any) => `${usuario.estatus_desc}`}
 	];
-
-	selection = new SelectionModel<{any}>(true, []);
 
 	constructor(public _usuarioService: UsuarioService,
 				public _accesoService: AccesoService,

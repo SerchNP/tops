@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AccesoService, FodaService } from '../../services/services.index';
-import { SelectionModel } from '@angular/cdk/collections';
-import { FodaC } from '../../models/fodaC.model';
+import { Derechos } from '../../interfaces/derechos.interface';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
-import { Derechos } from '../../interfaces/derechos.interface';
 
 @Component({
 	selector: 'app-autfoda-formulario',
@@ -25,15 +23,13 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	allowMultiSelect = true;
 
 	columns = [
-		{ columnDef: 'cuestion_desc', 	header: 'Cuestión',				cell: (foda: FodaC) => `${foda.cuestion_desc}`},
-		{ columnDef: 'foda',     		header: 'ID',   				cell: (foda: FodaC) => `${foda.foda}`},
-		{ columnDef: 'orden',   		header: 'No.', 					cell: (foda: FodaC) => `${foda.orden}`},
-		{ columnDef: 'foda_desc',   	header: 'Descripción', 			cell: (foda: FodaC) => `${foda.foda_desc}`},
-		{ columnDef: 'autoriza_desc',   header: 'Situación',			cell: (foda: FodaC) => `${foda.autoriza_desc}`},
-		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	cell: (foda: FodaC) => `${foda.motivo_cancela}`}
+		{ columnDef: 'cuestion_desc', 	header: 'Cuestión',				cell: (foda: any) => `${foda.cuestion_desc}`},
+		{ columnDef: 'foda',     		header: 'ID',   				cell: (foda: any) => `${foda.foda}`},
+		{ columnDef: 'orden',   		header: 'No.', 					cell: (foda: any) => `${foda.orden}`},
+		{ columnDef: 'foda_desc',   	header: 'Descripción', 			cell: (foda: any) => `${foda.foda_desc}`},
+		{ columnDef: 'autoriza_desc',   header: 'Situación',			cell: (foda: any) => `${foda.autoriza_desc}`},
+		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	cell: (foda: any) => `${foda.motivo_cancela}`}
 	];
-
-	selection = new SelectionModel<FodaC>(true, []);
 
 	constructor(private activatesRoute: ActivatedRoute,
 				private _accesoService: AccesoService,

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Derechos } from '../../interfaces/derechos.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { UsuarioService, AccesoService } from '../../services/services.index';
 import swal from 'sweetalert2';
@@ -21,7 +20,6 @@ export class UsuarioProcesoComponent implements OnInit {
 	ruta_add =  ['/paneladm', 'submenuusu', 'userproc_form', 'I'];
 	select = false;
 	allowMultiSelect = false;
-	selection = new SelectionModel<{any}>(true, []);
 
 	columns = [
 		{ columnDef: 'usuario',			header: 'Usuario',		cell: (usuproc: any) => `${usuproc.usuario}` },

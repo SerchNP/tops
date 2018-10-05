@@ -3,7 +3,6 @@ import { PuestosService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Subscription } from 'rxjs';
 
 
@@ -34,8 +33,6 @@ export class PuestosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'predecesor_desc', header: 'Predecesor', 	 cell: (puesto: any) => `${puesto.predecesor_desc}`},
 		{ columnDef: 'estatus_desc',	header: 'Situación',	 cell: (puesto: any) => `${puesto.estatus_desc}`}
 	];
-
-	selection = new SelectionModel<{}>(true, []);
 
 	constructor(public _accesoService: AccesoService,
 				public _puestosService: PuestosService,

@@ -33,8 +33,6 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'activa_desc',		header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.activa_desc}`}
 	];
 
-	selection = new SelectionModel<{}>(true, []);
-
 	constructor(private _accesoService: AccesoService,
 				private _procesosService: ProcesosService) {
 	}

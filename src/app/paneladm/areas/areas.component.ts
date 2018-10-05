@@ -35,8 +35,6 @@ export class AreasComponent implements OnInit, OnDestroy {
 		{ columnDef: 'ent_data',		header: 'en. Datos',	 cell: (area: any) => `${area.ent_data}`}
 	];
 
-	selection = new SelectionModel<{}>(true, []);
-
 	constructor(public _areasService: AreasService,
 				public _accesoService: AccesoService,
 				private router: Router) {}

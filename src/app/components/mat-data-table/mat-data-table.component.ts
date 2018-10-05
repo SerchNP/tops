@@ -19,7 +19,6 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() columns = [];
 	@Input() select;
 	@Input() llave: string;
-	@Input() selection;
 	@Input() derechos: Derechos;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
@@ -31,6 +30,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	length: number;
 	pageSize = 10;
 	pageSizeOptions: number[] = [5, 10, 25, 100];
+	selection;
 
 	constructor(private router: Router) {
 	}
@@ -58,7 +58,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 		if (this.derechos.cancelar) {
 			this.displayedColumns.push('cancelar');
 		}
-		this.selection = new SelectionModel<{}>(this.allowMultiSelect, []);
+		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}
 
 	/** Whether the number of selected elements matches the total number of rows. */

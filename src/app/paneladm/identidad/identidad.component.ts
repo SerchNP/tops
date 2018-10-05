@@ -22,7 +22,6 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
 	select = false;
 	allowMultiSelect = false;
-	selection = new SelectionModel<{}>(true, []);
 	columns = [
 		{columnDef: 'descrip',			header: 'Descripción',  cell: (identidad: any) => `${identidad.descrip}`},
 		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.sistema_desc}`},
@@ -35,13 +34,13 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 			this.path = url[0].path;
 			this.tipo = this.getTipo(this.path);
 			if (this.tipo !== 'E') {
-				this.columns.splice(0, 0, {columnDef: 'sistema',				header: 'Id Sistema',		cell: (identidad: any) => `${identidad.numero}`});
-				this.columns.splice(1, 0, {columnDef: 'sistema_desc',			header: 'Sistema',			cell: (identidad: any) => `${identidad.numero}`});
+				this.columns.splice(0, 0, {columnDef: 'sistema',		header: 'Id Sistema',	cell: (identidad: any) => `${identidad.numero}`});
+				this.columns.splice(1, 0, {columnDef: 'sistema_desc',	header: 'Sistema',		cell: (identidad: any) => `${identidad.numero}`});
 				if (this.tipo === 'O') {
-					this.columns.splice(2, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
+					this.columns.splice(2, 0, {columnDef: 'numero',		header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
 				}
 			} else {
-				this.columns.splice(0, 0, {columnDef: 'numero',				header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
+				this.columns.splice(0, 0, {columnDef: 'numero',			header: 'Número',		cell: (identidad: any) => `${identidad.numero}`});
 			}
 			if (this.tipo === 'E') {
 				this.ruta_add = ['/paneladm', 'ejes_form', this.tipo, 'I', 0];

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { Proceso } from '../../models/proceso.model';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
@@ -35,8 +34,6 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'ent_data',  		header: 'Ent. Datos',		cell: (proceso: Proceso) => `${proceso.ent_data}`, 		align: 'center'},
 		{ columnDef: 'autoriza_desc',	header: 'Estatus',			cell: (proceso: Proceso) => `${proceso.autoriza_desc}`}
 	];
-
-	selection = new SelectionModel<{}>(true, []);
 
 	constructor(private _procesosService: ProcesosService,
 				private _accesoService: AccesoService,
