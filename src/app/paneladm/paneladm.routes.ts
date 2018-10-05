@@ -36,7 +36,7 @@ const paneladmRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'procesos_form/:acc/:id', component: ProcesosFormularioComponent, data: {titulo: 'Mantenimiento de Procesos', padre: 'Administración', opcion: 'Procesos'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'area_proceso', component: AreaProcesoComponent, data: {titulo: 'Asigna Área a Proceso', padre: 'Administración', opcion: 'Procesos'} },
+					{ path: 'area_proceso', component: AreaProcesoComponent, data: {titulo: 'Asignar Área(s) a Proceso', padre: 'Administración', opcion: 'Procesos'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'area_proceso_form/:acc/:id', component: AreaProcesoFormularioComponent, data: {titulo: 'Asignación de Áreas a Procesos', padre: 'Administración', opcion: 'Procesos'} }
 				]
@@ -54,9 +54,9 @@ const paneladmRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'usuario_proceso', component: UsuarioProcesoComponent, data: {titulo: 'Asignar Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'userproc_form/:acc/:user/:proc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asigación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
+					{ path: 'userproc_form/:acc/:user/:proc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'userproc_form/:acc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asigación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} }
+					{ path: 'userproc_form/:acc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} }
 				]
 			},
 			{
