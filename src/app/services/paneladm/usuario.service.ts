@@ -147,4 +147,11 @@ export class UsuarioService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	asignarUsuarioProcesos(userprocs: any) {
+		const url = URL_SGC + this.RUTA + 'asignarUsuarioProcesos.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(userprocs);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }

@@ -41,35 +41,38 @@
     </div>
     <div class="card">
         <div class="card-header">
-            <div class="row">
+            <!--<div class="row">
                 <div class="col-md-10">Procesos Asignados</div>
                 <div class="col-md-2">
                     <button class="btn btn-success" type="button" *ngIf="accion === 'I'" (click)="addProceso()">
 						<i class="far fa-plus-square"></i> Agregar Proceso
 					</button>
                 </div>
-            </div>
+			</div>-->
+            Procesos Asignados al Área
         </div>
         <div class="card-body">
-            <table #proceso>
-                <thead *ngIf="procesos.length > 0">
-                    <tr>
-                        <th>Clave</th>
-                        <th>Proceso</th>
-                        <th>Administra</th>
-                        <th>Autoriza</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let proc of procesos">
-                        <td>{{proc.proceso}}<input type="hidden" name="proceso" value="{{proc.proceso}}"></td>
-                        <td>{{proc.proceso_desc}}</td>
-                        <td>{{proc.insertar}}</td>
-                        <td>{{proc.autorizar}}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div formArrayName="userprocs">
+                <table #proceso class="table table-borderer">
+                    <thead *ngIf="procesos.length > 0" class="thead-light">
+                        <tr>
+                            <th>Clave</th>
+                            <th>Proceso</th>
+                            <th class="text-center">Administra</th>
+                            <th class="text-center">Autoriza</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of forma.get('userprocs').controls; let i = index;" [formGroupName]="i">
+                            <td>{{item.value.proceso}}</td>
+                            <td>{{item.value.proceso_desc}}</td>
+                            <td class="text-center"><input type="checkbox" formControlName="b_administrar" [attr.checked]="item.value.b_administrar"></td>
+                            <td class="text-center"><input type="checkbox" formControlName="b_autorizar" [attr.checked]="item.value.b_autorizar"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <br/>
