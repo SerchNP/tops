@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ProcesosService, AccesoService } from '../../services/services.index';
+import { ProcesosService, AccesoService, HomeService } from '../../services/services.index';
 import { Proceso } from '../../models/proceso.model';
 import swal from 'sweetalert2';
 
@@ -25,6 +25,8 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	forma: FormGroup;
 	cancelar: any[] = ['/paneladm', 'submenuproc', 'procesos'];
 
+	sistemas: any[] = [];
+
 	cargarProceso(idProceso) {
 		let bandera = false;
 		this._procesosService.getProcesoById(idProceso)
@@ -47,16 +49,24 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	// tslint:disable-next-line:max-line-length
-	constructor(private activatesRoute: ActivatedRoute,
+	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
 				private _accesoService: AccesoService,
-				private _procesosService: ProcesosService) {
-		this.sub = this.activatesRoute.params.subscribe(params => {
+				private _procesosService: ProcesosService,
+				private _home: HomeService) {
+		this.sub = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];
 		});
 
-		this.titulo = (this.accion === 'I' ? 'Registro de Procesos' : 'Actualización de Procesos');
+		let pre = '';
+		switch (this.accion) {
+			case 'I':	pre = 'Registro';		break;
+			case 'U':	pre = 'Actualización';	break;
+			case 'V':	pre = 'Consulta';		break;
+		}
+
+		this.titulo = pre + ' de Procesos';
 
 		if (this.idProceso !== 0) {
 			this.cargarProceso(this.idProceso);
@@ -70,6 +80,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 			'proceso_desc': new FormControl('', Validators.required),
 			'predecesor' : new FormControl(),
 			'predecesor_desc' : new FormControl(),
+			'sistema' : new FormControl('', Validators.required),
 			'objetivo' : new FormControl('', Validators.required),
 			'apartados': new FormControl('', Validators.required),
 			'responsable': new FormControl('', Validators.required),
@@ -77,10 +88,15 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 			'estatus' : new FormControl('', Validators.required)
 		});
 		this.getProcesosTree();
+		this.getSistemas();
 	}
 
 	ngOnDestroy() {
 		this.sub.unsubscribe();
+	}
+
+	get sistema() {
+		return this.forma.get('sistema');
 	}
 
 	get ent_data() {
@@ -137,6 +153,10 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 		this._procesosService.getProcesosTree().subscribe((data: any) => {
 			this.items = data.procesos;
 		});
+	}
+
+	getSistemas() {
+		this._home.getSistemas().subscribe((data: any) => this.sistemas = data);
 	}
 
 }

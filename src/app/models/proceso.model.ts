@@ -11,6 +11,8 @@ export class Proceso {
 
 		public predecesor?: number,
 		public predecesor_desc?: string,
+		public sistema?: number,
+		public sistema_desc?: string,
 		public objetivo?: string,
 		public apartados?: string,
 		public responsable?: string,

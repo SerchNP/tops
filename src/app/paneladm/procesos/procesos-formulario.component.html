@@ -10,7 +10,7 @@
                 <small id="procesoHelp" class="form-text text-muted">Clave del Proceso</small>
             </div>
             <div class="col-sm-8">
-                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [ngClass]="{'is-invalid': forma.controls['proceso_desc'].invalid}">
+                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [ngClass]="{'is-invalid': forma.controls['proceso_desc'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="proceso_descHelp" class="form-text text-muted">Descripción del Proceso</small>
                 <div *ngIf="forma.controls['proceso_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -30,9 +30,20 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="sistema" class="col-sm-2 col-form-label text-right">Sistema</label>
+            <div class="col-sm-5">
+                <select class="form-control" name="sistema" formControlName="sistema" [ngStyle]="{'border-color': (sistema.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="">Seleccionar</option>
+						<option value="{{item.sistema}}" *ngFor="let item of sistemas">{{item.descrip}}</option>
+					</select>
+                <small id="sistemaHelp" class="form-text text-muted">El Proceso pertence al Sistema</small>
+                <div *ngIf="sistema.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo</label>
             <div class="col-sm-10">
-                <textarea class="form-control" formControlName="objetivo" aria-describedby="objetivoHelp" [ngClass]="{'is-invalid': forma.controls['objetivo'].invalid}"></textarea>
+                <textarea class="form-control" formControlName="objetivo" aria-describedby="objetivoHelp" [ngClass]="{'is-invalid': forma.controls['objetivo'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
                 <small id="objetivoHelp" class="form-text text-muted">Objetivo del Proceso</small>
                 <div *ngIf="forma.controls['objetivo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -40,7 +51,7 @@
         <div class="form-group row">
             <label for="apartados" class="col-sm-2 col-form-label text-right">Apartados de la Norma</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="apartados" aria-describedby="apartadosHelp" [ngClass]="{'is-invalid': forma.controls['apartados'].invalid}">
+                <input type="text" class="form-control" formControlName="apartados" aria-describedby="apartadosHelp" [ngClass]="{'is-invalid': forma.controls['apartados'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="apartadosHelp" class="form-text text-muted">Apartados de la Norma ISO aplicables al Proceso</small>
                 <div *ngIf="forma.controls['apartados'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -48,7 +59,7 @@
         <div class="form-group row">
             <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}">
+                <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
                 <div *ngIf="forma.controls['responsable'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -56,7 +67,7 @@
         <div class="form-group row">
             <label for="ent_data" class="col-sm-2 col-form-label text-right">Entrada de Datos</label>
             <div class="col-sm-2">
-                <select class="form-control" name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+                <select class="form-control" name="ent_data" formControlName="ent_data" [ngStyle]="{'border-color': (ent_data.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 					<option value="">Seleccionar</option>
 					<option value="S">Si</option>
 					<option value="N">No</option>
@@ -68,7 +79,7 @@
         <div class="form-group row">
             <label for="estatus" class="col-sm-2 col-form-label text-right">Estatus</label>
             <div class="col-sm-2">
-                <select class="form-control" name="estatus" formControlName="estatus" [ngStyle]="{'border-color': (estatus.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}">
+                <select class="form-control" name="estatus" formControlName="estatus" [ngStyle]="{'border-color': (estatus.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 					<option value="">Seleccionar</option>
 					<option value="A">Abierto</option>
 					<option value="C">Cerrado</option>
@@ -79,11 +90,14 @@
         </div>
     </div>
     <div class="text-center">
-        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+        <a [routerLink]="cancelar" class="btn btn-outline-success" *ngIf="accion === 'V'">
+            <i class="far fa-check-circle"></i> Aceptar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion !== 'V'">
 			<i class="fa fa-save"></i>
 			Guardar
 		</button>&nbsp;
-        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion !== 'V'">Cancelar</a>
     </div>
 </form>
 <!-- Modal -->

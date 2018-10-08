@@ -20,7 +20,7 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'proceso';
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {consultar: true, insertar: true, editar: true, cancelar: true};
 	ruta_add =  ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
@@ -30,6 +30,8 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'proceso_desc',   	header: 'Proceso', 			cell: (proceso: Proceso) => `${proceso.proceso_desc}`},
 		{ columnDef: 'predecesor',		header: 'ID Predecesor',	cell: (proceso: Proceso) => `${proceso.predecesor}`,	align: 'center'},
 		{ columnDef: 'predecesor_desc', header: 'Predecesor',		cell: (proceso: Proceso) => `${proceso.predecesor_desc}`},
+		{ columnDef: 'sistema',			header: 'ID Sistema',		cell: (proceso: Proceso) => `${proceso.sistema}`,	align: 'center'},
+		{ columnDef: 'sistema_desc',	header: 'Sistema',			cell: (proceso: Proceso) => `${proceso.sistema_desc}`},
 		{ columnDef: 'estatus',  		header: 'Abierto/Cerrado',	cell: (proceso: Proceso) => `${proceso.estatus}`, 		align: 'center'},
 		{ columnDef: 'ent_data',  		header: 'Ent. Datos',		cell: (proceso: Proceso) => `${proceso.ent_data}`, 		align: 'center'},
 		{ columnDef: 'autoriza_desc',	header: 'Estatus',			cell: (proceso: Proceso) => `${proceso.autoriza_desc}`}
@@ -58,11 +60,17 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	}
 
 	detectarAccion(datos: any): void {
-		if (datos.accion === 'E') {
+		if (datos.accion === 'V') {
+			this.consultarProceso(datos.row);
+		} else if (datos.accion === 'E') {
 			this.editarProceso(datos.row);
 		} else if (datos.accion === 'C') {
 			this.borrarProceso(datos.row);
 		}
+	}
+
+	consultarProceso(proceso: Proceso) {
+		this.router.navigate(['/paneladm', 'submenuproc', 'procesos_form', 'V', proceso.proceso]);
 	}
 
 	editarProceso(proceso: Proceso) {

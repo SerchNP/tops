@@ -62,6 +62,9 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 		if (this.select) {
 			this.displayedColumns.splice(0, 0, 'select');
 		}
+		if (this.derechos.consultar) {
+			this.displayedColumns.push('consultar');
+		}
 		if (this.derechos.editar) {
 			this.displayedColumns.push('editar');
 		}
