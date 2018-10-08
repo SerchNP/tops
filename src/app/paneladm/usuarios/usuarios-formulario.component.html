@@ -6,7 +6,7 @@
         <div class="form-group row">
             <label for="username" class="col-sm-2 col-form-label text-right">Usuario</label>
             <div class="col-sm-2">
-                <input class="form-control" type="text" formControlName="username" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.get('username').invalid)}" [attr.disabled]="(accion === 'U' ? 'disabled' : null)">
+                <input class="form-control" type="text" formControlName="username" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.get('username').invalid)}" [attr.disabled]="(accion === 'U' || accion === 'V' ? 'disabled' : null)">
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['username'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['username'].errors?.minlength)" class="invalid-feedback">Debe tener al menos {{formaUsuarios.controls['username'].errors.minlength.requiredLength}} carcateres</div>
             </div>
@@ -14,38 +14,38 @@
         <div class="form-group row">
             <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
             <div class="col-sm-1">
-                <input class="form-control" type="text" formControlName="titulo" aria-describedby="tituloHelp" autocomplete="given-name">
+                <input class="form-control" type="text" formControlName="titulo" aria-describedby="tituloHelp" autocomplete="given-name" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="tituloHelp" class="form-text text-muted">Título</small>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.get('nombre').invalid)}">
+                <input class="form-control" type="text" formControlName="nombre" aria-describedby="nombreHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.get('nombre').invalid)}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="nombreHelp" class="form-text text-muted">Nombre(s)</small>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['nombre'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" type="text" formControlName="paterno" aria-describedby="paternoHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.controls['paterno'].invalid)}">
+                <input class="form-control" type="text" formControlName="paterno" aria-describedby="paternoHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.controls['paterno'].invalid)}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="paternoHelp" class="form-text text-muted">Primer Apellido</small>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['paterno'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" type="text" formControlName="materno" aria-describedby="maternoHelp" autocomplete="given-name">
+                <input class="form-control" type="text" formControlName="materno" aria-describedby="maternoHelp" autocomplete="given-name" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="maternoHelp" class="form-text text-muted">Segundo Apellido</small>
             </div>
         </div>
         <div class="form-group row">
             <label for="email" class="col-sm-2 col-form-label text-right">Correo Electrónico</label>
             <div class="col-sm-4">
-                <input class="form-control" type="text" formControlName="email" aria-describedby="emailHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correoValidator)}">
+                <input class="form-control" type="text" formControlName="email" aria-describedby="emailHelp" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correoValidator)}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="emailHelp" class="form-text text-muted">Principal</small>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.errors?.correoValidator)" class="invalid-feedback">Formato incorrecto</div>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" type="text" formControlName="email2" aria-describedby="email2Help" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correo2Validator)}">
+                <input class="form-control" type="text" formControlName="email2" aria-describedby="email2Help" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correo2Validator)}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="email2Help" class="form-text text-muted">Adicional 1</small>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.errors?.correo2Validator)" class="invalid-feedback">Formato incorrecto</div>
             </div>
             <div class="col-sm-3">
-                <input class="form-control" type="text" formControlName="email3" aria-describedby="email3Help" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correo3Validator)}">
+                <input class="form-control" type="text" formControlName="email3" aria-describedby="email3Help" autocomplete="given-name" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.errors?.correo3Validator)}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="email3Help" class="form-text text-muted">Adicional 2</small>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.errors?.correo3Validator)" class="invalid-feedback">Formato incorrecto</div>
             </div>
@@ -53,7 +53,7 @@
         <div class="form-group row">
             <label for="area" class="col-sm-2 col-form-label text-right">Área</label>
             <div class="col-sm-10">
-                <select class="form-control" name="area" formControlName="area" aria-describedby="areaHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && area.invalid) ? '#dc3545' : '#ced4da')}">
+                <select class="form-control" name="area" formControlName="area" aria-describedby="areaHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && area.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 					<option *ngFor="let area of areas" value="{{area.area}}">{{area.area_desc}}</option>
 				</select>
                 <small id="areaHelp" class="form-text text-muted">Área de Trabajo</small>
@@ -63,7 +63,7 @@
         <div class="form-group row">
             <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
             <div class="col-sm-10">
-                <select class="form-control" name="puesto" formControlName="puesto" aria-describedby="puestoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && puesto.invalid) ? '#dc3545' : '#ced4da')}">
+                <select class="form-control" name="puesto" formControlName="puesto" aria-describedby="puestoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && puesto.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 					<option *ngFor="let puesto of puestos" value="{{puesto.puesto}}">{{puesto.puesto_desc}}</option>
 				</select>
                 <small id="puestoHelp" class="form-text text-muted">Puesto de Trabajo</small>
@@ -73,7 +73,7 @@
         <div class="form-group row">
             <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Usuario</label>
             <div class="col-sm-4">
-                <select class="form-control" name="tipo" formControlName="tipo" aria-describedby="tipoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && tipo.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'U' ? 'disabled' : null)">
+                <select class="form-control" name="tipo" formControlName="tipo" aria-describedby="tipoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && tipo.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'U' || accion === 'V' ? 'disabled' : null)">
 					<option value="S" *ngIf="_accesoService.tipoUsuario() === 'S'">Superusuario</option>
 					<option value="A">Auditor</option>
 					<option value="C">Coordinador de Calidad</option>
@@ -94,28 +94,28 @@
                             <li class="list-group-item">
                                 Contexto
                                 <div class="material-switch pull-right">
-                                    <input id="b_contexto" name="b_contexto" formControlName="b_contexto" type="checkbox">
+                                    <input id="b_contexto" name="b_contexto" formControlName="b_contexto" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_contexto" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Liderazgo
                                 <div class="material-switch pull-right">
-                                    <input id="b_liderazgo" name="b_liderazgo" formControlName="b_liderazgo" type="checkbox">
+                                    <input id="b_liderazgo" name="b_liderazgo" formControlName="b_liderazgo" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_liderazgo" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Riesgo
                                 <div class="material-switch pull-right">
-                                    <input id="b_riesgo" name="b_riesgo" formControlName="b_riesgo" type="checkbox">
+                                    <input id="b_riesgo" name="b_riesgo" formControlName="b_riesgo" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_riesgo" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Oportunidad
                                 <div class="material-switch pull-right">
-                                    <input id="b_oportunidad" name="b_oportunidad" formControlName="b_oportunidad" type="checkbox">
+                                    <input id="b_oportunidad" name="b_oportunidad" formControlName="b_oportunidad" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_oportunidad" class="label-primary"></label>
                                 </div>
                             </li>
@@ -126,28 +126,28 @@
                             <li class="list-group-item">
                                 Infraestructura
                                 <div class="material-switch pull-right">
-                                    <input id="b_infraestruc" name="b_infraestruc" formControlName="b_infraestruc" type="checkbox">
+                                    <input id="b_infraestruc" name="b_infraestruc" formControlName="b_infraestruc" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_infraestruc" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Clima Laboral
                                 <div class="material-switch pull-right">
-                                    <input id="b_clima_laboral" name="b_clima_laboral" formControlName="b_clima_laboral" type="checkbox">
+                                    <input id="b_clima_laboral" name="b_clima_laboral" formControlName="b_clima_laboral" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_clima_laboral" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Capacitación
                                 <div class="material-switch pull-right">
-                                    <input id="b_capacitacion" name="b_capacitacion" formControlName="b_capacitacion" type="checkbox">
+                                    <input id="b_capacitacion" name="b_capacitacion" formControlName="b_capacitacion" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_capacitacion" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Control de Información Documental
                                 <div class="material-switch pull-right">
-                                    <input id="b_control_doctos" name="b_control_doctos" formControlName="b_control_doctos" type="checkbox">
+                                    <input id="b_control_doctos" name="b_control_doctos" formControlName="b_control_doctos" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_control_doctos" class="label-primary"></label>
                                 </div>
                             </li>
@@ -158,28 +158,28 @@
                             <li class="list-group-item">
                                 Salida No Conforme
                                 <div class="material-switch pull-right">
-                                    <input id="b_salida_nc" name="b_salida_nc" formControlName="b_salida_nc" type="checkbox">
+                                    <input id="b_salida_nc" name="b_salida_nc" formControlName="b_salida_nc" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_salida_nc" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Quejas
                                 <div class="material-switch pull-right">
-                                    <input id="b_queja" name="b_queja" formControlName="b_queja" type="checkbox">
+                                    <input id="b_queja" name="b_queja" formControlName="b_queja" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_queja" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Satisfacción de Usuarios
                                 <div class="material-switch pull-right">
-                                    <input id="b_satisfaccion" name="b_satisfaccion" formControlName="b_satisfaccion" type="checkbox">
+                                    <input id="b_satisfaccion" name="b_satisfaccion" formControlName="b_satisfaccion" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_satisfaccion" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Indicadores
                                 <div class="material-switch pull-right">
-                                    <input id="b_indicador" name="b_indicador" formControlName="b_indicador" type="checkbox">
+                                    <input id="b_indicador" name="b_indicador" formControlName="b_indicador" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_indicador" class="label-primary"></label>
                                 </div>
                             </li>
@@ -190,28 +190,28 @@
                             <li class="list-group-item">
                                 Auditor
                                 <div class="material-switch pull-right">
-                                    <input id="b_auditor" name="b_auditor" formControlName="b_auditor" type="checkbox">
+                                    <input id="b_auditor" name="b_auditor" formControlName="b_auditor" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_auditor" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Revisión por la Dirección
                                 <div class="material-switch pull-right">
-                                    <input id="b_revision_dir" name="b_revision_dir" formControlName="b_revision_dir" type="checkbox">
+                                    <input id="b_revision_dir" name="b_revision_dir" formControlName="b_revision_dir" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_revision_dir" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 No Conformidades
                                 <div class="material-switch pull-right">
-                                    <input id="b_no_conformidad" name="b_no_conformidad" formControlName="b_no_conformidad" type="checkbox">
+                                    <input id="b_no_conformidad" name="b_no_conformidad" formControlName="b_no_conformidad" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_no_conformidad" class="label-primary"></label>
                                 </div>
                             </li>
                             <li class="list-group-item">
                                 Mejora Continua
                                 <div class="material-switch pull-right">
-                                    <input id="b_mejora_continua" name="b_mejora_continua" formControlName="b_mejora_continua" type="checkbox">
+                                    <input id="b_mejora_continua" name="b_mejora_continua" formControlName="b_mejora_continua" type="checkbox" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                                     <label for="b_mejora_continua" class="label-primary"></label>
                                 </div>
                             </li>
@@ -222,10 +222,13 @@
         </div>
     </div>
     <div class="text-center">
-        <button type="submit" class="btn btn-outline-primary" [disabled]="!formaUsuarios.valid">
-				<i class="fa fa-save"></i>
-				Guardar
-			</button>&nbsp;
-        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+        <a [routerLink]="cancelar" class="btn btn-outline-success" *ngIf="accion === 'V'">
+            <i class="far fa-check-circle"></i> Aceptar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!formaUsuarios.valid" *ngIf="accion !== 'V'">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion !== 'V'">Cancelar</a>
     </div>
 </form>

@@ -18,7 +18,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'usuario';
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {consultar: true, insertar: true, editar: true, cancelar: true};
 
 	ruta_add =  ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
 	select = false;
@@ -60,11 +60,17 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	}
 
 	detectarAccion(datos: any): void {
-		if (datos.accion === 'E') {
+		if (datos.accion === 'V') {
+			this.consultarUsuario(datos.row);
+		} else if (datos.accion === 'E') {
 			this.editarUsuario(datos.row);
 		} else if (datos.accion === 'C') {
 			this.cancelarUsuario(datos.row);
 		}
+	}
+
+	consultarUsuario(usuario: any) {
+		this.router.navigate(['/paneladm', 'submenuusu', 'usuarios_form', 'V', usuario.usuario]);
 	}
 
 	editarUsuario(usuario: any) {

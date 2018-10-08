@@ -37,9 +37,16 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 			this.idUsuario = params['id'];
 		});
 
-		this.titulo = (this.accion === 'I' ? 'Registro de Usuarios' : 'Actualización de Usuarios');
+		let pre = '';
+		switch (this.accion) {
+			case 'I':	pre = 'Registro';		break;
+			case 'U':	pre = 'Actualización';	break;
+			case 'V':	pre = 'Consulta';		break;
+		}
 
-		if (this.accion === 'U') {
+		this.titulo = pre + ' de Usuarios';
+
+		if (this.accion === 'U' || this.accion === 'V') {
 			this.cargarUsuario(this.idUsuario);
 		}
 	}
