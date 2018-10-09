@@ -4,6 +4,7 @@ import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
+import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 
 
 @Component({
@@ -11,13 +12,14 @@ import { Router } from '@angular/router';
 	templateUrl: './mat-data-table.component.html',
 	styleUrls: ['./mat-data-table.component.scss'],
 	animations: [
-	trigger('detailExpand', [
-		state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-		state('expanded', style({height: '*'})),
-		transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+		trigger('detailExpand', [
+			state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+			state('expanded', style({height: '*'})),
+			transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
 		]),
 	]
 })
+
 export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@ViewChild(MatSort) sort: MatSort;
@@ -55,7 +57,8 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	}
 
 	ngOnInit() {
-		this.displayedColumns = this.columns.map(c => c.columnDef);
+		const columnasVisibles = new FiltraColumnsPipe().transform(this.columns, true);
+		this.displayedColumns = columnasVisibles.map(c => c.columnDef);
 	}
 
 	ngAfterViewInit() {

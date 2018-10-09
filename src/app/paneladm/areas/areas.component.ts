@@ -4,6 +4,7 @@ import { Derechos } from '../../interfaces/derechos.interface';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { Areas } from '../../interfaces/areas.interface';
 
 
 @Component({
@@ -25,13 +26,14 @@ export class AreasComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'area', 			header: 'Área',			 cell: (area: any) => `${area.area}`, 		align: 'center'},
-		{ columnDef: 'area_desc',   	header: 'Descripción',	 cell: (area: any) => `${area.area_desc}`},
-		{ columnDef: 'predecesor',  	header: 'ID Predecesor', cell: (area: any) => `${area.predecesor}`,	align: 'center'},
-		{ columnDef: 'predecesor_desc',	header: 'Predecesor',	 cell: (area: any) => `${area.predecesor_desc}`},
-		{ columnDef: 'tipo_desc',		header: 'Tipo',	 		 cell: (area: any) => `${area.tipo_desc}`},
-		{ columnDef: 'estatus_desc',	header: 'Situación',	 cell: (area: any) => `${area.estatus_desc}`},
-		{ columnDef: 'ent_data',		header: 'en. Datos',	 cell: (area: any) => `${area.ent_data}`}
+		{ columnDef: 'area', 			header: 'Área',					 visible: true,		cell: (area: any) => `${area.area}`, 		align: 'center'},
+		{ columnDef: 'area_desc',   	header: 'Descripción',			 visible: true,		cell: (area: any) => `${area.area_desc}`},
+		{ columnDef: 'predecesor',  	header: 'ID Predecesor',		 visible: true,		cell: (area: any) => `${area.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor_desc',	header: 'Predecesor',			 visible: true,		cell: (area: any) => `${area.predecesor_desc}`},
+		{ columnDef: 'tipo_desc',		header: 'Tipo',			 		 visible: true,		cell: (area: any) => `${area.tipo_desc}`},
+		{ columnDef: 'estatus_desc',	header: 'Situación',			 visible: true,		cell: (area: any) => `${area.estatus_desc}`},
+		{ columnDef: 'ent_data',		header: 'Ent. Datos',			 visible: true,		cell: (area: any) => `${area.ent_data}`},
+		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	 visible: false,	cell: (area: any) => `${area.motivo_cancela}`}
 	];
 
 	constructor(public _areasService: AreasService,

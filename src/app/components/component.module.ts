@@ -11,12 +11,14 @@ import { MatTableModule, MatSortModule, MatCheckboxModule,
 // Componentes
 import { ArbolComponent } from '../components/arbol/arbol.component';
 import { MatDataTableComponent } from './mat-data-table/mat-data-table.component';
+import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
 
 
 @NgModule({
 	declarations: [
 		ArbolComponent,
-		MatDataTableComponent
+		MatDataTableComponent,
+		FiltraColumnsPipe
 	],
 	exports: [
 		ArbolComponent,
