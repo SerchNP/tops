@@ -103,11 +103,8 @@ tr.example-element-row:not(.example-expanded-row):active {
     display: flex;
 }
 
-.example-element-diagram {
-    min-width: 80px;
-    border: 2px solid black;
-    padding: 8px;
-    font-weight: lighter;
-    margin: 8px 0;
-    height: 104px;
+.example-header-detail {
+    color: rgba(0, 0, 0, .54);
+    padding: 0.15em;
+    font-weight: 500;
 }
