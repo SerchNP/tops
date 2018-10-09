@@ -7,29 +7,29 @@
         </mat-panel-title>
     </mat-expansion-panel-header>
     <div class="card bg-0">
-        <div class="card-header text-right" *ngIf="derechos.insertar || derechos.editar">
+        <div class="card-header text-right" *ngIf="derechos.insertar || derechos.editar" style="padding: 0px; background-color: transparent; border: 0;">
             <button *ngIf="derechos.insertar" type="button" class="btn btn-sm btn-link text-success" (click)="agregar()">
 				<i class="fas fa-plus-circle"></i> Agregar
 			</button>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="padding: 10px;">
             <div *ngIf="listado.length === 0" class="text-muted">- Sin registros -</div>
             <div class="list-group" *ngIf="listado.length > 0">
                 <div class="list-group-item list-group-item-light" *ngFor="let item of listado; let i = index">
-                    <i class="fas fa-ellipsis-v"></i> {{item.foda_desc}}
-                    <div class="row">
-                        <div class="col">
-                            {{item.autoriza_desc}}
+                    <div class="row" style="padding-left: 10px;">
+                        <div class="col-sm-9">
+                            <h6>{{item.foda_desc}}</h6>
                         </div>
+                        <div class="col-sm-3">{{item.autoriza_desc | titlecase}}</div>
                     </div>
                     <div class="row">
                         <div class="col" *ngIf="(derechos.editar || derechos.cancelar) &&(item.autoriza !== 7 && item.autoriza !== 6 && item.autoriza !== 5 && item.autoriza !== 4)">
                             <small>
-								<button type="button" class="btn btn-sm btn-link text-info" (click)="editar(item, i)" *ngIf="derechos.editar">
-									<i class="far fa-edit"></i> Editar
+								<button type="button" class="btn btn-sm btn-link" (click)="editar(item, i)" *ngIf="derechos.editar">
+									<i class="far fa-edit"></i>
 								</button>
 								<button type="button" class="btn btn-sm btn-link text-danger" (click)="cancelar(item, i)" *ngIf="derechos.cancelar">
-									<i class="fas fa-trash-alt"></i> Cancelar
+									<i class="fas fa-trash-alt"></i>
 								</button>
 							</small>
                         </div>
@@ -42,14 +42,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="row" *ngIf="(item.autoriza === 7 || item.autoriza === 6)">
+                    <div class="row" *ngIf="(item.autoriza === 7 || item.autoriza === 6)" style="padding-left: 10px;">
                         <div class="col">
-                            {{item.motivo_cancela}}
+                            MOTIVO: {{item.motivo_cancela}}
                         </div>
                     </div>
-                    <div class="row" *ngIf="(item.autoriza === 5 || item.autoriza === 4)">
+                    <div class="row" *ngIf="(item.autoriza === 5 || item.autoriza === 4)" style="padding-left: 10px;">
                         <div class="col">
-                            {{item.motivo_rechaza}}
+                            MOTIVO: {{item.motivo_rechaza}}
                         </div>
                     </div>
                 </div>

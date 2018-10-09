@@ -31,7 +31,7 @@ export class CardFodaComponent implements OnInit {
 	async agregar() {
 		const { value: fodaDESC } = await swal({
 			title: 'Ingrese la nueva ' + this.cuestion_desc,
-			input: 'text',
+			input: 'textarea',
 			showCancelButton: true,
 			inputValidator: value => {
 				return !value && 'Debe ingresar la nueva ' + this.cuestion_desc;
@@ -75,6 +75,7 @@ export class CardFodaComponent implements OnInit {
 				title: '¡Atención!',
 				text: '¿Está seguro(a) que desea cancelar la ' + this.cuestion_desc + ': ' + foda.foda_desc + '?',
 				type: 'warning',
+				input: 'textarea',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
 				confirmButtonColor: '#B22222'
@@ -122,6 +123,8 @@ export class CardFodaComponent implements OnInit {
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
+							this.listado[index]['autoriza'] = 1;
+							this.listado[index]['autoriza_desc'] = 'PENDIENTE';
 							this.listado[index]['foda_desc'] = fodaDESC;
 						},
 						error => {
