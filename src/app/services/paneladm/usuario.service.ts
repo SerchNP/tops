@@ -154,4 +154,11 @@ export class UsuarioService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
+	cancelarUsuarioProcesos(usuario: string, proceso: number, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'cancelarUsuarioProcesos.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"usuario": "' + usuario + '", "proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }

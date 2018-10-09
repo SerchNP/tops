@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AccesoService, UsuarioService, AreasService, ProcesosService } from '../../services/services.index';
 import swal from 'sweetalert2';
 
@@ -13,8 +13,8 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	private sub: any;
 	accion: string;
-	usuario: number;
-	proceso: string;
+	usuario: string;
+	proceso: number;
 
 	titulo: string;
 	forma: FormGroup;
@@ -26,7 +26,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	seleccionado = '';
 	procesos: any[] = [];
 
-	constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute,
+	constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router,
 				private _acceso: AccesoService, private _usuario: UsuarioService,
 				private _area: AreasService, private _procesos: ProcesosService) {
 		this.sub = this.activatedRoute.params.subscribe(params => {
@@ -46,7 +46,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 			area_desc: '',
 			userprocs: this.formBuilder.array([])
 		});
-		this.cargarUsuarios();
+		this.cargarUsuarios(this.usuario);
 	}
 
 	createItem(user, idproc, procdesc, padm, padmbol, paut, pautbol): FormGroup {
@@ -65,23 +65,35 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 		this.sub.unsubscribe();
 	}
 
-	cargarUsuarios() {
-		this._usuario.getUsuarios('N', 'A')
-			.subscribe(
-				(data: any) => {
-					this.usuariosTemp = data.usuarios;
-					this.usuariosTemp.forEach((x) => {
-						const json = '{"id" : "' + x.usuario + '", "name" : "' + x.nombre + ' ' + x.paterno + ' ' + x.materno + '"}';
-						this.usuarios.push(JSON.parse(json));
+	cargarUsuarios(username?: string) {
+		if (username !== undefined) {
+			this._usuario.getUsuarioById(username)
+				.subscribe(
+					(data: any) => {
+						this._acceso.guardarStorage(data.token);
+						this.forma.get('usuario').setValue(data.usuario.username);
+						this.forma.get('nombre').setValue(data.usuario.nombre + ' ' + data.usuario.paterno + ' ' + data.usuario.materno);
+						this.getAreaFromUsuario(data.usuario.area);
+						this.getProcesosFromUsuario(data.usuario.username);
 					});
-					this._acceso.guardarStorage(data.token);
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
-					}
-				});
+		} else {
+			this._usuario.getUsuarios('N', 'A')
+				.subscribe(
+					(data: any) => {
+						this.usuariosTemp = data.usuarios;
+						this.usuariosTemp.forEach((x) => {
+							const json = '{"id" : "' + x.usuario + '", "name" : "' + x.nombre + ' ' + x.paterno + ' ' + x.materno + '"}';
+							this.usuarios.push(JSON.parse(json));
+						});
+						this._acceso.guardarStorage(data.token);
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+		}
 	}
 
 	asignarUsuario() {
@@ -131,7 +143,6 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 				(data: any) => {
 					this.procesos = data.procesos;
 					this.procesos.forEach((p) => this.addItem(usuario, p));
-					console.log(this.userprocs);
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
@@ -144,8 +155,15 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	addItem(usuario, p): void {
 		this.userprocs = this.forma.get('userprocs') as FormArray;
-		// tslint:disable-next-line:max-line-length
-		this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.insertar, p.insertar === 'S', p.autorizar, p.autorizar === 'S'));
+		if (this.proceso !== undefined) {
+			if (p.proceso === Number(this.proceso)) {
+				// tslint:disable-next-line:max-line-length
+				this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.insertar, p.insertar === 'S', p.autorizar, p.autorizar === 'S'));
+			}
+		} else {
+			// tslint:disable-next-line:max-line-length
+			this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.insertar, p.insertar === 'S', p.autorizar, p.autorizar === 'S'));
+		}
 	}
 
 	guardar() {
@@ -155,25 +173,40 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 			if (element.b_administrar || element.b_autorizar) {
 				if (element.b_administrar) {
 					element.administra = 'S';
+				} else {
+					element.administra = 'N';
 				}
 				if (element.b_autorizar) {
 					element.autoriza = 'S';
+				} else {
+					element.autoriza = 'N';
 				}
 				listadoFinal.push(element);
 			}
 		});
-
-		this._usuario.asignarUsuarioProcesos(listadoFinal)
-			.subscribe((data: any) => {
-				swal('Atención!!!', data.message, 'success');
-				this.ngOnInit();
-			},
-			error => {
-				swal('ERROR', error.error.message, 'error');
-				if (error.error.code === 401) {
-					this._acceso.logout();
-				}
-			});
+		if (listadoFinal.length === 0) {
+			if (this.accion === 'U') {
+				swal('ERROR', 'Debe seleccionar al menos un atributo del proceso', 'error');
+			} else {
+				swal('ERROR', 'Debe seleccionar al menos un atributo de alguno de los procesos asignados al área', 'error');
+			}
+		} else {
+			this._usuario.asignarUsuarioProcesos(listadoFinal)
+				.subscribe((data: any) => {
+					swal('Atención!!!', data.message, 'success');
+					if (this.accion === 'U') {
+						this.router.navigate(['/paneladm', 'submenuusu', 'usuario_proceso']);
+					} else {
+						this.ngOnInit();
+					}
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+		}
 	}
 
 }

@@ -53,30 +53,31 @@ export class UsuarioProcesoComponent implements OnInit {
 				});
 	}
 
-	/*
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
-			this.editarUsuario(datos.row);
+			this.editarUsuarioProcesos(datos.row);
 		} else if (datos.accion === 'C') {
-			this.cancelarUsuario(datos.row);
+			this.cancelarUsuarioProcesos(datos.row);
 		}
 	}
 
-	editarUsuario(usuario: any) {
-		if (usuario.estatus === 'C') {
-			swal('ERROR', 'No es posible editar, el usuario ya se encuentra bloqueado', 'error');
+	editarUsuarioProcesos(registro: any) {
+		console.log(registro);
+		if (registro.activo === 'N') {
+			swal('ERROR', 'No es posible editar, el registro se encuentra inactivo', 'error');
 		} else {
-			this.router.navigate(['/paneladm', 'submenuusu', 'usuarios_form', 'U', usuario.usuario]);
+			this.router.navigate(['/paneladm', 'submenuusu', 'userproc_form', 'U', registro.usuario, registro.proceso]);
 		}
 	}
 
-	async cancelarUsuario(usuario: any) {
-		if (usuario.estatus === 'C') {
-			swal('ERROR', 'El usuario ya se encuentra bloqueado', 'error');
+	async cancelarUsuarioProcesos(registro: any) {
+		console.log(registro);
+		if (registro.activo === 'N') {
+			swal('ERROR', 'No es posible cancelar, el registro ya se encuentra inactivo', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
-				text: 'Está seguro que desea cancelar el usuario ' + usuario.usuario + '?',
+				text: 'Está seguro que desea cancelar el registro seleccionado?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
@@ -84,15 +85,15 @@ export class UsuarioProcesoComponent implements OnInit {
 			});
 			if (respuesta) {
 				const {value: motivo} = await swal({
-					title: 'Ingrese el motivo de bloqueo del usuario ' + usuario.usuario,
+					title: 'Ingrese el motivo de inactivción del registro seleccionado',
 					input: 'text',
 					showCancelButton: true,
 					inputValidator: (value) => {
-						return !value && 'Necesita ingresar el motivo de bloqueo';
+						return !value && 'Necesita ingresar el motivo de inactivación';
 					}
 				});
 				if (motivo !== undefined) {
-					this.subscription = this._usuarioService.cancelarUsuario(usuario.usuario, motivo.toUpperCase())
+					this.subscription = this._usuario.cancelarUsuarioProcesos(registro.usuario, registro.proceso, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -100,13 +101,12 @@ export class UsuarioProcesoComponent implements OnInit {
 						error => {
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
-								this._accesoService.logout();
+								this._acceso.logout();
 							}
 						});
 				}
 			}
 		}
 	}
-	*/
 
 }
