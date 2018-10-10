@@ -46,13 +46,38 @@ header h4 {
     background: #F7F5F5 !important;
 }
 
+
+/* TREE */
+
 .angular-tree-component {
     padding: 10px !important;
 }
 
 .toggle-children {
     background-image: url('../../src/assets/images/icons/arrow.png') !important;
+    height: 14px !important;
+    width: 14px !important;
 }
+
+.node-content-wrapper {
+    width: 100% !important;
+    border-radius: 5px !important;
+}
+
+.node-content-wrapper-active,
+.node-content-wrapper.node-content-wrapper-active:hover,
+.node-content-wrapper-active.node-content-wrapper-focused {
+    background: #5879d3 !important;
+    color: #fff !important;
+}
+
+.node-content-wrapper:hover {
+    background: #fff !important;
+    color: #5879d3 !important;
+}
+
+
+/* TREE */
 
 .mat-badge-accent .mat-badge-content {
     background-color: darkorange;
