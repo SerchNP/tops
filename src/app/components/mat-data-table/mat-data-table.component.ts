@@ -36,6 +36,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	expandedElement;
 
 	@Output() registro: EventEmitter<any> = new EventEmitter();
+	@Output() seleccionados: EventEmitter<any> = new EventEmitter();
 
 	dataSource: MatTableDataSource<any>;
 	displayedColumns;
@@ -97,8 +98,12 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 		this.dataSource.filter = filterValue.trim().toLowerCase();
 	}
 
+	onCheckClicked() {
+		this.seleccionados.emit(this.selection.selected);
+	}
+
 	onRowClicked(row) {
-		// console.log('Row clicked: ', row);
+		this.seleccionados.emit(this.selection.selected);
 	}
 
 	onButtonClicked(row, accion) {

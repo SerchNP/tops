@@ -4,7 +4,6 @@ import { Derechos } from '../../interfaces/derechos.interface';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
-import { Areas } from '../../interfaces/areas.interface';
 
 
 @Component({
@@ -33,7 +32,9 @@ export class AreasComponent implements OnInit, OnDestroy {
 		{ columnDef: 'tipo_desc',		header: 'Tipo',			 		 visible: true,		cell: (area: any) => `${area.tipo_desc}`},
 		{ columnDef: 'estatus_desc',	header: 'Situación',			 visible: true,		cell: (area: any) => `${area.estatus_desc}`},
 		{ columnDef: 'ent_data',		header: 'Ent. Datos',			 visible: true,		cell: (area: any) => `${area.ent_data}`},
-		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	 visible: false,	cell: (area: any) => `${area.motivo_cancela}`}
+		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	 visible: false,	cell: (area: any) => `${area.motivo_cancela}`},
+		{ columnDef: 'f_cancela',		header: 'Fecha de Cancelación',	 visible: false,	cell: (area: any) => `${area.f_cancela}`},
+		{ columnDef: 'u_cancela',		header: 'Usuario que Cancela',	 visible: false,	cell: (area: any) => `${area.u_cancela}`}
 	];
 
 	constructor(public _areasService: AreasService,
