@@ -16,3 +16,5 @@ export { AreasService } from './paneladm/areas.service';
 export { PuestosService } from './paneladm/puestos.service';
 // FODA
 export { FodaService } from './panelfoda/foda.service';
+// INDICADORES
+export { IndicadoresService } from './panelindicadores/indicadores.service';

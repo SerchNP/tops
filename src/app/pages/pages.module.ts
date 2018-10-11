@@ -11,6 +11,7 @@ import { PANELCONTEXTO_ROUTES } from '../panelcontexto/panelcontexto.routes';
 import { SharedModule } from '../shared/shared.module';
 import { PaneladmModule } from '../paneladm/paneladm.module';
 import { PanelContextoModule } from '../panelcontexto/panelcontexto.module';
+import { PanelIndicadoresModule } from '../panelindicadores/panelindicadores.module';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -39,7 +40,8 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 		ReactiveFormsModule,
 		SharedModule,
 		PaneladmModule,
-		PanelContextoModule
+		PanelContextoModule,
+		PanelIndicadoresModule
 	]
 })
 
