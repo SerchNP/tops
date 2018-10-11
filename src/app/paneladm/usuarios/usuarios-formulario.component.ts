@@ -89,6 +89,11 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 		);
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
 	get area() {
 		return this.formaUsuarios.get('area');
 	}
@@ -195,11 +200,6 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		}
-	}
-
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
 	}
 
 }

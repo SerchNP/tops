@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { AccesoService, PuestosService } from '../../services/services.index';
 import { Puestos } from '../../interfaces/puestos.interface';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-puestos-formulario',
@@ -12,7 +13,8 @@ import { Puestos } from '../../interfaces/puestos.interface';
 
 export class PuestosFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
+
 	accion: string;
 	idPuesto: number;
 	titulo: string;
@@ -27,7 +29,7 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 	constructor(private activatesRoute: ActivatedRoute, private router: Router,
 			private _accesoService: AccesoService, private _puestosService: PuestosService) {
 
-		this.sub = this.activatesRoute.params.subscribe(params => {
+		this.subscription = this.activatesRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idPuesto = params['id'];
 		});
@@ -51,12 +53,12 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	cargarPuesto(idPuesto: number) {
 		let bandera = false;
-		this._puestosService.getPuestoById(idPuesto)
+		this.subscription = this._puestosService.getPuestoById(idPuesto)
 			.subscribe(
 				(data: any) => {
 					this.puesto = data.puesto;
@@ -75,7 +77,7 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getPuestosTree() {
-		this._puestosService.getPuestosTree().subscribe((data: any) => this.items = data);
+		this.subscription = this._puestosService.getPuestosTree().subscribe((data: any) => this.items = data);
 	}
 
 	asignarPredecesor() {
@@ -96,7 +98,7 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.accion === 'U') {
-			this._puestosService.modificarPuesto(this.formaPuestos.value)
+			this.subscription = this._puestosService.modificarPuesto(this.formaPuestos.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -109,7 +111,7 @@ export class PuestosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			this._puestosService.insertarPuesto(this.formaPuestos.value)
+			this.subscription = this._puestosService.insertarPuesto(this.formaPuestos.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');

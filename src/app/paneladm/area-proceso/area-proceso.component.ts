@@ -57,6 +57,19 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'C') {
+			this.cancelaAreaAsignada(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
+		}
+	}
+
 	async cancelaAreaAsignada(areaPproceso: any) {
 		if (areaPproceso.activa === 'N') {
 			swal('ERROR', 'La asignación ya se encuentra cancelada', 'error');
@@ -79,7 +92,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this._procesosService.cancelaAreaAsignada(areaPproceso.clave, motivo.toUpperCase())
+					this.subscription = this._procesosService.cancelaAreaAsignada(areaPproceso.clave, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -111,19 +124,6 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 				motivo_cancela: datos.motivo_cancela
 			}
 		});
-	}
-
-	detectarAccion(datos: any): void {
-		if (datos.accion === 'C') {
-			this.cancelaAreaAsignada(datos.row);
-		} else if (datos.accion === 'V') {
-			this.openDialog(datos.row);
-		}
-	}
-
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
 	}
 
 }

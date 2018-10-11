@@ -4,6 +4,8 @@ import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
 
 
 @Component({
@@ -20,7 +22,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'puesto';
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
 
 	ruta_add =  ['/paneladm', 'puestos_form', 'I', 0];
 	select = false;
@@ -36,7 +38,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 
 	constructor(public _accesoService: AccesoService,
 				public _puestosService: PuestosService,
-				private router: Router) {
+				private router: Router, public dialog: MatDialog) {
 	}
 
 	ngOnInit() {
@@ -57,11 +59,18 @@ export class PuestosComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
 			this.editarPuesto(datos.row);
 		} else if (datos.accion === 'C') {
 			this.borrarPuesto(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
 		}
 	}
 
@@ -112,9 +121,21 @@ export class PuestosComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.puesto_desc,
+				estatus: datos.estatus_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

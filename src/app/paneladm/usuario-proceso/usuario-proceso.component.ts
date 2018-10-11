@@ -1,22 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
 import { UsuarioService, AccesoService } from '../../services/services.index';
 import swal from 'sweetalert2';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
 	selector: 'app-usuario-proceso',
 	templateUrl: './usuario-proceso.component.html'
 })
 
-export class UsuarioProcesoComponent implements OnInit {
+export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
 	listado: any[] = [];
 	cargando = false;
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
 	ruta_add =  ['/paneladm', 'submenuusu', 'userproc_form', 'I'];
 	select = false;
 	allowMultiSelect = false;
@@ -34,7 +36,7 @@ export class UsuarioProcesoComponent implements OnInit {
 		// { columnDef: 'responsable',		header: 'Responsable',	cell: (usuproc: any) => `${usuproc.responsable}` }
 	];
 
-	constructor(private router: Router, private _usuario: UsuarioService, private _acceso: AccesoService) { }
+	constructor(private router: Router, private _usuario: UsuarioService, private _acceso: AccesoService, public dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.cargando = true;
@@ -53,11 +55,18 @@ export class UsuarioProcesoComponent implements OnInit {
 				});
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
 			this.editarUsuarioProcesos(datos.row);
 		} else if (datos.accion === 'C') {
 			this.cancelarUsuarioProcesos(datos.row);
+		}  else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
 		}
 	}
 
@@ -107,6 +116,23 @@ export class UsuarioProcesoComponent implements OnInit {
 				}
 			}
 		}
+	}
+
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.area_desc,
+				estatus: datos.activa_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

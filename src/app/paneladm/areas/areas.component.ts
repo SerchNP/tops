@@ -4,6 +4,8 @@ import { Derechos } from '../../interfaces/derechos.interface';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
+import { MatDialog } from '@angular/material';
 
 
 @Component({
@@ -19,27 +21,24 @@ export class AreasComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'area';
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
 	ruta_add = ['/paneladm', 'areas_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'area', 			header: 'Área',					 visible: true,		cell: (area: any) => `${area.area}`, 		align: 'center'},
-		{ columnDef: 'area_desc',   	header: 'Descripción',			 visible: true,		cell: (area: any) => `${area.area_desc}`},
-		{ columnDef: 'predecesor',  	header: 'ID Predecesor',		 visible: true,		cell: (area: any) => `${area.predecesor}`,	align: 'center'},
-		{ columnDef: 'predecesor_desc',	header: 'Predecesor',			 visible: true,		cell: (area: any) => `${area.predecesor_desc}`},
-		{ columnDef: 'tipo_desc',		header: 'Tipo',			 		 visible: true,		cell: (area: any) => `${area.tipo_desc}`},
-		{ columnDef: 'estatus_desc',	header: 'Situación',			 visible: true,		cell: (area: any) => `${area.estatus_desc}`},
-		{ columnDef: 'ent_data',		header: 'Ent. Datos',			 visible: true,		cell: (area: any) => `${area.ent_data}`},
-		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	 visible: false,	cell: (area: any) => `${area.motivo_cancela}`},
-		{ columnDef: 'f_cancela',		header: 'Fecha de Cancelación',	 visible: false,	cell: (area: any) => `${area.f_cancela}`},
-		{ columnDef: 'u_cancela',		header: 'Usuario que Cancela',	 visible: false,	cell: (area: any) => `${area.u_cancela}`}
+		{ columnDef: 'area', 			header: 'Área',				cell: (area: any) => `${area.area}`, 		align: 'center'},
+		{ columnDef: 'area_desc',   	header: 'Descripción',		cell: (area: any) => `${area.area_desc}`},
+		{ columnDef: 'predecesor',  	header: 'ID Predecesor',	cell: (area: any) => `${area.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor_desc',	header: 'Predecesor',		cell: (area: any) => `${area.predecesor_desc}`},
+		{ columnDef: 'tipo_desc',		header: 'Tipo',			 	cell: (area: any) => `${area.tipo_desc}`},
+		{ columnDef: 'estatus_desc',	header: 'Situación',		cell: (area: any) => `${area.estatus_desc}`},
+		{ columnDef: 'ent_data',		header: 'Ent. Datos',		cell: (area: any) => `${area.ent_data}`}
 	];
 
 	constructor(public _areasService: AreasService,
 				public _accesoService: AccesoService,
-				private router: Router) {}
+				private router: Router, public dialog: MatDialog) {}
 
 	ngOnInit() {
 		this.cargando = true;
@@ -59,11 +58,18 @@ export class AreasComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
 			this.editarArea(datos.row);
 		} else if (datos.accion === 'C') {
 			this.borrarArea(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
 		}
 	}
 
@@ -114,9 +120,21 @@ export class AreasComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.area_desc,
+				estatus: datos.activa_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

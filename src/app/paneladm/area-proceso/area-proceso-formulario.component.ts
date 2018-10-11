@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProcesosService, AccesoService, AreasService } from '../../services/services.index';
 import swal from 'sweetalert2';
 import { AreaProceso } from '../../interfaces/procesos.interface';
+import { Subscription } from 'rxjs';
 
 @Component ({
 	selector: 'app-area-proceso-formulario',
@@ -11,7 +12,7 @@ import { AreaProceso } from '../../interfaces/procesos.interface';
 })
 export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
 	accion: string;
 	clave: number;
 	titulo: string;
@@ -25,12 +26,12 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 	forma: FormGroup;
 	cancelar: any[] = ['/paneladm', 'submenuproc', 'area_proceso'];
 
-	constructor(private activatesRoute: ActivatedRoute,
+	constructor(private activatedRoute: ActivatedRoute,
 				// private router: Router,
 				private _accesoService: AccesoService,
 				private _procesosService: ProcesosService,
 				private _areasService: AreasService) {
-		this.sub = this.activatesRoute.params.subscribe(params => {
+		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.clave = params['id'];
 			this.titulo = 'Asignación de Áreas a Procesos';
@@ -49,7 +50,7 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	get area() {
@@ -68,7 +69,7 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	guardar() {
-		this._procesosService.asignaAreaProceso(this.forma.value)
+		this.subscription = this._procesosService.asignaAreaProceso(this.forma.value)
 			.subscribe((data: any) => {
 				this._accesoService.guardarStorage(data.token);
 				swal('Atención!!!', data.message, 'success');
@@ -84,13 +85,13 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getAreas() {
-		this._areasService.getAreas().subscribe((data: any) => {
+		this.subscription = this._areasService.getAreas().subscribe((data: any) => {
 			this.areas = data.areas;
 		});
 	}
 
 	getProcesosTree() {
-		this._procesosService.getProcesosTree().subscribe((data: any) => {
+		this.subscription = this._procesosService.getProcesosTree().subscribe((data: any) => {
 			this.procesos = data.procesos;
 		});
 	}

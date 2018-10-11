@@ -3,6 +3,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { IdentidadService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
 import swal from 'sweetalert2';
+import { MatDialog } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
 
 
 @Component({
@@ -12,24 +15,26 @@ import swal from 'sweetalert2';
 
 export class IdentidadComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
+
 	path = '';
 	tipo = '';
 	cargando = false;
 	listado: any[] = [];
 	ruta_add: any[] = [];
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true};
+	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
 	select = false;
 	allowMultiSelect = false;
 	columns = [
 		{columnDef: 'descrip',			header: 'Descripción',  cell: (identidad: any) => `${identidad.descrip}`},
-		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.sistema_desc}`},
-		{columnDef: 'activo_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.sistema_desc}`}
+		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.autoriza_desc}`},
+		{columnDef: 'activo_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.activo_desc}`}
 	];
 
 	constructor(private activatedRoute: ActivatedRoute, private router: Router,
-				public _acceso: AccesoService, public _identidad: IdentidadService) {
-		this.sub = this.activatedRoute.url.subscribe(url => {
+				public _acceso: AccesoService, public _identidad: IdentidadService,
+				public dialog: MatDialog) {
+		this.subscription = this.activatedRoute.url.subscribe(url => {
 			this.path = url[0].path;
 			this.tipo = this.getTipo(this.path);
 			if (this.tipo !== 'E') {
@@ -51,7 +56,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cargando = true;
-		this._identidad.getIdentidad('C', 0, this.tipo)
+		this.subscription = this._identidad.getIdentidad('C', 0, this.tipo)
 			.subscribe(
 				(data: any) => {
 					this.listado = data.identidad;
@@ -67,7 +72,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	getTipo(path: string) {
@@ -84,11 +89,13 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 		return valor;
 	}
 
-	detectarAccion(accion: any): void {
-		if (accion.accion === 'E') {
-			this.editarIdentidad(accion.row);
-		} else if (accion.accion === 'C') {
-			this.cancelarIdentidad(accion.row);
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'E') {
+			this.editarIdentidad(datos.row);
+		} else if (datos.accion === 'C') {
+			this.cancelarIdentidad(datos.row);
+		}  else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
 		}
 	}
 
@@ -126,7 +133,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this._identidad.cancelarIdentidad(identidad.clave, motivo.toUpperCase())
+					this.subscription = this._identidad.cancelarIdentidad(identidad.clave, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							this._acceso.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
@@ -141,6 +148,35 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 				}
 			}
 		}
+	}
+
+	openDialog(datos: any): void {
+		let titulo;
+		let subtitulo;
+		switch (this.tipo) {
+			case 'A': titulo = 'Alcance de ' + datos.sistema_desc; break; /*subtitulo = datos.descrip; */
+			case 'M': titulo = 'Misión de ' + datos.sistema_desc; break;
+			case 'V': titulo = 'Visión de ' + datos.sistema_desc; break;
+			case 'O': titulo = datos.sistema_desc; subtitulo = 'Objetivo ' + datos.numero + ': ' + datos.descrip; break;
+			case 'N': titulo = 'Nota de ' + datos.sistema_desc; break;
+			case 'P': titulo = 'Política de Calidad de ' + datos.sistema_desc; break;
+			case 'E': titulo = 'Eje Estratégico'; subtitulo = datos.numero + '.- ' + datos.descrip; break;
+		}
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: titulo,
+				subtitle: subtitulo,
+				estatus: datos.autoriza_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

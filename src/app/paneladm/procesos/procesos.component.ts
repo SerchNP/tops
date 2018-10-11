@@ -5,6 +5,9 @@ import { Proceso } from '../../models/proceso.model';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
+
 
 
 @Component({
@@ -26,20 +29,24 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'proceso',     	header: 'ID Proceso',		cell: (proceso: Proceso) => `${proceso.proceso}`},
-		{ columnDef: 'proceso_desc',   	header: 'Proceso', 			cell: (proceso: Proceso) => `${proceso.proceso_desc}`},
-		{ columnDef: 'predecesor',		header: 'ID Predecesor',	cell: (proceso: Proceso) => `${proceso.predecesor}`,	align: 'center'},
-		{ columnDef: 'predecesor_desc', header: 'Predecesor',		cell: (proceso: Proceso) => `${proceso.predecesor_desc}`},
-		{ columnDef: 'sistema',			header: 'ID Sistema',		cell: (proceso: Proceso) => `${proceso.sistema}`,	align: 'center'},
-		{ columnDef: 'sistema_desc',	header: 'Sistema',			cell: (proceso: Proceso) => `${proceso.sistema_desc}`},
-		{ columnDef: 'estatus',  		header: 'Abierto/Cerrado',	cell: (proceso: Proceso) => `${proceso.estatus}`, 		align: 'center'},
-		{ columnDef: 'ent_data',  		header: 'Ent. Datos',		cell: (proceso: Proceso) => `${proceso.ent_data}`, 		align: 'center'},
-		{ columnDef: 'autoriza_desc',	header: 'Estatus',			cell: (proceso: Proceso) => `${proceso.autoriza_desc}`}
+		{ columnDef: 'proceso',     	header: 'ID Proceso',				visible: true,		cell: (proceso: any) => `${proceso.proceso}`},
+		{ columnDef: 'proceso_desc',   	header: 'Proceso', 					visible: true,		cell: (proceso: any) => `${proceso.proceso_desc}`},
+		{ columnDef: 'predecesor',		header: 'ID Predecesor',			visible: true,		cell: (proceso: any) => `${proceso.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor_desc', header: 'Predecesor',				visible: true,		cell: (proceso: any) => `${proceso.predecesor_desc}`},
+		{ columnDef: 'sistema',			header: 'ID Sistema',				visible: true,		cell: (proceso: any) => `${proceso.sistema}`,		align: 'center'},
+		{ columnDef: 'sistema_desc',	header: 'Sistema',					visible: true,		cell: (proceso: any) => `${proceso.sistema_desc}`},
+		{ columnDef: 'estatus',  		header: 'Abierto/Cerrado',			visible: true,		cell: (proceso: any) => `${proceso.estatus}`, 		align: 'center'},
+		{ columnDef: 'ent_data',  		header: 'Ent. Datos',				visible: true,		cell: (proceso: any) => `${proceso.ent_data}`, 		align: 'center'},
+		{ columnDef: 'autoriza_desc',	header: 'Estatus',					visible: true,		cell: (proceso: any) => `${proceso.autoriza_desc}`},
+		{ columnDef: 'objetivo',		header: 'Objetivo',					visible: false,		cell: (proceso: any) => `${proceso.objetivo}`},
+		{ columnDef: 'apartados',		header: 'Apartados de la Norma',	visible: false,		cell: (proceso: any) => `${proceso.apartados}`},
+		{ columnDef: 'responsable',		header: 'Responsable',				visible: false,		cell: (proceso: any) => `${proceso.responsable}`}
+
 	];
 
 	constructor(private _procesosService: ProcesosService,
 				private _accesoService: AccesoService,
-				private router: Router) {}
+				private router: Router, public dialog: MatDialog) {}
 
 	ngOnInit() {
 		this.cargando = true;
@@ -59,13 +66,19 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	ngOnDestroy() {
+		// unsubscribe to ensure no memory leaks
+		this.subscription.unsubscribe();
+	}
+
 	detectarAccion(datos: any): void {
-		if (datos.accion === 'V') {
-			this.consultarProceso(datos.row);
-		} else if (datos.accion === 'E') {
+		if (datos.accion === 'E') {
 			this.editarProceso(datos.row);
 		} else if (datos.accion === 'C') {
 			this.borrarProceso(datos.row);
+		} else if (datos.accion === 'V') {
+			// this.consultarProceso(datos.row);
+			this.openDialog(datos.row);
 		}
 	}
 
@@ -119,9 +132,21 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnDestroy() {
-		// unsubscribe to ensure no memory leaks
-		this.subscription.unsubscribe();
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.proceso_desc,
+				estatus: datos.estatus_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

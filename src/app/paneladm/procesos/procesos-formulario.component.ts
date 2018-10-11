@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProcesosService, AccesoService, HomeService } from '../../services/services.index';
 import { Proceso } from '../../models/proceso.model';
 import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-procesos-formulario',
@@ -12,7 +13,8 @@ import swal from 'sweetalert2';
 
 export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
+
 	accion: string;
 	idProceso: number;
 	titulo: string;
@@ -29,7 +31,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 	cargarProceso(idProceso) {
 		let bandera = false;
-		this._procesosService.getProcesoById(idProceso)
+		this.subscription = this._procesosService.getProcesoById(idProceso)
 			.subscribe(
 				(data: any) => {
 					this.proceso = data.proceso;
@@ -54,7 +56,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				private _accesoService: AccesoService,
 				private _procesosService: ProcesosService,
 				private _home: HomeService) {
-		this.sub = this.activatedRoute.params.subscribe(params => {
+		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idProceso = params['id'];
 		});
@@ -92,7 +94,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	get sistema() {
@@ -109,7 +111,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.accion === 'U') {
-			this._procesosService.modificaProceso(this.forma.value)
+			this.subscription = this._procesosService.modificaProceso(this.forma.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -122,7 +124,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			this._procesosService.insertaProceso(this.forma.value)
+			this.subscription = this._procesosService.insertaProceso(this.forma.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -150,13 +152,13 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getProcesosTree() {
-		this._procesosService.getProcesosTree().subscribe((data: any) => {
+		this.subscription = this._procesosService.getProcesosTree().subscribe((data: any) => {
 			this.items = data.procesos;
 		});
 	}
 
 	getSistemas() {
-		this._home.getSistemas().subscribe((data: any) => this.sistemas = data);
+		this.subscription = this._home.getSistemas().subscribe((data: any) => this.sistemas = data);
 	}
 
 }

@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AccesoService, IdentidadService, HomeService } from '../../services/services.index';
 import { Identidad } from '../../interfaces/identidad.interface';
 import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-identidad-formulario',
@@ -12,7 +13,8 @@ import swal from 'sweetalert2';
 
 export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
+
 	tipo_i: string;
 	accion: string;
 	clave: number;
@@ -26,9 +28,9 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 	consec_default: string;
 	seleccionado = '';
 
-	constructor(private activatesRoute: ActivatedRoute, private router: Router,
+	constructor(private activatedRoute: ActivatedRoute, private router: Router,
 				private _accesoService: AccesoService, private _identidad: IdentidadService, private _home: HomeService) {
-		this.sub = this.activatesRoute.params.subscribe(params => {
+		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.tipo_i = params['tipo'];
 			this.accion = params['acc'];
 			this.clave = params['id'];
@@ -72,7 +74,7 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	get sistema() {
@@ -98,11 +100,11 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getSistemas() {
-		this._home.getSistemas().subscribe((data: any) => this.sistemas = data);
+		this.subscription = this._home.getSistemas().subscribe((data: any) => this.sistemas = data);
 	}
 
 	cargarIdentidad(clave: number) {
-		this._identidad.getIdentidadById(clave)
+		this.subscription = this._identidad.getIdentidadById(clave)
 			.subscribe(
 				(data: any) => {
 					this.identidad = data.identidad;
@@ -119,7 +121,7 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.accion === 'U') {
-			this._identidad.modificarIdentidad(this.forma.value)
+			this.subscription = this._identidad.modificarIdentidad(this.forma.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -132,7 +134,7 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			this._identidad.insertarIdentidad(this.forma.value)
+			this.subscription = this._identidad.insertarIdentidad(this.forma.value)
 				.subscribe((data: any) => {
 					this._accesoService.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');

@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AccesoService, UsuarioService, AreasService, ProcesosService } from '../../services/services.index';
 import swal from 'sweetalert2';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-usuario-proceso-formulario',
@@ -11,7 +12,8 @@ import swal from 'sweetalert2';
 
 export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
-	private sub: any;
+	private subscription: Subscription;
+
 	accion: string;
 	usuario: string;
 	proceso: number;
@@ -29,7 +31,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router,
 				private _acceso: AccesoService, private _usuario: UsuarioService,
 				private _area: AreasService, private _procesos: ProcesosService) {
-		this.sub = this.activatedRoute.params.subscribe(params => {
+		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			try { this.usuario = params['user']; } catch (e) { console.log(e); }
 			try { this.proceso = params['proc']; } catch (e) { console.log(e); }
@@ -62,12 +64,12 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.sub.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	cargarUsuarios(username?: string) {
 		if (username !== undefined) {
-			this._usuario.getUsuarioById(username)
+			this.subscription = this._usuario.getUsuarioById(username)
 				.subscribe(
 					(data: any) => {
 						this._acceso.guardarStorage(data.token);
@@ -77,7 +79,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 						this.getProcesosFromUsuario(data.usuario.username);
 					});
 		} else {
-			this._usuario.getUsuarios('N', 'A')
+			this.subscription = this._usuario.getUsuarios('N', 'A')
 				.subscribe(
 					(data: any) => {
 						this.usuariosTemp = data.usuarios;
@@ -103,7 +105,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 			this.forma.get('nombre').setValue(json.name);
 			document.getElementById('close').click();
 
-			this._usuario.getUsuarioById(json.id)
+			this.subscription = this._usuario.getUsuarioById(json.id)
 				.subscribe(
 					(data: any) => {
 						this._acceso.guardarStorage(data.token);
@@ -122,7 +124,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getAreaFromUsuario(area: number) {
-		this._area.getAreaById(area)
+		this.subscription = this._area.getAreaById(area)
 			.subscribe(
 				(data: any) => {
 					this.forma.get('area').setValue(data.area.area);
@@ -138,7 +140,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getProcesosFromUsuario(usuario: string) {
-		this._procesos.getProcesosByUserArea(usuario)
+		this.subscription = this._procesos.getProcesosByUserArea(usuario)
 			.subscribe(
 				(data: any) => {
 					this.procesos = data.procesos;
@@ -191,7 +193,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 				swal('ERROR', 'Debe seleccionar al menos un atributo de alguno de los procesos asignados al área', 'error');
 			}
 		} else {
-			this._usuario.asignarUsuarioProcesos(listadoFinal)
+			this.subscription = this._usuario.asignarUsuarioProcesos(listadoFinal)
 				.subscribe((data: any) => {
 					swal('Atención!!!', data.message, 'success');
 					if (this.accion === 'U') {
