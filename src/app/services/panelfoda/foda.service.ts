@@ -9,24 +9,22 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class FodaService {
 
-	TOKEN = 'token=' + localStorage.getItem('token');
-
 	constructor(private http: HttpClient, private router: Router) { }
 
 	getFODAByProceso (proceso: number) {
-		const url = URL_SGC + '/foda/getFODAByProceso.json?p=' + proceso + '&' + this.TOKEN;
+		const url = URL_SGC + '/foda/getFODAByProceso.json?p=' + proceso + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getFODAByProcesoP (proceso: number) {
-		const url = URL_SGC + '/foda/getFODAByProcesoP.json?p=' + proceso + '&' + this.TOKEN;
+		const url = URL_SGC + '/foda/getFODAByProcesoP.json?p=' + proceso + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	insertaFODA(foda: FodaC) {
-		const url = URL_SGC + '/foda/insertaFODA.json?' + this.TOKEN;
+		const url = URL_SGC + '/foda/insertaFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"proceso": ' + foda.proceso + ', "foda_desc": "' + foda.foda_desc + '", "cuestion": "' + foda.cuestion + '", "cuestion_desc": "' + foda.cuestion_desc + '"}'));
@@ -34,7 +32,7 @@ export class FodaService {
 	}
 
 	editaFODA(fodaID: number, fodaDESC: string, cuestion_desc: string) {
-		const url = URL_SGC + '/foda/editaFODA.json?' + this.TOKEN;
+		const url = URL_SGC + '/foda/editaFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"foda": ' + fodaID + ', "foda_desc": "' + fodaDESC + '", "cuestion_desc": "' + cuestion_desc + '"}'));
@@ -42,7 +40,7 @@ export class FodaService {
 	}
 
 	cancelaFODA(fodaID: number, motivo_cancela: string, cuestion_desc: string) {
-		const url = URL_SGC + '/foda/cancelaFODA.json?' + this.TOKEN;
+		const url = URL_SGC + '/foda/cancelaFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"foda": ' + fodaID + ', "motivo_cancela": "' + motivo_cancela + '", "cuestion_desc": "' + cuestion_desc + '"}'));
@@ -50,14 +48,14 @@ export class FodaService {
 	}
 
 	autorizarFODA(arregloFODA: any[]) {
-		const url = URL_SGC + '/foda/autorizarFODA.json?' + this.TOKEN;
+		const url = URL_SGC + '/foda/autorizarFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(arregloFODA);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	rechazarFODA(proceso: number, foda: number, motivo_rechaza: string) {
-		const url = URL_SGC + '/foda/rechazarFODA.json?' + this.TOKEN;
+		const url = URL_SGC + '/foda/rechazarFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"proceso" : ' + proceso + ', "foda": ' + foda + ', "motivo_rechaza": "' + motivo_rechaza + '"}'));
