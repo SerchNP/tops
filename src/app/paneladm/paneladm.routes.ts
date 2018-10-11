@@ -17,13 +17,13 @@ import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.compo
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
 
 // Guards
-import { LoginGuard } from '../services/services.index';
+import { LoginGuard, TipoUsuarioGuard } from '../services/services.index';
 
 const paneladmRoutes: Routes = [
 	{
 		path: 'paneladm',
 		component: PagesComponent,
-		canActivate: [LoginGuard],
+		canActivate: [LoginGuard, TipoUsuarioGuard],
 		children: [
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },
 			// tslint:disable-next-line:max-line-length

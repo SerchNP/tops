@@ -1,6 +1,7 @@
 // Guard
 export { LoginGuard } from './guards/login.guard';
 export { TokenGuard } from './guards/token.guard';
+export { TipoUsuarioGuard } from './guards/tipo-usuario.guard';
 // Principal
 export { HomeService } from './shared/home.service';
 export { AccesoService } from './shared/acceso.service';

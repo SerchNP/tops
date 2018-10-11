@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { TokenGuard, LoginGuard } from './services.index';
+import { TokenGuard, LoginGuard, TipoUsuarioGuard } from './services.index';
 import { AccesoService, SidebarService, HomeService } from './services.index';
 import { UsuarioService, ProcesosService } from './services.index';
 import { AreasService, PuestosService } from './services.index';
@@ -19,6 +19,7 @@ import { DerechosService } from './shared/derechos.service';
 	providers: [
 		TokenGuard,
 		LoginGuard,
+		TipoUsuarioGuard,
 		HomeService,
 		AccesoService,
 		SidebarService,

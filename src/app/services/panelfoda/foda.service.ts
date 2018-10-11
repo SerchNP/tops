@@ -53,7 +53,14 @@ export class FodaService {
 		const url = URL_SGC + '/foda/autorizarFODA.json?' + this.TOKEN;
 		const headers = HeadersPOST;
 		const body = JSON.stringify(arregloFODA);
-		console.log(body);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	rechazarFODA(proceso: number, foda: number, motivo_rechaza: string) {
+		const url = URL_SGC + '/foda/rechazarFODA.json?' + this.TOKEN;
+		const headers = HeadersPOST;
+		// tslint:disable-next-line:max-line-length
+		const body = JSON.stringify(JSON.parse('{"proceso" : ' + proceso + ', "foda": ' + foda + ', "motivo_rechaza": "' + motivo_rechaza + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }

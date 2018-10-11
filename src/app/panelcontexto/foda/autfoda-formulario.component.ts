@@ -93,4 +93,48 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 				});
 		}
 	}
+
+	detectarAccion(datos: any): void {
+		if (datos.accion === 'C') {
+			this.rechazarFODA(datos.row);
+		}
+	}
+
+	async rechazarFODA(registro: any) {
+		console.log(registro);
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea rechazar el elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			const {value: motivo} = await swal({
+				title: 'Ingrese el motivo de rechazo del elemento',
+				input: 'textarea',
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return !value && 'Necesita ingresar el motivo de rechazo';
+				}
+			});
+			if (motivo !== undefined) {
+				console.log(motivo);
+				this.subscription = this._fodaService.rechazarFODA(registro.proceso, registro.foda, motivo)
+					.subscribe((data: any) => {
+						this._accesoService.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.ngOnInit();
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._accesoService.logout();
+						}
+					});
+			}
+		}
+	}
+
 }
