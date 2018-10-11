@@ -7,7 +7,7 @@ import { APP_ROUTES } from './app.routes';
 
 // Modulos
 import { TreeModule } from 'angular-tree-component';
-
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,12 +19,14 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detalle.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
-		DetalleComponent
+		DetalleComponent,
+		DialogDetalleComponent
 	],
 	imports: [
 		BrowserModule,
@@ -35,10 +37,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 		PagesModule,
 		SharedModule,
 		ServicesModule,
-		BrowserAnimationsModule
+		BrowserAnimationsModule,
+		MatDialogModule
+	],
+	exports: [
+		MatDialogModule
 	],
 	schemas: [ NO_ERRORS_SCHEMA ],
-	providers: [],
+	providers: [
+		{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+	],
+	entryComponents: [
+		DialogDetalleComponent
+	],
 	bootstrap: [AppComponent]
 })
 

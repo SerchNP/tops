@@ -1,0 +1,21 @@
+.label-dialog-detalle {
+    color: rgba(0, 0, 0, .54);
+    padding: 0.15em;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.mat-dialog-actions {
+    display: block !important;
+}
+
+.title-dialog-detalle {
+    background: #5879d3 !important;
+    color: #fff !important;
+    padding: 5px;
+}
+
+::ng-deep .mat-dialog-container {
+    box-shadow: 5px 5px rgba(0, 0, 0, 0.12) !important;
+    border-radius: 8px !important;
+}

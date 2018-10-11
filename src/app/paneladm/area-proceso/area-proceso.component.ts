@@ -1,9 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccesoService } from '../../services/shared/acceso.service';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { ProcesosService } from '../../services/services.index';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
 
 @Component ({
 	selector: 'app-area-proceso',
@@ -17,7 +19,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'clave';
-	derechos: Derechos = {insertar: true, editar: false, cancelar: true}; // No tiene opcion de editar
+	derechos: Derechos = {insertar: true, editar: false, cancelar: true, consultar: true}; // No tiene opcion de editar
 	ruta_add =  ['/paneladm', 'submenuproc', 'area_proceso_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
@@ -33,7 +35,8 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 	];
 
 	constructor(private _accesoService: AccesoService,
-				private _procesosService: ProcesosService) {
+				private _procesosService: ProcesosService,
+				public dialog: MatDialog) {
 	}
 
 	ngOnInit() {
@@ -92,9 +95,29 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.proceso_desc,
+				subtitle: datos.area_desc,
+				estatus: datos.activa_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
+	}
+
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'C') {
 			this.cancelaAreaAsignada(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
 		}
 	}
 

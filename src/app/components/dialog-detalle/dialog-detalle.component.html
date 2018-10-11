@@ -1,0 +1,61 @@
+<h1 mat-dialog-title class="title-dialog-detalle">{{data.title}}</h1>
+<h6 class="text-secondary">{{data.subtitle}}</h6>
+<p class="text-secondary">{{data.estatus}}</p>
+<hr>
+<div mat-dialog-content>
+    <div class="container">
+        <div class="row" *ngIf="data.u_captura">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Usuario captura:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.u_captura }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.f_captura">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Fecha captura:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.f_captura }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.u_modifica">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Usuario modifica:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.u_modifica }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.f_modifica">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Fecha modifica:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.f_modifica }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.u_cancela">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Usuario cancela:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.u_cancela }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.f_cancela">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Fecha cancela:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.f_cancela }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.motivo_cancela">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Motivo cancela:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.motivo_cancela }}
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div mat-dialog-actions class="text-right">
+    <button mat-button class="btn btn-sm btn-outline-secondary" (click)="onNoClick()">Cerrar</button>
+</div>
