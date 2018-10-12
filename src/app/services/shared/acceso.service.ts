@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import swal from 'sweetalert2';
 import { UsuarioLogin } from '../../interfaces/usuarios.interface';
-import { URL_SGC, AUTH } from '../../config/config';
+import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 
 
 @Injectable()
@@ -13,25 +13,10 @@ export class AccesoService {
 
 	constructor(public http: HttpClient, public router: Router) { }
 
-	private getHeadersPOST(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH,
-			'Content-Type' : 'application/json'
-		});
-		return headers;
-	}
-
-	private getHeadersGET(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH
-		});
-		return headers;
-	}
-
 	login(usuario: UsuarioLogin) {
 		const body = JSON.stringify(usuario);
 		const url = URL_SGC + '/acceso/loginUsuario.json';
-		const headers = this.getHeadersPOST();
+		const headers = HeadersPOST;
 
 		return this.http.post(url, body, { headers }).map((resp: any) => {
 			localStorage.setItem('token', resp.token);
@@ -89,13 +74,11 @@ export class AccesoService {
 	}
 
 	renovarToken() {
-		const token_act = localStorage.getItem('token');
-		const url = URL_SGC + '/acceso/renovarToken.json?token=' + token_act;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + '/acceso/renovarToken.json?token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
-			const token = resp.token;
-			localStorage.setItem('token', token);
+			localStorage.setItem('token', resp.token);
 			return true;
 		}).catch(error => {
 			this.router.navigate(['/home']);

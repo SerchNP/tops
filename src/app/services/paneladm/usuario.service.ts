@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import { URL_SGC, HeadersPOST, HeadersGET } from '../../config/config';
 import { Usuario } from '../../interfaces/usuarios.interface';
@@ -9,19 +8,18 @@ import { Usuario } from '../../interfaces/usuarios.interface';
 export class UsuarioService {
 
 	private RUTA = '/paneladm/usuarios/';
-	private TOKEN = 'token=' + localStorage.getItem('token');
 
-	constructor(private http: HttpClient, private router: Router) { }
+	constructor(private http: HttpClient) { }
 
 	getUsuarios(tipo: string, estatus: string) {
-		const url = URL_SGC + this.RUTA + 'getUsuarios.json?t=' + tipo + '&e=' + estatus + '&' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'getUsuarios.json?t=' + tipo + '&e=' + estatus + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getUsuarioById(usuario: string) {
 		const token = localStorage.getItem('token');
-		const url = URL_SGC + this.RUTA + 'getUsuarioById.json?user=' + usuario + '&' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'getUsuarioById.json?user=' + usuario + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -57,7 +55,7 @@ export class UsuarioService {
 		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
-		const url = URL_SGC + this.RUTA + 'insertarUsuario.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'insertarUsuario.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
@@ -94,28 +92,28 @@ export class UsuarioService {
 		usuario.matriz.no_conformidad = (usuario.matriz.b_no_conformidad === true ? 'S' : 'N');
 		usuario.matriz.mejora_continua = (usuario.matriz.b_mejora_continua === true ? 'S' : 'N');
 
-		const url = URL_SGC + this.RUTA + 'editarUsuario.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'editarUsuario.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelarUsuario(usuario: string, motivo: string) {
-		const url = URL_SGC + this.RUTA + 'cancelarUsuario.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'cancelarUsuario.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	validarPassword(usuario: string, password: string) {
-		const url = URL_SGC + this.RUTA + 'validarPass.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'validarPass.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "password": "' + btoa(password) + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	actualizarPassword(usuario: string, password: string) {
-		const url = URL_SGC + this.RUTA + 'actualizarPass.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'actualizarPass.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"username": "' + usuario + '", "password": "' + btoa(password) + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
@@ -135,27 +133,27 @@ export class UsuarioService {
 			delete usuario['email3'];
 		}
 
-		const url = URL_SGC + this.RUTA + 'actualizarPerfil.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'actualizarPerfil.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(usuario);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	getUsuariosProcesos() {
-		const url = URL_SGC + this.RUTA + 'getUsuariosProcesos.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'getUsuariosProcesos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	asignarUsuarioProcesos(userprocs: any) {
-		const url = URL_SGC + this.RUTA + 'asignarUsuarioProcesos.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'asignarUsuarioProcesos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(userprocs);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelarUsuarioProcesos(usuario: string, proceso: number, motivo: string) {
-		const url = URL_SGC + this.RUTA + 'cancelarUsuarioProcesos.json?' + this.TOKEN;
+		const url = URL_SGC + this.RUTA + 'cancelarUsuarioProcesos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"usuario": "' + usuario + '", "proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { URL_SGC, AUTH } from '../../config/config';
+import { URL_SGC, HeadersGET } from '../../config/config';
 
 
 @Injectable()
@@ -9,16 +9,9 @@ export class HomeService {
 
 	constructor(public http: HttpClient, public router: Router) { }
 
-	private getHeadersGET(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH
-		});
-		return headers;
-	}
-
 	getIdentidad(sistema: number, tipo: string) {
 		const url = URL_SGC + '/sgc/getIdentidad.json?s=' + sistema + '&t=' + tipo;
-		const headers = this.getHeadersGET();
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.descripcion;
@@ -27,7 +20,7 @@ export class HomeService {
 
 	getSistemas() {
 		const url = URL_SGC + '/sgc/getSistemas.json';
-		const headers = this.getHeadersGET();
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.sistemas;
@@ -36,7 +29,7 @@ export class HomeService {
 
 	getSistemaById(sistema: number) {
 		const url = URL_SGC + '/sgc/getSistemaById.json?s=' + sistema;
-		const headers = this.getHeadersGET();
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.sistema;
@@ -45,7 +38,7 @@ export class HomeService {
 
 	getObjetivos(sistema: number) {
 		const url = URL_SGC + '/sgc/getObjetivos.json?s=' + sistema;
-		const headers = this.getHeadersGET();
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.objetivos;
@@ -54,7 +47,7 @@ export class HomeService {
 
 	getIdentidadFull(sistema: number, tipo: string) {
 		const url = URL_SGC + '/sgc/getIdentidadFull.json?s=' + sistema + '&t=' + tipo;
-		const headers = this.getHeadersGET();
+		const headers = HeadersGET;
 
 		return this.http.get(url, { headers }).map((resp: any) => {
 			return resp.descripcion;

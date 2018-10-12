@@ -1,50 +1,33 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/map';
-import { URL_SGC, AUTH } from '../../config/config';
+import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { Areas } from '../../interfaces/areas.interface';
 
 @Injectable()
 export class AreasService {
 
-	constructor(private http: HttpClient, private router: Router) { }
+	private RUTA = '/paneladm/areas/';
 
-	private getHeadersPOST(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH,
-			'Content-Type' : 'application/json'
-		});
-		return headers;
-	}
-
-	private getHeadersGET(): HttpHeaders {
-		const headers = new HttpHeaders({
-			'authorization': 'Basic ' + AUTH
-		});
-		return headers;
-	}
+	constructor(private http: HttpClient) { }
 
 	getAreas() {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/getAreas.json?token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getAreas.json?token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
 	getAreasTree() {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/getAreasTree.json?token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getAreasTree.json?token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map((resp: any) => {
 			return resp.areas;
 		});
 	}
 
 	getAreaById(idArea: number) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/getAreaById.json?id=' + idArea + '&token=' + token;
-		const headers = this.getHeadersGET();
+		const url = URL_SGC + this.RUTA + 'getAreaById.json?id=' + idArea + '&token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
@@ -59,9 +42,8 @@ export class AreasService {
 			delete area['predecesor_desc'];
 		}
 
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/insertarArea.json?token=' + token;
-		const headers = this.getHeadersPOST();
+		const url = URL_SGC + this.RUTA + 'insertarArea.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
 		const body = JSON.stringify(area);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
@@ -73,17 +55,16 @@ export class AreasService {
 		if (area.predecesor_desc === null) {
 			delete area['predecesor_desc'];
 		}
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/modificarArea.json?token=' + token;
-		const headers = this.getHeadersPOST();
+
+		const url = URL_SGC + this.RUTA + 'modificarArea.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
 		const body = JSON.stringify(area);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	cancelarArea(area: number, motivo: string) {
-		const token = localStorage.getItem('token');
-		const url = URL_SGC + '/paneladm/areas/cancelarArea.json?token=' + token;
-		const headers = this.getHeadersPOST();
+		const url = URL_SGC + this.RUTA + 'cancelarArea.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"area": ' + area + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
