@@ -6,6 +6,7 @@ import { UsuarioService, AccesoService } from '../../services/services.index';
 import swal from 'sweetalert2';
 import { DialogDetalleComponent } from '../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
+import { DerechosService } from '../../services/shared/derechos.service';
 
 @Component({
 	selector: 'app-usuario-proceso',
@@ -18,7 +19,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 
 	listado: any[] = [];
 	cargando = false;
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
+	derechos: Derechos = {administrar: true, consultar: true};
 	ruta_add =  ['/paneladm', 'submenuusu', 'userproc_form', 'I'];
 	select = false;
 	allowMultiSelect = false;
@@ -30,17 +31,20 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'area_desc',		header: 'Área',			cell: (usuproc: any) => `${usuproc.area_desc}` },
 		{ columnDef: 'proceso',			header: 'Id Proceso',	cell: (usuproc: any) => `${usuproc.proceso}` },
 		{ columnDef: 'proceso_desc',	header: 'Proceso',		cell: (usuproc: any) => `${usuproc.proceso_desc}` },
+		{ columnDef: 'menu_desc',		header: 'Opción',		cell: (usuproc: any) => `${usuproc.menu_desc}` },
 		{ columnDef: 'activo',			header: 'Activo',		cell: (usuproc: any) => `${usuproc.activo}` },
 		{ columnDef: 'administra',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administra}` },
-		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}` }// ,
-		// { columnDef: 'responsable',		header: 'Responsable',	cell: (usuproc: any) => `${usuproc.responsable}` }
+		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}` }
 	];
 
-	constructor(private router: Router, private _usuario: UsuarioService, private _acceso: AccesoService, public dialog: MatDialog) { }
+	constructor(private router: Router,
+				private _derechos: DerechosService,
+				private _acceso: AccesoService,
+				public dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._usuario.getUsuariosProcesos()
+		this.subscription = this._derechos.getUsuariosMenuProcesos()
 			.subscribe(
 				(data: any) => {
 					this.listado = data.listado;
@@ -62,15 +66,15 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'E') {
-			this.editarUsuarioProcesos(datos.row);
+			this.editarUsuarioMenuProceso(datos.row);
 		} else if (datos.accion === 'C') {
-			this.cancelarUsuarioProcesos(datos.row);
+			this.cancelarUsuarioMenuProceso(datos.row);
 		}  else if (datos.accion === 'V') {
 			this.openDialog(datos.row);
 		}
 	}
 
-	editarUsuarioProcesos(registro: any) {
+	editarUsuarioMenuProceso(registro: any) {
 		console.log(registro);
 		if (registro.activo === 'N') {
 			swal('ERROR', 'No es posible editar, el registro se encuentra inactivo', 'error');
@@ -79,7 +83,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async cancelarUsuarioProcesos(registro: any) {
+	async cancelarUsuarioMenuProceso(registro: any) {
 		console.log(registro);
 		if (registro.activo === 'N') {
 			swal('ERROR', 'No es posible cancelar, el registro ya se encuentra inactivo', 'error');
@@ -102,7 +106,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this.subscription = this._usuario.cancelarUsuarioProcesos(registro.usuario, registro.proceso, motivo.toUpperCase())
+					this.subscription = this._derechos.cancelarUsuarioMenuProceso(registro.usuario, registro.menu, registro.proceso, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();

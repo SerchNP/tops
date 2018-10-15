@@ -38,7 +38,7 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cargando = true;
-		this.derechos = this._derechosService.getDerechosProceso(this.proceso);
+		this.derechos = this._derechosService.getDerechosMenuProceso('foda', this.proceso);
 		this.subscription = this._fodaService.getFODAByProceso(this.proceso)
 			.subscribe(
 				data => {

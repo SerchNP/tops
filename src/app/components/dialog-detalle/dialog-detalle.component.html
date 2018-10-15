@@ -53,6 +53,27 @@
                 {{ data.motivo_cancela }}
             </div>
         </div>
+        <div class="row" *ngIf="data.u_rechaza">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Usuario rechaza:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.u_rechaza }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.f_rechaza">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Fecha rechaza:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.f_rechaza }}
+            </div>
+        </div>
+        <div class="row" *ngIf="data.motivo_rechaza">
+            <div class="col-sm-4 label-dialog-detalle">{{ 'Motivo rechaza:' | titlecase }}
+            </div>
+            <div class="col-sm-8">
+                {{ data.motivo_rechaza }}
+            </div>
+        </div>
     </div>
 </div>
 <hr>

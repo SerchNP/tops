@@ -4,6 +4,7 @@ import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { AccesoService, UsuarioService, AreasService, ProcesosService } from '../../services/services.index';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { DerechosService } from '../../services/shared/derechos.service';
 
 @Component({
 	selector: 'app-usuario-proceso-formulario',
@@ -30,6 +31,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	constructor(private formBuilder: FormBuilder, private activatedRoute: ActivatedRoute, private router: Router,
 				private _acceso: AccesoService, private _usuario: UsuarioService,
+				private _derechos: DerechosService,
 				private _area: AreasService, private _procesos: ProcesosService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
@@ -140,6 +142,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getProcesosFromUsuario(usuario: string) {
+		console.log(usuario);
 		this.subscription = this._procesos.getProcesosByUserArea(usuario)
 			.subscribe(
 				(data: any) => {
@@ -193,7 +196,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 				swal('ERROR', 'Debe seleccionar al menos un atributo de alguno de los procesos asignados al área', 'error');
 			}
 		} else {
-			this.subscription = this._usuario.asignarUsuarioProcesos(listadoFinal)
+			this.subscription = this._derechos.asignarUsuarioMenuProceso(listadoFinal)
 				.subscribe((data: any) => {
 					swal('Atención!!!', data.message, 'success');
 					if (this.accion === 'U') {

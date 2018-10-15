@@ -139,7 +139,7 @@ export class UsuarioService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	getUsuariosProcesos() {
+	/*getUsuariosProcesos() {
 		const url = URL_SGC + this.RUTA + 'getUsuariosProcesos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
@@ -157,6 +157,6 @@ export class UsuarioService {
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"usuario": "' + usuario + '", "proceso": ' + proceso + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
-	}
+	}*/
 
 }

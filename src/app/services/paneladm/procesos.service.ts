@@ -13,7 +13,6 @@ export class ProcesosService {
 
 	constructor(private http: HttpClient) { }
 
-
 	getProcesos() {
 		const url = URL_SGC + this.RUTA + 'getProcesos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
@@ -26,13 +25,11 @@ export class ProcesosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getProcesosByUserArea(usuario?: string) {
+	getProcesosByUserArea(usuario?: string, menuID?: string) {
 		let url = '';
-		if (usuario !== undefined) {
-			url = URL_SGC + this.RUTA + 'getProcesosByUserArea.json?u=' + usuario + '&token=' + localStorage.getItem('token');
-		} else {
-			url = URL_SGC + this.RUTA + 'getProcesosByUserArea.json?token=' + localStorage.getItem('token');
-		}
+		url = URL_SGC + this.RUTA + 'getProcesosByUserArea.json?token=' + localStorage.getItem('token')
+				+ ((menuID !== undefined) ? '&m=' + menuID : '')
+				+ ((usuario !== undefined) ? '&u=' + usuario : '');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}

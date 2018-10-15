@@ -1,7 +1,7 @@
 <mat-form-field>
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Buscar">
 </mat-form-field>
-<div class="text-right" *ngIf="derechos.insertar">
+<div class="text-right" *ngIf="derechos.administrar">
     <button type="button" class="btn btn-sm btn-outline-primary" (click)="agregar()">
 		<i class="fas fa-plus"></i> Agregar
 	</button>

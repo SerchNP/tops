@@ -58,6 +58,7 @@
                         <tr>
                             <th>Clave</th>
                             <th>Proceso</th>
+                            <th>Opción</th>
                             <th class="text-center">Administra</th>
                             <th class="text-center">Autoriza</th>
                             <th></th>
@@ -67,6 +68,7 @@
                         <tr *ngFor="let item of forma.get('userprocs').controls; let i = index;" [formGroupName]="i">
                             <td>{{item.value.proceso}}</td>
                             <td>{{item.value.proceso_desc}}</td>
+                            <td>{{item.value.menu_desc}}</td>
                             <td class="text-center"><input type="checkbox" formControlName="b_administrar" [attr.checked]="item.value.b_administrar"></td>
                             <td class="text-center"><input type="checkbox" formControlName="b_autorizar" [attr.checked]="item.value.b_autorizar"></td>
                         </tr>

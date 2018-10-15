@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProcesosService, AccesoService, AreasService } from '../../services/services.index';
 import swal from 'sweetalert2';
@@ -27,7 +27,6 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 	cancelar: any[] = ['/paneladm', 'submenuproc', 'area_proceso'];
 
 	constructor(private activatedRoute: ActivatedRoute,
-				// private router: Router,
 				private _accesoService: AccesoService,
 				private _procesosService: ProcesosService,
 				private _areasService: AreasService) {

@@ -1,8 +1,6 @@
 export interface Derechos {
 	consultar?: boolean;
-	insertar?: boolean;
-	editar?: boolean;
-	cancelar?: boolean;
+	administrar?: boolean;
 	descargar?: boolean;
 	exportar?: boolean;
 	autorizar?: boolean;

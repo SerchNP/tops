@@ -22,7 +22,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	cargando = false;
 	listado: any[] = [];
 	ruta_add: any[] = [];
-	derechos: Derechos = {insertar: true, editar: true, cancelar: true, consultar: true};
+	derechos: Derechos = {administrar: true, consultar: true};
 	select = false;
 	allowMultiSelect = false;
 	columns = [

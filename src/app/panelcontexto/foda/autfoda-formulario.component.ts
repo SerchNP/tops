@@ -18,7 +18,7 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	cargando = true;
 	jsonData: any;
 	listado: any[] = [];
-	derechos: Derechos = {autorizar: true, cancelar: true};
+	derechos: Derechos = {autorizar: true, administrar: true};
 	select = true;
 	allowMultiSelect = true;
 
@@ -45,7 +45,7 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		console.log('entro al init');
 		this.cargando = true;
-		this.subscription = this._fodaService.getFODAByProcesoP(this.proceso)
+		this.subscription = this._fodaService.getFODAByProcesoPndtes(this.proceso)
 			.subscribe(
 				data => {
 					this.jsonData = data;
