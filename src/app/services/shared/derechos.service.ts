@@ -51,6 +51,12 @@ export class DerechosService {
 						}
 					});
 		}
+
+		if (derechosMenuProceso.administrar) {
+			derechosMenuProceso.insertar = true;
+			derechosMenuProceso.editar = true;
+			derechosMenuProceso.cancelar = true;
+		}
 		return derechosMenuProceso;
 	}
 

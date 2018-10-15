@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { AccesoService, FodaService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
 import swal from 'sweetalert2';
@@ -18,7 +18,7 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	cargando = true;
 	jsonData: any;
 	listado: any[] = [];
-	derechos: Derechos = {autorizar: true, administrar: true};
+	derechos: Derechos = {autorizar: true, administrar: true, cancelar: true, editar: false, insertar: false};
 	select = true;
 	allowMultiSelect = true;
 
@@ -33,7 +33,7 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación',	cell: (foda: any) => `${foda.motivo_cancela}`}
 	];
 
-	constructor(private activatedRoute: ActivatedRoute, private router: Router,
+	constructor(private activatedRoute: ActivatedRoute,
 				private _accesoService: AccesoService,
 				private _fodaService: FodaService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
@@ -43,7 +43,6 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit() {
-		console.log('entro al init');
 		this.cargando = true;
 		this.subscription = this._fodaService.getFODAByProcesoPndtes(this.proceso)
 			.subscribe(
@@ -74,14 +73,12 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
 			swal('Atención', 'Debe seleccionar al menos un registro para autorizar', 'error');
 		} else {
-			console.log(this.seleccionados);
 			const arreglo: any[] = [];
 			this.seleccionados.forEach(element => {
 				arreglo.push(JSON.parse('{"proceso" : ' + element['proceso'] + ', "foda" : ' + element['foda'] + '}'));
 			});
 			this.subscription = this._fodaService.autorizarFODA(arreglo)
 				.subscribe((data: any) => {
-					console.log(data);
 					swal('Atención!!!', data.message, 'success');
 					this.ngOnInit();
 				},
@@ -101,7 +98,6 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	async rechazarFODA(registro: any) {
-		console.log(registro);
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
 			text: 'Está seguro que desea rechazar el elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
@@ -120,7 +116,6 @@ export class AutfodaFormularioComponent implements OnInit, OnDestroy {
 				}
 			});
 			if (motivo !== undefined) {
-				console.log(motivo);
 				this.subscription = this._fodaService.rechazarFODA(registro.proceso, registro.foda, motivo)
 					.subscribe((data: any) => {
 						this._accesoService.guardarStorage(data.token);

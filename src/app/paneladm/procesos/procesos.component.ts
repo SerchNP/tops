@@ -23,7 +23,7 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'proceso';
-	derechos: Derechos = {consultar: true, administrar: true};
+	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 	ruta_add =  ['/paneladm', 'submenuproc', 'procesos_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;

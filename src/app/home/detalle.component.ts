@@ -43,7 +43,6 @@ export class DetalleComponent implements OnInit {
 					this.sistema = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar el Sistema', 'error');
 					this.cargando = false;
 				});
@@ -56,7 +55,6 @@ export class DetalleComponent implements OnInit {
 					this.alcance = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar el Alcance', 'error');
 					this.cargando = false;
 				});
@@ -69,7 +67,6 @@ export class DetalleComponent implements OnInit {
 					this.mision = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar la Misión', 'error');
 					this.cargando = false;
 				});
@@ -82,7 +79,6 @@ export class DetalleComponent implements OnInit {
 					this.vision = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar la Visión', 'error');
 					this.cargando = false;
 				});
@@ -95,7 +91,6 @@ export class DetalleComponent implements OnInit {
 					this.nota = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar la Nota', 'error');
 					this.cargando = false;
 				});
@@ -108,7 +103,6 @@ export class DetalleComponent implements OnInit {
 					this.objetivos = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar los Objetivos', 'error');
 					this.cargando = false;
 				});

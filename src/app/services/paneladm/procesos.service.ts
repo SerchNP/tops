@@ -25,10 +25,9 @@ export class ProcesosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getProcesosByUserArea(usuario?: string, menuID?: string) {
+	getProcesosByUserArea(menuID: string, usuario?: string) {
 		let url = '';
-		url = URL_SGC + this.RUTA + 'getProcesosByUserArea.json?token=' + localStorage.getItem('token')
-				+ ((menuID !== undefined) ? '&m=' + menuID : '')
+		url = URL_SGC + this.RUTA + 'getProcesosByUserArea.json?token=' + localStorage.getItem('token') + '&m=' + menuID
 				+ ((usuario !== undefined) ? '&u=' + usuario : '');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);

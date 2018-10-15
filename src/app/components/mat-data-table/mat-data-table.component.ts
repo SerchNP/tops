@@ -70,8 +70,12 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 			this.displayedColumns.push('consultar');
 		}
 		if (this.derechos.administrar) {
-			this.displayedColumns.push('editar');
-			this.displayedColumns.push('cancelar');
+			if (this.derechos.editar) {
+				this.displayedColumns.push('editar');
+			}
+			if (this.derechos.cancelar) {
+				this.displayedColumns.push('cancelar');
+			}
 		}
 		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}

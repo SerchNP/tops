@@ -60,7 +60,6 @@ export class CardFodaComponent implements OnInit {
 					this.listado.push(foda);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();

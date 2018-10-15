@@ -21,7 +21,7 @@ export class AreasComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'area';
-	derechos: Derechos = {administrar: true, consultar: true};
+	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 	ruta_add = ['/paneladm', 'areas_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;

@@ -19,7 +19,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 
 	listado: any[] = [];
 	cargando = false;
-	derechos: Derechos = {administrar: true, consultar: true};
+	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: false, cancelar: true};
 	ruta_add =  ['/paneladm', 'submenuusu', 'userproc_form', 'I'];
 	select = false;
 	allowMultiSelect = false;
@@ -75,7 +75,6 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	editarUsuarioMenuProceso(registro: any) {
-		console.log(registro);
 		if (registro.activo === 'N') {
 			swal('ERROR', 'No es posible editar, el registro se encuentra inactivo', 'error');
 		} else {
@@ -84,7 +83,6 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	async cancelarUsuarioMenuProceso(registro: any) {
-		console.log(registro);
 		if (registro.activo === 'N') {
 			swal('ERROR', 'No es posible cancelar, el registro ya se encuentra inactivo', 'error');
 		} else {

@@ -20,7 +20,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	llave = 'usuario';
-	derechos: Derechos = {consultar: true, administrar: true};
+	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 
 	ruta_add =  ['/paneladm', 'submenuusu', 'usuarios_form', 'I', 0];
 	select = false;

@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
 		this._accesoService.login( this.usuario )
 			.subscribe( data => {},
 			error => {
-				console.error(error);
 				swal('ERROR', error.error.message, 'error');
 			});
 	}

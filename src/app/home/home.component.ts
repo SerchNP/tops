@@ -30,7 +30,6 @@ export class HomeComponent implements OnInit {
 					this.politica = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar la Política de Calidad', 'error');
 					this.cargando = false;
 				});
@@ -43,7 +42,6 @@ export class HomeComponent implements OnInit {
 					this.listadoSistemas = data;
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', 'Error al cargar los Sistemas de Calidad', 'error');
 					this.cargando = false;
 				});

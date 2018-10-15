@@ -27,7 +27,7 @@ export class FodaComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._procesosService.getProcesosByUserArea()
+		this.subscription = this._procesosService.getProcesosByUserArea('foda')
 			.subscribe(
 				data => {
 					this.jsonData = data;

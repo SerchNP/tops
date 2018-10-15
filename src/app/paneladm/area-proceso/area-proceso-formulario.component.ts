@@ -75,7 +75,6 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 				this.forma.get('area').setValue('');
 			},
 			error => {
-				console.error(error);
 				swal('ERROR', error.error.message, 'error');
 				if (error.error.code === 401) {
 					this._accesoService.logout();

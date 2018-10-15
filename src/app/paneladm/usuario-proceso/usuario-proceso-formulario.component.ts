@@ -143,7 +143,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	getProcesosFromUsuario(usuario: string) {
 		console.log(usuario);
-		this.subscription = this._procesos.getProcesosByUserArea(usuario)
+		this.subscription = this._procesos.getProcesosByUserArea('usuario_proceso', usuario)
 			.subscribe(
 				(data: any) => {
 					this.procesos = data.procesos;

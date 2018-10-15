@@ -18,8 +18,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'clave';
-	derechos: Derechos = {administrar: true, consultar: true}; // No tiene opcion de editar
+	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: false, cancelar: true}; // No tiene opcion de editar
 	ruta_add =  ['/paneladm', 'submenuproc', 'area_proceso_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;

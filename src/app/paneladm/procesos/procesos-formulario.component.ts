@@ -40,7 +40,6 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					this._accesoService.guardarStorage(token);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
@@ -131,7 +130,6 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 					this.router.navigate(['/paneladm', 'submenuproc', 'procesos']);
 				},
 				error => {
-					console.error(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._accesoService.logout();
