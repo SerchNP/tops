@@ -23,6 +23,12 @@ export class FodaService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getFODAByProcesoRechazados (proceso: number) {
+		const url = URL_SGC + '/foda/getFODAByProcesoRechazados.json?p=' + proceso + '&token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	insertaFODA(foda: FodaC) {
 		const url = URL_SGC + '/foda/insertaFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
@@ -59,6 +65,13 @@ export class FodaService {
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"proceso" : ' + proceso + ', "foda": ' + foda + ', "motivo_rechaza": "' + motivo_rechaza + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	actualizarPrioridadFODA (cuestion: string, arregloFODA: any[]) {
+		const url = URL_SGC + '/foda/actualizarPrioridadFODA.json?token=' + localStorage.getItem('token') + '&c=' + cuestion;
+		const headers = HeadersPOST;
+		const body = JSON.stringify(arregloFODA);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }
