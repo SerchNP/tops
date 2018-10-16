@@ -6,10 +6,10 @@ import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-rechazos-foda-formulario',
-	templateUrl: './rechazos-foda-formulario.component.html'
+	selector: 'app-rechazos-foda',
+	templateUrl: './rechazos-foda.component.html'
 })
-export class RechazosFodaFormularioComponent implements OnInit, OnDestroy {
+export class RechazosFodaComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 	proceso: number;
 	proceso_desc: string;
@@ -17,7 +17,7 @@ export class RechazosFodaFormularioComponent implements OnInit, OnDestroy {
 	cargando = true;
 	jsonData: any;
 	listado: any[] = [];
-	derechos: Derechos = {administrar: true, cancelar: true, editar: true, insertar: false};
+	derechos: Derechos = {administrar: true, cancelar: false, editar: true, insertar: false};
 	select = true;
 	allowMultiSelect = true;
 

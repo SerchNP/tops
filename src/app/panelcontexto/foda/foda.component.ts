@@ -23,7 +23,7 @@ export class FodaComponent implements OnInit, OnDestroy {
 	derechos: Derechos;
 
 	constructor(private _accesoService: AccesoService,
-				private _procesosService: ProcesosService) {}
+				private _procesosService: ProcesosService) { }
 
 	ngOnInit() {
 		this.cargando = true;
@@ -42,6 +42,10 @@ export class FodaComponent implements OnInit, OnDestroy {
 						this._accesoService.logout();
 					}
 				});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
 	}
 
 	clearFilter() {
@@ -63,9 +67,5 @@ export class FodaComponent implements OnInit, OnDestroy {
 				}
 			}
 		}
-	}
-
-	ngOnDestroy() {
-		this.subscription.unsubscribe();
 	}
 }

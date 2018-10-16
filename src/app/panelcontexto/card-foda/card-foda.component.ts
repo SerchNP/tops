@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FodaService, AccesoService } from '../../services/services.index';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { FodaC } from '../../models/fodaC.model';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 	templateUrl: './card-foda.component.html',
 	styleUrls: ['./card-foda.component.scss']
 })
-export class CardFodaComponent implements OnInit {
+export class CardFodaComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
@@ -185,5 +185,14 @@ export class CardFodaComponent implements OnInit {
 				motivo_rechaza: datos.motivo_rechaza
 			}
 		});
+	}
+
+	ngOnDestroy() {
+		// Marca UNIDEFINED, suponemos que porque ya dejó de existir el contenerdor principal (Foda-Formulario)
+		/* try {
+			this.subscription.unsubscribe();
+		} catch (Exception) {
+			console.log(Exception);
+		} */
 	}
 }

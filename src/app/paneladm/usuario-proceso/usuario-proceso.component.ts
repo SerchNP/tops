@@ -32,9 +32,9 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'proceso',			header: 'Id Proceso',	cell: (usuproc: any) => `${usuproc.proceso}` },
 		{ columnDef: 'proceso_desc',	header: 'Proceso',		cell: (usuproc: any) => `${usuproc.proceso_desc}` },
 		{ columnDef: 'menu_desc',		header: 'Opción',		cell: (usuproc: any) => `${usuproc.menu_desc}` },
-		{ columnDef: 'activo',			header: 'Activo',		cell: (usuproc: any) => `${usuproc.activo}` },
-		{ columnDef: 'administra',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administra}` },
-		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}` }
+		{ columnDef: 'estatus_desc',	header: 'Situación',	cell: (usuproc: any) => `${usuproc.estatus_desc}` },
+		{ columnDef: 'administra',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administra}`, align: 'center'},
+		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}`, 	 align: 'center'}
 	];
 
 	constructor(private router: Router,
@@ -75,7 +75,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	editarUsuarioMenuProceso(registro: any) {
-		if (registro.activo === 'N') {
+		if (registro.estatus === 'N') {
 			swal('ERROR', 'No es posible editar, el registro se encuentra inactivo', 'error');
 		} else {
 			this.router.navigate(['/paneladm', 'submenuusu', 'userproc_form', 'U', registro.usuario, registro.proceso]);
@@ -83,7 +83,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	async cancelarUsuarioMenuProceso(registro: any) {
-		if (registro.activo === 'N') {
+		if (registro.estatus === 'N') {
 			swal('ERROR', 'No es posible cancelar, el registro ya se encuentra inactivo', 'error');
 		} else {
 			const {value: respuesta} = await swal({

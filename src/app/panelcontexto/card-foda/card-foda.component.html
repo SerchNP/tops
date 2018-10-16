@@ -29,14 +29,13 @@
                         <div class="col-sm-3 text-right">{{item.autoriza_desc | titlecase}}</div>
                     </div>
                     <div class="col-sm-auto text-right">
-                        <button *ngIf="(i > 0) && derechos.administrar && (item.autoriza === 0 || item.autoriza === 1 || item.autoriza === 2 || item.autoriza === 3)" type="button" class="btn btn-xs btn-link text-secondary" (click)="mover(listado, item, i, -1)" title="Subir">
+                        <button *ngIf="(i > 0) && derechos.administrar && (item.autoriza === 1 || item.autoriza === 2 || item.autoriza === 3)" type="button" class="btn btn-xs btn-link text-secondary" (click)="mover(listado, item, i, -1)" title="Subir">
 							<i class="fas fa-arrow-up"></i>
 						</button>
-                        <button *ngIf="(i < (listado.length - 1)) && derechos.administrar && (item.autoriza === 0 || item.autoriza === 1 || item.autoriza === 2 || item.autoriza === 3)" type="button" class="btn btn-xs btn-link text-secondary" (click)="mover(listado, item, i, +1)"
-                            title="Bajar">
+                        <button *ngIf="(i < (listado.length - 1)) && derechos.administrar && (item.autoriza === 1 || item.autoriza === 2 || item.autoriza === 3)" type="button" class="btn btn-xs btn-link text-secondary" (click)="mover(listado, item, i, +1)" title="Bajar">
 							<i class="fas fa-arrow-down"></i>
 						</button>
-                        <button *ngIf="derechos.administrar && (item.autoriza === 0 || item.autoriza === 1 || item.autoriza === 2 || item.autoriza === 3)" type="button" class="btn btn-md btn-link text-danger" (click)="cancelar(item, i)" title="Cancelar">
+                        <button *ngIf="derechos.administrar && (item.autoriza === 3)" type="button" class="btn btn-md btn-link text-danger" (click)="cancelar(item, i)" title="Cancelar">
 							<i class="fas fa-trash-alt"></i>
 						</button>
                         <button type="button" class="btn btn-md btn-link" title="Ver + Info" (click)="openDialog(item)">

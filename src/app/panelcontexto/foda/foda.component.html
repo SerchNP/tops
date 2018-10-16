@@ -16,14 +16,14 @@
             <h6 class="card-subtitle mb-2 text-muted">ID {{proceso.proceso}}</h6>
             <small>
 				<div class="card-footer text-right">
-					<a class="card-link" [routerLink]="['/panelcontexto', 'panelfoda', 'foda_form', proceso.proceso, proceso.proceso_desc]">
+					<a class="card-link" [routerLink]="['/panelcontexto', 'panelfoda', 'fodamovs_form', proceso.proceso, proceso.proceso_desc]">
 						<i class="far fa-eye"></i> Ver FODA
 					</a>
 					<a class="card-link" [routerLink]="['/panelcontexto', 'panelfoda', 'autorizafoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.pendtes_foda > 0 && proceso.autorizar === 'S'" [matBadgeHidden]="proceso.pendtes_foda === 0" [matBadge]="proceso.pendtes_foda"
 						matBadgePosition="after" matBadgeColor="accent">
 						<i class="fas fa-check-double"></i> Autorizar
 					</a>
-					<a class="card-link text-danger" [routerLink]="['/panelcontexto', 'panelfoda', 'rechazosfoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.rechazados_foda > 0 && proceso.autorizar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
+					<a class="card-link text-danger" [routerLink]="['/panelcontexto', 'panelfoda', 'rechazosfoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.rechazados_foda > 0 && proceso.administrar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
 						[matBadge]="proceso.rechazados_foda" matBadgePosition="after" matBadgeColor="warn">
 						<i class="fas fa-ban"></i> Rechazados
 					</a>

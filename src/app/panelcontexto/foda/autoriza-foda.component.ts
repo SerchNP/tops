@@ -6,10 +6,10 @@ import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-autorizafoda-formulario',
-	templateUrl: './autoriza-foda-formulario.component.html'
+	selector: 'app-autoriza-foda',
+	templateUrl: './autoriza-foda.component.html'
 })
-export class AutorizaFodaFormularioComponent implements OnInit, OnDestroy {
+export class AutorizaFodaComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 	proceso: number;

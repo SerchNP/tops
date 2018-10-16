@@ -56,7 +56,11 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.subscription.unsubscribe();
+		try {
+			this.subscription.unsubscribe();
+		} catch (Exception) {
+			console.log(Exception);
+		}
 	}
 
 }
