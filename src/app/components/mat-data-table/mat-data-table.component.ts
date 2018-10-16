@@ -93,7 +93,8 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 
 		this.isAllSelected() ?
 			this.selection.clear() :
-			this.dataSource.data.forEach(row => this.selection.select(row));
+			this.dataSource.data.forEach(row => this.selection.select(row))
+			this.seleccionados.emit(this.selection.selected);
 	}
 
 	applyFilter(filterValue: string) {
