@@ -66,6 +66,13 @@ export class DerechosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getProcesosMenuAsignable(usuario: string, area: number) {
+		// tslint:disable-next-line:max-line-length
+		const url = URL_SGC + this.RUTA + 'getProcesosMenuAsignable.json?usuario=' + usuario + '&area=' + area + '&token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	asignarUsuarioMenuProceso(userprocs: any) {
 		const url = URL_SGC + this.RUTA + 'asignaUsuarioMenuProceso.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;

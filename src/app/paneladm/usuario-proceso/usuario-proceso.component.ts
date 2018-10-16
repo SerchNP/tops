@@ -125,6 +125,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.area_desc,
+				subtitle: datos.menu_desc,
 				estatus: datos.activa_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,

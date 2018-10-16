@@ -53,11 +53,13 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 		this.cargarUsuarios(this.usuario);
 	}
 
-	createItem(user, idproc, procdesc, padm, padmbol, paut, pautbol): FormGroup {
+	createItem(user, idproc, procdesc, idmenu, menudesc, padm, padmbol, paut, pautbol): FormGroup {
 		return this.formBuilder.group({
 			usuario: user,
 			proceso: idproc,
 			proceso_desc: procdesc,
+			menu: idmenu,
+			menu_desc: menudesc,
 			administra: padm,
 			b_administrar: padmbol,
 			autoriza: paut,
@@ -78,7 +80,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 						this.forma.get('usuario').setValue(data.usuario.username);
 						this.forma.get('nombre').setValue(data.usuario.nombre + ' ' + data.usuario.paterno + ' ' + data.usuario.materno);
 						this.getAreaFromUsuario(data.usuario.area);
-						this.getProcesosFromUsuario(data.usuario.username);
+						this.getProcesosFromUsuario(data.usuario.username, data.usuario.area);
 					});
 		} else {
 			this.subscription = this._usuario.getUsuarios('N', 'A')
@@ -112,7 +114,7 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 					(data: any) => {
 						this._acceso.guardarStorage(data.token);
 						this.getAreaFromUsuario(data.usuario.area);
-						this.getProcesosFromUsuario(json.id);
+						this.getProcesosFromUsuario(json.id, data.usuario.area);
 					},
 					error => {
 						swal('ERROR', error.error.message, 'error');
@@ -141,12 +143,11 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	getProcesosFromUsuario(usuario: string) {
-		console.log(usuario);
-		this.subscription = this._procesos.getProcesosByUserArea('usuario_proceso', usuario)
+	getProcesosFromUsuario(usuario: string, area: number) {
+		this.subscription = this._derechos.getProcesosMenuAsignable(usuario, area)
 			.subscribe(
 				(data: any) => {
-					this.procesos = data.procesos;
+					this.procesos = data.listado;
 					this.procesos.forEach((p) => this.addItem(usuario, p));
 					this._acceso.guardarStorage(data.token);
 				},
@@ -163,11 +164,11 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 		if (this.proceso !== undefined) {
 			if (p.proceso === Number(this.proceso)) {
 				// tslint:disable-next-line:max-line-length
-				this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.insertar, p.insertar === 'S', p.autorizar, p.autorizar === 'S'));
+				this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.menu, p.menu_desc, p.administrar, p.administrar === 'S', p.autorizar, p.autorizar === 'S'));
 			}
 		} else {
 			// tslint:disable-next-line:max-line-length
-			this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.insertar, p.insertar === 'S', p.autorizar, p.autorizar === 'S'));
+			this.userprocs.push(this.createItem(usuario, p.proceso, p.proceso_desc, p.menu, p.menu_desc, p.administrar, p.administrar === 'S', p.autorizar, p.autorizar === 'S'));
 		}
 	}
 
