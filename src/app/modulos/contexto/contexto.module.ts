@@ -18,6 +18,7 @@ import { FodaFormularioComponent } from './foda/foda-formulario.component';
 import { CardFodaComponent } from './card-foda/card-foda.component';
 import { AutorizaFodaComponent } from './foda/autoriza-foda.component';
 import { RechazosFodaComponent } from './foda/rechazos-foda.component';
+import { ListadoFodaComponent } from './foda/listado-foda.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { RechazosFodaComponent } from './foda/rechazos-foda.component';
 		FodaFormularioComponent,
 		CardFodaComponent,
 		AutorizaFodaComponent,
-		RechazosFodaComponent
+		RechazosFodaComponent,
+		ListadoFodaComponent
 	]
 })
 export class ContextoModule { }

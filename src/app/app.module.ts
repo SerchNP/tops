@@ -20,15 +20,13 @@ import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detalle.component';
-import { ListadoFodaComponent } from './modulos/contexto/foda/listado-foda.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		DetalleComponent,
-		DialogDetalleComponent,
-		ListadoFodaComponent
+		DialogDetalleComponent
 	],
 	imports: [
 		BrowserModule,

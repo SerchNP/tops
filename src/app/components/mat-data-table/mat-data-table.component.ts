@@ -60,7 +60,6 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	ngOnInit() {
 		const columnasVisibles = new FiltraColumnsPipe().transform(this.columns, true);
 		this.displayedColumns = columnasVisibles.map(c => c.columnDef);
-		console.log(this.displayedColumns);
 	}
 
 	ngAfterViewInit() {
