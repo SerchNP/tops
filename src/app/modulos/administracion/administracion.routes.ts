@@ -52,11 +52,11 @@ const administracionRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'usuarios_form/:acc/:id', component: UsuariosFormularioComponent, data: {titulo: 'Mantenimiento de Usuarios', padre: 'Administración', opcion: 'Usuarios'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'usuario_proceso', component: UsuarioProcesoComponent, data: {titulo: 'Asignar Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
+					{ path: 'usuario_proceso', component: UsuarioProcesoComponent, data: {titulo: 'Asignar Privilegios a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'userproc_form/:acc/:user/:proc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
+					{ path: 'userproc_form/:acc/:user/:proc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Privilegios a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'userproc_form/:acc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Procesos a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} }
+					{ path: 'userproc_form/:acc', component: UsuarioProcesoFormularioComponent, data: {titulo: 'Asignación de Privilegios a Usuarios', padre: 'Administración', opcion: 'Procesos a Usuarios'} }
 				]
 			},
 			{
