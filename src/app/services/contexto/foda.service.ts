@@ -76,4 +76,10 @@ export class FodaService {
 		const body = JSON.stringify(arregloFODA);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	getListadoFODA (tipo: string) {
+		const url = URL_SGC + this.RUTA + 'getListadoFODA.json?t=' + tipo + '&token=' + localStorage.getItem('token');
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
 }
