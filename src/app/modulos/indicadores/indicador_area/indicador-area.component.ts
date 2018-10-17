@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccesoService } from '../../../services/shared/acceso.service';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { IndicadoresService, AreasService } from '../../../services/services.index';
+import { IndicadoresService, DerechosService } from '../../../services/services.index';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -42,14 +42,13 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 
 	constructor(private _accesoService: AccesoService,
 				private _indicadorService: IndicadoresService,
-				private _areas: AreasService,
+				private _derechosService: DerechosService,
 				public dialog: MatDialog) {
 	}
 
 	ngOnInit() {
 		this.cargando = true;
 		this.subscription = this._indicadorService.getIndicadoresUAP('indicador_area')
-		// this.subscription = this._areas.getAreas()
 			.subscribe(
 				data => {
 					this.jsonData = data;
