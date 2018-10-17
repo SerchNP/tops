@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccesoService } from '../../../services/shared/acceso.service';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { ProcesosService } from '../../../services/services.index';
+import { IndicadoresService, AreasService } from '../../../services/services.index';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -19,34 +19,41 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'clave';
-	derechos: Derechos = {administrar: true, consultar: true}; // No tiene opcion de editar
-	ruta_add =  ['/administracion', 'submenuproc', 'area_proceso_form', 'I', 0];
+	derechos: Derechos = {administrar: true, editar: true, cancelar: true, insertar: true};
+	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'clave', 			header: 'Clave',		cell: (area_proceso: any) => `${area_proceso.clave}`, 	align: 'center'},
-		{ columnDef: 'proceso',     	header: 'ID Proceso',	cell: (area_proceso: any) => `${area_proceso.proceso}`,	align: 'center'},
-		{ columnDef: 'proceso_desc',   	header: 'Proceso', 		cell: (area_proceso: any) => `${area_proceso.proceso_desc}`},
-		{ columnDef: 'area',			header: 'ID Área', 		cell: (area_proceso: any) => `${area_proceso.area}`,	align: 'center'},
-		{ columnDef: 'area_desc',   	header: 'Área',			cell: (area_proceso: any) => `${area_proceso.area_desc}`},
-		{ columnDef: 'tipo_area_desc',  header: 'Tipo Área',	cell: (area_proceso: any) => `${area_proceso.tipo_area_desc}`},
-		{ columnDef: 'autoriza_desc',	header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.autoriza_desc}`}
+		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	 align: 'center', cell: (indicador: any) => `${indicador.proceso}`},
+		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 	     cell: (indicador: any) => `${indicador.proceso_desc}`},
+		{ columnDef: 'indicador', 		 header: 'Clave', 	    	 align: 'center', cell: (indicador: any) => `${indicador.indicador}`},
+		{ columnDef: 'indicador_desc',	 header: 'Indicador',    	 cell: (indicador: any) => `${indicador.indicador_desc}`},
+		{ columnDef: 'tipo_desc',  		 header: 'Tipo Indicador',	 cell: (indicador: any) => `${indicador.tipo_desc}`},
+		{ columnDef: 'frecuencia_desc',  header: 'Frecuencia',		 cell: (indicador: any) => `${indicador.frecuencia_desc}`},
+		{ columnDef: 't_formula_desc',	 header: 'Cálculo',   	 	 cell: (indicador: any) => `${indicador.t_formula_desc}`},
+		{ columnDef: 't_resultado_desc', header: 'Resultado',	     cell: (indicador: any) => `${indicador.t_resultado_desc}`},
+		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		 cell: (indicador: any) => `${indicador.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			 cell: (indicador: any) => `${indicador.estatus_desc}`},
+		{ columnDef: 'meta',			 header: 'Meta',  	    	 visible: false, cell: (indicador: any) => `${indicador.meta}`},
+		{ columnDef: 'formula',			 header: 'Fórmula',      	 visible: false, cell: (indicador: any) => `${indicador.formula}`},
+		{ columnDef: 'objetivo_desc',	 header: 'Objetivo Calidad', visible: false, cell: (indicador: any) => `${indicador.objetivo_desc}`}
 	];
 
 	constructor(private _accesoService: AccesoService,
-				private _procesosService: ProcesosService,
+				private _indicadorService: IndicadoresService,
+				private _areas: AreasService,
 				public dialog: MatDialog) {
 	}
 
 	ngOnInit() {
 		this.cargando = true;
-		/*this.subscription = this._procesosService.getAreasAsignadas(0)
+		this.subscription = this._indicadorService.getIndicadoresUAP('indicador_area')
+		// this.subscription = this._areas.getAreas()
 			.subscribe(
 				data => {
 					this.jsonData = data;
-					this.listado = this.jsonData.areas_asignadas;
+					this.listado = this.jsonData.indicadores;
 					this._accesoService.guardarStorage(this.jsonData.token);
 					this.cargando = false;
 				},
@@ -55,7 +62,7 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 					if (error.error.code === 401) {
 						this._accesoService.logout();
 					}
-				});*/
+				});
 	}
 
 	ngOnDestroy() {
@@ -65,19 +72,21 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'C') {
-			this.cancelaAreaAsignada(datos.row);
+			// this.cancelar(datos.row);
+		} if (datos.accion === 'E') {
+			// this.cancelar(datos.row);
 		} else if (datos.accion === 'V') {
-			this.openDialog(datos.row);
+			// this.openDialog(datos.row);
 		}
 	}
 
-	async cancelaAreaAsignada(areaPproceso: any) {
-		if (areaPproceso.autoriza === 7) {
-			swal('ERROR', 'La asignación ya se encuentra cancelada', 'error');
+	/*async cancelar(indicador: any) {
+		if (indicador.autoriza === 7) {
+			swal('ERROR', 'El indicador ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
-				text: 'Está seguro que desea cancelar el area ' + areaPproceso.area_desc + ' para el proceso ' + areaPproceso.proceso_desc + '?',
+				text: 'Está seguro que desea cancelar el indicador ' + indicador.indicador_desc + ' del proceso ' + indicador.proceso_desc + '?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
@@ -93,7 +102,7 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this.subscription = this._procesosService.cancelaAreaAsignada(areaPproceso.clave, motivo.toUpperCase())
+					this.subscription = this._indicadorService.cancelaAreaAsignada(areaPproceso.clave, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -107,14 +116,14 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 				}
 			}
 		}
-	}
+	}*/
 
 	openDialog(datos: any): void {
 		const dialogRef = this.dialog.open(DialogDetalleComponent, {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				subtitle: datos.area_desc,
+				subtitle: datos.indicador_desc,
 				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,

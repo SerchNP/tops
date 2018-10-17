@@ -14,7 +14,7 @@ const IndicadoresRoutes: Routes = [
 		canActivate: [LoginGuard],
 		children: [
 			{
-				path: 'indicador_area', component: IndicadorAreaComponent, data: {titulo: 'Indicadores en el Área', padre: 'Indicadores'}
+				path: 'indicador_area', component: IndicadorAreaComponent, data: {titulo: 'Indicadores', padre: 'Indicadores'}
 			}
 		]
 	}

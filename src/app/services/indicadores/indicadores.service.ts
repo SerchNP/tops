@@ -7,13 +7,13 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class IndicadoresService {
 
-	TOKEN = 'token=' + localStorage.getItem('token');
+	private RUTA = '/indicadores/';
 
 	constructor(private http: HttpClient,
 				private router: Router) { }
 
-	getIndicadoresArea () {
-		const url = URL_SGC + '/indicadores/getIndicadoresArea.json?' + this.TOKEN;
+	getIndicadoresUAP(menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getIndicadoresUAP.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}

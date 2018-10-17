@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PAGES_ROUTES } from './pages.routes';
 import { ADMINISTRACION_ROUTES } from '../modulos/administracion/administracion.routes';
 import { CONTEXTO_ROUTES } from '../modulos/contexto/contexto.routes';
+import { INDICADORES_ROUTES } from '../modulos/indicadores/indicadores.routes';
 
 // Modulos
 import { SharedModule } from '../shared/shared.module';
@@ -36,6 +37,7 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 		PAGES_ROUTES,
 		ADMINISTRACION_ROUTES,
 		CONTEXTO_ROUTES,
+		INDICADORES_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,

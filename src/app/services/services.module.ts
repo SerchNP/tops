@@ -9,6 +9,7 @@ import { IdentidadService } from './services.index';
 import { FodaService } from './contexto/foda.service';
 import { CatalogosService } from './shared/catalogos.service';
 import { DerechosService } from './shared/derechos.service';
+import { IndicadoresService } from './indicadores/indicadores.service';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { DerechosService } from './shared/derechos.service';
 		AreasService,
 		PuestosService,
 		IdentidadService,
-		FodaService
+		FodaService,
+		IndicadoresService
 	],
 	declarations: []
 })
