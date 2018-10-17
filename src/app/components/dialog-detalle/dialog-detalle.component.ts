@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export interface DialogData {
 	title: string;
 	subtitle?: string;
-	estatus: string;
+	situacion: string;
 	u_captura?: string;
 	f_captura?: string;
 	u_modifica?: string;

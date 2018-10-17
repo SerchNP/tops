@@ -3,13 +3,10 @@ export interface Areas {
 	area_desc: string;
 	predecesor?: string;
 	predecesor_desc?: string;
-	// area_desclarga: string;
-	activa: string;
-	// activa_desc: string;
 	tipo: string;
 	tipo_desc: string;
-	estatus: string;
-	estatus_desc: string;
+	autoriza: number;
+	autoriza_desc: string;
 	ent_data: string;
 	f_captura: Date;
 	u_captura: string;

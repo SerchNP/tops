@@ -19,7 +19,6 @@ export class FodaComponent implements OnInit, OnDestroy {
 	procesos: any[] = [];
 	procesosMostrar: any[] = [];
 	cargando = false;
-	cat_autoriza: any[] = [];
 	derechos: Derechos;
 
 	constructor(private _accesoService: AccesoService,

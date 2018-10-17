@@ -81,7 +81,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	}
 
 	editarUsuario(usuario: any) {
-		if (usuario.estatus === 'C') {
+		if (usuario.estatus === 'B') {
 			swal('ERROR', 'No es posible editar, el usuario ya se encuentra bloqueado', 'error');
 		} else {
 			this.router.navigate(['/administracion', 'submenuusu', 'usuarios_form', 'U', usuario.usuario]);
@@ -89,7 +89,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	}
 
 	async cancelarUsuario(usuario: any) {
-		if (usuario.estatus === 'C') {
+		if (usuario.estatus === 'B') {
 			swal('ERROR', 'El usuario ya se encuentra bloqueado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
@@ -132,7 +132,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 			data: {
 				title: datos.usuario,
 				subtitle: datos.nombre + ' ' + datos.paterno + ' ' + datos.materno,
-				estatus: datos.estatus_desc,
+				situacion: datos.estatus_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

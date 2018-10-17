@@ -30,7 +30,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'area',			header: 'ID Área', 		cell: (area_proceso: any) => `${area_proceso.area}`,	align: 'center'},
 		{ columnDef: 'area_desc',   	header: 'Área',			cell: (area_proceso: any) => `${area_proceso.area_desc}`},
 		{ columnDef: 'tipo_area_desc',  header: 'Tipo Área',	cell: (area_proceso: any) => `${area_proceso.tipo_area_desc}`},
-		{ columnDef: 'estatus_desc',	header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.estatus_desc}`}
+		{ columnDef: 'autoriza_desc',	header: 'Situación',	cell: (area_proceso: any) => `${area_proceso.autoriza_desc}`}
 	];
 
 	constructor(private _accesoService: AccesoService,
@@ -70,7 +70,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	async cancelaAreaAsignada(areaPproceso: any) {
-		if (areaPproceso.estatus === 'N') {
+		if (areaPproceso.autoriza === 7) {
 			swal('ERROR', 'La asignación ya se encuentra cancelada', 'error');
 		} else {
 			const {value: respuesta} = await swal({
@@ -113,7 +113,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 			data: {
 				title: datos.proceso_desc,
 				subtitle: datos.area_desc,
-				estatus: datos.estatus_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

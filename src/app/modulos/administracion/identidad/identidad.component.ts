@@ -28,7 +28,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 	columns = [
 		{columnDef: 'descrip',			header: 'Descripción',  cell: (identidad: any) => `${identidad.descrip}`},
 		{columnDef: 'autoriza_desc',	header: 'Situación',	cell: (identidad: any) => `${identidad.autoriza_desc}`},
-		{columnDef: 'activo_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.activo_desc}`}
+		{columnDef: 'estatus_desc',		header: 'Estatus',		cell: (identidad: any) => `${identidad.estatus_desc}`, visible: 'false'}
 	];
 
 	constructor(private activatedRoute: ActivatedRoute, private router: Router,
@@ -126,7 +126,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				const {value: motivo} = await swal({
 					title: 'Ingrese el motivo de cancelación del registro seleccionado',
-					input: 'text',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
 						return !value && 'Necesita ingresar el motivo de cancelación';
@@ -167,7 +167,7 @@ export class IdentidadComponent implements OnInit, OnDestroy {
 			data: {
 				title: titulo,
 				subtitle: subtitulo,
-				estatus: datos.autoriza_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

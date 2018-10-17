@@ -22,7 +22,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 	seleccionado = '';
 	items: any [] = [];
 
-	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null);
+	proceso: Proceso = new Proceso(null, null, null, null, null, null, null, null, null);
 
 	forma: FormGroup;
 	cancelar: any[] = ['/administracion', 'submenuproc', 'procesos'];

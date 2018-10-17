@@ -27,13 +27,16 @@ export class AreasComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'area', 			header: 'Área',				cell: (area: any) => `${area.area}`, 		align: 'center'},
+		{ columnDef: 'area', 			header: 'Área',				cell: (area: any) => `${area.area}`, 			align: 'center'},
 		{ columnDef: 'area_desc',   	header: 'Descripción',		cell: (area: any) => `${area.area_desc}`},
-		{ columnDef: 'predecesor',  	header: 'ID Predecesor',	cell: (area: any) => `${area.predecesor}`,	align: 'center'},
+		{ columnDef: 'predecesor',  	header: 'ID Predecesor',	cell: (area: any) => `${area.predecesor}`,		align: 'center'},
 		{ columnDef: 'predecesor_desc',	header: 'Predecesor',		cell: (area: any) => `${area.predecesor_desc}`},
 		{ columnDef: 'tipo_desc',		header: 'Tipo',			 	cell: (area: any) => `${area.tipo_desc}`},
-		{ columnDef: 'estatus_desc',	header: 'Situación',		cell: (area: any) => `${area.estatus_desc}`},
-		{ columnDef: 'ent_data',		header: 'Ent. Datos',		cell: (area: any) => `${area.ent_data}`}
+		{ columnDef: 'autoriza_desc',	header: 'Situación',		cell: (area: any) => `${area.autoriza_desc}`},
+		{ columnDef: 'ent_data',		header: 'Ent. Datos',		cell: (area: any) => `${area.ent_data}`},
+		{ columnDef: 'u_cancela',		header: 'Usuario Cancela',	cell: (area: any) => `${area.u_cancela}`, 		visible: false},
+		{ columnDef: 'f_cancela',		header: 'Fecha Cancela',	cell: (area: any) => `${area.f_cancela}`, 		visible: false},
+		{ columnDef: 'motivo_cancela',	header: 'Motivo Cancela',	cell: (area: any) => `${area.motivo_cancela}`, 	visible: false}
 	];
 
 	constructor(public _areasService: AreasService,
@@ -74,7 +77,7 @@ export class AreasComponent implements OnInit, OnDestroy {
 	}
 
 	editarArea(area: any) {
-		if (area.estatus === 'N') {
+		if (area.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar el área, ya se encuentra cancelada', 'error');
 		} else {
 			this.router.navigate(['/administracion', 'areas_form', 'U', area.area]);
@@ -82,7 +85,7 @@ export class AreasComponent implements OnInit, OnDestroy {
 	}
 
 	async borrarArea(area: any) {
-		if (area.estatus === 'N') {
+		if (area.autoriza === 7) {
 			swal('ERROR', 'El área ya se encuentra cancelada', 'error');
 		} else {
 			const {value: respuesta} = await swal({
@@ -96,7 +99,7 @@ export class AreasComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				const {value: motivo} = await swal({
 					title: 'Ingrese el motivo de cancelación del área',
-					input: 'text',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
 						return !value && 'Necesita ingresar el motivo de cancelación';
@@ -125,14 +128,11 @@ export class AreasComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.area_desc,
-				estatus: datos.activa_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,
-				f_modifica: datos.f_modifica,
-				u_cancela: datos.u_cancela,
-				f_cancela: datos.f_cancela,
-				motivo_cancela: datos.motivo_cancela
+				f_modifica: datos.f_modifica
 			}
 		});
 	}

@@ -33,11 +33,4 @@ export class CatalogosService {
 					}
 				});
 	}
-
-	/*getDescAutoriza: any = (autoriza: number) => {
-		const arr = this.cat_autoriza.filter(
-			value => value.autoriza === autoriza);
-		return arr[0].autoriza_desc;
-	}*/
-
 }

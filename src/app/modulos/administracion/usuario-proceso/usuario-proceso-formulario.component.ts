@@ -60,9 +60,9 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 			proceso_desc: procdesc,
 			menu: idmenu,
 			menu_desc: menudesc,
-			administra: padm,
+			administrar: padm,
 			b_administrar: padmbol,
-			autoriza: paut,
+			autorizar: paut,
 			b_autorizar: pautbol
 		});
 	}
@@ -178,14 +178,14 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 		listado.value.forEach(element => {
 			if (element.b_administrar || element.b_autorizar) {
 				if (element.b_administrar) {
-					element.administra = 'S';
+					element.administrar = 'S';
 				} else {
-					element.administra = 'N';
+					element.administrar = 'N';
 				}
 				if (element.b_autorizar) {
-					element.autoriza = 'S';
+					element.autorizar = 'S';
 				} else {
-					element.autoriza = 'N';
+					element.autorizar = 'N';
 				}
 				listadoFinal.push(element);
 			}

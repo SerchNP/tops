@@ -32,9 +32,9 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'proceso',			header: 'Id Proceso',	cell: (usuproc: any) => `${usuproc.proceso}` },
 		{ columnDef: 'proceso_desc',	header: 'Proceso',		cell: (usuproc: any) => `${usuproc.proceso_desc}` },
 		{ columnDef: 'menu_desc',		header: 'Opción',		cell: (usuproc: any) => `${usuproc.menu_desc}` },
-		{ columnDef: 'estatus_desc',	header: 'Situación',	cell: (usuproc: any) => `${usuproc.estatus_desc}` },
-		{ columnDef: 'administra',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administra}`, align: 'center'},
-		{ columnDef: 'autoriza',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autoriza}`, 	 align: 'center'}
+		{ columnDef: 'autoriza_desc',	header: 'Situación',	cell: (usuproc: any) => `${usuproc.autoriza_desc}` },
+		{ columnDef: 'administrar',		header: 'Administra',	cell: (usuproc: any) => `${usuproc.administrar}`, align: 'center'},
+		{ columnDef: 'autorizar',		header: 'Autoriza',		cell: (usuproc: any) => `${usuproc.autorizar}`,   align: 'center'}
 	];
 
 	constructor(private router: Router,
@@ -75,7 +75,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	editarUsuarioMenuProceso(registro: any) {
-		if (registro.estatus === 'N') {
+		if (registro.autoriza === 7) {
 			swal('ERROR', 'No es posible editar, el registro se encuentra inactivo', 'error');
 		} else {
 			this.router.navigate(['/administracion', 'submenuusu', 'userproc_form', 'U', registro.usuario, registro.proceso]);
@@ -83,7 +83,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 	}
 
 	async cancelarUsuarioMenuProceso(registro: any) {
-		if (registro.estatus === 'N') {
+		if (registro.autoriza === 7) {
 			swal('ERROR', 'No es posible cancelar, el registro ya se encuentra inactivo', 'error');
 		} else {
 			const {value: respuesta} = await swal({
@@ -96,11 +96,11 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 			});
 			if (respuesta) {
 				const {value: motivo} = await swal({
-					title: 'Ingrese el motivo de inactivción del registro seleccionado',
-					input: 'text',
+					title: 'Ingrese el motivo de cancelación del registro seleccionado',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
-						return !value && 'Necesita ingresar el motivo de inactivación';
+						return !value && 'Necesita ingresar el motivo de cancelacion';
 					}
 				});
 				if (motivo !== undefined) {
@@ -126,7 +126,7 @@ export class UsuarioProcesoComponent implements OnInit, OnDestroy {
 			data: {
 				title: datos.area_desc,
 				subtitle: datos.menu_desc,
-				estatus: datos.activa_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

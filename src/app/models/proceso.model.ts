@@ -5,6 +5,7 @@ export class Proceso {
 		public autoriza: number,
 		public autoriza_desc: string,
 		public estatus: string,
+		public estatus_desc: string,
 		public ent_data: string,
 		public f_captura: Date,
 		public u_captura: string,

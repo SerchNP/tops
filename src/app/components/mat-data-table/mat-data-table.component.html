@@ -28,7 +28,7 @@
     <ng-container matColumnDef="editar">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
-            <button type="button" *ngIf="row.cancelado === 'N' || row.autoriza === 5" class="btn btn-sm btn-outline-secondary" title="Editar Registro" (click)="onButtonClicked(row, 'E')">
+            <button type="button" *ngIf="row.cancelado === 'N'" class="btn btn-sm btn-outline-secondary" title="Editar Registro" (click)="onButtonClicked(row, 'E')">
 				<i class="far fa-edit"></i>
 			</button>
         </td>
@@ -36,7 +36,7 @@
     <ng-container matColumnDef="cancelar">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
-            <button type="button" *ngIf="row.cancelado === 'N' || row.autoriza === 5" class="btn btn-sm btn-outline-secondary" title="Cancelar Registro" (click)="onButtonClicked(row, 'C')">
+            <button type="button" *ngIf="row.cancelado === 'N'" class="btn btn-sm btn-outline-secondary" title="Cancelar Registro" (click)="onButtonClicked(row, 'C')">
 				<i class="fas fa-trash-alt"></i>
 			</button>
         </td>

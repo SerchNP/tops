@@ -28,18 +28,18 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'proceso',     	header: 'ID Proceso',				visible: true,		cell: (proceso: any) => `${proceso.proceso}`},
-		{ columnDef: 'proceso_desc',   	header: 'Proceso', 					visible: true,		cell: (proceso: any) => `${proceso.proceso_desc}`},
-		{ columnDef: 'predecesor',		header: 'ID Predecesor',			visible: true,		cell: (proceso: any) => `${proceso.predecesor}`,	align: 'center'},
-		{ columnDef: 'predecesor_desc', header: 'Predecesor',				visible: true,		cell: (proceso: any) => `${proceso.predecesor_desc}`},
-		{ columnDef: 'sistema',			header: 'ID Sistema',				visible: true,		cell: (proceso: any) => `${proceso.sistema}`,		align: 'center'},
-		{ columnDef: 'sistema_desc',	header: 'Sistema',					visible: true,		cell: (proceso: any) => `${proceso.sistema_desc}`},
-		{ columnDef: 'estatus',  		header: 'Abierto/Cerrado',			visible: true,		cell: (proceso: any) => `${proceso.estatus}`, 		align: 'center'},
-		{ columnDef: 'ent_data',  		header: 'Ent. Datos',				visible: true,		cell: (proceso: any) => `${proceso.ent_data}`, 		align: 'center'},
-		{ columnDef: 'autoriza_desc',	header: 'Estatus',					visible: true,		cell: (proceso: any) => `${proceso.autoriza_desc}`},
-		{ columnDef: 'objetivo',		header: 'Objetivo',					visible: false,		cell: (proceso: any) => `${proceso.objetivo}`},
-		{ columnDef: 'apartados',		header: 'Apartados de la Norma',	visible: false,		cell: (proceso: any) => `${proceso.apartados}`},
-		{ columnDef: 'responsable',		header: 'Responsable',				visible: false,		cell: (proceso: any) => `${proceso.responsable}`}
+		{ columnDef: 'proceso',     	header: 'ID Proceso',			 visible: true,  cell: (proceso: any) => `${proceso.proceso}`},
+		{ columnDef: 'proceso_desc',   	header: 'Proceso', 				 visible: true,  cell: (proceso: any) => `${proceso.proceso_desc}`},
+		{ columnDef: 'predecesor',		header: 'ID Predecesor',		 visible: true,  align: 'center', cell: (proceso: any) => `${proceso.predecesor}`},	
+		{ columnDef: 'predecesor_desc', header: 'Predecesor',			 visible: true,  cell: (proceso: any) => `${proceso.predecesor_desc}`},
+		{ columnDef: 'sistema',			header: 'ID Sistema',			 visible: true,  align: 'center', cell: (proceso: any) => `${proceso.sistema}`},
+		{ columnDef: 'sistema_desc',	header: 'Sistema',				 visible: true,  cell: (proceso: any) => `${proceso.sistema_desc}`},
+		{ columnDef: 'estatus_desc',	header: 'Estatus',				 visible: true,  cell: (proceso: any) => `${proceso.estatus_desc}`},
+		{ columnDef: 'ent_data_desc',  	header: 'Ent. Datos',			 visible: true,  cell: (proceso: any) => `${proceso.ent_data_desc}`},
+		{ columnDef: 'autoriza_desc',	header: 'Situación',			 visible: true,  cell: (proceso: any) => `${proceso.autoriza_desc}`},
+		{ columnDef: 'objetivo',		header: 'Objetivo',				 visible: false, cell: (proceso: any) => `${proceso.objetivo}`},
+		{ columnDef: 'apartados',		header: 'Apartados de la Norma', visible: false, cell: (proceso: any) => `${proceso.apartados}`},
+		{ columnDef: 'responsable',		header: 'Responsable',			 visible: false, cell: (proceso: any) => `${proceso.responsable}`}
 
 	];
 
@@ -136,7 +136,7 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				estatus: datos.estatus_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

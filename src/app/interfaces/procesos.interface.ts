@@ -4,7 +4,8 @@ export interface AreaProceso {
 	proceso_desc: string;
 	area: number;
 	area_desc: string;
-	activa: string;
+	autoriza: number;
+	autoriza_desc: string;
 	f_captura: Date;
 	u_captura: string;
 	f_modifica?: Date;

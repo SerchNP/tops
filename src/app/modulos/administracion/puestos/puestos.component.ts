@@ -33,7 +33,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'puesto_desc',   	header: 'Descripción', 	 cell: (puesto: any) => `${puesto.puesto_desc}`},
 		{ columnDef: 'predecesor', 		header: 'ID Predecesor', cell: (puesto: any) => `${puesto.predecesor}`},
 		{ columnDef: 'predecesor_desc', header: 'Predecesor', 	 cell: (puesto: any) => `${puesto.predecesor_desc}`},
-		{ columnDef: 'estatus_desc',	header: 'Situación',	 cell: (puesto: any) => `${puesto.estatus_desc}`}
+		{ columnDef: 'autoriza_desc',	header: 'Situación',	 cell: (puesto: any) => `${puesto.autoriza_desc}`}
 	];
 
 	constructor(public _accesoService: AccesoService,
@@ -75,7 +75,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 	}
 
 	editarPuesto(puesto: any) {
-		if (puesto.estatus === 'N') {
+		if (puesto.autoriza === 7) {
 			swal('ERROR', 'El puesto no se puede modificar porque está cancelado', 'error');
 		} else {
 			this.router.navigate(['/administracion', 'puestos_form', 'U', puesto.puesto]);
@@ -83,7 +83,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 	}
 
 	async borrarPuesto(puesto: any) {
-		if (puesto.estatus === 'N') {
+		if (puesto.autoriza === 7) {
 			swal('ERROR', 'El puesto ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
@@ -97,7 +97,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				const {value: motivo} = await swal({
 					title: 'Ingrese el motivo de cancelación del puesto',
-					input: 'text',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
 						return !value && 'Necesita ingresar el motivo de cancelación';
@@ -126,7 +126,7 @@ export class PuestosComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.puesto_desc,
-				estatus: datos.estatus_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

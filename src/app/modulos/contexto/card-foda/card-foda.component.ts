@@ -25,7 +25,6 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 
 	bandera: boolean;
 	jsonData: any;
-	cat_autoriza: any [] = [];
 
 	constructor(private _accesoService: AccesoService,
 				private _fodaService: FodaService,
@@ -70,10 +69,10 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 
 	async cancelar(foda: FodaC, index) {
 		if (foda.autoriza === 7 || foda.autoriza === 6) {
-			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra cancelada', 'error'
+			swal('ERROR', 'La ' + this.cuestion_desc + ' se encuentra cancelada', 'error'
 			);
 		} else if (foda.autoriza === 5 || foda.autoriza === 4) {
-			swal('ERROR', 'La ' + this.cuestion_desc + ' ya se encuentra rechazada', 'error'
+			swal('ERROR', 'La ' + this.cuestion_desc + ' se encuentra rechazada', 'error'
 			);
 		} else {
 			const { value: respuesta } = await swal({
@@ -117,10 +116,8 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 		if (respuesta !== undefined) {
 			const arreglo: any[] = [];
 			this.listado.forEach(element => {
-				if (element['autoriza'] === 0 || element['autoriza'] === 1 || element['autoriza'] === 2 || element['autoriza'] === 3) {
+				if (element['autoriza'] === 1 || element['autoriza'] === 2 || element['autoriza'] === 3) {
 					arreglo.push(JSON.parse('{"proceso" : ' + element['proceso'] + ', "foda" : ' + element['foda'] + '}'));
-				} else {
-					console.log('Descartado: ', element['autoriza_desc'], element['foda'], element['foda_desc']);
 				}
 			});
 			this.subscription = this._fodaService.actualizarPrioridadFODA(this.cuestion, arreglo)
@@ -172,7 +169,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.cuestion + datos.orden + '   ' + datos.foda_desc,
-				estatus: datos.autoriza_desc,
+				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,
 				u_modifica: datos.u_modifica,

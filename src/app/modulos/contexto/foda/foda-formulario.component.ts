@@ -17,7 +17,6 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 	proceso: number;
 	proceso_desc: string;
 	derechos: Derechos = {};
-	cat_autoriza: any[] = [];
 
 	cargando = false;
 	jsonData: any;
