@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-11">
+        <h5><i class="far fa-arrow-alt-circle-right"></i> {{proceso_desc}}</h5>
+    </div>
+    <div class="col-1 text-right">
+        <a [routerLink]="['/contexto', 'submenufoda', 'foda']" class="btn btn-outline-dark">Regresar</a>
+    </div>
+</div>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-center">
+            <strong>Cargando</strong>
+            <br>
+            <i class="fas fa-sync-alt fa-spin fa-2x"></i>
+            <br>
+            <span>Espere por favor</span>
+        </div>
+    </div>
+</div>
+<br/>
+<app-mat-data-table (registro)="detectarAccion($event)" (seleccionados)="detectarRegistros($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect"></app-mat-data-table>
+<div class="text-center">
+    <button type="submit" (click)="guardar()" class="btn btn-outline-primary">
+		<i class="fa fa-save"></i>
+		Guardar
+	</button>&nbsp;
+    <a [routerLink]="['/contexto', 'submenufoda', 'foda']" class="btn btn-outline-danger">Cancelar</a>
+</div>

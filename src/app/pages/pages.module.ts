@@ -4,14 +4,14 @@ import { CommonModule } from '@angular/common';
 
 // Rutas
 import { PAGES_ROUTES } from './pages.routes';
-import { PANELADM_ROUTES } from '../paneladm/paneladm.routes';
-import { PANELCONTEXTO_ROUTES } from '../panelcontexto/panelcontexto.routes';
+import { ADMINISTRACION_ROUTES } from '../modulos/administracion/administracion.routes';
+import { CONTEXTO_ROUTES } from '../modulos/contexto/contexto.routes';
 
 // Modulos
 import { SharedModule } from '../shared/shared.module';
-import { PaneladmModule } from '../paneladm/paneladm.module';
-import { PanelContextoModule } from '../panelcontexto/panelcontexto.module';
-import { PanelIndicadoresModule } from '../panelindicadores/panelindicadores.module';
+import { AdministracionModule } from '../modulos/administracion/administracion.module';
+import { ContextoModule } from '../modulos/contexto/contexto.module';
+import { IndicadoresModule } from '../modulos/indicadores/indicadores.module';
 
 // Componentes
 import { PagesComponent } from './pages.component';
@@ -34,14 +34,14 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 	imports: [
 		CommonModule,
 		PAGES_ROUTES,
-		PANELADM_ROUTES,
-		PANELCONTEXTO_ROUTES,
+		ADMINISTRACION_ROUTES,
+		CONTEXTO_ROUTES,
 		FormsModule,
 		ReactiveFormsModule,
 		SharedModule,
-		PaneladmModule,
-		PanelContextoModule,
-		PanelIndicadoresModule
+		AdministracionModule,
+		ContextoModule,
+		IndicadoresModule
 	]
 })
 

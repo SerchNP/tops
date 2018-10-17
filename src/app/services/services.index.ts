@@ -9,12 +9,12 @@ export { SidebarService } from './shared/sidebar.service';
 export { CatalogosService } from './shared/catalogos.service';
 export { DerechosService } from './shared/derechos.service';
 // Catálogos
-export { UsuarioService } from './paneladm/usuario.service';
-export { IdentidadService } from './paneladm/identidad.service';
-export { ProcesosService } from './paneladm/procesos.service';
-export { AreasService } from './paneladm/areas.service';
-export { PuestosService } from './paneladm/puestos.service';
+export { UsuarioService } from './administracion/usuario.service';
+export { IdentidadService } from './administracion/identidad.service';
+export { ProcesosService } from './administracion/procesos.service';
+export { AreasService } from './administracion/areas.service';
+export { PuestosService } from './administracion/puestos.service';
 // FODA
-export { FodaService } from './panelfoda/foda.service';
+export { FodaService } from './contexto/foda.service';
 // INDICADORES
-export { IndicadoresService } from './panelindicadores/indicadores.service';
+export { IndicadoresService } from './indicadores/indicadores.service';

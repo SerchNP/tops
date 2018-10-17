@@ -6,7 +6,7 @@ import { AccesoService, SidebarService, HomeService } from './services.index';
 import { UsuarioService, ProcesosService } from './services.index';
 import { AreasService, PuestosService } from './services.index';
 import { IdentidadService } from './services.index';
-import { FodaService } from './panelfoda/foda.service';
+import { FodaService } from './contexto/foda.service';
 import { CatalogosService } from './shared/catalogos.service';
 import { DerechosService } from './shared/derechos.service';
 

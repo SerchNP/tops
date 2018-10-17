@@ -1,0 +1,34 @@
+<div class="row" *ngIf="!cargando">
+    <div class="col-md-5 input-group">
+        <input #filtro class="form-control" placeholder="Buscar" (keyup)="filtraProcesos(filtro.value);" />
+        <div class="input-group-btn">
+            <button class="btn btn-xs btn-secondary" type="button" (click)="clearFilter()">
+				<i class="fas fa-search-minus"></i>
+			</button>
+        </div>
+    </div>
+</div>
+<br />
+<div class="card-columns">
+    <div class="card border-1 bg-light" *ngFor="let proceso of procesosMostrar">
+        <div class="card-body text-dark">
+            <h5 clas="card-title font-weight-bold"><i class="fas fa-project-diagram"></i> {{proceso.proceso_desc}}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">ID {{proceso.proceso}}</h6>
+            <small>
+				<div class="card-footer text-right">
+					<a class="card-link" [routerLink]="['/contexto', 'submenufoda', 'fodamovs_form', proceso.proceso, proceso.proceso_desc]">
+						<i class="far fa-eye"></i> Ver FODA
+					</a>
+					<a class="card-link" [routerLink]="['/contexto', 'submenufoda', 'autorizafoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.pendtes_foda > 0 && proceso.autorizar === 'S'" [matBadgeHidden]="proceso.pendtes_foda === 0" [matBadge]="proceso.pendtes_foda"
+						matBadgePosition="after" matBadgeColor="accent">
+						<i class="fas fa-check-double"></i> Autorizar
+					</a>
+					<a class="card-link text-danger" [routerLink]="['/contexto', 'submenufoda', 'rechazosfoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.rechazados_foda > 0 && proceso.administrar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
+						[matBadge]="proceso.rechazados_foda" matBadgePosition="after" matBadgeColor="warn">
+						<i class="fas fa-ban"></i> Rechazados
+					</a>
+				</div>
+			</small>
+        </div>
+    </div>
+</div>
