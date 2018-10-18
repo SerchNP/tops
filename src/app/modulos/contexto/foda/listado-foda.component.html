@@ -10,4 +10,15 @@
     </div>
 </div>
 <br/>
-<app-mat-data-table (registro)="detectarAccion($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect"></app-mat-data-table>
+<div class="row">
+    <div class="col-sm-12">
+        Filtrar Tipo de Cuestión&nbsp;
+        <button class="btn btn-outline-primary" routerLinkActive="active" (click)="filtrar()">Ver Todas</button>&nbsp;
+        <button class="btn btn-outline-primary" routerLinkActive="active" (click)="filtrar('A')">Amenazas</button>&nbsp;
+        <button class="btn btn-outline-primary" routerLinkActive="active" (click)="filtrar('D')">Debilidades</button>&nbsp;
+        <button class="btn btn-outline-primary" routerLinkActive="active" (click)="filtrar('F')">Fortalezas</button>&nbsp;
+        <button class="btn btn-outline-primary" routerLinkActive="active" (click)="filtrar('O')">Oportunidades</button>
+    </div>
+</div>
+<br/>
+<app-mat-data-table (registro)="detectarAccion($event)" [derechos]="derechos" [columns]="columns" [data]="listadoFiltrado" [select]="select" [allowMultiSelect]="allowMultiSelect"></app-mat-data-table>
