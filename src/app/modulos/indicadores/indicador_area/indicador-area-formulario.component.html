@@ -1,0 +1,134 @@
+<h5>{{ titulo }}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'">
+                <small id="procesoHelp" class="form-text text-muted">El indicador pertence al Proceso</small>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
+					Seleccionar proceso
+				</button>
+            </div>
+            <div class="col-sm-8">
+                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="accion === 'U'">
+                <small id="procesoHelp" class="form-text text-muted">Descripción del proceso</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="indicador" class="col-sm-2 col-form-label text-right">Clave</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="indicador" aria-describedby="indicadorHelp" [attr.disabled]="true">
+                <small id="indicadorHelp" class="form-text text-muted">Clave del Indicador</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="indicador_desc" class="col-sm-2 col-form-label text-right">Indicador</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" formControlName="indicador_desc" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['indicador_desc'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="indicador_descHelp" class="form-text text-muted">Descripción del indicador</small>
+                <div *ngIf="forma.controls['indicador_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <!-- <div class="form-group row">
+            <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo de Calidad</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="objetivo" formControlName="objetivo" [ngStyle]="{'border-color': (objetivo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="">Seleccionar</option>
+						<option value="{{item.clave}}" *ngFor="let item of objetivos">{{item.descrip}}</option>
+					</select>
+                <small id="objetivoHelp" class="form-text text-muted">El indicador se relaciona a este objetivo de calidad</small>
+                <div *ngIf="objetivo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div> -->
+        <!-- <div class="form-group row">
+            <label for="frecuencia" class="col-sm-2 col-form-label text-right">Frecuencia de medición</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="frecuencia" formControlName="frecuencia" [ngStyle]="{'border-color': (frecuencia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+						<option value="{{item.clave}}" *ngFor="let item of frecuencias">{{item.descripcion}}</option>
+					</select>
+                <small id="frecuenciaHelp" class="form-text text-muted">Frecuencia de medición del indicador</small>
+                <div *ngIf="frecuencia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div> -->
+        <div class="form-group row">
+            <label for="meta" class="col-sm-2 col-form-label text-right">Meta</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" formControlName="meta" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['meta'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="metaHelp" class="form-text text-muted">Meta del indicador</small>
+                <div *ngIf="forma.controls['meta'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <!-- <div class="form-group row">
+            <label for="t_formula" class="col-sm-2 col-form-label text-right">Tipo de Fórmula</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="t_formula" formControlName="t_formula" [ngStyle]="{'border-color': (t_formula.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="">Seleccionar</option>
+						<option value="{{item.clave}}" *ngFor="let item of t_formulas">{{item.t_formula}}</option>
+					</select>
+                <small id="t_formulaHelp" class="form-text text-muted">Tipo de fórmula aplicable al indicador</small>
+                <div *ngIf="t_formula.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div> -->
+        <div class="form-group row">
+            <label for="formula" class="col-sm-2 col-form-label text-right">Fórmula</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" formControlName="formula" aria-describedby="formulaHelp" [ngClass]="{'is-invalid': forma.controls['formula'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="formulaHelp" class="form-text text-muted">Descripción de la fórmula del indicador</small>
+                <div *ngIf="forma.controls['formula'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <!-- <div class="form-group row">
+            <label for="t_resultado" class="col-sm-2 col-form-label text-right">Tipo de Resultado</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="t_resultado" formControlName="t_resultado" [ngStyle]="{'border-color': (t_resultado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="">Seleccionar</option>
+						<option value="{{item.clave}}" *ngFor="let item of t_resultados">{{item.t_resultado}}</option>
+					</select>
+                <small id="t_resultadoHelp" class="form-text text-muted">Tipo de resultado del indicador</small>
+                <div *ngIf="t_resultado.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div> -->
+    </div>
+    <div class="text-center">
+        <a [routerLink]="cancelar" class="btn btn-outline-success" *ngIf="accion === 'V'">
+            <i class="far fa-check-circle"></i> Aceptar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion !== 'V'">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion !== 'V'">Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar indicador proceso</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarproceso(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { AccesoService, ProcesosService } from '../../../services/services.index
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
+import { FodaService } from '../../../services/contexto/foda.service';
 
 @Component({
 	selector: 'app-foda',
@@ -22,11 +23,12 @@ export class FodaComponent implements OnInit, OnDestroy {
 	derechos: Derechos;
 
 	constructor(private _accesoService: AccesoService,
-				private _procesosService: ProcesosService) { }
+				private _procesosService: ProcesosService,
+				private _fodaService: FodaService) { }
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._procesosService.getProcesosByUserArea('foda')
+		this.subscription = this._procesosService.getProcesosUsuario('foda')
 			.subscribe(
 				data => {
 					this.jsonData = data;

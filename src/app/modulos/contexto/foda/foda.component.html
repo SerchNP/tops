@@ -1,3 +1,11 @@
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+
+        </div>
+    </div>
+</div>
 <div class="row" *ngIf="!cargando">
     <div class="col-md-5 input-group">
         <input #filtro class="form-control" placeholder="Buscar" (keyup)="filtraProcesos(filtro.value);" />

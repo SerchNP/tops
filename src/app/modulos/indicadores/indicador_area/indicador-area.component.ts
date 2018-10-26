@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccesoService } from '../../../services/shared/acceso.service';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { IndicadoresService, DerechosService } from '../../../services/services.index';
+import { IndicadoresService } from '../../../services/services.index';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
@@ -16,11 +17,10 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
-	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {administrar: true, editar: true, cancelar: true, insertar: true};
-	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0];
+	ruta_add =  ['/indicadores', 'indicador_area_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
@@ -42,7 +42,7 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 
 	constructor(private _accesoService: AccesoService,
 				private _indicadorService: IndicadoresService,
-				private _derechosService: DerechosService,
+				private router: Router,
 				public dialog: MatDialog) {
 	}
 
@@ -50,10 +50,9 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.subscription = this._indicadorService.getIndicadoresUAP('indicador_area')
 			.subscribe(
-				data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.indicadores;
-					this._accesoService.guardarStorage(this.jsonData.token);
+				(data: any) => {
+					this.listado = data.indicadores;
+					this._accesoService.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {
@@ -76,6 +75,14 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 			// this.cancelar(datos.row);
 		} else if (datos.accion === 'V') {
 			// this.openDialog(datos.row);
+		}
+	}
+
+	editarProceso(indicador) {
+		if (indicador.autoriza === 7) {
+			swal('ERROR', 'No es posible modificar, el indicador ya se encuentra cancelado', 'error');
+		} else {
+			this.router.navigate(['/indicadores', 'indicador_area_form', 'U', indicador.indicador]);
 		}
 	}
 
