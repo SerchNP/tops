@@ -22,11 +22,13 @@ import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { PuestosComponent } from './puestos/puestos.component';
 import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
 import { PeriodosComponent } from './periodos/periodos.component';
-import { TipoIndicadoresComponent } from './tipo-indicadores/tipo-indicadores.component';
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
+import { FrecuenciaMedicionComponent } from './catalogos/frecuencia-medicion.component';
+import { FormulasComponent } from './catalogos/formulas.component';
+import { TResultadosComponent } from './catalogos/tresultados.component';
 
 
 @NgModule({
@@ -45,7 +47,10 @@ import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-pro
 		IdentidadComponent,
 		IdentidadFormularioComponent,
 		UsuarioProcesoComponent,
-		UsuarioProcesoFormularioComponent
+		UsuarioProcesoFormularioComponent,
+		FrecuenciaMedicionComponent,
+		FormulasComponent,
+		TResultadosComponent
 	],
 	exports: [
 		AdministracionComponent

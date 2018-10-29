@@ -37,7 +37,7 @@
                 <div *ngIf="forma.controls['indicador_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
-        <!-- <div class="form-group row">
+        <div class="form-group row">
             <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo de Calidad</label>
             <div class="col-sm-8">
                 <select class="form-control" name="objetivo" formControlName="objetivo" [ngStyle]="{'border-color': (objetivo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
@@ -47,8 +47,8 @@
                 <small id="objetivoHelp" class="form-text text-muted">El indicador se relaciona a este objetivo de calidad</small>
                 <div *ngIf="objetivo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-        </div> -->
-        <!-- <div class="form-group row">
+        </div>
+        <div class="form-group row">
             <label for="frecuencia" class="col-sm-2 col-form-label text-right">Frecuencia de medición</label>
             <div class="col-sm-3">
                 <select class="form-control" name="frecuencia" formControlName="frecuencia" [ngStyle]="{'border-color': (frecuencia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
@@ -58,7 +58,7 @@
                 <small id="frecuenciaHelp" class="form-text text-muted">Frecuencia de medición del indicador</small>
                 <div *ngIf="frecuencia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-        </div> -->
+        </div>
         <div class="form-group row">
             <label for="meta" class="col-sm-2 col-form-label text-right">Meta</label>
             <div class="col-sm-6">

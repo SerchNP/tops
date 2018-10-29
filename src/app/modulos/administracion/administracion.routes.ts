@@ -15,9 +15,13 @@ import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
+import { FrecuenciaMedicionComponent } from './catalogos/frecuencia-medicion.component';
+import { FormulasComponent } from './catalogos/formulas.component';
+import { TResultadosComponent } from './catalogos/tresultados.component';
 
 // Guards
 import { LoginGuard, TipoUsuarioGuard } from '../../services/services.index';
+
 
 const administracionRoutes: Routes = [
 	{
@@ -25,6 +29,19 @@ const administracionRoutes: Routes = [
 		component: PagesComponent,
 		canActivate: [LoginGuard, TipoUsuarioGuard],
 		children: [
+			// tslint:disable-next-line:max-line-length
+			// { path: 'frecuencias', component: FrecuenciaMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencia de Medición'} },
+			{
+				path: 'submenucat',
+				children: [
+					// tslint:disable-next-line:max-line-length
+					{ path: 'frecuencias', component: FrecuenciaMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencias de Medición'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'formulas', component: FormulasComponent, data: {titulo: 'Catálogo de Fórmulas', padre: 'Administración', opcion: 'Fórmulas'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'tresultados', component: TResultadosComponent, data: {titulo: 'Catálogo de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} }
+				]
+			},
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },
 			// tslint:disable-next-line:max-line-length
 			{ path: 'areas_form/:acc/:id', component: AreasFormularioComponent, data: {titulo: 'Mantenimiento de Áreas', padre: 'Administración', opcion: 'Áreas'} },

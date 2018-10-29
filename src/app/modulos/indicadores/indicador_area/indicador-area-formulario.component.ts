@@ -60,8 +60,7 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.forma = new FormGroup({
 			// FormControl ---> Valor default, Reglas de Validacion, Reglas de validación asíncronas
-			'proceso' : new FormControl(),
-			'proceso_desc': new FormControl('', Validators.required),
+			'proceso' : new FormControl('', Validators.required),
 			'tipo' : new FormControl(null, Validators.required),
 			'indicador' : new FormControl(),
 			'indicador_desc' : new FormControl('', Validators.required),
@@ -80,6 +79,14 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 
 	get proceso() {
 		return this.forma.get('proceso');
+	}
+
+	get frecuencia() {
+		return this.forma.get('frecuencia');
+	}
+
+	get objetivo() {
+		return this.forma.get('objetivo');
 	}
 
 	getCatalogos() {

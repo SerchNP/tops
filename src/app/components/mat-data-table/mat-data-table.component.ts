@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
-import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 
 
 @Component({
