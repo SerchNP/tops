@@ -78,6 +78,10 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		this.cargando = false;
 	}
 
+	get proceso() {
+		return this.forma.get('proceso');
+	}
+
 	getCatalogos() {
 	}
 
