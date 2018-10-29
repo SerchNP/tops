@@ -13,16 +13,13 @@
     <div class="form-group">
         <div class="form-group row">
             <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
-            <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="accion === 'U'">
-                <small id="procesoHelp" class="form-text text-muted">El indicador pertence al Proceso</small>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
-					Seleccionar proceso
-				</button>
-            </div>
             <div class="col-sm-8">
-                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="accion === 'U'">
-                <small id="procesoHelp" class="form-text text-muted">Descripción del proceso</small>
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos">{{item.proceso_desc}}</option>
+					</select>
+                <small id="procesoHelp" class="form-text text-muted">El indicador pertenece al Proceso</small>
+                <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
