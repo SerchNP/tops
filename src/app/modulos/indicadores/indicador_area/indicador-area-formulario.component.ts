@@ -75,6 +75,17 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		this.getCatalogos();
 		this.getProcesos();
 		this.cargando = false;
+
+		this.subscription = this.forma.controls['proceso'].valueChanges
+			.subscribe(procesoSel => {
+				// "procesoSel" representa la clave del proceso seleccionado,
+				// por lo que hay que filtrar la lista de procesos para obtener
+				// la clave del sistema a la que pertenece el proceso
+				this.subscription = this._procesos.getProcesoById(procesoSel).subscribe(
+					(data: any) => {
+						this.getObjetivos(data.proceso.sistema);
+					});
+			});
 	}
 
 	get proceso() {
