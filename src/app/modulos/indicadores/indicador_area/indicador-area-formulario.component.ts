@@ -20,6 +20,7 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 	titulo: string;
 
 	seleccionado = '';
+	objetivoSel = '';
 	items: any [] = [];
 
 	procesos: any[] = [];

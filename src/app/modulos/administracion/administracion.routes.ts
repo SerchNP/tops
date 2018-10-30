@@ -15,7 +15,7 @@ import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
-import { FrecuenciaMedicionComponent } from './catalogos/frecuencia-medicion.component';
+import { FrecuenciasMedicionComponent } from './catalogos/frecuencias-medicion.component';
 import { FormulasComponent } from './catalogos/formulas.component';
 import { TResultadosComponent } from './catalogos/tresultados.component';
 
@@ -35,7 +35,7 @@ const administracionRoutes: Routes = [
 				path: 'submenucat',
 				children: [
 					// tslint:disable-next-line:max-line-length
-					{ path: 'frecuencias', component: FrecuenciaMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencias de Medición'} },
+					{ path: 'frecuencias', component: FrecuenciasMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencias de Medición'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'formulas', component: FormulasComponent, data: {titulo: 'Catálogo de Fórmulas', padre: 'Administración', opcion: 'Fórmulas'} },
 					// tslint:disable-next-line:max-line-length

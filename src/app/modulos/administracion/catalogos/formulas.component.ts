@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CatalogosService } from '../../../services/shared/catalogos.service';
 import { AccesoService } from '../../../services/shared/acceso.service';
 import { Derechos } from '../../../interfaces/derechos.interface';
+import { Catalogo } from '../../../models/catalogo.model';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
@@ -16,7 +17,7 @@ export class FormulasComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {consultar: false, administrar: true, insertar: true, editar: true, cancelar: false};
-	ruta_add = ['/administracion', 'frecuencias_form', 'I', 0];
+	ruta_add = ['/administracion', 'formulas_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
@@ -53,7 +54,7 @@ export class FormulasComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async editarFormula(formula: any) {
+	async editarFormula(formula: Catalogo) {
 		const {value: descripcion} = await swal({
 			title: 'Actualizar descripción de la Fórmula',
 			input: 'text',

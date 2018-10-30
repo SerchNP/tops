@@ -26,7 +26,7 @@ import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
-import { FrecuenciaMedicionComponent } from './catalogos/frecuencia-medicion.component';
+import { FrecuenciasMedicionComponent } from './catalogos/frecuencias-medicion.component';
 import { FormulasComponent } from './catalogos/formulas.component';
 import { TResultadosComponent } from './catalogos/tresultados.component';
 
@@ -48,7 +48,7 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 		IdentidadFormularioComponent,
 		UsuarioProcesoComponent,
 		UsuarioProcesoFormularioComponent,
-		FrecuenciaMedicionComponent,
+		FrecuenciasMedicionComponent,
 		FormulasComponent,
 		TResultadosComponent
 	],
