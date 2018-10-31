@@ -3,6 +3,7 @@ import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 import { AccesoService } from './acceso.service';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/toPromise';
 import swal from 'sweetalert2';
 
 @Injectable()
@@ -19,6 +20,25 @@ export class CatalogosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getCatalogoPromesa (cat: string) {
+		const promesa = new Promise((resolve, reject) => {
+			const url = URL_SGC + this.RUTA + 'getCatalogo.json?token=' + localStorage.getItem('token') + '&c=' + cat;
+			const headers = HeadersGET;
+			this.http.get(url, {headers}).toPromise()
+				.then(
+					(res: any) => {
+						this._accesoService.guardarStorage(res.token);
+						resolve(res.catalogo);
+					},
+					msg => {
+						console.log(msg);
+						reject(msg.error.message);
+					}
+				);
+		});
+		return promesa;
+	}
+
 	editaDescFrecuencia(clave: number, descripcion: string, tipoPeriodo: string) {
 		const url = URL_SGC + this.RUTA + 'editaDescFrecuencia.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
@@ -33,13 +53,12 @@ export class CatalogosService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	getCatalogo (cat: string): any {
-		this.getCatalogoService(cat)
+	/*getCatalogo (cat: string): any {
+		let catalogo: any[];
+		this.getCatalogoPromesa(cat)
 			.subscribe(
-				data => {
-					const jsonData: any = data;
-					const catalogo: any [] = jsonData.catalogo;
-					return catalogo;
+				(data: any) => {
+					catalogo = data.catalogo;
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -47,57 +66,22 @@ export class CatalogosService {
 						this._accesoService.logout();
 					}
 				});
-	}
+		return catalogo;
+	}*/
 
 	getFrecuencias() {
 		const cat = 'FRE';
-		this.getCatalogoService(cat)
-			.subscribe(
-				data => {
-					const jsonData: any = data;
-					const frecuencias: any [] = jsonData.catalogo;
-					return frecuencias;
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._accesoService.logout();
-					}
-				});
+		return this.getCatalogoPromesa(cat);
 	}
 
 	getFormulas() {
 		const cat = 'FOR';
-		this.getCatalogoService(cat)
-			.subscribe(
-				data => {
-					const jsonData: any = data;
-					const formulas: any [] = jsonData.catalogo;
-					return formulas;
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._accesoService.logout();
-					}
-				});
+		return this.getCatalogoPromesa(cat);
 	}
 
 	getResultados() {
 		const cat = 'RES';
-		this.getCatalogoService(cat)
-			.subscribe(
-				data => {
-					const jsonData: any = data;
-					const resultados: any [] = jsonData.catalogo;
-					return resultados;
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._accesoService.logout();
-					}
-				});
+		return this.getCatalogoPromesa(cat);
 	}
 
 	getEstadosRiesgo() {
