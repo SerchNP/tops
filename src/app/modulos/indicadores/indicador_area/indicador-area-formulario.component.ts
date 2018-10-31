@@ -24,9 +24,9 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 	items: any [] = [];
 
 	procesos: any[] = [];
-	formulas: any[] = [];
+	t_formulas: any[] = [];
 	frecuencias: any[] = [];
-	resultados: any[] = [];
+	t_resultados: any[] = [];
 	objetivos: any[] = [];
 
 	forma: FormGroup;
@@ -62,10 +62,10 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		this.forma = new FormGroup({
 			// FormControl ---> Valor default, Reglas de Validacion, Reglas de validación asíncronas
 			'proceso' : new FormControl('', Validators.required),
-			'tipo' : new FormControl(null, Validators.required),
+			'objetivo' : new FormControl('', Validators.required),
 			'indicador' : new FormControl(),
 			'indicador_desc' : new FormControl('', Validators.required),
-			'objetivo' : new FormControl('', Validators.required),
+			'tipo' : new FormControl('', Validators.required),
 			'meta': new FormControl('', Validators.required),
 			'frecuencia' : new FormControl('', Validators.required),
 			'formula': new FormControl('', Validators.required),
@@ -89,19 +89,67 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	get proceso() {
-		return this.forma.get('proceso');
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
 	}
 
-	get frecuencia() {
-		return this.forma.get('frecuencia');
+	get proceso() {
+		return this.forma.get('proceso');
 	}
 
 	get objetivo() {
 		return this.forma.get('objetivo');
 	}
 
+	get tipo() {
+		return this.forma.get('tipo');
+	}
+
+	get frecuencia() {
+		return this.forma.get('frecuencia');
+	}
+
+	get t_formula() {
+		return this.forma.get('t_formula');
+	}
+
+	get t_resultado() {
+		return this.forma.get('t_resultado');
+	}
+
 	getCatalogos() {
+		this._catalogos.getFrecuencias().then((data: any) => {
+			this.frecuencias = data;
+		}).catch(error => {
+			console.log(error);
+		});
+
+		this._catalogos.getFormulas().then((data: any) => {
+			this.t_formulas = data;
+		}).catch(error => {
+			console.log(error);
+		});
+
+		this._catalogos.getResultados().then((data: any) => {
+			this.t_resultados = data;
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	getProcesos() {
+		this.subscription = this._procesos.getProcesosUsuario('indicador_area')
+			.subscribe(
+				(data: any) => {
+					this.procesos = data.procesos;
+					this._acceso.guardarStorage(data.token);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
 	}
 
 	getObjetivos(sistema: number) {
@@ -132,19 +180,11 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	cargarIndicador(id: number) {
-
-	}
-
-	guardar () {
-
-	}
-
-	getProcesos() {
-		this.subscription = this._procesos.getProcesosUsuario('indicador_area')
+	cargarIndicador(idIndicador: number) {
+		this.subscription = this._indicadores.getIndicadorById(idIndicador)
 			.subscribe(
 				(data: any) => {
-					this.procesos = data.procesos;
+					this.forma.patchValue(data.indicador);
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
@@ -155,7 +195,34 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	ngOnDestroy() {
-		this.subscription.unsubscribe();
+	guardar () {
+		if (this.accion === 'U') {
+			this.subscription = this._indicadores.modificarIndicador(this.forma.value)
+				.subscribe((data: any) => {
+					this._acceso.guardarStorage(data.token);
+					swal('Atención!!!', data.message, 'success');
+					this.router.navigate(this.cancelar);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+		} else {
+			this.subscription = this._indicadores.insertarIndicador(this.forma.value)
+				.subscribe((data: any) => {
+					this._acceso.guardarStorage(data.token);
+					swal('Atención!!!', data.message, 'success');
+					this.router.navigate(this.cancelar);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+		}
 	}
+
 }

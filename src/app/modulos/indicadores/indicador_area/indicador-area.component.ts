@@ -70,15 +70,15 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'C') {
-			// this.cancelar(datos.row);
+			this.cancelarIndicador(datos.row);
 		} if (datos.accion === 'E') {
-			// this.cancelar(datos.row);
+			this.editarIndicador(datos.row);
 		} else if (datos.accion === 'V') {
 			// this.openDialog(datos.row);
 		}
 	}
 
-	editarProceso(indicador) {
+	editarIndicador(indicador) {
 		if (indicador.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar, el indicador ya se encuentra cancelado', 'error');
 		} else {
@@ -86,29 +86,23 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	/*async cancelar(indicador: any) {
+	async cancelarIndicador(indicador: any) {
 		if (indicador.autoriza === 7) {
 			swal('ERROR', 'El indicador ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
-				text: 'Está seguro que desea cancelar el indicador ' + indicador.indicador_desc + ' del proceso ' + indicador.proceso_desc + '?',
+				// tslint:disable-next-line:max-line-length
+				text: 'Está seguro que desea cancelar el indicador   >>> ' + indicador.indicador_desc + ' <<<   del proceso ' + indicador.proceso_desc + '?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
 				confirmButtonColor: '#B22222'
 			});
 			if (respuesta) {
-				const {value: motivo} = await swal({
-					title: 'Ingrese el motivo de cancelación',
-					input: 'text',
-					showCancelButton: true,
-					inputValidator: (value) => {
-						return !value && 'Necesita ingresar el motivo de cancelación';
-					}
-				});
-				if (motivo !== undefined) {
-					this.subscription = this._indicadorService.cancelaAreaAsignada(areaPproceso.clave, motivo.toUpperCase())
+				if (indicador.autoriza === 1) {
+					// Si esta capturado, se borra, por lo que no se pedirá el motivo
+					this.subscription = this._indicadorService.cancelarIndicador(indicador.indicador, '')
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -119,12 +113,34 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 								this._accesoService.logout();
 							}
 						});
+				} else {
+					const {value: motivo} = await swal({
+						title: 'Ingrese el motivo de cancelación',
+						input: 'text',
+						showCancelButton: true,
+						inputValidator: (value) => {
+							return !value && 'Necesita ingresar el motivo de cancelación';
+						}
+					});
+					if (motivo !== undefined) {
+						this.subscription = this._indicadorService.cancelarIndicador(indicador.indicador, motivo.toUpperCase())
+							.subscribe((data: any) => {
+								swal('Atención!!!', data.message, 'success');
+								this.ngOnInit();
+							},
+							error => {
+								swal('ERROR', error.error.message, 'error');
+								if (error.error.code === 401) {
+									this._accesoService.logout();
+								}
+							});
+					}
 				}
 			}
 		}
-	}*/
+	}
 
-	openDialog(datos: any): void {
+	/*openDialog(datos: any): void {
 		const dialogRef = this.dialog.open(DialogDetalleComponent, {
 			width: '550px',
 			data: {
@@ -140,6 +156,6 @@ export class IndicadorAreaComponent implements OnInit, OnDestroy {
 				motivo_cancela: datos.motivo_cancela
 			}
 		});
-	}
+	}*/
 
 }
