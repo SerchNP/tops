@@ -6,11 +6,11 @@ import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
 @Component({
-	selector: 'app-indicador-area-formulario',
-	templateUrl: './indicador-area-formulario.component.html',
+	selector: 'app-indicador-formulario',
+	templateUrl: './indicador-formulario.component.html',
 	providers: [CatalogosService]
 })
-export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
+export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
@@ -24,13 +24,13 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 	items: any [] = [];
 
 	procesos: any[] = [];
-	t_formulas: any[] = [];
+	formulas: any[] = [];
 	frecuencias: any[] = [];
-	t_resultados: any[] = [];
+	resultados: any[] = [];
 	objetivos: any[] = [];
 
 	forma: FormGroup;
-	cancelar: any[] = ['/indicadores', 'indicador_area'];
+	cancelar: any[] = ['/indicadores', 'matriz_indicadores'];
 
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
@@ -67,10 +67,11 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 			'indicador_desc' : new FormControl('', Validators.required),
 			'tipo' : new FormControl('', Validators.required),
 			'meta': new FormControl('', Validators.required),
+			'valor_meta': new FormControl('', Validators.required),
 			'frecuencia' : new FormControl('', Validators.required),
-			'formula': new FormControl('', Validators.required),
-			't_formula' : new FormControl('', Validators.required),
-			't_resultado' : new FormControl('', Validators.required)
+			'calculo': new FormControl('', Validators.required),
+			'formula' : new FormControl('', Validators.required),
+			'resultado' : new FormControl('', Validators.required)
 		});
 		this.cargando = true;
 		this.getCatalogos();
@@ -109,12 +110,12 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('frecuencia');
 	}
 
-	get t_formula() {
-		return this.forma.get('t_formula');
+	get formula() {
+		return this.forma.get('formula');
 	}
 
-	get t_resultado() {
-		return this.forma.get('t_resultado');
+	get resultado() {
+		return this.forma.get('resultado');
 	}
 
 	getCatalogos() {
@@ -125,13 +126,13 @@ export class IndicadorAreaFormularioComponent implements OnInit, OnDestroy {
 		});
 
 		this._catalogos.getFormulas().then((data: any) => {
-			this.t_formulas = data;
+			this.formulas = data;
 		}).catch(error => {
 			console.log(error);
 		});
 
 		this._catalogos.getResultados().then((data: any) => {
-			this.t_resultados = data;
+			this.resultados = data;
 		}).catch(error => {
 			console.log(error);
 		});

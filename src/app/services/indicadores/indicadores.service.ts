@@ -13,8 +13,8 @@ export class IndicadoresService {
 	constructor(private http: HttpClient,
 				private router: Router) { }
 
-	getIndicadoresUAP(menuID: string) {
-		const url = URL_SGC + this.RUTA + 'getIndicadoresUAP.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+	getMatrizIndicadores(menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getMatrizIndicadores.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -43,6 +43,13 @@ export class IndicadoresService {
 		const url = URL_SGC + this.RUTA + 'cancelarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	autorizarIndicador(indicador: Indicador) {
+		const url = URL_SGC + this.RUTA + 'autorizarIndicador.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(indicador);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

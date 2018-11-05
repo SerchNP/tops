@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 
 
 @Component({
-	selector: 'app-mat-data-table',
-	templateUrl: './mat-data-table.component.html',
-	styleUrls: ['./mat-data-table.component.scss'],
+	selector: 'app-mat-data-table-privint',
+	templateUrl: './mat-data-table-privint.component.html',
+	styleUrls: ['./mat-data-table-privint.component.scss'],
 	animations: [
 		trigger('detailExpand', [
 			state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
 	]
 })
 
-export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
+export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnChanges {
 
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -69,6 +69,9 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 		if (this.derechos.consultar) {
 			this.displayedColumns.push('consultar');
 		}
+		if (this.derechos.graficas) {
+			this.displayedColumns.push('graficas');
+		}
 		if (this.derechos.administrar) {
 			if (this.derechos.editar) {
 				this.displayedColumns.push('editar');
@@ -76,6 +79,9 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 			if (this.derechos.cancelar) {
 				this.displayedColumns.push('cancelar');
 			}
+		}
+		if (this.derechos.autorizar) {
+			this.displayedColumns.push('autorizar');
 		}
 		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}

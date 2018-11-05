@@ -4,8 +4,9 @@ import { PagesComponent } from '../../pages/pages.component';
 
 // Guards
 import { LoginGuard } from '../../services/services.index';
-import { IndicadorAreaComponent } from './indicador_area/indicador-area.component';
-import { IndicadorAreaFormularioComponent } from './indicador_area/indicador-area-formulario.component';
+import { MatrizIndicadoresComponent } from './matriz_indicadores/matriz-indicadores.component';
+import { IndicadorFormularioComponent } from './matriz_indicadores/indicador-formulario.component';
+import { IndicadorGraficasComponent } from './indicador-graficas/indicador-graficas.component';
 
 
 const IndicadoresRoutes: Routes = [
@@ -14,9 +15,11 @@ const IndicadoresRoutes: Routes = [
 		component: PagesComponent,
 		canActivate: [LoginGuard],
 		children: [
-			{ path: 'indicador_area', component: IndicadorAreaComponent, data: {titulo: 'Indicadores', padre: 'Indicadores'}},
+			{ path: 'matriz_indicadores', component: MatrizIndicadoresComponent, data: {titulo: 'Matriz de Indicadores', padre: 'Indicadores'}},
 			// tslint:disable-next-line:max-line-length
-			{ path: 'indicador_area_form/:acc/:id', component: IndicadorAreaFormularioComponent, data: {titulo: 'Registro Indicadores', padre: 'Indicadores'}}
+			{ path: 'indicador_form/:acc/:id', component: IndicadorFormularioComponent, data: {titulo: 'Registro Indicadores', padre: 'Indicadores'}},
+			// tslint:disable-next-line:max-line-length
+			{ path: 'grafica_indicador_form/:id', component: IndicadorGraficasComponent, data: {titulo: 'Gráfica del Indicador', padre: 'Indicadores'}}
 		]
 	}
 ];

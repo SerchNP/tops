@@ -10,7 +10,9 @@ import { ComponentModule } from '../../components/component.module';
 
 // Componentes
 import { IndicadoresComponent } from './indicadores.component';
-import { IndicadorAreaComponent } from './indicador_area/indicador-area.component';
+import { MatrizIndicadoresComponent } from './matriz_indicadores/matriz-indicadores.component';
+import { IndicadorFormularioComponent } from './matriz_indicadores/indicador-formulario.component';
+import { IndicadorGraficasComponent } from './indicador-graficas/indicador-graficas.component';
 
 @NgModule({
 	imports: [
@@ -22,7 +24,9 @@ import { IndicadorAreaComponent } from './indicador_area/indicador-area.componen
 	],
 	declarations: [
 		IndicadoresComponent,
-		IndicadorAreaComponent
+		MatrizIndicadoresComponent,
+		IndicadorFormularioComponent,
+		IndicadorGraficasComponent
 	]
 })
 export class IndicadoresModule { }

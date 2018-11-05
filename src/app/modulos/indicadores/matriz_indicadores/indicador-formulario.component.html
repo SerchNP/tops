@@ -71,6 +71,11 @@
                 <small id="metaHelp" class="form-text text-muted">Meta del indicador</small>
                 <div *ngIf="forma.controls['meta'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
+            <label for="valor_meta" class="col-sm-1 col-form-label text-right">Valor</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="valor_meta" aria-describedby="valor_metaHelp" [ngClass]="{'is-invalid': forma.controls['valor_meta'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <small id="valor_metaHelp" class="form-text text-muted">Valor meta del indicador</small>
+            </div>
         </div>
         <div class="form-group row">
             <label for="frecuencia" class="col-sm-2 col-form-label text-right">Frecuencia de medición</label>
@@ -84,33 +89,33 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="t_formula" class="col-sm-2 col-form-label text-right">Tipo de Fórmula</label>
+            <label for="formula" class="col-sm-2 col-form-label text-right">Tipo de Fórmula</label>
             <div class="col-sm-3">
-                <select class="form-control" name="t_formula" formControlName="t_formula" [ngStyle]="{'border-color': (t_formula.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="formula" formControlName="formula" [ngStyle]="{'border-color': (formula.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 						<option value="">Seleccionar</option>
-						<option value="{{item.clave}}" *ngFor="let item of t_formulas">{{item.descripcion}}</option>
+						<option value="{{item.clave}}" *ngFor="let item of formulas">{{item.descripcion}}</option>
 					</select>
-                <small id="t_formulaHelp" class="form-text text-muted">Tipo de fórmula aplicable al indicador</small>
-                <div *ngIf="t_formula.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <small id="formulaHelp" class="form-text text-muted">Tipo de fórmula aplicable al indicador</small>
+                <div *ngIf="formula.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="formula" class="col-sm-2 col-form-label text-right">Fórmula</label>
+            <label for="calculo" class="col-sm-2 col-form-label text-right">Cálculo</label>
             <div class="col-sm-6">
-                <textarea class="form-control" formControlName="formula" aria-describedby="formulaHelp" [ngClass]="{'is-invalid': forma.controls['formula'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
-                <small id="formulaHelp" class="form-text text-muted">Descripción de la fórmula del indicador</small>
-                <div *ngIf="forma.controls['formula'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                <textarea class="form-control" formControlName="calculo" aria-describedby="calculoHelp" [ngClass]="{'is-invalid': forma.controls['calculo'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="calculoHelp" class="form-text text-muted">Descripción del cálculo del indicador</small>
+                <div *ngIf="forma.controls['calculo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="t_resultado" class="col-sm-2 col-form-label text-right">Tipo de Resultado</label>
+            <label for="resultado" class="col-sm-2 col-form-label text-right">Tipo de Resultado</label>
             <div class="col-sm-3">
-                <select class="form-control" name="t_resultado" formControlName="t_resultado" [ngStyle]="{'border-color': (t_resultado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="resultado" formControlName="resultado" [ngStyle]="{'border-color': (resultado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
 						<option value="">Seleccionar</option>
-						<option value="{{item.clave}}" *ngFor="let item of t_resultados">{{item.descripcion}}</option>
+						<option value="{{item.clave}}" *ngFor="let item of resultados">{{item.descripcion}}</option>
 					</select>
-                <small id="t_resultadoHelp" class="form-text text-muted">Tipo de resultado del indicador</small>
-                <div *ngIf="t_resultado.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <small id="resultadoHelp" class="form-text text-muted">Tipo de resultado del indicador</small>
+                <div *ngIf="resultado.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
     </div>

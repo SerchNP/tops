@@ -7,4 +7,5 @@ export interface Derechos {
 	descargar?: boolean;
 	exportar?: boolean;
 	autorizar?: boolean;
+	graficas?: boolean;
 }

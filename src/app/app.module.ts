@@ -20,15 +20,13 @@ import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detalle.component';
-import { IndicadorAreaFormularioComponent } from './modulos/indicadores/indicador_area/indicador-area-formulario.component';
 
 @NgModule({
 	declarations: [
 		AppComponent,
 		HomeComponent,
 		DetalleComponent,
-		DialogDetalleComponent,
-		IndicadorAreaFormularioComponent
+		DialogDetalleComponent
 	],
 	imports: [
 		BrowserModule,
