@@ -81,7 +81,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 			}
 		}
 		if (this.derechos.autorizar) {
-			this.displayedColumns.push('autorizar');
+			this.displayedColumns.splice(0, 0, 'autorizar');
 		}
 		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}

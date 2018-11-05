@@ -17,6 +17,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	cargando: boolean;
 	accion: string;
 	idIndicador: number;
+	autoriza: string;
 	titulo: string;
 
 	seleccionado = '';
@@ -35,7 +36,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
 				private _acceso: AccesoService,
-				private _indicadores: IndicadoresService,
+				private _indicador: IndicadoresService,
 				private _procesos: ProcesosService,
 				private _catalogos: CatalogosService,
 				private _identidad: IdentidadService
@@ -43,12 +44,14 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.idIndicador = params['id'];
+			this.autoriza = params['aut'];
 		});
 		let pre = '';
 		switch (this.accion) {
-			case 'I':	pre = 'Registro';		break;
-			case 'U':	pre = 'Actualización';	break;
-			case 'V':	pre = 'Consulta';		break;
+			case 'I':	pre = 'Registro';			  break;
+			case 'U':	pre = 'Actualización';		  break;
+			case 'V':	pre = 'Consulta';			  break;
+			case 'A':	pre = 'Autorización/Rechazo'; break;
 		}
 
 		this.titulo = pre + ' de Indicadores';
@@ -71,7 +74,10 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 			'frecuencia' : new FormControl('', Validators.required),
 			'calculo': new FormControl('', Validators.required),
 			'formula' : new FormControl('', Validators.required),
-			'resultado' : new FormControl('', Validators.required)
+			'resultado' : new FormControl('', Validators.required),
+			'autoriza_desc': new FormControl(''),
+			'motivo_cancela': new FormControl(''),
+			'motivo_rechaza': new FormControl('')
 		});
 		this.cargando = true;
 		this.getCatalogos();
@@ -182,11 +188,11 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	cargarIndicador(idIndicador: number) {
-		this.subscription = this._indicadores.getIndicadorById(idIndicador)
+		this.subscription = this._indicador.getIndicadorById(idIndicador)
 			.subscribe(
 				(data: any) => {
-					this.forma.patchValue(data.indicador);
 					this._acceso.guardarStorage(data.token);
+					this.forma.patchValue(data.indicador);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -198,7 +204,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 
 	guardar () {
 		if (this.accion === 'U') {
-			this.subscription = this._indicadores.modificarIndicador(this.forma.value)
+			this.subscription = this._indicador.modificarIndicador(this.forma.value)
 				.subscribe((data: any) => {
 					this._acceso.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -211,7 +217,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		} else {
-			this.subscription = this._indicadores.insertarIndicador(this.forma.value)
+			this.subscription = this._indicador.insertarIndicador(this.forma.value)
 				.subscribe((data: any) => {
 					this._acceso.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
@@ -226,4 +232,62 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	async autorizar () {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: '¿Está seguro que desea autorizar '
+				+ ((this.autoriza === '6' || this.autoriza === '8') ? 'la cancelación del' : 'el') + ' indicador?',
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar'
+		});
+		if (respuesta) {
+			this.subscription = this._indicador.autorizarIndicador(this.idIndicador)
+				.subscribe((data: any) => {
+					swal('Atención!!!', data.message, 'success');
+					this.router.navigate(this.cancelar);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+		}
+	}
+
+	async rechazar () {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: '¿Está seguro que desea rechazar '
+				+ ((this.autoriza === '6' || this.autoriza === '8') ? 'la cancelación del' : 'el') + ' indicador?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			const {value: motivo} = await swal({
+				title: 'Ingrese el motivo de rechazo',
+				input: 'textarea',
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return !value && 'Necesita ingresar el motivo de rechazo';
+				}
+			});
+			if (motivo !== undefined) {
+				this.subscription = this._indicador.rechazarIndicador(this.idIndicador, motivo.toUpperCase())
+					.subscribe((data: any) => {
+						swal('Atención!!!', data.message, 'success');
+						this.router.navigate(this.cancelar);
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
+		}
+	}
 }

@@ -19,14 +19,14 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {administrar: true, editar: true, cancelar: true, insertar: true, graficas: true, autorizar: true};
-	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0];
+	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0];
 	select = false;
 	allowMultiSelect = false;
 
 	columns = [
-		{ columnDef: 'tipo_desc',  		 header: 'Tipo',	   		   cell: (indicador: any) => `${indicador.tipo_desc}`},
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (indicador: any) => `${indicador.proceso}`},
 		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 	       cell: (indicador: any) => `${indicador.proceso_desc}`},
+		{ columnDef: 'tipo_desc',  		 header: 'Tipo',	   		   cell: (indicador: any) => `${indicador.tipo_desc}`},
 		{ columnDef: 'indicador', 		 header: 'Clave', 	    	   align: 'center', cell: (indicador: any) => `${indicador.indicador}`},
 		{ columnDef: 'indicador_desc',	 header: 'Indicador',    	   cell: (indicador: any) => `${indicador.indicador_desc}`},
 		{ columnDef: 'valor_meta',		 header: 'Meta (Valor)',       align: 'center', cell: (indicador: any) => `${indicador.valor_meta}`},
@@ -40,26 +40,26 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		{ columnDef: 'objetivo_desc',	 header: 'Objetivo Calidad',   visible: false, cell: (indicador: any) => `${indicador.objetivo_desc}`}
 	];
 
-	constructor(private _accesoService: AccesoService,
-				private _indicadorService: IndicadoresService,
-				private _derechosService: DerechosService,
+	constructor(private _acceso: AccesoService,
+				private _indicador: IndicadoresService,
+				private _derechos: DerechosService,
 				private router: Router,
 				public dialog: MatDialog) {
 	}
 
 	ngOnInit() {
 		this.cargando = true;
-		this.subscription = this._indicadorService.getMatrizIndicadores('matriz_indicadores')
+		this.subscription = this._indicador.getMatrizIndicadores('matriz_indicadores')
 			.subscribe(
 				(data: any) => {
 					this.listado = data.indicadores;
-					this._accesoService.guardarStorage(data.token);
+					this._acceso.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 	}
@@ -83,11 +83,11 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	autorizarIndicador(indicador: any) {
-		if (indicador.autorizar === 'N') {
-			swal('ERROR', 'No es posible autorizar el indicador', 'error');
+	autorizarIndicador(indicador) {
+		if (indicador.pendiente === 'N') {
+			swal('ERROR', 'No es posible autorizar/rechazar el indicador', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'autorizar_form', 'U', indicador.indicador]);
+			this.router.navigate(['/indicadores', 'indicador_form', 'A', indicador.indicador, indicador.autoriza]);
 		}
 	}
 
@@ -98,7 +98,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				// tslint:disable-next-line:max-line-length
-				text: 'Está seguro que desea cancelar el indicador   >>> ' + indicador.indicador_desc + ' <<<   del proceso ' + indicador.proceso_desc + '?',
+				text: 'Está seguro que desea cancelar el indicador "' + indicador.indicador_desc + '" del proceso ' + indicador.proceso_desc + '?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
@@ -107,7 +107,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				if (indicador.autoriza === 1) {
 					// Si esta capturado, se borra, por lo que no se pedirá el motivo
-					this.subscription = this._indicadorService.cancelarIndicador(indicador.indicador, '')
+					this.subscription = this._indicador.cancelarIndicador(indicador.indicador, '')
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -115,20 +115,20 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 						error => {
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
-								this._accesoService.logout();
+								this._acceso.logout();
 							}
 						});
 				} else {
 					const {value: motivo} = await swal({
 						title: 'Ingrese el motivo de cancelación',
-						input: 'text',
+						input: 'textarea',
 						showCancelButton: true,
 						inputValidator: (value) => {
 							return !value && 'Necesita ingresar el motivo de cancelación';
 						}
 					});
 					if (motivo !== undefined) {
-						this.subscription = this._indicadorService.cancelarIndicador(indicador.indicador, motivo.toUpperCase())
+						this.subscription = this._indicador.cancelarIndicador(indicador.indicador, motivo.toUpperCase())
 							.subscribe((data: any) => {
 								swal('Atención!!!', data.message, 'success');
 								this.ngOnInit();
@@ -136,7 +136,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 							error => {
 								swal('ERROR', error.error.message, 'error');
 								if (error.error.code === 401) {
-									this._accesoService.logout();
+									this._acceso.logout();
 								}
 							});
 					}
@@ -149,7 +149,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		if (indicador.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar, el indicador ya se encuentra cancelado', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'indicador_form', 'U', indicador.indicador]);
+			this.router.navigate(['/indicadores', 'indicador_form', 'U', indicador.indicador, 0]);
 		}
 	}
 
@@ -157,7 +157,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		if (indicador.autoriza !== 7 && indicador.autoriza !== 3) {
 			swal('ERROR', 'No es posible visualizar gráficas, el indicador no es válido', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'grafica_indicador_form', indicador.indicador]);
+			this.router.navigate(['/indicadores', 'grafica_indicador_form', indicador.indicador, 0]);
 		}
 	}
 

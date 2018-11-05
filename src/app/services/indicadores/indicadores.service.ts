@@ -46,10 +46,17 @@ export class IndicadoresService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	autorizarIndicador(indicador: Indicador) {
+	autorizarIndicador(idIndicador: number) {
 		const url = URL_SGC + this.RUTA + 'autorizarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(indicador);
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + '}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	rechazarIndicador(idIndicador: number, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'rechazarIndicador.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + ', "motivo_rechaza": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

@@ -1,4 +1,4 @@
-<h5>{{ titulo }}</h5>
+<h5>{{titulo}}</h5>
 <hr>
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">
@@ -11,10 +11,20 @@
 <br>
 <form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
     <div class="form-group">
+        <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
+            <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
+            <div class="col-sm-3">
+                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
+            </div>
+            <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
+            <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
+                <textarea readonly class="form-control" formControlName="motivo_cancela" aria-describedby="motivo_cancelaHelp"></textarea>
+            </div>
+        </div>
         <div class="form-group row">
             <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
             <div class="col-sm-8">
-                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
 						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
 						<option value="{{item.proceso}}" *ngFor="let item of procesos">{{item.proceso_desc}}</option>
 					</select>
@@ -28,7 +38,7 @@
                 <div class="input-group" *ngFor="let item of objetivos">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                            <input type="radio" name="objetivo" [value]="item.clave" formControlName="objetivo">
+                            <input type="radio" name="objetivo" [value]="item.clave" formControlName="objetivo" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
                         </div>
                     </div>
                     <textarea class="form-control" aria-label="item.numero" style="height: auto; overflow: hidden;" readonly="readonly">{{item.numero + '. ' + item.descrip}}</textarea>
@@ -47,7 +57,7 @@
         <div class="form-group row">
             <label for="indicador_desc" class="col-sm-2 col-form-label text-right">Indicador</label>
             <div class="col-sm-8">
-                <textarea class="form-control" formControlName="indicador_desc" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['indicador_desc'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <textarea class="form-control" formControlName="indicador_desc" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['indicador_desc'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
                 <small id="indicador_descHelp" class="form-text text-muted">Descripción del indicador</small>
                 <div *ngIf="forma.controls['indicador_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -55,7 +65,7 @@
         <div class="form-group row">
             <label for="frecuencia" class="col-sm-2 col-form-label text-right">Tipo de Indicador</label>
             <div class="col-sm-3">
-                <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (tipo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (tipo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 					<option value="" disabled="disabled" selected="selected">Seleccionar</option>
 					<option value="C">Cumplimiento</option>
 					<option value="G">Gestión</option>
@@ -66,21 +76,21 @@
         </div>
         <div class="form-group row">
             <label for="meta" class="col-sm-2 col-form-label text-right">Meta</label>
-            <div class="col-sm-6">
-                <textarea class="form-control" formControlName="meta" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['meta'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+            <div class="col-sm-5">
+                <textarea class="form-control" formControlName="meta" aria-describedby="metaHelp" [ngClass]="{'is-invalid': forma.controls['meta'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
                 <small id="metaHelp" class="form-text text-muted">Meta del indicador</small>
                 <div *ngIf="forma.controls['meta'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
             <label for="valor_meta" class="col-sm-1 col-form-label text-right">Valor</label>
             <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="valor_meta" aria-describedby="valor_metaHelp" [ngClass]="{'is-invalid': forma.controls['valor_meta'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <input class="form-control" type="number" formControlName="valor_meta" aria-describedby="valor_metaHelp" [ngClass]="{'is-invalid': forma.controls['valor_meta'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
                 <small id="valor_metaHelp" class="form-text text-muted">Valor meta del indicador</small>
             </div>
         </div>
         <div class="form-group row">
             <label for="frecuencia" class="col-sm-2 col-form-label text-right">Frecuencia de medición</label>
             <div class="col-sm-3">
-                <select class="form-control" name="frecuencia" formControlName="frecuencia" [ngStyle]="{'border-color': (frecuencia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="frecuencia" formControlName="frecuencia" [ngStyle]="{'border-color': (frecuencia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 							<option value="" disabled="disabled" selected="selected">Seleccionar</option>
 							<option value="{{item.clave}}" *ngFor="let item of frecuencias">{{item.descripcion}}</option>
 						</select>
@@ -91,7 +101,7 @@
         <div class="form-group row">
             <label for="formula" class="col-sm-2 col-form-label text-right">Tipo de Fórmula</label>
             <div class="col-sm-3">
-                <select class="form-control" name="formula" formControlName="formula" [ngStyle]="{'border-color': (formula.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="formula" formControlName="formula" [ngStyle]="{'border-color': (formula.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 						<option value="">Seleccionar</option>
 						<option value="{{item.clave}}" *ngFor="let item of formulas">{{item.descripcion}}</option>
 					</select>
@@ -102,7 +112,7 @@
         <div class="form-group row">
             <label for="calculo" class="col-sm-2 col-form-label text-right">Cálculo</label>
             <div class="col-sm-6">
-                <textarea class="form-control" formControlName="calculo" aria-describedby="calculoHelp" [ngClass]="{'is-invalid': forma.controls['calculo'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"></textarea>
+                <textarea class="form-control" formControlName="calculo" aria-describedby="calculoHelp" [ngClass]="{'is-invalid': forma.controls['calculo'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
                 <small id="calculoHelp" class="form-text text-muted">Descripción del cálculo del indicador</small>
                 <div *ngIf="forma.controls['calculo'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
             </div>
@@ -110,7 +120,7 @@
         <div class="form-group row">
             <label for="resultado" class="col-sm-2 col-form-label text-right">Tipo de Resultado</label>
             <div class="col-sm-3">
-                <select class="form-control" name="resultado" formControlName="resultado" [ngStyle]="{'border-color': (resultado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="resultado" formControlName="resultado" [ngStyle]="{'border-color': (resultado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 						<option value="">Seleccionar</option>
 						<option value="{{item.clave}}" *ngFor="let item of resultados">{{item.descripcion}}</option>
 					</select>
@@ -120,14 +130,20 @@
         </div>
     </div>
     <div class="text-center">
-        <a [routerLink]="cancelar" class="btn btn-outline-success" *ngIf="accion === 'V'">
-            <i class="far fa-check-circle"></i> Aceptar
-        </a>&nbsp;
-        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion !== 'V'">
-			<i class="fa fa-save"></i>
-			Guardar
+        <button type="button" class="btn btn-outline-primary" (click)="autorizar()" *ngIf="accion === 'A'">
+			<i class="fas fa-check-circle"></i> Autorizar
 		</button>&nbsp;
-        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion !== 'V'">Cancelar</a>
+        <button type="button" class="btn btn-outline-danger" (click)="rechazar()" *ngIf="accion === 'A'">
+			<i class="far fa-times-circle"></i> Rechazar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'A' || accion === 'V'">
+            <i class="far fa-arrow-alt-circle-left"></i> Regresar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion === 'U' || accion === 'I'">
+			<i class="fa fa-save"></i> Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U' || accion === 'I'">
+			Cancelar</a>
     </div>
 </form>
 <!-- Modal -->

@@ -17,7 +17,7 @@ const IndicadoresRoutes: Routes = [
 		children: [
 			{ path: 'matriz_indicadores', component: MatrizIndicadoresComponent, data: {titulo: 'Matriz de Indicadores', padre: 'Indicadores'}},
 			// tslint:disable-next-line:max-line-length
-			{ path: 'indicador_form/:acc/:id', component: IndicadorFormularioComponent, data: {titulo: 'Registro Indicadores', padre: 'Indicadores'}},
+			{ path: 'indicador_form/:acc/:id/:aut', component: IndicadorFormularioComponent, data: {titulo: 'Indicadores', padre: 'Indicadores'}},
 			// tslint:disable-next-line:max-line-length
 			{ path: 'grafica_indicador_form/:id', component: IndicadorGraficasComponent, data: {titulo: 'Gráfica del Indicador', padre: 'Indicadores'}}
 		]

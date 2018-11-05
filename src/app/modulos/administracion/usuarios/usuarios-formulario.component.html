@@ -222,9 +222,6 @@
         </div>
     </div>
     <div class="text-center">
-        <a [routerLink]="cancelar" class="btn btn-outline-success" *ngIf="accion === 'V'">
-            <i class="far fa-check-circle"></i> Aceptar
-        </a>&nbsp;
         <button type="submit" class="btn btn-outline-primary" [disabled]="!formaUsuarios.valid" *ngIf="accion !== 'V'">
 			<i class="fa fa-save"></i>
 			Guardar
