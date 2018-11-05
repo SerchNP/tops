@@ -19,8 +19,10 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { IdentidadComponent } from './identidad/identidad.component';
+
+// Pipes
 import { GroupByPipe } from '../pipes/group-by.pipe';
-import { FiltraProcesosPipe } from '../pipes/filtra-procesos.pipe';
+
 
 @NgModule({
 	declarations: [
@@ -28,8 +30,7 @@ import { FiltraProcesosPipe } from '../pipes/filtra-procesos.pipe';
 		DashboardComponent,
 		ProfileComponent,
 		IdentidadComponent,
-		GroupByPipe,
-		FiltraProcesosPipe
+		GroupByPipe
 	],
 	exports: [
 		DashboardComponent
