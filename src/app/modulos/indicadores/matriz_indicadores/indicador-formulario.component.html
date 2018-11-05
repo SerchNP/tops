@@ -26,7 +26,7 @@
             <div class="col-sm-8">
                 <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
 						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
-						<option value="{{item.proceso}}" *ngFor="let item of procesos">{{item.proceso_desc}}</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: 'ADM'">{{item.proceso_desc}}</option>
 					</select>
                 <small id="procesoHelp" class="form-text text-muted">El indicador pertenece al Proceso</small>
                 <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
@@ -35,7 +35,7 @@
         <div class="form-group row">
             <label for="objetivo" class="col-sm-2 col-form-label text-right">Objetivo de Calidad</label>
             <div class="col-sm-8">
-                <div class="input-group" *ngFor="let item of objetivos">
+                <div class="input-group" *ngFor="let item of objetivos | filtraObjetivo: (accion === 'A' ? objetivo.value : null)">
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <input type="radio" name="objetivo" [value]="item.clave" formControlName="objetivo" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">

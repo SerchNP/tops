@@ -145,7 +145,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getProcesos() {
-		this.subscription = this._procesos.getProcesosUsuario('indicador_area')
+		this.subscription = this._procesos.getProcesosUsuario('matriz_indicadores')
 			.subscribe(
 				(data: any) => {
 					this.procesos = data.procesos;
