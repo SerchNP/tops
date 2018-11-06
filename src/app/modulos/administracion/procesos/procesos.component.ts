@@ -21,7 +21,6 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'proceso';
 	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 	ruta_add =  ['/administracion', 'submenuproc', 'procesos_form', 'I', 0];
 	select = false;

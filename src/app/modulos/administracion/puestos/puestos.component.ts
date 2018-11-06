@@ -21,7 +21,6 @@ export class PuestosComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'puesto';
 	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 
 	ruta_add =  ['/administracion', 'puestos_form', 'I', 0];
