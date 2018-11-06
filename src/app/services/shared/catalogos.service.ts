@@ -53,22 +53,6 @@ export class CatalogosService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	/*getCatalogo (cat: string): any {
-		let catalogo: any[];
-		this.getCatalogoPromesa(cat)
-			.subscribe(
-				(data: any) => {
-					catalogo = data.catalogo;
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._accesoService.logout();
-					}
-				});
-		return catalogo;
-	}*/
-
 	getFrecuencias() {
 		const cat = 'FRE';
 		return this.getCatalogoPromesa(cat);

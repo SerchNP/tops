@@ -19,6 +19,12 @@ export class IndicadoresService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getMedicionesIndicador(idIndicador: number) {
+		const url = URL_SGC + this.RUTA + 'getMedicionesIndicador.json?token=' + localStorage.getItem('token') + '&i=' + idIndicador;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getIndicadorById(idIndicador: number) {
 		const url = URL_SGC + this.RUTA + 'getIndicadorById.json?id=' + idIndicador + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
@@ -60,4 +66,19 @@ export class IndicadoresService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
+	insertarMedicionIndicador(indicadorID: number, f_inicial: string, f_final: string, medicion: number) {
+		const url = URL_SGC + this.RUTA + 'insertarMedicionIndicador.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		// tslint:disable-next-line:max-line-length
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + indicadorID + ', "f_inicial": "' + f_inicial + '", "f_final": "' + f_final + '", "medicion" : ' + medicion + '}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	cancelarMedicionIndicador(indicadorID: number, regid: number, motivo: string) {
+		console.log(indicadorID, regid, motivo);
+		const url = URL_SGC + this.RUTA + 'cancelarMedicionIndicador.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + indicadorID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
 }

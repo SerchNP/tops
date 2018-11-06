@@ -12,12 +12,15 @@ export class DerechosService {
 
 	private RUTA = '/derechos/';
 
+	public PRIVILEGIOS;
+
 	constructor(public http: HttpClient,
 				public router: Router,
 				private _accesoService: AccesoService) {}
 
 	getDerechosMenuProcesoService(menuID: string, procesoID: number) {
-		const url = URL_SGC + '/derechos/getDerechosMenuProceso.json?m=' + menuID + '&p=' + procesoID + '&token=' + localStorage.getItem('token');
+		// tslint:disable-next-line:max-line-length
+		const url = URL_SGC + this.RUTA + 'getDerechosMenuProceso.json?m=' + menuID + '&p=' + procesoID + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -58,6 +61,36 @@ export class DerechosService {
 			derechosMenuProceso.cancelar = true;
 		}
 		return derechosMenuProceso;
+	}
+
+	getDerechosGlobalMenuPromesa (menuID: string) {
+		const promesa: Promise<Derechos> = new Promise((resolve, reject) => {
+			const url = URL_SGC + this.RUTA + 'getDerechosGlobalMenu.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+			const headers = HeadersGET;
+			this.http.get(url, {headers}).toPromise()
+				.then(
+					(res: any) => {
+						this._accesoService.guardarStorage(res.token);
+						const derechos: Derechos = {};
+						derechos.consultar = ((res.derechos.consultar === 'S') ? true : false);
+						derechos.administrar = ((res.derechos.administrar === 'S') ? true : false);
+						derechos.autorizar = ((res.derechos.autorizar === 'S') ? true : false);
+						derechos.descargar = ((res.derechos.descargar === 'S') ? true : false);
+						derechos.exportar = ((res.derechos.exportar === 'S') ? true : false);
+						if (res.derechos.administrar === 'S') {
+							derechos.insertar = true;
+							derechos.editar = true;
+							derechos.cancelar = true;
+						}
+						resolve(derechos);
+					},
+					msg => {
+						console.log(msg);
+						reject(msg.error.message);
+					}
+				);
+		});
+		return promesa;
 	}
 
 	getUsuariosMenuProcesos() {

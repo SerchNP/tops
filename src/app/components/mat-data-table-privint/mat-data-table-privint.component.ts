@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { DerechosService } from '../../services/shared/derechos.service';
 import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
@@ -28,10 +29,10 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	@Input() data: any [];
 	@Input() columns = [];
 	@Input() select;
-	@Input() llave: string;
-	@Input() derechos: Derechos;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
+	@Input() graficas: boolean;
+	@Input() derechos: Derechos = {};
 
 	expandedElement;
 
@@ -45,8 +46,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	pageSizeOptions: number[] = [5, 10, 25, 100];
 	selection;
 
-	constructor(private router: Router) {
-	}
+	constructor(private router: Router) { }
 
 	ngOnChanges(changes) {
 		if (changes['data']) {
@@ -54,6 +54,21 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 			this.length = this.dataSource.data.length;
 			this.dataSource.paginator = this.paginator;
 			this.dataSource.sort = this.sort;
+		} else if (changes['derechos']) {
+			if (this.derechos.consultar) {
+				this.displayedColumns.push('consultar');
+			}
+			if (this.derechos.administrar) {
+				if (this.derechos.editar) {
+					this.displayedColumns.push('editar');
+				}
+				if (this.derechos.cancelar) {
+					this.displayedColumns.push('cancelar');
+				}
+			}
+			if (this.derechos.autorizar) {
+				this.displayedColumns.splice(0, 0, 'autorizar');
+			}
 		}
 	}
 
@@ -66,23 +81,10 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 		if (this.select) {
 			this.displayedColumns.splice(0, 0, 'select');
 		}
-		if (this.derechos.consultar) {
-			this.displayedColumns.push('consultar');
-		}
-		if (this.derechos.graficas) {
+		if (this.graficas) {
 			this.displayedColumns.push('graficas');
 		}
-		if (this.derechos.administrar) {
-			if (this.derechos.editar) {
-				this.displayedColumns.push('editar');
-			}
-			if (this.derechos.cancelar) {
-				this.displayedColumns.push('cancelar');
-			}
-		}
-		if (this.derechos.autorizar) {
-			this.displayedColumns.splice(0, 0, 'autorizar');
-		}
+
 		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}
 

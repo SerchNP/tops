@@ -26,7 +26,7 @@
             <div class="col-sm-8">
                 <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
 						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
-						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: 'ADM'">{{item.proceso_desc}}</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
 					</select>
                 <small id="procesoHelp" class="form-text text-muted">El indicador pertenece al Proceso</small>
                 <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>

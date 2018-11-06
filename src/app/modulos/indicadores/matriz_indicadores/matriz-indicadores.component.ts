@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AccesoService } from '../../../services/shared/acceso.service';
 import { Derechos } from '../../../interfaces/derechos.interface';
+import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { IndicadoresService, DerechosService } from '../../../services/services.index';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
@@ -18,10 +19,11 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 
 	listado: any[] = [];
 	cargando = false;
-	derechos: Derechos = {administrar: true, editar: true, cancelar: true, insertar: true, graficas: true, autorizar: true};
+	menu = 'matriz_indicadores';
 	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0];
 	select = false;
 	allowMultiSelect = false;
+	derechos: Derechos = {};
 
 	columns = [
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (indicador: any) => `${indicador.proceso}`},
@@ -42,13 +44,13 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 
 	constructor(private _acceso: AccesoService,
 				private _indicador: IndicadoresService,
-				private _derechos: DerechosService,
+				public _derechos: DerechosService,
 				private router: Router,
-				public dialog: MatDialog) {
-	}
+				public dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.cargando = true;
+		this.getDerechos();
 		this.subscription = this._indicador.getMatrizIndicadores('matriz_indicadores')
 			.subscribe(
 				(data: any) => {
@@ -75,12 +77,22 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		} if (datos.accion === 'E') {
 			this.editarIndicador(datos.row);
 		} else if (datos.accion === 'V') {
-			// this.openDialog(datos.row);
+			this.openDialog(datos.row);
 		} else if (datos.accion === 'A') {
 			this.autorizarIndicador(datos.row);
 		} else if (datos.accion === 'G') {
 			this.graficasIndicador(datos.row);
 		}
+	}
+
+	getDerechos() {
+		this._derechos.getDerechosGlobalMenuPromesa(this.menu).then((data: any) => {
+			this.derechos = data;
+			this._derechos.PRIVILEGIOS = data;
+			localStorage.setItem('actionsMI', JSON.stringify(this.derechos));
+		}).catch(error => {
+			console.log(error);
+		});
 	}
 
 	autorizarIndicador(indicador) {
@@ -157,8 +169,26 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		if (indicador.autoriza !== 7 && indicador.autoriza !== 3) {
 			swal('ERROR', 'No es posible visualizar gráficas, el indicador no es válido', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'grafica_indicador_form', indicador.indicador, 0]);
+			this.router.navigate(['/indicadores', 'indicador_graficas', indicador.indicador]);
 		}
+	}
+
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: datos.proceso_desc,
+				subtitle: datos.indicador_desc,
+				situacion: datos.autoriza_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 
 }

@@ -9,10 +9,10 @@ export class FiltraProcesosPipe implements PipeTransform {
 		if (!items || !accion) {
 			return items;
 		}
-		if (accion === 'AUT') {
+		if (accion === 'A') {
 			return items.filter(item => item.autorizar.indexOf('S') !== -1);
 		}
-		if (accion === 'ADM') {
+		if (accion === 'U' || accion === 'I') {
 			return items.filter(item => item.administrar.indexOf('S') !== -1);
 		}
 	}
