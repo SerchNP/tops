@@ -20,7 +20,6 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'usuario';
 	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 
 	ruta_add =  ['/administracion', 'submenuusu', 'usuarios_form', 'I', 0];

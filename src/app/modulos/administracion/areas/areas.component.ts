@@ -20,7 +20,6 @@ export class AreasComponent implements OnInit, OnDestroy {
 	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
-	llave = 'area';
 	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
 	ruta_add = ['/administracion', 'areas_form', 'I', 0];
 	select = false;
