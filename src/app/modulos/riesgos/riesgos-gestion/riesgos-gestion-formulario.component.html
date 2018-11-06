@@ -1,0 +1,98 @@
+<h5>{{titulo}}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
+            <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
+            <div class="col-sm-3">
+                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
+            </div>
+            <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
+            <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
+                <textarea readonly class="form-control" formControlName="motivo_cancela" aria-describedby="motivo_cancelaHelp"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
+					</select>
+                <small id="procesoHelp" class="form-text text-muted">El Riesgo de Gestión pertenece al Proceso</small>
+                <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="riesgo" class="col-sm-2 col-form-label text-right">Clave</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="riesgo" aria-describedby="riesgoHelp" [attr.disabled]="true">
+                <small id="riesgoHelp" class="form-text text-muted">Clave del riesgo</small>
+            </div>
+        </div>
+        <!-- <div class="form-group row">
+            <label for="tipo_cuestion" class="col-sm-2 col-form-label text-right">Cuestion</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="cuestion" formControlName="proceso" [ngStyle]="{'border-color': (tipo_cuestion.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.cuestion}}" *ngFor="let item of cuestiones">{{item.cuestion_desc}}</option>
+					</select>
+                <small id="tipo_cuestionHelp" class="form-text text-muted">Tipo de Cuestión Externa/Interna</small>
+                <div *ngIf="tipo_cuestion.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div> -->
+        <!-- <div class="form-group row">
+            <label for="riesgo_desc" class="col-sm-2 col-form-label text-right">Identificación del Riesgo</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" formControlName="riesgo_desc" aria-describedby="riesgo_descHelp" [ngClass]="{'is-invalid': forma.controls['riesgo_desc'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="riesgo_descHelp" class="form-text text-muted">Identificación del riesgo</small>
+                <div *ngIf="forma.controls['riesgo_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div> -->
+    </div>
+    <div class="text-center">
+        <button type="button" class="btn btn-outline-primary" (click)="autorizar()" *ngIf="accion === 'A'">
+			<i class="fas fa-check-circle"></i> Autorizar
+		</button>&nbsp;
+        <button type="button" class="btn btn-outline-danger" (click)="rechazar()" *ngIf="accion === 'A'">
+			<i class="far fa-times-circle"></i> Rechazar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'A' || accion === 'V'">
+            <i class="far fa-arrow-alt-circle-left"></i> Regresar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion === 'U' || accion === 'I'">
+			<i class="fa fa-save"></i> Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U' || accion === 'I'">
+			Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Cuestión Externa/Interna</h5>
+                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarproceso()">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
-import { DerechosService } from '../../services/shared/derechos.service';
 import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
@@ -32,6 +31,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
 	@Input() graficas: boolean;
+	@Input() detalle: boolean;
 	@Input() derechos: Derechos = {};
 
 	expandedElement;
@@ -80,6 +80,9 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	ngAfterViewInit() {
 		if (this.select) {
 			this.displayedColumns.splice(0, 0, 'select');
+		}
+		if (this.detalle) {
+			this.displayedColumns.push('detalle');
 		}
 		if (this.graficas) {
 			this.displayedColumns.push('graficas');

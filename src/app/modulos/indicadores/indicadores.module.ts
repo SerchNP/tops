@@ -7,6 +7,7 @@ import { INDICADORES_ROUTES } from './indicadores.routes';
 
 // Modulos
 import { ComponentModule } from '../../components/component.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 // Componentes
 import { IndicadoresComponent } from './indicadores.component';
@@ -14,13 +15,10 @@ import { MatrizIndicadoresComponent } from './matriz_indicadores/matriz-indicado
 import { IndicadorFormularioComponent } from './matriz_indicadores/indicador-formulario.component';
 import { IndicadorGraficasComponent } from './indicador-graficas/indicador-graficas.component';
 
-// Pipes
-import { FiltraObjetivoPipe } from '../../pipes/filtra-objetivo.pipe';
-import { FiltraProcesosPipe } from '../../pipes/filtra-procesos.pipe';
-
 
 @NgModule({
 	imports: [
+		PipesModule,
 		CommonModule,
 		INDICADORES_ROUTES,
 		ComponentModule,
@@ -31,9 +29,7 @@ import { FiltraProcesosPipe } from '../../pipes/filtra-procesos.pipe';
 		IndicadoresComponent,
 		MatrizIndicadoresComponent,
 		IndicadorFormularioComponent,
-		IndicadorGraficasComponent,
-		FiltraObjetivoPipe,
-		FiltraProcesosPipe
+		IndicadorGraficasComponent
 	]
 })
 export class IndicadoresModule { }

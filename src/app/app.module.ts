@@ -21,6 +21,7 @@ import { DetalleComponent } from './home/detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detalle.component';
 
+
 @NgModule({
 	declarations: [
 		AppComponent,

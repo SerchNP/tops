@@ -18,3 +18,5 @@ export { PuestosService } from './administracion/puestos.service';
 export { FodaService } from './contexto/foda.service';
 // Indicadores
 export { IndicadoresService } from './indicadores/indicadores.service';
+// Riesgos
+export { RiesgoService } from './riesgos/riesgo.service';

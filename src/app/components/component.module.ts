@@ -7,20 +7,19 @@ import { TreeModule } from 'angular-tree-component';
 import { MatTableModule, MatSortModule, MatCheckboxModule,
 		MatPaginatorModule, MatFormFieldModule, MatInputModule,
 		MatProgressSpinnerModule } from '@angular/material';
+import { PipesModule } from '../pipes/pipes.module';
 
 // Componentes
 import { ArbolComponent } from '../components/arbol/arbol.component';
 import { MatDataTableComponent } from './mat-data-table/mat-data-table.component';
 import { MatDataTablePrivIntComponent } from './mat-data-table-privint/mat-data-table-privint.component';
-import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
 
 
 @NgModule({
 	declarations: [
 		ArbolComponent,
 		MatDataTableComponent,
-		MatDataTablePrivIntComponent,
-		FiltraColumnsPipe
+		MatDataTablePrivIntComponent
 	],
 	exports: [
 		ArbolComponent,
@@ -28,6 +27,7 @@ import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
 		MatDataTablePrivIntComponent
 	],
 	imports: [
+		PipesModule,
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,

@@ -7,6 +7,7 @@ import { ADMINISTRACION_ROUTES } from './administracion.routes';
 
 // Modulos
 import { ComponentModule } from '../../components/component.module';
+import { PipesModule } from '../../pipes/pipes.module';
 
 // Componentes
 import { AdministracionComponent } from './administracion.component';
@@ -56,6 +57,7 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 		AdministracionComponent
 	],
 	imports: [
+		PipesModule,
 		CommonModule,
 		ADMINISTRACION_ROUTES,
 		FormsModule,

@@ -19,7 +19,7 @@ export interface Usuario {
 	puesto: number;
 	// public timeout: number,
 	matricula?: string;
-	matriz: {
+	matriz?: {
 		contexto: string;
 		liderazgo: string;
 		riesgo: string;

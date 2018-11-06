@@ -10,6 +10,7 @@ import { FodaService } from './contexto/foda.service';
 import { CatalogosService } from './shared/catalogos.service';
 import { DerechosService } from './shared/derechos.service';
 import { IndicadoresService } from './indicadores/indicadores.service';
+import { RiesgoService } from './riesgos/riesgo.service';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { IndicadoresService } from './indicadores/indicadores.service';
 		PuestosService,
 		IdentidadService,
 		FodaService,
-		IndicadoresService
+		IndicadoresService,
+		RiesgoService
 	],
 	declarations: []
 })
