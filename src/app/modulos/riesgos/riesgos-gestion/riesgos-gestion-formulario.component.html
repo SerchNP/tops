@@ -4,7 +4,6 @@
     <div class="col-sm-12">
         <div class="alert alert-warning text-left">
             <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
-
         </div>
     </div>
 </div>
@@ -55,8 +54,8 @@
                     </li>
                 </ul>
                 <ul class="list-group" *ngIf="listfoda.length > 0">
-                    <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listfoda">
-                        <mat-checkbox name="cuestiones" [value]="item.foda">
+                    <li class="list-group-item list-group-item-action flex-column align-items-start" formArrayName="cuestiones" *ngFor="let item of listfoda; let i = index">
+                        <mat-checkbox [value]="item.foda" [formControlName]="i" (change)="onCheckChange($event)">
                             <small class="text-muted">{{item.cuestion}}{{item.orden}} Cuestion {{item.tipo_cuestion_desc}}</small>
                             <p style="margin-bottom: 0;">{{item.foda_desc}}</p>
                         </mat-checkbox>
@@ -80,5 +79,5 @@
 		</button>&nbsp;
         <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U' || accion === 'I'">
 			Cancelar</a>
-    </div>
+    </div>{{forma.value | json}}
 </form>

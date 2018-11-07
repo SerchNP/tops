@@ -64,9 +64,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			'riesgo' : new FormControl(),
 			'riesgo_desc' : new FormControl('', Validators.required),
 			// 'cuestiones' : new FormControl('', Validators.required),
-			'cuestiones' : new FormArray([
-				new FormControl('')
-			]),
+			'cuestiones' : new FormArray([]),
 			'autoriza_desc': new FormControl(''),
 			'motivo_cancela': new FormControl(''),
 			'motivo_rechaza': new FormControl('')
@@ -83,6 +81,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				this.subscription = this._foda.getFODAByProceso(procesoSel).subscribe(
 					(data: any) => {
 						this.listfoda = new FiltraFodaAutPipe().transform(data.foda, 3);
+						this.listfoda.forEach(item => (<FormArray>this.forma.controls['cuestiones']).push(new FormControl(false)));
 					});
 			});
 	}
@@ -129,7 +128,37 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	onCheckChange(event) {
+		const formArray: FormArray = this.forma.get('cuestiones') as FormArray;
+		/* Selected */
+		if (event.source.checked) {
+			// Add a new control in the arrayForm
+			formArray.push(new FormControl(event.source.value));
+		} else {
+			/* unselected */
+			// find the unselected element
+			let i = 0;
+			formArray.controls.forEach((ctrl: FormControl) => {
+				if (ctrl.value === event.source.value) {
+					// Remove the unselected element from the arrayForm
+					formArray.removeAt(i);
+					return;
+				}
+				i++;
+			});
+		}
+	}
+
 	guardar () {
+		const formArray: FormArray = this.forma.get('cuestiones') as FormArray;
+		const formArrayFinal: any = [];
+		formArray.controls.forEach((ctrl: FormControl) => {
+			if (ctrl.value !== true && ctrl.value !== false) {
+				formArrayFinal.push(JSON.parse('{"proceso" : ' + this.forma.get('proceso').value + ', "foda" : ' + ctrl.value + '}'));
+			}
+		});
+		const valorForma = this.forma.value;
+		valorForma.cuestiones = formArrayFinal;
 	}
 
 	async autorizar () {
