@@ -84,4 +84,9 @@ export class CatalogosService {
 					}
 				});
 	}
+
+	getTipoCuestion() {
+		const cat = 'CEI';
+		return this.getCatalogoPromesa(cat);
+	}
 }

@@ -6,6 +6,11 @@
 		<i class="fas fa-plus"></i> Agregar
 	</button>
 </div>
+<div class="text-left small" *ngIf="derechos.administrar" style="padding-bottom: 0.25rem">
+    <a class="text-danger" [routerLink]="ruta_rechazos" *ngIf="aviso_r > 0" [matBadgeHidden]="aviso_r === 0" [matBadge]="aviso_r" matBadgePosition="after" matBadgeColor="warn">
+        <i class="fas fa-ban"></i> Rechazados
+    </a>
+</div>
 <table class="table table-condensed" mat-table [dataSource]="dataSource" matSort aria-label="tabla" class=" mat-elevation-z2" matSortDisableClear multiTemplateDataRows>
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>

@@ -158,7 +158,6 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	}
 
 	detalleRiesgo(riesgo) {
-		console.log(riesgo);
 		this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'V', riesgo.riesgo, riesgo.autoriza]);
 	}
 

@@ -19,6 +19,12 @@ export class IndicadoresService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getAvisoMatrizIndicadores(menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getAvisoMatrizIndicadores.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getMedicionesIndicador(idIndicador: number) {
 		const url = URL_SGC + this.RUTA + 'getMedicionesIndicador.json?token=' + localStorage.getItem('token') + '&i=' + idIndicador;
 		const headers = HeadersGET;
@@ -75,7 +81,6 @@ export class IndicadoresService {
 	}
 
 	cancelarMedicionIndicador(indicadorID: number, regid: number, motivo: string) {
-		console.log(indicadorID, regid, motivo);
 		const url = URL_SGC + this.RUTA + 'cancelarMedicionIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"indicador": ' + indicadorID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));

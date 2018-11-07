@@ -30,6 +30,8 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	@Input() select;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
+	@Input() aviso_r: number;
+	@Input() ruta_rechazos: any[];
 	@Input() graficas: boolean;
 	@Input() detalle: boolean;
 	@Input() derechos: Derechos = {};

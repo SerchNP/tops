@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -8,6 +9,7 @@ import { MatTableModule, MatSortModule, MatCheckboxModule,
 		MatPaginatorModule, MatFormFieldModule, MatInputModule,
 		MatProgressSpinnerModule } from '@angular/material';
 import { PipesModule } from '../pipes/pipes.module';
+import { MatBadgeModule } from '@angular/material/badge';
 
 // Componentes
 import { ArbolComponent } from '../components/arbol/arbol.component';
@@ -28,6 +30,8 @@ import { MatDataTablePrivIntComponent } from './mat-data-table-privint/mat-data-
 	],
 	imports: [
 		PipesModule,
+		RouterModule,
+		MatBadgeModule,
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,

@@ -21,9 +21,11 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 	cargando = false;
 	menu = 'matriz_indicadores';
 	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0];
+	ruta_rechazos = ['/indicadores', 'rechazos_indicador_form', 'R'];
 	select = false;
 	allowMultiSelect = false;
 	derechos: Derechos = {};
+	aviso_r = 0;
 
 	columns = [
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (indicador: any) => `${indicador.proceso}`},
@@ -51,7 +53,8 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.cargando = true;
 		this.getDerechos();
-		this.subscription = this._indicador.getMatrizIndicadores('matriz_indicadores')
+		this.getAviso();
+		this.subscription = this._indicador.getMatrizIndicadores(this.menu)
 			.subscribe(
 				(data: any) => {
 					this.listado = data.indicadores;
@@ -83,6 +86,22 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		} else if (datos.accion === 'G') {
 			this.graficasIndicador(datos.row);
 		}
+	}
+
+	getAviso() {
+		this.subscription = this._indicador.getAvisoMatrizIndicadores(this.menu)
+		.subscribe(
+			(data: any) => {
+				this.aviso_r = data.aviso[0].rechazados;
+				this._acceso.guardarStorage(data.token);
+				this.cargando = false;
+			},
+			error => {
+				swal('ERROR', error.error.message, 'error');
+				if (error.error.code === 401) {
+					this._acceso.logout();
+				}
+			});
 	}
 
 	getDerechos() {
