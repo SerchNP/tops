@@ -17,3 +17,17 @@ export class FiltraFodaPipe implements PipeTransform {
 	}
 
 }
+
+@Pipe({
+	name: 'filtraFodaAut'
+})
+export class FiltraFodaAutPipe implements PipeTransform {
+
+	transform(items: any[], autoriza: number): any {
+		if (!items || !autoriza) {
+			return items;
+		}
+		return items.filter(item => (item.autoriza === autoriza));
+	}
+
+}

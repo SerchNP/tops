@@ -16,7 +16,6 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 	proceso_desc: string;
 
 	cargando = true;
-	jsonData: any;
 	listado: any[] = [];
 	derechos: Derechos = {autorizar: true, administrar: true, cancelar: true, editar: false, insertar: false};
 	select = true;
@@ -46,10 +45,9 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.subscription = this._fodaService.getFODAByProcesoPndtes(this.proceso)
 			.subscribe(
-				data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.foda;
-					this._accesoService.guardarStorage(this.jsonData.token);
+				(data: any) => {
+					this.listado = data.foda;
+					this._accesoService.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {

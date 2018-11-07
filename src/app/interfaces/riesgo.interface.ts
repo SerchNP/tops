@@ -4,8 +4,8 @@ export interface RiesgoGestion {
 	proceso?: number;
 	proceso_desc?: string;
 	cuestiones?: {
-		foda: number,
-		foda_desc: string;
+		proceso: number,
+		foda: number
 	};
 	tipo_riesgo?: string;
 	tipo_riesgo_desc?: string;
