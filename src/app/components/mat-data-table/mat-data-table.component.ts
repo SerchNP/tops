@@ -28,7 +28,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() data: any [];
 	@Input() columns = [];
 	@Input() select;
-	@Input() llave: string;
+	@Input() accion: string;
 	@Input() derechos: Derechos;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
@@ -45,8 +45,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	pageSizeOptions: number[] = [5, 10, 25, 100];
 	selection;
 
-	constructor(private router: Router) {
-	}
+	constructor(private router: Router) {}
 
 	ngOnChanges(changes) {
 		if (changes['data']) {

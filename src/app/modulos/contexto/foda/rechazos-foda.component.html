@@ -16,4 +16,11 @@
     </div>
 </div>
 <br/>
-<app-mat-data-table (registro)="detectarAccion($event)" (seleccionados)="detectarRegistros($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect"></app-mat-data-table>
+<app-mat-data-table (registro)="detectarAccion($event)" (seleccionados)="detectarRegistros($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect" [accion]="accion"></app-mat-data-table>
+<div class="text-center">
+    <button type="submit" (click)="guardar()" class="btn btn-outline-primary">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>&nbsp;
+    <a [routerLink]="['/contexto', 'submenufoda', 'foda']" class="btn btn-outline-danger">Cancelar</a>
+</div>

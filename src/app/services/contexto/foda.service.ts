@@ -70,6 +70,13 @@ export class FodaService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
+	autorizaRechazoFODA(arregloFODA: any[]) {
+		const url = URL_SGC + this.RUTA + 'autorizaRechazoFODA.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(arregloFODA);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 	actualizarPrioridadFODA (cuestion: string, arregloFODA: any[]) {
 		const url = URL_SGC + this.RUTA + 'actualizarPrioridadFODA.json?token=' + localStorage.getItem('token') + '&c=' + cuestion;
 		const headers = HeadersPOST;
