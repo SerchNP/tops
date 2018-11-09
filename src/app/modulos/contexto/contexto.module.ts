@@ -9,7 +9,8 @@ import { CONTEXTO_ROUTES } from './contexto.routes';
 import { ComponentModule } from '../../components/component.module';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material';
-import { FiltraFodaPipe } from '../../pipes/filtra-foda.pipe';
+import { PipesModule } from '../../pipes/pipes.module';
+
 
 // Componentes
 import { ContextoComponent } from './contexto.component';
@@ -19,6 +20,8 @@ import { CardFodaComponent } from './card-foda/card-foda.component';
 import { AutorizaFodaComponent } from './foda/autoriza-foda.component';
 import { RechazosFodaComponent } from './foda/rechazos-foda.component';
 import { ListadoFodaComponent } from './foda/listado-foda.component';
+import { DireccionComponent } from './direccion/direccion.component';
+import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
 
 
 @NgModule({
@@ -29,17 +32,19 @@ import { ListadoFodaComponent } from './foda/listado-foda.component';
 		FormsModule,
 		ReactiveFormsModule,
 		MatExpansionModule,
-		MatBadgeModule
+		MatBadgeModule,
+		PipesModule
 	],
 	declarations: [
-		FiltraFodaPipe,
 		ContextoComponent,
 		FodaComponent,
 		FodaFormularioComponent,
 		CardFodaComponent,
 		AutorizaFodaComponent,
 		RechazosFodaComponent,
-		ListadoFodaComponent
+		ListadoFodaComponent,
+		DireccionComponent,
+		DireccionFormularioComponent
 	]
 })
 export class ContextoModule { }
