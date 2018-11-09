@@ -89,4 +89,9 @@ export class CatalogosService {
 		const cat = 'CEI';
 		return this.getCatalogoPromesa(cat);
 	}
+
+	getTipoEstrategia() {
+		const cat = 'EST';
+		return this.getCatalogoPromesa(cat);
+	}
 }
