@@ -15,15 +15,20 @@ import swal from 'sweetalert2';
 })
 export class RiesgosGestionComponent implements OnInit, OnDestroy {
 
+	private _MENU = 'riesgo_gestion';
+	private _TIPOR = 'G';
+
 	private subscription: Subscription;
 
 	listado: any[] = [];
 	cargando = false;
-	menu = 'riesgo_gestion';
 	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0];
 	select = false;
 	allowMultiSelect = false;
 	derechos: Derechos = {};
+
+	ruta_rechazos = ['/riesgos', 'rechazos_riesgog_form', 'R'];
+	aviso_r = 0;
 
 	columns = [
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
@@ -43,7 +48,8 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.cargando = true;
 		this.getDerechos();
-		this.subscription = this._riesgo.getRiesgos('G', 'riesgo_gestion')
+		this.getAviso();
+		this.subscription = this._riesgo.getRiesgos(this._TIPOR, this._MENU)
 			.subscribe(
 				(data: any) => {
 					this.listado = data.riesgos;
@@ -78,7 +84,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	}
 
 	getDerechos() {
-		this._derechos.getDerechosGlobalMenuPromesa(this.menu).then((data: any) => {
+		this._derechos.getDerechosGlobalMenuPromesa(this._MENU).then((data: any) => {
 			this.derechos = data;
 			// this._derechos.PRIVILEGIOS = data;
 			// localStorage.setItem('actionsRG', JSON.stringify(this.derechos));
@@ -87,11 +93,27 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	getAviso() {
+		this.subscription = this._riesgo.getAvisoRiesgos(this._TIPOR, this._MENU)
+			.subscribe(
+				(data: any) => {
+					this.aviso_r = data.aviso.rechazados;
+					this._acceso.guardarStorage(data.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
 	autorizaRiesgo(riesgo) {
 		if (riesgo.pendiente === 'N') {
 			swal('ERROR', 'No es posible autorizar/rechazar el riesgo', 'error');
 		} else {
-			this.router.navigate(['/riesgos', 'riesgo_form', 'A', riesgo.riesgo, riesgo.autoriza, 0]);
+			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'A', riesgo.riesgo, riesgo.autoriza]);
 		}
 	}
 
