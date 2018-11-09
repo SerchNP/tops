@@ -20,8 +20,8 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	menu = 'matriz_indicadores';
-	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0];
-	ruta_rechazos = ['/indicadores', 'rechazos_indicador_form', 'R'];
+	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0, 'M'];
+	ruta_rechazos = ['/indicadores', 'indicadores_rechazados_form'];
 	select = false;
 	allowMultiSelect = false;
 	derechos: Derechos = {};
@@ -41,7 +41,8 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			   cell: (indicador: any) => `${indicador.estatus_desc}`},
 		{ columnDef: 'meta',			 header: 'Meta (Descripcion)', visible: false, cell: (indicador: any) => `${indicador.meta}`},
 		{ columnDef: 'calculo',			 header: 'Cálculo',      	   visible: false, cell: (indicador: any) => `${indicador.calculo}`},
-		{ columnDef: 'objetivo_desc',	 header: 'Objetivo Calidad',   visible: false, cell: (indicador: any) => `${indicador.objetivo_desc}`}
+		{ columnDef: 'objetivo_desc',	 header: 'Objetivo Calidad',   visible: false, cell: (indicador: any) => `${indicador.objetivo_desc}`},
+		{ columnDef: 'puesto_resp_desc', header: 'Responsable',   	   visible: false, cell: (indicador: any) => `${indicador.puesto_resp_desc}`}
 	];
 
 	constructor(private _acceso: AccesoService,
@@ -118,7 +119,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		if (indicador.pendiente === 'N') {
 			swal('ERROR', 'No es posible autorizar/rechazar el indicador', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'indicador_form', 'A', indicador.indicador, indicador.autoriza]);
+			this.router.navigate(['/indicadores', 'indicador_form', 'A', indicador.indicador, indicador.autoriza, 'M']);
 		}
 	}
 
@@ -180,7 +181,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		if (indicador.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar, el indicador ya se encuentra cancelado', 'error');
 		} else {
-			this.router.navigate(['/indicadores', 'indicador_form', 'U', indicador.indicador, 0]);
+			this.router.navigate(['/indicadores', 'indicador_form', 'U', indicador.indicador, indicador.autoriza, 'M']);
 		}
 	}
 

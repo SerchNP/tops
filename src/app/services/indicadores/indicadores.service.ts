@@ -25,6 +25,12 @@ export class IndicadoresService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getIndicadoresRechazados(menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getIndicadoresRechazados.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getMedicionesIndicador(idIndicador: number) {
 		const url = URL_SGC + this.RUTA + 'getMedicionesIndicador.json?token=' + localStorage.getItem('token') + '&i=' + idIndicador;
 		const headers = HeadersGET;
@@ -44,7 +50,10 @@ export class IndicadoresService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	modificarIndicador(indicador: Indicador) {
+	modificarIndicador(indicador: Indicador, motivo?: string) {
+		if (motivo) {
+			indicador.motivo_modif = motivo.toUpperCase();
+		}
 		const url = URL_SGC + this.RUTA + 'modificarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(indicador);
@@ -69,6 +78,13 @@ export class IndicadoresService {
 		const url = URL_SGC + this.RUTA + 'rechazarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + ', "motivo_rechaza": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	reautorizarIndicadores(arreglo: any[]) {
+		const url = URL_SGC + this.RUTA + 'reautorizarIndicadores.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(arreglo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

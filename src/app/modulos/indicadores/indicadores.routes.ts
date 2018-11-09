@@ -6,6 +6,7 @@ import { PagesComponent } from '../../pages/pages.component';
 import { LoginGuard } from '../../services/services.index';
 import { MatrizIndicadoresComponent } from './matriz_indicadores/matriz-indicadores.component';
 import { IndicadorFormularioComponent } from './matriz_indicadores/indicador-formulario.component';
+import { IndicadoresRechazadosComponent } from './matriz_indicadores/indicadores-rechazados.component';
 import { IndicadorGraficasComponent } from './indicador-graficas/indicador-graficas.component';
 
 
@@ -17,7 +18,9 @@ const IndicadoresRoutes: Routes = [
 		children: [
 			{ path: 'matriz_indicadores', component: MatrizIndicadoresComponent, data: {titulo: 'Matriz de Indicadores', padre: 'Indicadores'}},
 			// tslint:disable-next-line:max-line-length
-			{ path: 'indicador_form/:acc/:id/:aut', component: IndicadorFormularioComponent, data: {titulo: 'Indicadores', padre: 'Indicadores'}},
+			{ path: 'indicador_form/:acc/:id/:aut/:o', component: IndicadorFormularioComponent, data: {titulo: 'Indicadores', padre: 'Indicadores'}},
+			// tslint:disable-next-line:max-line-length
+			{ path: 'indicadores_rechazados_form', component: IndicadoresRechazadosComponent, data: {titulo: 'Indicadores Rechazados', padre: 'Indicadores'}},
 			// tslint:disable-next-line:max-line-length
 			{ path: 'indicador_graficas/:id', component: IndicadorGraficasComponent, data: {titulo: 'Mediciones del Indicador', padre: 'Indicadores'}}
 		]

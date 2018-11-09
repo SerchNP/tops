@@ -69,7 +69,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
-			swal('Atención', 'Debe seleccionar al menos un registro para autorizar', 'error');
+			swal('Atención!!!', 'Debe seleccionar al menos un registro para autorizar.', 'error');
 		} else {
 			const arreglo: any[] = [];
 			this.seleccionados.forEach(element => {

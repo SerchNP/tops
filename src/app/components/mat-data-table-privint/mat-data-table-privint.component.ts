@@ -1,10 +1,12 @@
 import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
+import { AccesoService } from '../../services/shared/acceso.service';
 import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Derechos } from '../../interfaces/derechos.interface';
 import { Router } from '@angular/router';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -47,8 +49,10 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	pageSize = 10;
 	pageSizeOptions: number[] = [5, 10, 25, 100];
 	selection;
+	tipoUsuario = 'N';
 
-	constructor(private router: Router) { }
+	constructor(private router: Router,
+				private _acceso: AccesoService) { }
 
 	ngOnChanges(changes) {
 		if (changes['data']) {
@@ -75,6 +79,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	}
 
 	ngOnInit() {
+		this.tipoUsuario = this._acceso.tipoUsuario();
 		const columnasVisibles = new FiltraColumnsPipe().transform(this.columns, true);
 		this.displayedColumns = columnasVisibles.map(c => c.columnDef);
 	}
@@ -123,7 +128,17 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	}
 
 	onButtonClicked(row, accion) {
-		this.registro.emit({row, accion});
+		let error = false;
+		if (accion === 'C' || accion === 'E') {
+			if ((this.tipoUsuario !== 'S' && this.tipoUsuario !== 'C') && row.autoriza === 2) {
+				error = true;
+				// tslint:disable-next-line:max-line-length
+				swal('Error!!!', 'No es posible ' + ((accion === 'C') ? 'Cancelar' : 'Editar') + ', el registro ya se encuentra Pre-Autorizado', 'error');
+			}
+		}
+		if (!error) {
+			this.registro.emit({row, accion});
+		}
 	}
 
 	agregar() {

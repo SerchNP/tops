@@ -79,7 +79,7 @@ export class ListadoFodaComponent implements OnInit, OnDestroy {
 	async editarFODA(registro: any) {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
-			text: 'Está seguro que desea modificar el descriptivo del elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
+			text: 'Está seguro que desea modificar el descriptivo de la ' + registro.cuestion_desc + ' "' + registro.foda_desc + '"?',
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Aceptar',
@@ -87,12 +87,12 @@ export class ListadoFodaComponent implements OnInit, OnDestroy {
 		});
 		if (respuesta) {
 			const {value: motivo} = await swal({
-				title: 'Ingrese el nuevo descriptivo del elemento',
+				title: 'Ingrese el nuevo descriptivo de la ' + registro.cuestion_desc,
 				input: 'textarea',
 				inputValue: registro.foda_desc,
 				showCancelButton: true,
 				inputValidator: (value) => {
-					return !value && 'Necesita ingresar el descriptivo';
+					return !value && 'Necesita ingresar el descriptivo de la ' + registro.cuestion_desc;
 				}
 			});
 			if (motivo !== undefined) {

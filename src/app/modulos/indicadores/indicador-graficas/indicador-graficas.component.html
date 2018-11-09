@@ -19,15 +19,15 @@
             <li class="list-group-item">Objetivo de Calidad: {{registro.objetivo_desc}}</li>
         </ul>
         <div class="card-footer text-right">
-            <button *ngIf="insertar" type="button" class="btn btn-sm btn-outline-primary" (click)="agregar()">
+            <button *ngIf="insertar" type="button" class="btn btn-sm btn-outline-primary" (click)="agregarMedicion()">
 				<i class="fas fa-plus"></i> Agregar
 			</button>&nbsp;
             <a [routerLink]="cancelar" class="btn btn-sm btn-outline-dark">Regresar</a>
         </div>
     </div>
-    <div class="card">
+    <!-- <div class="card">
         <div class="card-header">Gráfica</div>
-    </div>
+    </div> -->
 </div>
 <app-mat-data-table (registro)="detectarAccion($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect">
 </app-mat-data-table>

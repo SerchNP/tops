@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IndicadoresService, AccesoService, CatalogosService, IdentidadService, ProcesosService } from '../../../services/services.index';
+import { IndicadoresService, AccesoService, CatalogosService,
+		IdentidadService, ProcesosService, PuestosService } from '../../../services/services.index';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
@@ -15,10 +16,13 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 
 	cargando: boolean;
+	id: number;
 	accion: string;
-	idIndicador: number;
 	autoriza: string;
+	cambia = 'N';
+	origen: string;
 	titulo: string;
+	cancelar: any[];
 
 	seleccionado = '';
 	objetivoSel = '';
@@ -29,9 +33,9 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	frecuencias: any[] = [];
 	resultados: any[] = [];
 	objetivos: any[] = [];
+	puestos: any[] = [];
 
 	forma: FormGroup;
-	cancelar: any[] = ['/indicadores', 'matriz_indicadores'];
 
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
@@ -39,25 +43,34 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				private _indicador: IndicadoresService,
 				private _procesos: ProcesosService,
 				private _catalogos: CatalogosService,
-				private _identidad: IdentidadService
+				private _identidad: IdentidadService,
+				private _puesto: PuestosService
 				) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.idIndicador = params['id'];
+			this.id = params['id'];
 			this.autoriza = params['aut'];
+			this.origen = params['o'];
 		});
+
 		let pre = '';
 		switch (this.accion) {
-			case 'I':	pre = 'Registro';			  break;
-			case 'U':	pre = 'Actualización';		  break;
-			case 'V':	pre = 'Consulta';			  break;
-			case 'A':	pre = 'Autorización/Rechazo'; break;
+			case 'I': pre = 'Registro';			    break;
+			case 'U': pre = (this.origen === 'M' ? 'Actualización' : 'Corrección');	    break;
+			case 'V': pre = 'Consulta';			    break;
+			case 'A': pre = 'Autorización/Rechazo'; break;
 		}
 
 		this.titulo = pre + ' de Indicadores';
 
-		if (this.idIndicador !== 0) {
-			this.cargarIndicador(this.idIndicador);
+		if (this.origen === 'M') {
+			this.cancelar = ['/indicadores', 'matriz_indicadores'];
+		} else {
+			this.cancelar = ['/indicadores', 'indicadores_rechazados_form'];
+		}
+
+		if (this.id !== 0) {
+			this.cargarIndicador(this.id);
 		}
 	}
 
@@ -75,15 +88,16 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 			'calculo': new FormControl('', Validators.required),
 			'formula' : new FormControl('', Validators.required),
 			'resultado' : new FormControl('', Validators.required),
+			'puesto_resp': new FormControl('', Validators.required),
 			'autoriza_desc': new FormControl(''),
 			'motivo_cancela': new FormControl(''),
-			'motivo_rechaza': new FormControl('')
+			'motivo_rechaza': new FormControl(''),
+			'motivo_modif': new FormControl('')
 		});
 		this.cargando = true;
 		this.getCatalogos();
 		this.getProcesos();
 		this.cargando = false;
-
 		this.subscription = this.forma.controls['proceso'].valueChanges
 			.subscribe(procesoSel => {
 				// "procesoSel" representa la clave del proceso seleccionado,
@@ -92,6 +106,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				this.subscription = this._procesos.getProcesoById(procesoSel).subscribe(
 					(data: any) => {
 						this.getObjetivos(data.proceso.sistema);
+						this.getPuestos(data.proceso.proceso);
 					});
 			});
 	}
@@ -102,6 +117,10 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 
 	get proceso() {
 		return this.forma.get('proceso');
+	}
+
+	get puesto_resp() {
+		return this.forma.get('puesto_resp');
 	}
 
 	get objetivo() {
@@ -176,23 +195,30 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	asignarproceso() {
-		if (this.seleccionado.length > 0) {
-			const json = JSON.parse(this.seleccionado);
-			this.forma.get('proceso').setValue(json.id);
-			this.forma.get('proceso_desc').setValue(json.name);
-			document.getElementById('close').click();
-		} else {
-			swal('Error', 'No se ha seleccionado el proceso', 'error');
-		}
+	getPuestos(proceso: number) {
+		this.cargando = true;
+		this.subscription = this._puesto.getPuestosAreaProc(proceso)
+			.subscribe(
+				(data: any) => {
+					this.puestos = data.puestos;
+					this._acceso.guardarStorage(data.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
 	}
 
-	cargarIndicador(idIndicador: number) {
-		this.subscription = this._indicador.getIndicadorById(idIndicador)
+	cargarIndicador(id: number) {
+		this.subscription = this._indicador.getIndicadorById(id)
 			.subscribe(
 				(data: any) => {
 					this._acceso.guardarStorage(data.token);
 					this.forma.patchValue(data.indicador);
+					this.cambia = data.indicador.cambia;
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -202,26 +228,52 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	guardar () {
+	async guardar () {
 		if (this.accion === 'U') {
-			this.subscription = this._indicador.modificarIndicador(this.forma.value)
-				.subscribe((data: any) => {
-					this._acceso.guardarStorage(data.token);
-					swal('Atención!!!', data.message, 'success');
-					this.router.navigate(this.cancelar);
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
+			if (this.autoriza === '3') {
+				const {value: motivo} = await swal({
+					title: 'Ingrese el motivo del cambio',
+					input: 'textarea',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return !value && 'Necesita ingresar el motivo del cambio';
 					}
 				});
+				if (motivo !== undefined) {
+					this.subscription = this._indicador.modificarIndicador(this.forma.value, motivo.toUpperCase())
+						.subscribe((data: any) => {
+							this._acceso.guardarStorage(data.token);
+							swal('Atención!!!', data.message, 'success');
+							this.router.navigate(this.cancelar);
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+				}
+			} else {
+				this.subscription = this._indicador.modificarIndicador(this.forma.value)
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.router.navigate(this.cancelar);
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
 		} else {
 			this.subscription = this._indicador.insertarIndicador(this.forma.value)
 				.subscribe((data: any) => {
 					this._acceso.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
-					this.router.navigate(this.cancelar);
+					this.objetivos = [];
+					this.ngOnInit();
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -242,7 +294,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 			confirmButtonText: 'Aceptar'
 		});
 		if (respuesta) {
-			this.subscription = this._indicador.autorizarIndicador(this.idIndicador)
+			this.subscription = this._indicador.autorizarIndicador(this.id)
 				.subscribe((data: any) => {
 					swal('Atención!!!', data.message, 'success');
 					this.router.navigate(this.cancelar);
@@ -276,7 +328,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				}
 			});
 			if (motivo !== undefined) {
-				this.subscription = this._indicador.rechazarIndicador(this.idIndicador, motivo.toUpperCase())
+				this.subscription = this._indicador.rechazarIndicador(this.id, motivo.toUpperCase())
 					.subscribe((data: any) => {
 						swal('Atención!!!', data.message, 'success');
 						this.router.navigate(this.cancelar);

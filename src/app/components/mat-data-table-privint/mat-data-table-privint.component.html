@@ -41,7 +41,7 @@
     <ng-container matColumnDef="autorizar">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
-            <button type="button" *ngIf="row.autorizar === 'S' && row.pendiente === 'S'" class="btn btn-sm btn-outline-secondary" title="Autorizar Registro" (click)="onButtonClicked(row, 'A')">
+            <button type="button" *ngIf="row.autorizar === 'S'" class="btn btn-sm btn-outline-secondary" title="Autorizar Registro" (click)="onButtonClicked(row, 'A')">
 				<i class="fas fa-clipboard-check"></i>
 			</button>
         </td>
@@ -65,7 +65,7 @@
     <ng-container matColumnDef="cancelar">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let row">
-            <button type="button" *ngIf="row.cancelado === 'N' && row.administrar === 'S' && row.pendiente === 'N'" class="btn btn-sm btn-outline-secondary" title="Cancelar Registro" (click)="onButtonClicked(row, 'C')">
+            <button type="button" *ngIf="row.cancelado === 'N' && row.administrar === 'S'" class="btn btn-sm btn-outline-secondary" title="Cancelar Registro" (click)="onButtonClicked(row, 'C')">
 				<i class="fas fa-trash-alt"></i>
 			</button>
         </td>

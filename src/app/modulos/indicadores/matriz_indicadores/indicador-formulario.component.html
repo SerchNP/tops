@@ -4,7 +4,6 @@
     <div class="col-sm-12">
         <div class="alert alert-warning text-left">
             <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
-
         </div>
     </div>
 </div>
@@ -14,11 +13,15 @@
         <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
             <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
             <div class="col-sm-3">
-                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
+                <input type="text" readonly class="form-control" formControlName="autoriza_desc">
             </div>
             <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
             <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
-                <textarea readonly class="form-control" formControlName="motivo_cancela" aria-describedby="motivo_cancelaHelp"></textarea>
+                <textarea readonly class="form-control" formControlName="motivo_cancela"></textarea>
+            </div>
+            <label for="motivo_modif" *ngIf="cambia === 'S'" class="col-sm-1 col-form-label text-right">Motivo</label>
+            <div class="col-sm-4" *ngIf="cambia === 'S'">
+                <textarea readonly class="form-control" formControlName="motivo_modif"></textarea>
             </div>
         </div>
         <div class="form-group row">
@@ -128,6 +131,17 @@
                 <div *ngIf="resultado.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
+        <div class="form-group row">
+            <label for="puesto_resp" class="col-sm-2 col-form-label text-right">Responsable</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="puesto_resp" formControlName="puesto_resp" [ngStyle]="{'border-color': (puesto_resp.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.puesto}}" *ngFor="let item of puestos">{{item.puesto_desc}}</option>
+					</select>
+                <small id="puesto_respHelp" class="form-text text-muted">Puesto del responsable del indicador</small>
+                <div *ngIf="puesto_resp.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
     </div>
     <div class="text-center">
         <button type="button" class="btn btn-outline-primary" (click)="autorizar()" *ngIf="accion === 'A'">
@@ -146,23 +160,3 @@
 			Cancelar</a>
     </div>
 </form>
-<!-- Modal -->
-<div class="modal fade" id="treeModal" #treeModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar indicador proceso</h5>
-                <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
-				<span aria-hidden="true">&times;</span>
-			  </button>
-            </div>
-            <div class="modal-body">
-                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" (click)="asignarproceso()">Seleccionar</button>
-            </div>
-        </div>
-    </div>
-</div>

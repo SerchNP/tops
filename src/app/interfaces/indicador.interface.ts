@@ -36,4 +36,5 @@ export interface Indicador {
 	u_rechaza?: string;
 	motivo_rechaza?: string;
 	cancelado?: string;
+	motivo_modif?: string;
 }

@@ -82,7 +82,7 @@ export class AccesoService {
 			return true;
 		}).catch(error => {
 			this.router.navigate(['/home']);
-			swal('Atención', 'ERROR', 'error');
+			swal('Atención!!!', 'ERROR', 'error');
 			return Observable.throw(error);
 		});
 	}

@@ -23,6 +23,12 @@ export class PuestosService {
 		return this.http.get(url, {headers}).map((resp: any) => resp.puestos);
 	}
 
+	getPuestosAreaProc(proceso: number) {
+		const url = URL_SGC + this.RUTA + 'getPuestosAreaProc.json?token=' + localStorage.getItem('token') + '&p=' + proceso;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getPuestoById(idPuesto: number) {
 		const url = URL_SGC + this.RUTA + 'getPuestoById.json?id=' + idPuesto + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;

@@ -15,7 +15,6 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 	proceso_desc: string;
 
 	cargando = true;
-	jsonData: any;
 	listado: any[] = [];
 	derechos: Derechos = {administrar: true, cancelar: true, editar: true, insertar: false};
 	select = true;
@@ -52,10 +51,9 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.subscription = this._fodaService.getFODAByProcesoRechazados(this.proceso)
 			.subscribe(
-				data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.rechazados;
-					this._accesoService.guardarStorage(this.jsonData.token);
+				(data: any) => {
+					this.listado = data.rechazados;
+					this._accesoService.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {
@@ -77,13 +75,13 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 
 	guardar() {
 		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
-			swal('Atención', 'Debe seleccionar al menos un registro para autorizar', 'error');
+			swal('Atención!!!', 'Debe seleccionar al menos un registro.', 'error');
 		} else {
 			const arreglo: any[] = [];
 			this.seleccionados.forEach(element => {
 				arreglo.push(JSON.parse('{"proceso" : ' + element['proceso'] + ', "foda" : ' + element['foda'] + '}'));
 			});
-			this.subscription = this._fodaService.autorizaRechazoFODA(arreglo)
+			this.subscription = this._fodaService.reautorizarFODA(arreglo)
 				.subscribe((data: any) => {
 					swal('Atención!!!', data.message, 'success');
 					this.ngOnInit();
@@ -116,7 +114,7 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 		});
 		if (respuesta) {
 			if (registro.autoriza === 4) {
-				// Cuando esta CANCELACIÓN RECHAZADA y se "rechaza", se pone en PENDIENTE 
+				// Cuando esta CANCELACIÓN RECHAZADA y se "rechaza", se pone en PENDIENTE
 				// (NO veo la nececidad de pedir motivo si se va aborrar por el trigger)
 				this.subscription = this._fodaService.rechazarFODA(registro.proceso, registro.foda, '')
 					.subscribe((data: any) => {
@@ -132,7 +130,7 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 					});
 			} else if (registro.autoriza === 5) {
 				// Cuando está RECHAZADO y se "rechaza", se elimina(delete) de la tabla
-				this._fodaService.cancelaFODA(registro.foda, '', registro.cuestion_desc)
+				this.subscription = this._fodaService.cancelaFODA(registro.foda, '', registro.cuestion_desc)
 					.subscribe((data: any) => {
 						this._accesoService.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
@@ -145,28 +143,6 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 						}
 					});
 			}
-			/*const {value: motivo} = await swal({
-				title: 'Ingrese el motivo de rechazo del elemento',
-				input: 'textarea',
-				showCancelButton: true,
-				inputValidator: (value) => {
-					return !value && 'Necesita ingresar el motivo de rechazo';
-				}
-			});
-			if (motivo !== undefined) {
-				this.subscription = this._fodaService.rechazarFODA(registro.proceso, registro.foda, motivo)
-					.subscribe((data: any) => {
-						this._accesoService.guardarStorage(data.token);
-						swal('Atención!!!', data.message, 'success');
-						this.ngOnInit();
-					},
-					error => {
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._accesoService.logout();
-						}
-					});
-			}*/
 		}
 	}
 
@@ -205,79 +181,4 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 			}
 		}
 	}
-
-	/*async editarFODARechazado(registro: any) {
-		const {value: respuesta} = await swal({
-			title: 'Atención!!!',
-			// tslint:disable-next-line:max-line-length
-			text: 'Está seguro que desea editar el elemento (' + registro.cuestion_desc + ') "' 
-					+ registro.foda_desc + '", para así volverlo PENDIENTE?',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Aceptar',
-			confirmButtonColor: '#B22222'
-		});
-		if (respuesta) {
-			const {value: motivo} = await swal({
-				title: 'Ingrese el nuevo descriptivo del elemento',
-				input: 'textarea',
-				inputValue: registro.foda_desc,
-				showCancelButton: true,
-				inputValidator: (value) => {
-					return !value && 'Necesita ingresar el nuevo descriptivo del elemento';
-				}
-			});
-			if (motivo !== undefined) {
-				this.subscription = this._fodaService.editaFODARechazado(registro.foda, motivo, registro.cuestion_desc)
-					.subscribe((data: any) => {
-						this._accesoService.guardarStorage(data.token);
-						swal('Atención!!!', data.message, 'success');
-						this.ngOnInit();
-					},
-					error => {
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._accesoService.logout();
-						}
-					});
-			}
-		}
-	}
-
-	async editarComentariosCancelacion(registro: any) {
-		const {value: respuesta} = await swal({
-			title: 'Atención!!!',
-			// tslint:disable-next-line:max-line-length
-			text: 'Está seguro que desea editar los comentarios de cancelación del elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '", para volverlo a cancelar?',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Aceptar',
-			confirmButtonColor: '#B22222'
-		});
-		if (respuesta) {
-			const {value: motivo} = await swal({
-				title: 'Ingrese el nuevo comentario de cancelación del elemento',
-				input: 'textarea',
-				inputValue: registro.motivo_cancela,
-				showCancelButton: true,
-				inputValidator: (value) => {
-					return !value && 'Necesita ingresar el nuevo comentario de cancelación del elemento';
-				}
-			});
-			if (motivo !== undefined) {
-				/*this.subscription = this._fodaService.editaCancelacionFODA(registro.foda, motivo, registro.cuestion_desc)
-					.subscribe((data: any) => {
-						this._accesoService.guardarStorage(data.token);
-						swal('Atención!!!', data.message, 'success');
-						this.ngOnInit();
-					},
-					error => {
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._accesoService.logout();
-						}
-					});
-			}
-		}
-	}*/
 }
