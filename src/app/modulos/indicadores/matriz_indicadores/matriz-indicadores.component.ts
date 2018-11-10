@@ -19,6 +19,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 
 	listado: any[] = [];
 	cargando = false;
+	llave = 'indicador';
 	menu = 'matriz_indicadores';
 	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0, 'M'];
 	ruta_rechazos = ['/indicadores', 'indicadores_rechazados_form'];

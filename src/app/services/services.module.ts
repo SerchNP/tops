@@ -11,6 +11,7 @@ import { CatalogosService } from './shared/catalogos.service';
 import { DerechosService } from './shared/derechos.service';
 import { IndicadoresService } from './indicadores/indicadores.service';
 import { RiesgoService } from './riesgos/riesgo.service';
+import { DireccionService } from './contexto/direccion.service';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { RiesgoService } from './riesgos/riesgo.service';
 		IdentidadService,
 		FodaService,
 		IndicadoresService,
-		RiesgoService
+		RiesgoService,
+		DireccionService
 	],
 	declarations: []
 })

@@ -27,6 +27,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
+	@Input() llave;
 	@Input() data: any [];
 	@Input() columns = [];
 	@Input() select;

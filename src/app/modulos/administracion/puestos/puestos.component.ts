@@ -18,7 +18,6 @@ export class PuestosComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
-	jsonData: any;
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {consultar: true, administrar: true, insertar: true, editar: true, cancelar: true};
@@ -44,10 +43,9 @@ export class PuestosComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.subscription = this._puestosService.getPuestos()
 			.subscribe(
-				data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.puestos;
-					this._accesoService.guardarStorage(this.jsonData.token);
+				(data: any) => {
+					this.listado = data.puestos;
+					this._accesoService.guardarStorage(data.token);
 					this.cargando = false;
 				},
 				error => {

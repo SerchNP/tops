@@ -25,7 +25,6 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 	procesos: any[] = [];
 	estrategias: any [] = [];
 
-
 	constructor(private activatedRoute: ActivatedRoute,
 				private formBuilder: FormBuilder,
 				private _acceso: AccesoService,
@@ -42,7 +41,6 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 			case 'I':	pre = 'Registro';			  break;
 			case 'U':	pre = 'Actualización';		  break;
 			case 'V':	pre = 'Consulta';			  break;
-			case 'A':	pre = 'Autorización/Rechazo'; break;
 		}
 
 		this.titulo = pre + ' de Dirección Estratégica';
@@ -54,8 +52,8 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.forma = this.formBuilder.group({
-			autoriza_desc: new FormControl(''),
-			proceso : new FormControl('', Validators.required)
+			proceso : new FormControl('', Validators.required),
+			estrategia: new FormControl('', Validators.required)
 		});
 
 		this.cargando = true;
@@ -70,6 +68,10 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 
 	get proceso() {
 		return this.forma.get('proceso');
+	}
+
+	get estrategia() {
+		return this.forma.get('estrategia');
 	}
 
 	cargarDireccionEst(direcccionId: number) {}
@@ -95,6 +97,10 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		}).catch(error => {
 			console.log(error);
 		});
+	}
+
+	guardar() {
+
 	}
 
 }

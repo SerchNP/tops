@@ -10,21 +10,10 @@
 <br>
 <form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
     <div class="form-group">
-        <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
-            <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
-            <div class="col-sm-3">
-                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
-            </div>
-            <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
-            <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
-                <textarea readonly class="form-control" formControlName="motivo_cancela" aria-describedby="motivo_cancelaHelp"></textarea>
-            </div>
-        </div>
-
         <div class="form-group row">
             <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
             <div class="col-sm-8">
-                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
 							<option value="" selected="selected" disabled="disabled">Seleccionar</option>
 							<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
 						</select>
@@ -33,14 +22,14 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="frecuencia" class="col-sm-2 col-form-label text-right">Tipo de Estrategia</label>
+            <label for="estrategia" class="col-sm-2 col-form-label text-right">Tipo de Estrategia</label>
             <div class="col-sm-3">
-                <select class="form-control" name="tipo_estrategia" formControlName="tipo_estrategia" [ngStyle]="{'border-color': (tipo_estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
-								<option value="" disabled="disabled" selected="selected">Seleccionar</option>
-								<option value="{{item.clave}}" *ngFor="let item of estrategias">{{item.descripcion}}</option>
-							</select>
-                <small id="tipo_estrategiaHelp" class="form-text text-muted">Tipo de Estratégia</small>
-                <div *ngIf="tipo_estrategia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <select class="form-control" name="estrategia" formControlName="estrategia" [ngStyle]="{'border-color': (estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
+						<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+						<option value="{{item.clave}}" *ngFor="let item of estrategias">{{item.descripcion}}</option>
+					</select>
+                <small id="estrategiaHelp" class="form-text text-muted">Tipo de Estratégia</small>
+                <div *ngIf="estrategia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
     </div>
