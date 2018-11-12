@@ -8,11 +8,12 @@ import { RIESGOS_ROUTES } from './riesgos.routes';
 // Modulos
 import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule, MatRadioModule } from '@angular/material';
 
 // Componentes
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
 import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-gestion-formulario.component';
+import { RiesgosRechazadosComponent } from './riesgos-gestion/riesgos-rechazados.component';
 
 @NgModule({
 	imports: [
@@ -22,11 +23,13 @@ import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-ges
 		ComponentModule,
 		FormsModule,
 		ReactiveFormsModule,
-		MatCheckboxModule
+		MatCheckboxModule,
+		MatRadioModule
 	],
 	declarations: [
 		RiesgosGestionComponent,
-		RiesgosGestionFormularioComponent
+		RiesgosGestionFormularioComponent,
+		RiesgosRechazadosComponent
 	],
 	providers: []
 })

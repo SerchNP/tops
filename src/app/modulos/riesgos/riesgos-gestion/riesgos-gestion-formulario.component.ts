@@ -31,6 +31,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 	forma: FormGroup;
 	cancelar: any[] = ['/riesgos', 'riesgo_gestion'];
 
+
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
 				private _acceso: AccesoService,
@@ -67,10 +68,6 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			riesgo_desc : new FormControl('', Validators.required),
 			cuestiones : this.formBuilder.array([]),
 			autoriza_desc: new FormControl('')
-			/*
-			'motivo_cancela': new FormControl(''),
-			'motivo_rechaza': new FormControl('')
-			*/
 		});
 
 		this.cargando = true;
@@ -88,7 +85,6 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				this.subscription = this._foda.getFODAByProceso(procesoSel).subscribe(
 					(data: any) => {
 						this.listfoda = new FiltraFodaAutPipe().transform(data.foda, 3);
-						this.listfoda.forEach((p) => this.addItem(p, this.listfodaSel));
 					});
 			});
 	}
@@ -134,34 +130,6 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 						this._acceso.logout();
 					}
 				});
-	}
-
-	addItem(p, listado): void {
-		if (listado.length === 0) {
-			this.cuestiones.push(this.createItem(p.proceso, false, p.foda, p.foda_desc, p.cuestion, p.tipo_cuestion_desc, p.orden));
-		} else {
-			let bandera = false;
-			listado.forEach(element => {
-				if (p.foda === element.foda) {
-					bandera = true;
-					return;
-				}
-			});
-			// tslint:disable-next-line:max-line-length
-			this.cuestiones.push(this.createItem(p.proceso, bandera, p.foda, p.foda_desc, p.cuestion, p.tipo_cuestion_desc, p.orden));
-		}
-	}
-
-	createItem(proceso, b_foda, foda, fodadesc, cuestion, tipo_cuestion, orden): FormGroup {
-		return this.formBuilder.group({
-			proceso: proceso,
-			foda: foda,
-			b_foda: b_foda,
-			foda_desc: fodadesc,
-			cuestion: cuestion,
-			tipo_cuestion_desc: tipo_cuestion,
-			orden: orden
-		});
 	}
 
 	guardar () {
