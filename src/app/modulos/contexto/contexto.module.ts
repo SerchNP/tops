@@ -10,7 +10,7 @@ import { ComponentModule } from '../../components/component.module';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatExpansionModule } from '@angular/material';
 import { PipesModule } from '../../pipes/pipes.module';
-
+import { MatCheckboxModule } from '@angular/material';
 
 // Componentes
 import { ContextoComponent } from './contexto.component';
@@ -33,7 +33,8 @@ import { DireccionFormularioComponent } from './direccion/direccion-formulario.c
 		ReactiveFormsModule,
 		MatExpansionModule,
 		MatBadgeModule,
-		PipesModule
+		PipesModule,
+		MatCheckboxModule
 	],
 	declarations: [
 		ContextoComponent,

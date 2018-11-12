@@ -106,7 +106,7 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 	async rechazarFODA(registro: any) {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
-			text: 'Está seguro que desea rechazar el elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
+			text: '¿Está seguro que desea rechazar la ' + registro.cuestion_desc + ' "' + registro.foda_desc + '"?',
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Aceptar',
@@ -149,7 +149,7 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 	async editarFODA(registro: any) {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
-			text: 'Está seguro que desea modificar el descriptivo del elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
+			text: '¿Está seguro que desea modificar el descriptivo de la ' + registro.cuestion_desc + ' "' + registro.foda_desc + '"?',
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Aceptar',
@@ -157,7 +157,7 @@ export class RechazosFodaComponent implements OnInit, OnDestroy {
 		});
 		if (respuesta) {
 			const {value: motivo} = await swal({
-				title: 'Ingrese el nuevo descriptivo del elemento',
+				title: 'Ingrese el nuevo descriptivo de la ' + registro.cuestion_desc,
 				input: 'textarea',
 				inputValue: registro.foda_desc,
 				showCancelButton: true,

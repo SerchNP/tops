@@ -4,6 +4,7 @@ import { Derechos } from '../../../interfaces/derechos.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
 	selector: 'app-autoriza-foda',
@@ -20,7 +21,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 	derechos: Derechos = {autorizar: true, administrar: true, cancelar: true, editar: false, insertar: false};
 	select = true;
 	allowMultiSelect = true;
-
+	accion = 'A';
 	seleccionados: any[];
 
 	columns = [
@@ -98,7 +99,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 	async rechazarFODA(registro: any) {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
-			text: 'Está seguro que desea rechazar el elemento (' + registro.cuestion_desc + ') "' + registro.foda_desc + '"?',
+			text: '¿Está seguro que desea rechazar la ' + registro.cuestion_desc + ' "' + registro.foda_desc + '"?',
 			type: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Aceptar',
@@ -106,7 +107,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 		});
 		if (respuesta) {
 			const {value: motivo} = await swal({
-				title: 'Ingrese el motivo de rechazo del elemento',
+				title: 'Ingrese el motivo de rechazo de la ' + registro.cuestion_desc,
 				input: 'textarea',
 				showCancelButton: true,
 				inputValidator: (value) => {

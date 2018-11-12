@@ -22,11 +22,13 @@ const ContextoRoutes: Routes = [
 			{
 				path: 'submenufoda',
 				children: [
-					{ path: 'foda', component: FodaComponent, data: {titulo: 'FODA', padre: 'foda'} },
-					{ path: 'fodamovs_form/:p/:d', component: FodaFormularioComponent, data: {titulo: 'FODA', padre: 'foda'} },
-					{ path: 'autorizafoda_form/:p/:d', component: AutorizaFodaComponent, data: {titulo: 'Autoriza FODA', padre: 'foda'} },
-					{ path: 'rechazosfoda_form/:p/:d', component: RechazosFodaComponent, data: {titulo: 'Rechazos FODA', padre: 'foda'} },
-					{ path: 'listado_foda', component: ListadoFodaComponent, data: {titulo: 'Listado FODA', padre: 'foda'} },
+					{ path: 'foda', component: FodaComponent, data: {titulo: 'Cuestiones Externas e Internas', padre: 'FODA'} },
+					{ path: 'fodamovs_form/:p/:d', component: FodaFormularioComponent, data: {titulo: 'Cuestiones Externas e Internas', padre: 'FODA'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'autorizafoda_form/:p/:d', component: AutorizaFodaComponent, data: {titulo: 'Autoriza FODA', padre: 'FODA'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'rechazosfoda_form/:p/:d', component: RechazosFodaComponent, data: {titulo: 'Rechazos FODA', padre: 'FODA'} },
+					{ path: 'listado_foda', component: ListadoFodaComponent, data: {titulo: 'Listado de Cuestiones Externas e Internas', padre: 'FODA'} },
 				]
 			},
 			{
@@ -35,7 +37,7 @@ const ContextoRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'direccion', component: DireccionComponent, data: {titulo: 'Dirección Estratégica', padre: 'Contexto', opcion: 'Dirección Estratégica'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'direccion_form/:acc/:id/:aut', component: DireccionFormularioComponent, data: {titulo: '', padre: 'Contexto', opcion: 'Dirección Estratégica'} }
+					{ path: 'direccion_form/:acc/:id/:aut', component: DireccionFormularioComponent, data: {titulo: 'Dirección Estratégica', padre: 'Contexto', opcion: 'Dirección Estratégica'} }
 				]
 			}
 		]

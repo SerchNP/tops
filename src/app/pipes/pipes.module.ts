@@ -4,7 +4,8 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
 import { FiltraObjetivoPipe } from '../pipes/filtra-objetivo.pipe';
 import { FiltraProcesosPipe } from '../pipes/filtra-procesos.pipe';
 import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
-import { FiltraFodaPipe } from '../pipes//filtra-foda.pipe';
+import { FiltraFodaPipe } from '../pipes/filtra-foda.pipe';
+import { FiltraTipoEstrategiaPipe } from '../pipes/filtra-tipo-estrategia.pipe';
 
 @NgModule ({
 	declarations: [
@@ -12,7 +13,8 @@ import { FiltraFodaPipe } from '../pipes//filtra-foda.pipe';
 		FiltraObjetivoPipe,
 		FiltraProcesosPipe,
 		FiltraColumnsPipe,
-		FiltraFodaPipe
+		FiltraFodaPipe,
+		FiltraTipoEstrategiaPipe
 	],
 	imports: [
 	],
@@ -21,7 +23,8 @@ import { FiltraFodaPipe } from '../pipes//filtra-foda.pipe';
 		FiltraObjetivoPipe,
 		FiltraProcesosPipe,
 		FiltraColumnsPipe,
-		FiltraFodaPipe
+		FiltraFodaPipe,
+		FiltraTipoEstrategiaPipe
 	]
 })
 
