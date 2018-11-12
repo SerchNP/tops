@@ -11,7 +11,7 @@
         <i class="fas fa-ban"></i> Rechazados
     </a>
 </div>
-<table class="table table-condensed" mat-table [dataSource]="dataSource" matSort aria-label="tabla" class=" mat-elevation-z2" matSortDisableClear multiTemplateDataRows>
+<table class="table table-condensed" [trackBy]="dataSource[llave]" mat-table [dataSource]="dataSource" matSort aria-label="tabla" class=" mat-elevation-z2" matSortDisableClear multiTemplateDataRows>
     <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()" [indeterminate]="selection.hasValue() && !isAllSelected()">
@@ -79,11 +79,11 @@
     <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
     <ng-container matColumnDef="expandedDetail">
         <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-            <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+            <div class="element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                 <div class="container">
                     <div *ngFor="let column of columns | filtraColumns: false">
                         <div class="row" *ngIf="element[column.columnDef]">
-                            <div class="col-md-2 example-header-detail" *ngIf="element[column.columnDef].trim() !== ''">
+                            <div class="col-md-2 header-detail" *ngIf="element[column.columnDef].trim() !== ''">
                                 {{column.header | uppercase}}:
                             </div>
                             <div class="col-md-10" *ngIf="element[column.columnDef].trim() !== ''">
@@ -96,10 +96,10 @@
         </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns;"></tr>
-    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="example-element-row" [class.example-expanded-row]="expandedElement === element" (click)="selection.toggle(element); onRowClicked(element); expandedElement = element;"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;" class="element-row" [class.expanded-row]="expandedElement === element" (click)="selection.toggle(element); onRowClicked(element); expandedElement = element;"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
 </table>
-<div class="example-no-results" [style.display]="dataSource?.filteredData.length == 0 ? '' : 'none'">
+<div class="no-results" [style.display]="dataSource?.filteredData.length == 0 ? '' : 'none'">
     <h6>No hay datos para mostrar.</h6>
 </div>
 <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
