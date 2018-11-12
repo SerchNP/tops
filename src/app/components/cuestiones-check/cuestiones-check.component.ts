@@ -12,7 +12,9 @@ export class CuestionesCheckComponent implements OnInit, OnChanges {
 	@Input() listFODA: any[];
 	@Input() listFODASel: any[];
 	@Input() accion: string;
-	@Input() cuestiones: FormArray;
+	@Input() cuestiones_name: string;
+
+	ctrlcuestiones: FormArray;
 
 	constructor(private formBuilder: FormBuilder) {
 		console.log(this.listFODA);
@@ -22,9 +24,14 @@ export class CuestionesCheckComponent implements OnInit, OnChanges {
 		if (changes['listFODA']) {
 			this.listFODA.forEach((p) => this.addItem(p, this.listFODASel));
 		}
+		this.ctrlcuestiones = this.cuestiones;
 	}
 
 	ngOnInit() {
+	}
+
+	get cuestiones() {
+		return this.forma.get(this.cuestiones_name) as FormArray;
 	}
 
 	addItem(p, listado): void {
