@@ -10,6 +10,7 @@ import { Derechos } from '../../interfaces/derechos.interface';
 import { Aviso } from '../../interfaces/aviso.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
+import { filter } from 'rxjs/operators';
 
 
 @Component({
@@ -65,14 +66,20 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 			this.dataSource.sort = this.sort;
 		} else if (changes['derechos']) {
 			if (this.derechos.consultar) {
-				this.displayedColumns.push('consultar');
+				if (this.displayedColumns.indexOf('consultar') === -1) {
+					this.displayedColumns.push('consultar');
+				}
 			}
 			if (this.derechos.administrar) {
 				if (this.derechos.editar) {
-					this.displayedColumns.push('editar');
+					if (this.displayedColumns.indexOf('editar') === -1) {
+						this.displayedColumns.push('editar');
+					}
 				}
 				if (this.derechos.cancelar) {
-					this.displayedColumns.push('cancelar');
+					if (this.displayedColumns.indexOf('cancelar') === -1) {
+						this.displayedColumns.push('cancelar');
+					}
 				}
 			}
 		}
