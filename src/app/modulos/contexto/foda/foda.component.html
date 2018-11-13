@@ -27,14 +27,18 @@
 					<a class="card-link" [routerLink]="['/contexto', 'submenufoda', 'fodamovs_form', proceso.proceso, proceso.proceso_desc]">
 						<i class="far fa-eye"></i> Ver FODA
 					</a>
-					<a class="card-link" [routerLink]="['/contexto', 'submenufoda', 'autorizafoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.pendtes_foda > 0 && proceso.autorizar === 'S'" [matBadgeHidden]="proceso.pendtes_foda === 0" [matBadge]="proceso.pendtes_foda"
+					<a class="card-link" [routerLink]="['/contexto', 'submenufoda', 'autorizafoda_form', proceso.proceso, proceso.proceso_desc, 'A']" *ngIf="proceso.pendtes_foda > 0 && proceso.autorizar === 'S'" [matBadgeHidden]="proceso.pendtes_foda === 0" [matBadge]="proceso.pendtes_foda"
 						matBadgePosition="after" matBadgeColor="accent">
-						<i class="fas fa-check-double"></i> Autorizar
+						<i class="fas fa-check-double"></i> Pendientes
 					</a>
-					<a class="card-link text-danger" [routerLink]="['/contexto', 'submenufoda', 'rechazosfoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.rechazados_foda > 0 && proceso.administrar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
+					<a class="card-link text-danger" [routerLink]="['/contexto', 'submenufoda', 'autorizafoda_form', proceso.proceso, proceso.proceso_desc, 'R']" *ngIf="proceso.rechazados_foda > 0 && proceso.administrar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
 						[matBadge]="proceso.rechazados_foda" matBadgePosition="after" matBadgeColor="warn">
 						<i class="fas fa-ban"></i> Rechazados
 					</a>
+					<!-- <a class="card-link text-danger" [routerLink]="['/contexto', 'submenufoda', 'rechazosfoda_form', proceso.proceso, proceso.proceso_desc]" *ngIf="proceso.rechazados_foda > 0 && proceso.administrar === 'S'" [matBadgeHidden]="proceso.rechazados_foda === 0"
+						[matBadge]="proceso.rechazados_foda" matBadgePosition="after" matBadgeColor="warn">
+						<i class="fas fa-ban"></i> Rechazados
+					</a> -->
 				</div>
 			</small>
         </div>

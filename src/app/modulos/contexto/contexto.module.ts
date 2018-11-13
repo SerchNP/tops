@@ -18,7 +18,6 @@ import { FodaComponent } from './foda/foda.component';
 import { FodaFormularioComponent } from './foda/foda-formulario.component';
 import { CardFodaComponent } from './card-foda/card-foda.component';
 import { AutorizaFodaComponent } from './foda/autoriza-foda.component';
-import { RechazosFodaComponent } from './foda/rechazos-foda.component';
 import { ListadoFodaComponent } from './foda/listado-foda.component';
 import { DireccionComponent } from './direccion/direccion.component';
 import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
@@ -42,7 +41,6 @@ import { DireccionFormularioComponent } from './direccion/direccion-formulario.c
 		FodaFormularioComponent,
 		CardFodaComponent,
 		AutorizaFodaComponent,
-		RechazosFodaComponent,
 		ListadoFodaComponent,
 		DireccionComponent,
 		DireccionFormularioComponent

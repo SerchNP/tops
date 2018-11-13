@@ -1,10 +1,13 @@
-import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output, OnChanges,
+		EventEmitter, SimpleChanges } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import { MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import { AccesoService } from '../../services/shared/acceso.service';
 import { FiltraColumnsPipe } from '../../pipes/filtra-columns.pipe';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Opciones } from '../../interfaces/opciones.interface';
 import { Derechos } from '../../interfaces/derechos.interface';
+import { Aviso } from '../../interfaces/aviso.interface';
 import { Router } from '@angular/router';
 import swal from 'sweetalert2';
 
@@ -27,16 +30,15 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	@ViewChild(MatSort) sort: MatSort;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 
-	@Input() llave;
 	@Input() data: any [];
 	@Input() columns = [];
 	@Input() select;
 	@Input() allowMultiSelect;
 	@Input() ruta_add: any[];
-	@Input() aviso_r: number;
-	@Input() ruta_rechazos: any[];
-	@Input() graficas: boolean;
-	@Input() detalle: boolean;
+	@Input() ruta_p: any[];
+	@Input() ruta_r: any[];
+	@Input() avisos: Aviso = {};
+	@Input() opciones: Opciones = {};
 	@Input() derechos: Derechos = {};
 
 	expandedElement;
@@ -55,7 +57,7 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 	constructor(private router: Router,
 				private _acceso: AccesoService) { }
 
-	ngOnChanges(changes) {
+	ngOnChanges(changes: SimpleChanges) {
 		if (changes['data']) {
 			this.dataSource = new MatTableDataSource<any>(this.data);
 			this.length = this.dataSource.data.length;
@@ -73,9 +75,6 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 					this.displayedColumns.push('cancelar');
 				}
 			}
-			if (this.derechos.autorizar) {
-				this.displayedColumns.splice(0, 0, 'autorizar');
-			}
 		}
 	}
 
@@ -89,13 +88,12 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 		if (this.select) {
 			this.displayedColumns.splice(0, 0, 'select');
 		}
-		if (this.detalle) {
-			this.displayedColumns.push('detalle');
-		}
-		if (this.graficas) {
+		if (this.opciones.graficas) {
 			this.displayedColumns.push('graficas');
 		}
-
+		if (this.opciones.detalle) {
+			this.displayedColumns.push('detalle');
+		}
 		this.selection = new SelectionModel<{any}>(this.allowMultiSelect, []);
 	}
 

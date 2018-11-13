@@ -1,4 +1,4 @@
-export class FodaC {
+export class Foda {
 	proceso: number;
 	proceso_desc: string;
 	foda: number;

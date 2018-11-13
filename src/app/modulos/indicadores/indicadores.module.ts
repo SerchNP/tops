@@ -13,7 +13,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 import { IndicadoresComponent } from './indicadores.component';
 import { MatrizIndicadoresComponent } from './matriz_indicadores/matriz-indicadores.component';
 import { IndicadorFormularioComponent } from './matriz_indicadores/indicador-formulario.component';
-import { IndicadoresRechazadosComponent } from './matriz_indicadores/indicadores-rechazados.component';
+import { AutorizaIndicadoresComponent } from './matriz_indicadores/autoriza-indicadores.component';
 import { IndicadorGraficasComponent } from './indicador-graficas/indicador-graficas.component';
 
 
@@ -30,7 +30,7 @@ import { IndicadorGraficasComponent } from './indicador-graficas/indicador-grafi
 		IndicadoresComponent,
 		MatrizIndicadoresComponent,
 		IndicadorFormularioComponent,
-		IndicadoresRechazadosComponent,
+		AutorizaIndicadoresComponent,
 		IndicadorGraficasComponent
 	]
 })

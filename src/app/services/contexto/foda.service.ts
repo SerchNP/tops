@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
-import { FodaC } from '../../models/fodaC.model';
+import { Foda } from '../../models/foda.model';
 import { Router } from '@angular/router';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
@@ -31,7 +31,7 @@ export class FodaService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	insertaFODA(foda: FodaC) {
+	insertaFODA(foda: Foda) {
 		const url = URL_SGC + this.RUTA + 'insertaFODA.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length

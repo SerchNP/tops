@@ -4,7 +4,6 @@ export interface Puestos {
 	predecesor?: string;
 	predecesor_desc?: string;
 	activo: string;
-	// activo_desc: string;
 	f_captura: Date;
 	u_captura: string;
 	f_modifica?: Date;

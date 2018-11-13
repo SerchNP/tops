@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Derechos } from '../../../interfaces/derechos.interface';
+import { Opciones } from '../../../interfaces/opciones.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { AccesoService, DerechosService, DireccionService, CatalogosService } from '../../../services/services.index';
 import { MatDialog } from '@angular/material';
@@ -20,8 +21,8 @@ export class DireccionComponent implements OnInit, OnDestroy {
 	ruta_add =  ['/contexto', 'submenudirest', 'direccion_form', 'I', 0, 0];
 	llave = 'regid';
 	cargando = false;
+	opciones: Opciones = { detalle: true };
 	derechos: Derechos = {};
-
 	select = false;
 	allowMultiSelect = false;
 	listado: any[] = [];

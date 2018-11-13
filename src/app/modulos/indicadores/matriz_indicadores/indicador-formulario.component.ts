@@ -20,6 +20,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	accion: string;
 	autoriza: string;
 	cambia = 'N';
+	s_guardar = true;
 	origen: string;
 	titulo: string;
 	cancelar: any[];
@@ -55,10 +56,9 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 
 		let pre = '';
 		switch (this.accion) {
-			case 'I': pre = 'Registro';			    break;
-			case 'U': pre = (this.origen === 'M' ? 'Actualización' : 'Corrección');	    break;
-			case 'V': pre = 'Consulta';			    break;
-			case 'A': pre = 'Autorización/Rechazo'; break;
+			case 'I': pre = 'Registro';	break;
+			case 'U': pre = (this.origen === 'M' ? 'Actualización' : 'Corrección'); break;
+			case 'V': pre = 'Consulta'; this.s_guardar = false; break;
 		}
 
 		this.titulo = pre + ' de Indicadores';
@@ -66,7 +66,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 		if (this.origen === 'M') {
 			this.cancelar = ['/indicadores', 'matriz_indicadores'];
 		} else {
-			this.cancelar = ['/indicadores', 'indicadores_rechazados_form'];
+			this.cancelar = ['/indicadores', 'autorizaindica_form', 'R']; // La edicion se habilita solo en el rechazo
 		}
 
 		if (this.id !== 0) {
@@ -284,7 +284,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async autorizar () {
+	/*async autorizar () {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
 			text: '¿Está seguro que desea autorizar '
@@ -306,9 +306,9 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		}
-	}
+	}*/
 
-	async rechazar () {
+	/*async rechazar () {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
 			text: '¿Está seguro que desea rechazar '
@@ -341,5 +341,5 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 					});
 			}
 		}
-	}
+	}*/
 }

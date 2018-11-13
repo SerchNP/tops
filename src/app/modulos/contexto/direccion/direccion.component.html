@@ -7,5 +7,5 @@
     </div>
 </div>
 <br>
-<app-mat-data-table-privint [llave]="llave" (registro)="detectarAccion($event)" [detalle]="true" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect" [ruta_add]="ruta_add">
+<app-mat-data-table-privint (registro)="detectarAccion($event)" [opciones]="opciones" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect" [ruta_add]="ruta_add">
 </app-mat-data-table-privint>

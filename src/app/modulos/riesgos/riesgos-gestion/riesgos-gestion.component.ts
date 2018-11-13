@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccesoService } from '../../../services/shared/acceso.service';
-import { Derechos } from '../../../interfaces/derechos.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
-import { RiesgoService, DerechosService } from '../../../services/services.index';
+import { AccesoService, RiesgoService, DerechosService } from '../../../services/services.index';
+import { Opciones } from '../../../interfaces/opciones.interface';
+import { Derechos } from '../../../interfaces/derechos.interface';
+import { Aviso } from '../../../interfaces/aviso.interface';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -23,20 +24,21 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0];
+	ruta_p = ['/riesgos', 'autorizariesgog_form', 'A'];
+	ruta_r = ['/riesgos', 'autorizariesgog_form', 'R'];
 	select = false;
 	allowMultiSelect = false;
+	opciones: Opciones = { detalle: true };
 	derechos: Derechos = {};
-
-	ruta_rechazos = ['/riesgos', 'rechazos_riesgog_form', 'R'];
-	aviso_r = 0;
+	avisos: Aviso = {};
 
 	columns = [
-		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
-		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 	       cell: (riesgo: any) => `${riesgo.proceso_desc}`},
-		{ columnDef: 'riesgo', 		 	 header: 'Clave', 	    	   align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
-		{ columnDef: 'riesgo_desc',	 	 header: 'riesgo',    	   cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		   cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
-		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			   cell: (riesgo: any) => `${riesgo.estatus_desc}`}
+		{ columnDef: 'proceso',     	 header: 'ID Proceso',	align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
+		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 	cell: (riesgo: any) => `${riesgo.proceso_desc}`},
+		{ columnDef: 'riesgo', 		 	 header: 'Clave', 	    align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
+		{ columnDef: 'riesgo_desc',	 	 header: 'riesgo',    	cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
+		{ columnDef: 'autoriza_desc', 	 header: 'Situación',	cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	 header: 'Estatus',		cell: (riesgo: any) => `${riesgo.estatus_desc}`}
 	];
 
 	constructor(private _acceso: AccesoService,
@@ -86,8 +88,6 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	getDerechos() {
 		this._derechos.getDerechosGlobalMenuPromesa(this._MENU).then((data: any) => {
 			this.derechos = data;
-			// this._derechos.PRIVILEGIOS = data;
-			// localStorage.setItem('actionsRG', JSON.stringify(this.derechos));
 		}).catch(error => {
 			console.log(error);
 		});
@@ -97,7 +97,8 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 		this.subscription = this._riesgo.getAvisoRiesgos(this._TIPOR, this._MENU)
 			.subscribe(
 				(data: any) => {
-					this.aviso_r = data.aviso.rechazados;
+					this.avisos.pendientes = data.aviso.pendientes;
+					this.avisos.rechazados = data.aviso.rechazados;
 					this._acceso.guardarStorage(data.token);
 					this.cargando = false;
 				},

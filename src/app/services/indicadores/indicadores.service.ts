@@ -19,26 +19,32 @@ export class IndicadoresService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getAvisoMatrizIndicadores(menuID: string) {
-		const url = URL_SGC + this.RUTA + 'getAvisoMatrizIndicadores.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+	getAvisoMatrizIndicadores() {
+		const url = URL_SGC + this.RUTA + 'getAvisoMatrizIndicadores.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getIndicadoresRechazados(menuID: string) {
-		const url = URL_SGC + this.RUTA + 'getIndicadoresRechazados.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+	getIndicadoresPendientes() {
+		const url = URL_SGC + this.RUTA + 'getIndicadoresPendientes.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getMedicionesIndicador(idIndicador: number) {
-		const url = URL_SGC + this.RUTA + 'getMedicionesIndicador.json?token=' + localStorage.getItem('token') + '&i=' + idIndicador;
+	getIndicadoresRechazados() {
+		const url = URL_SGC + this.RUTA + 'getIndicadoresRechazados.json?token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getIndicadorById(idIndicador: number) {
-		const url = URL_SGC + this.RUTA + 'getIndicadorById.json?id=' + idIndicador + '&token=' + localStorage.getItem('token');
+	getMedicionesIndicador(indicadorID: number) {
+		const url = URL_SGC + this.RUTA + 'getMedicionesIndicador.json?token=' + localStorage.getItem('token') + '&i=' + indicadorID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getIndicadorById(indicadorID: number) {
+		const url = URL_SGC + this.RUTA + 'getIndicadorById.json?id=' + indicadorID + '&token=' + localStorage.getItem('token');
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -60,24 +66,24 @@ export class IndicadoresService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	cancelarIndicador(idIndicador: number, motivo: string) {
+	cancelarIndicador(indicadorID: number, motivo: string) {
 		const url = URL_SGC + this.RUTA + 'cancelarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + indicadorID + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	autorizarIndicador(idIndicador: number) {
-		const url = URL_SGC + this.RUTA + 'autorizarIndicador.json?token=' + localStorage.getItem('token');
-		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + '}'));
-		return this.http.post(url, body, { headers }).map(resp => resp);
-	}
-
-	rechazarIndicador(idIndicador: number, motivo: string) {
+	rechazarIndicador(indicadorID: number, motivo: string) {
 		const url = URL_SGC + this.RUTA + 'rechazarIndicador.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"indicador": ' + idIndicador + ', "motivo_rechaza": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"indicador": ' + indicadorID + ', "motivo_rechaza": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	autorizarIndicadores(arreglo: any[]) {
+		const url = URL_SGC + this.RUTA + 'autorizarIndicadores.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(arreglo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

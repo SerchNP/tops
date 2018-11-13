@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccesoService } from '../../../services/shared/acceso.service';
-import { Derechos } from '../../../interfaces/derechos.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
-import { IndicadoresService, DerechosService } from '../../../services/services.index';
+import { AccesoService, IndicadoresService, DerechosService } from '../../../services/services.index';
+import { Derechos } from '../../../interfaces/derechos.interface';
+import { Opciones } from '../../../interfaces/opciones.interface';
+import { Aviso } from '../../../interfaces/aviso.interface';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -22,11 +23,13 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 	llave = 'indicador';
 	menu = 'matriz_indicadores';
 	ruta_add =  ['/indicadores', 'indicador_form', 'I', 0, 0, 'M'];
-	ruta_rechazos = ['/indicadores', 'indicadores_rechazados_form'];
+	ruta_p = ['/indicadores', 'autorizaindica_form', 'A'];
+	ruta_r = ['/indicadores', 'autorizaindica_form', 'R'];
 	select = false;
 	allowMultiSelect = false;
+	opciones: Opciones = { graficas: true };
 	derechos: Derechos = {};
-	aviso_r = 0;
+	avisos: Aviso = {pendientes: 0, rechazados: 0};
 
 	columns = [
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',   	   align: 'center', cell: (indicador: any) => `${indicador.proceso}`},
@@ -56,19 +59,7 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.getDerechos();
 		this.getAviso();
-		this.subscription = this._indicador.getMatrizIndicadores(this.menu)
-			.subscribe(
-				(data: any) => {
-					this.listado = data.indicadores;
-					this._acceso.guardarStorage(data.token);
-					this.cargando = false;
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
-					}
-				});
+		this.getMatriz();
 	}
 
 	ngOnDestroy() {
@@ -90,11 +81,28 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		}
 	}
 
+	getMatriz() {
+		this.subscription = this._indicador.getMatrizIndicadores(this.menu)
+			.subscribe(
+				(data: any) => {
+					this.listado = data.indicadores;
+					this._acceso.guardarStorage(data.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
 	getAviso() {
-		this.subscription = this._indicador.getAvisoMatrizIndicadores(this.menu)
+		this.subscription = this._indicador.getAvisoMatrizIndicadores()
 		.subscribe(
 			(data: any) => {
-				this.aviso_r = data.aviso[0].rechazados;
+				this.avisos.pendientes = data.aviso.pendientes;
+				this.avisos.rechazados = data.aviso.rechazados;
 				this._acceso.guardarStorage(data.token);
 				this.cargando = false;
 			},
@@ -131,7 +139,8 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				// tslint:disable-next-line:max-line-length
-				text: 'Está seguro que desea cancelar el indicador "' + indicador.indicador_desc + '" del proceso ' + indicador.proceso_desc + '?',
+				text: 'Está seguro que desea cancelar el indicador "'
+					+ indicador.indicador_desc + '" del proceso ' + indicador.proceso_desc + '?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',

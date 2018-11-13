@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FodaService, AccesoService } from '../../../services/services.index';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { FodaC } from '../../../models/fodaC.model';
+import { Foda } from '../../../models/foda.model';
 import { MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
@@ -16,7 +16,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
-	@Input() listado: FodaC[] = [];
+	@Input() listado: Foda[] = [];
 	@Input() cuestion: string;
 	@Input() cuestion_desc: string;
 	@Input() proceso: number;
@@ -43,7 +43,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 			}
 		});
 		if (fodaDESC !== undefined) {
-			const foda: FodaC = new FodaC();
+			const foda: Foda = new Foda();
 			foda.cuestion = this.cuestion;
 			foda.cuestion_desc = this.cuestion_desc;
 			foda.foda_desc = fodaDESC;
@@ -67,7 +67,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async cancelar(foda: FodaC, index) {
+	async cancelar(foda: Foda, index) {
 		if (foda.autoriza === 7 || foda.autoriza === 6) {
 			swal('ERROR', 'La ' + this.cuestion_desc + ' se encuentra cancelada', 'error'
 			);
@@ -143,7 +143,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	cancelaFoda (foda: FodaC, modo: string, index: number, motivo?: string) {
+	cancelaFoda (foda: Foda, modo: string, index: number, motivo?: string) {
 		this.subscription = this._fodaService.cancelaFODA(foda.foda, motivo, this.cuestion_desc)
 			.subscribe((data: any) => {
 				swal('Atención!!!', data.message, 'success');

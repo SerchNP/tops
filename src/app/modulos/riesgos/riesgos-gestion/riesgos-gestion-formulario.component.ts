@@ -173,7 +173,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async autorizar () {
+	/*async autorizar () {
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
 			text: '¿Está seguro que desea autorizar '
@@ -230,6 +230,6 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 					});
 			}
 		}
-	}
+	}*/
 
 }
