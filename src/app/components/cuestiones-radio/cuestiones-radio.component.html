@@ -1,23 +1,16 @@
 <div [formGroup]="forma">
-    <ul class="list-group" *ngIf="cuestiones.controls.length === 0">
+    <ul class="list-group" *ngIf="listFODA.length === 0">
         <li class="list-group-item invalid-feedback">No hay datos para mostrar.
         </li>
     </ul>
-    <ul class="list-group" *ngIf="cuestiones.controls.length > 0" formArrayName="cuestiones">
-        <mat-radio-group>
-            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of cuestiones.controls; let i = index" [formGroupName]="i">
-                <mat-radio-button [value]="item.value.foda" [disabled]="accion === 'I' || accion === 'U'  ? null: 'disabled'">
-                    <small class="text-muted">{{item.value.cuestion}}{{item.value.orden}} Cuestion {{item.value.tipo_cuestion_desc}}</small>
-                    <p style="margin-bottom: 0;">{{item.value.foda_desc}}</p>
+    <ul class="list-group" *ngIf="listFODA.length > 0">
+        <mat-radio-group [formControlName]="cuestiones_name">
+            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listFODA; let i = index">
+                <mat-radio-button [value]="item.foda" [disabled]="accion === 'I' || accion === 'U'  ? null: 'disabled'">
+                    <small class="text-muted">{{item.cuestion}}{{item.orden}} Cuestion {{item.tipo_cuestion_desc}}</small>
+                    <p style="margin-bottom: 0;">{{item.foda_desc}}</p>
                 </mat-radio-button>
             </li>
         </mat-radio-group>
-
-        <!--  <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of cuestiones.controls; let i = index" [formGroupName]="i">
-            <mat- formControlName="b_foda" [disabled]="accion === 'I' || accion === 'U'  ? null: 'disabled'">
-                <small class="text-muted">{{item.value.cuestion}}{{item.value.orden}} Cuestion {{item.value.tipo_cuestion_desc}}</small>
-                <p style="margin-bottom: 0;">{{item.value.foda_desc}}</p>
-                </mat-checkbox>
-        </li>-->
     </ul>
 </div>

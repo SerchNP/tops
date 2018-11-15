@@ -21,31 +21,123 @@
                 <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="estrategia" class="col-sm-2 col-form-label text-right">Tipo de Estrategia</label>
-            <div class="col-sm-4">
-                <select class="form-control" name="estrategia" formControlName="estrategia" [ngStyle]="{'border-color': (estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
-						<option value="" disabled="disabled" selected="selected">Seleccionar</option>
-						<option value="{{item.clave}}" *ngFor="let item of estrategias">{{item.descripcion}}</option>
-					</select>
-                <small id="estrategiaHelp" class="form-text text-muted" *ngIf="estrateg">{{ estrateg[0].combinacion_desc }}</small>
-                <div *ngIf="estrategia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-est-tab" data-toggle="tab" href="#nav-est" role="tab" aria-controls="nav-est" aria-selected="true">Estrategia</a>
+                <a class="nav-item nav-link" id="nav-eje-tab" data-toggle="tab" href="#nav-eje" role="tab" aria-controls="nav-eje" aria-selected="false" [ngClass]="(proceso.value === '' || estrategia.invalid || foda_a.invalid || foda_b.invalid) ? 'disabled' : null">Ejes Estratégicos</a>
+                <a class="nav-item nav-link" id="nav-lac-tab" data-toggle="tab" href="#nav-lac" role="tab" aria-controls="nav-lac" aria-selected="false" [ngClass]="(proceso.value === '' || estrategia.invalid || foda_a.invalid || foda_b.invalid) ? 'disabled' : null">Líneas de Acción</a>
             </div>
-            <div class="col-sm-5 text-uppercase text-primary text-left" *ngIf="estrateg">
-                <p>{{ estrateg[0].accion_general }}</p>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-est" role="tabpanel" aria-labelledby="nav-est-tab">
+                <br/>
+                <div class="form-group row">
+                    <label for="estrategia" class="col-sm-2 col-form-label text-right">Tipo de Estrategia</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" name="estrategia" formControlName="estrategia" [ngStyle]="{'border-color': (estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || proceso.value === '' ? 'disabled' : null)">
+								<option value="" disabled="disabled" selected="selected">Seleccionar</option>
+								<option value="{{item.clave}}" *ngFor="let item of estrategias">{{item.descripcion}}</option>
+							</select>
+                        <small id="estrategiaHelp" class="form-text text-muted" *ngIf="estrateg">{{ estrateg[0].combinacion_desc }}</small>
+                        <div *ngIf="estrategia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                    </div>
+                    <div class="col-sm-5 text-uppercase text-primary text-left" *ngIf="estrateg">
+                        <p>{{ estrateg[0].accion_general }}</p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="foda_a" class="col-sm-12 col-form-label text-center">Cuestiones Externas/Internas A</label>
+                        <div class="col-sm-12">
+                            <app-cuestiones-radio [forma]="forma" [listFODA]="listFODA_a" [listFODASel]="listFODASel_a" [cuestiones_name]="'foda_a'" [accion]="accion"></app-cuestiones-radio>
+                            <div *ngIf="foda_a.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="foda_b" class="col-sm-12 col-form-label text-center">Cuestiones Externas/Internas B</label>
+                        <div class="col-sm-12">
+                            <app-cuestiones-radio [forma]="forma" [listFODA]="listFODA_b" [listFODASel]="listFODASel_b" [cuestiones_name]="'foda_b'" [accion]="accion"></app-cuestiones-radio>
+                            <div *ngIf="foda_b.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-eje" role="tabpanel" aria-labelledby="nav-eje-tab">
+                <br/>
+                <div class="form-group row">
+                    <label for="ejes" class="col-sm-2 col-form-label text-right">Ejes Estratégicos</label>
+                    <div class="col-sm-10">
+                        <ul class="list-group" *ngIf="ejes.controls.length === 0">
+                            <li class="list-group-item invalid-feedback">No hay datos para mostrar.
+                            </li>
+                        </ul>
+                        <ul class="list-group" *ngIf="ejes.controls.length > 0" formArrayName="ejes">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of ejes.controls; let i = index" [formGroupName]="i">
+                                <mat-checkbox formControlName="b_eje" [disabled]="accion === 'I' || accion === 'U'  ? null: 'disabled'">
+                                    <p style="margin-bottom: 0; white-space: normal;">{{item.value.numero}}.- {{item.value.descrip}}</p>
+                                </mat-checkbox>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-lac" role="tabpanel" aria-labelledby="nav-lac-tab">
+                <br/>
+                <div class="row">
+                    <div class=" col-md-12 text-center">
+                        <button type="button" class="btn btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addLinea()">
+							<i class="fa fa-plus"></i> Agregar Línea de Acción
+						</button>
+                    </div>
+                </div>
+                <br/>
+                <table class="table table-sm table-hover" formArrayName="lineas">
+                    <thead class="thead-secondary">
+                        <tr>
+                            <th>Líneas de Acción</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Nombre del Responsable</th>
+                            <th>Puesto del Responsable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of lineas.controls; let i = index" [formGroupName]="i">
+                            <td>
+                                <textarea rows="2" cols="60" formControlName="accion" [attr.disabled]="item.value.clave> 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="lineas.controls[i].controls['accion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <input type="date" formControlName="fecha" style="width: 150px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <div *ngIf="lineas.controls[i].controls['fecha'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <input type="text" formControlName="responsable" style="width: 280px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <div *ngIf="lineas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <select formControlName="puesto" style="width: 350px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+									<option value="">Seleccionar</option>
+									<option value="{{puesto.puesto}}" *ngFor="let puesto of listaPuestos" >{{puesto.puesto_desc}}</option>
+								</select>
+                                <div *ngIf="lineas.controls[i].controls['puesto'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="form-group row">
-            <label for="cuestiones_a" class="col-sm-2 col-form-label text-right">Cuestiones Externas/Internas A</label>
-            <div class="col-sm-10">
-                <app-cuestiones-check #fodaCheck [forma]="forma" [listFODA]="listFODA_a" [listFODASel]="listFODASel_a" [cuestiones_name]="'cuestiones_a'" [accion]="accion"></app-cuestiones-check>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="cuestiones_b" class="col-sm-2 col-form-label text-right">Cuestiones Externas/Internas B</label>
-            <div class="col-sm-10">
-                <app-cuestiones-check #fodaCheck [forma]="forma" [listFODA]="listFODA_b" [listFODASel]="listFODASel_b" [cuestiones_name]="'cuestiones_b'" [accion]="accion"></app-cuestiones-check>
-            </div>
+        <br/>
+        <div class="text-center">
+            <!--<a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'A' || accion === 'V'">
+                <i class="far fa-arrow-alt-circle-left"></i> Regresar
+            </a>&nbsp;-->
+            <button type="submit" class="btn btn-outline-primary" *ngIf="accion === 'U' || accion === 'I'" [disabled]="!forma.valid">
+					<i class="fa fa-save"></i> Guardar
+				</button>&nbsp;
+            <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U' || accion === 'I'">
+					Cancelar</a>
         </div>
     </div>
 </form>

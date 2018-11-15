@@ -36,6 +36,7 @@ export class DireccionComponent implements OnInit, OnDestroy {
 		{ columnDef: 'foda_a_desc',  	 header: 'Cuestion A', 	       cell: (direst: any) => `${direst.foda_a_desc}`},
 		{ columnDef: 'orden_b',  	 	 header: 'No. B', 	       	   cell: (direst: any) => `${direst.orden_b}`},
 		{ columnDef: 'foda_b_desc',  	 header: 'Cuestion B', 	       cell: (direst: any) => `${direst.foda_b_desc}`},
+		{ columnDef: 'lista_ejes',  	 header: 'Ejes Est.',		   align: 'center', cell: (direst: any) => `${direst.lista_ejes}`},
 		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		   cell: (direst: any) => `${direst.autoriza_desc}`},
 		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			   cell: (direst: any) => `${direst.estatus_desc}`}
 	];
@@ -44,7 +45,6 @@ export class DireccionComponent implements OnInit, OnDestroy {
 	constructor(private _acceso: AccesoService,
 				private _derechos: DerechosService,
 				private _direccion: DireccionService,
-				private _catalogos: CatalogosService,
 				private dialog: MatDialog) { }
 
 	ngOnInit() {
