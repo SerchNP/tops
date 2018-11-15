@@ -19,7 +19,7 @@
             <li class="list-group-item">Objetivo de Calidad: {{registro.objetivo_desc}}</li>
         </ul>
         <div class="card-footer text-right">
-            <button *ngIf="insertar" type="button" class="btn btn-sm btn-outline-primary" (click)="agregarMedicion()">
+            <button *ngIf="insertar && registro.autoriza === 3" type="button" class="btn btn-sm btn-outline-primary" (click)="agregarMedicion()">
 				<i class="fas fa-plus"></i> Agregar
 			</button>&nbsp;
             <a [routerLink]="cancelar" class="btn btn-sm btn-outline-dark">Regresar</a>

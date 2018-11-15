@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { RiesgoGestion } from '../../interfaces/riesgo.interface';
+import { RiesgoGestion, Riesgo } from '../../interfaces/riesgo.interface';
 
 @Injectable()
 export class RiesgoService {
@@ -15,6 +15,18 @@ export class RiesgoService {
 
 	getRiesgos(tipo_riesgo: string, menuID: string) {
 		const url = URL_SGC + this.RUTA + 'getRiesgos.json?token=' + localStorage.getItem('token') + '&t=' + tipo_riesgo + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getRiesgosPendientes(tipo_riesgo: string) {
+		const url = URL_SGC + this.RUTA + 'getRiesgosPendientes.json?token=' + localStorage.getItem('token') + '&t=' + tipo_riesgo;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getRiesgosRechazados(tipo_riesgo: string) {
+		const url = URL_SGC + this.RUTA + 'getRiesgosRechazados.json?token=' + localStorage.getItem('token') + '&t=' + tipo_riesgo;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -54,17 +66,25 @@ export class RiesgoService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	autorizaRiesgoGestion(riesgo: RiesgoGestion) {
-		const url = URL_SGC + this.RUTA + 'autorizaRiesgoGestion.json?token=' + localStorage.getItem('token');
+	autorizarRiesgos(riesgos: any[]) {
+		const url = URL_SGC + this.RUTA + 'autorizarRiesgos.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(riesgo);
+		const body = JSON.stringify(riesgos);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	rechazaRiesgoGestion(idRiesgo: number, motivo: string) {
-		const url = URL_SGC + this.RUTA + 'rechazaRiesgoGestion.json?token=' + localStorage.getItem('token');
+	rechazarRiesgo(idRiesgo: number, tipo_riesgo: string, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'rechazarRiesgo.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"riesgo": ' + idRiesgo + ', "tipo_riesgo": "G", "motivo_rechaza": "' + motivo + '"}'));
+		// tslint:disable-next-line:max-line-length
+		const body = JSON.stringify(JSON.parse('{"riesgo": ' + idRiesgo + ', "tipo_riesgo": "' + tipo_riesgo + '", "motivo_rechaza": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	reautorizarRiesgos(arreglo: any[]) {
+		const url = URL_SGC + this.RUTA + 'reautorizarRiesgos.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(arreglo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }

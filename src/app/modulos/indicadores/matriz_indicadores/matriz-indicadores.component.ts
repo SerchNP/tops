@@ -51,9 +51,9 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 
 	constructor(private _acceso: AccesoService,
 				private _indicador: IndicadoresService,
-				public _derechos: DerechosService,
+				private _derechos: DerechosService,
 				private router: Router,
-				public dialog: MatDialog) { }
+				private dialog: MatDialog) { }
 
 	ngOnInit() {
 		this.cargando = true;

@@ -13,6 +13,7 @@ import { MatCheckboxModule, MatRadioModule } from '@angular/material';
 // Componentes
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
 import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-gestion-formulario.component';
+import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';
 
 @NgModule({
 	imports: [
@@ -27,7 +28,8 @@ import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-ges
 	],
 	declarations: [
 		RiesgosGestionComponent,
-		RiesgosGestionFormularioComponent
+		RiesgosGestionFormularioComponent,
+		AutorizaRiesgosGestionComponent
 	],
 	providers: []
 })

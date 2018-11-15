@@ -13,7 +13,7 @@
         <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
             <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
             <div class="col-sm-3">
-                <input type="text" readonly class="form-control" formControlName="autoriza_desc">
+                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
             </div>
             <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
             <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
@@ -144,12 +144,6 @@
         </div>
     </div>
     <div class="text-center">
-        <!-- <button type="button" class="btn btn-outline-primary" (click)="autorizar()" *ngIf="accion === 'A'">
-			<i class="fas fa-check-circle"></i> Autorizar
-		</button>&nbsp;
-        <button type="button" class="btn btn-outline-danger" (click)="rechazar()" *ngIf="accion === 'A'">
-			<i class="far fa-times-circle"></i> Rechazar
-		</button>&nbsp; -->
         <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
             <i class="far fa-arrow-alt-circle-left"></i> Regresar
         </a>&nbsp;

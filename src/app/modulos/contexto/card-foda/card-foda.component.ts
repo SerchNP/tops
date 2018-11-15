@@ -26,8 +26,8 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 	bandera: boolean;
 	jsonData: any;
 
-	constructor(private _accesoService: AccesoService,
-				private _fodaService: FodaService,
+	constructor(private _acceso: AccesoService,
+				private _foda: FodaService,
 				public dialog: MatDialog) {}
 
 	ngOnInit() {
@@ -51,9 +51,9 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 			foda.autoriza = 1;
 			foda.autoriza_desc = 'PENDIENTE';
 
-			this.subscription = this._fodaService.insertaFODA(foda)
+			this.subscription = this._foda.insertaFODA(foda)
 				.subscribe((data: any) => {
-					this._accesoService.guardarStorage(data.token);
+					this._acceso.guardarStorage(data.token);
 					swal('Atención!!!', data.message, 'success');
 					foda.foda = data.foda_id;
 					this.listado.push(foda);
@@ -61,9 +61,40 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
+		}
+	}
+
+	async editar(foda: Foda, index) {
+		if (foda.autoriza !== 1) {
+			swal('ERROR', 'No es posible editar la ' + this.cuestion_desc, 'error'
+			);
+		} else {
+			const {value: fodaDESC} = await swal({
+				title: 'Ingrese el nuevo descriptivo de la ' + this.cuestion_desc,
+				input: 'textarea',
+				inputValue: foda.foda_desc,
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return !value && 'Necesita ingresar el descriptivo de la ' + this.cuestion_desc;
+				}
+			});
+			if (fodaDESC !== undefined) {
+				this.subscription = this._foda.editaFODA(foda.foda, fodaDESC, this.cuestion_desc)
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						foda.foda_desc = fodaDESC;
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
 		}
 	}
 
@@ -120,7 +151,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 					arreglo.push(JSON.parse('{"proceso" : ' + element['proceso'] + ', "foda" : ' + element['foda'] + '}'));
 				}
 			});
-			this.subscription = this._fodaService.actualizarPrioridadFODA(this.cuestion, arreglo)
+			this.subscription = this._foda.actualizarPrioridadFODA(this.cuestion, arreglo)
 				.subscribe((data: any) => {
 					swal('Atención!!!', data.message, 'success');
 					this.ngOnInit();
@@ -128,7 +159,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 			this.bandera = false;
@@ -144,7 +175,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 	}
 
 	cancelaFoda (foda: Foda, modo: string, index: number, motivo?: string) {
-		this.subscription = this._fodaService.cancelaFODA(foda.foda, motivo, this.cuestion_desc)
+		this.subscription = this._foda.cancelaFODA(foda.foda, motivo, this.cuestion_desc)
 			.subscribe((data: any) => {
 				swal('Atención!!!', data.message, 'success');
 				this.ngOnInit();
@@ -159,7 +190,7 @@ export class CardFodaComponent implements OnInit, OnDestroy {
 			error => {
 				swal('ERROR', error.error.message, 'error');
 				if (error.error.code === 401) {
-					this._accesoService.logout();
+					this._acceso.logout();
 				}
 			});
 	}

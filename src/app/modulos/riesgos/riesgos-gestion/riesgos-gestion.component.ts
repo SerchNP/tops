@@ -24,8 +24,8 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0];
-	ruta_p = ['/riesgos', 'autorizariesgog_form', 'A'];
-	ruta_r = ['/riesgos', 'autorizariesgog_form', 'R'];
+	ruta_p = ['/riesgos', 'autorizariesgosg_form', 'A'];
+	ruta_r = ['/riesgos', 'autorizariesgosg_form', 'R'];
 	select = false;
 	allowMultiSelect = false;
 	opciones: Opciones = { detalle: true };
@@ -33,12 +33,14 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	avisos: Aviso = {};
 
 	columns = [
-		{ columnDef: 'proceso',     	 header: 'ID Proceso',	align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
-		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 	cell: (riesgo: any) => `${riesgo.proceso_desc}`},
-		{ columnDef: 'riesgo', 		 	 header: 'Clave', 	    align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
-		{ columnDef: 'riesgo_desc',	 	 header: 'riesgo',    	cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-		{ columnDef: 'autoriza_desc', 	 header: 'Situación',	cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
-		{ columnDef: 'estatus_desc', 	 header: 'Estatus',		cell: (riesgo: any) => `${riesgo.estatus_desc}`}
+		{ columnDef: 'proceso',     	 header: 'ID Proceso',		align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
+		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 		cell: (riesgo: any) => `${riesgo.proceso_desc}`},
+		{ columnDef: 'riesgo', 		 	 header: 'ID Riesgo', 		align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
+		{ columnDef: 'riesgo_desc',	 	 header: 'Riesgo',    		cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
+		{ columnDef: 'tipo_riesgo_desc', header: 'Tipo de Riesgo',  cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
+		{ columnDef: 'lista_foda', 		 header: 'Cuestiones Externas e Internas',  cell: (riesgo: any) => `${riesgo.lista_foda}`},
+		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			cell: (riesgo: any) => `${riesgo.estatus_desc}`}
 	];
 
 	constructor(private _acceso: AccesoService,
@@ -125,7 +127,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				// tslint:disable-next-line:max-line-length
-				text: 'Está seguro que desea cancelar el riesgo "' + riesgo.riesgo_desc + '" del proceso ' + riesgo.proceso_desc + '?',
+				text: 'Está seguro que desea cancelar el riesgo "' + riesgo.riesgo_desc + '"?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
@@ -134,7 +136,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				if (riesgo.autoriza === 1) {
 					// Si esta capturado, se borra, por lo que no se pedirá el motivo
-					/*this.subscription = this._riesgo.cancelaRiesgo(riesgo.riesgo, '')
+					this.subscription = this._riesgo.cancelarRiesgo(riesgo.riesgo, riesgo.tipo_riesgo, '')
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -144,7 +146,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 							if (error.error.code === 401) {
 								this._acceso.logout();
 							}
-						});*/
+						});
 				} else {
 					const {value: motivo} = await swal({
 						title: 'Ingrese el motivo de cancelación',
@@ -155,7 +157,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 						}
 					});
 					if (motivo !== undefined) {
-						/*this.subscription = this._riesgo.cancelaRiesgo(riesgo.riesgo, motivo.toUpperCase())
+						this.subscription = this._riesgo.cancelarRiesgo(riesgo.riesgo, riesgo.tipo_riesgo, motivo.toUpperCase())
 							.subscribe((data: any) => {
 								swal('Atención!!!', data.message, 'success');
 								this.ngOnInit();
@@ -165,7 +167,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 								if (error.error.code === 401) {
 									this._acceso.logout();
 								}
-							});*/
+							});
 					}
 				}
 			}
@@ -189,7 +191,8 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				subtitle: datos.riesgo_desc,
+				subtitle: datos.tipo_riesgo_desc,
+				texto: datos.riesgo_desc,
 				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
 				f_captura: datos.f_captura,

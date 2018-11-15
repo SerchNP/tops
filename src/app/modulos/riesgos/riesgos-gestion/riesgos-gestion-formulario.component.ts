@@ -20,17 +20,16 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 	riesgoId: number;
 	autoriza: string;
 	titulo: string;
-
+	origen: string;
+	s_guardar = true;
 	seleccionado = '';
 	selectedValues: any[];
-
 	procesos: any[] = [];
 	listfoda: any [] = [];
 	listfodaSel: any [] = [];
+	cancelar: any[];
 
 	forma: FormGroup;
-	cancelar: any[] = ['/riesgos', 'riesgo_gestion'];
-
 
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
@@ -43,16 +42,22 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			this.accion = params['acc'];
 			this.riesgoId = params['id'];
 			this.autoriza = params['aut'];
+			this.origen = params['o'];
 		});
 		let pre = '';
 		switch (this.accion) {
-			case 'I':	pre = 'Registro';			  break;
-			case 'U':	pre = 'Actualización';		  break;
-			case 'V':	pre = 'Consulta';			  break;
-			case 'A':	pre = 'Autorización/Rechazo'; break;
+			case 'I': pre = 'Registro';	break;
+			case 'U': pre = (this.origen === 'M' ? 'Actualización' : 'Corrección'); break;
+			case 'V': pre = 'Consulta'; this.s_guardar = false; break;
 		}
 
 		this.titulo = pre + ' de Riesgos de Gestión';
+
+		if (this.origen === 'M') {
+			this.cancelar =  ['/riesgos', 'riesgo_gestion'];
+		} else {
+			this.cancelar = ['/riesgos', 'autorizariesgosg_form', 'R']; // La edicion se habilita solo en el rechazo
+		}
 
 		if (this.riesgoId !== 0) {
 			this.cargaRiesgo(this.riesgoId);
@@ -140,7 +145,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			}
 		});
 		if (listadoFinal.length === 0) {
-			swal('ERROR', 'Debe seleccionar al menos una Cuestión Externa/Interna ligada al proceso', 'error');
+			swal('ERROR', 'Debe seleccionar al menos una Cuestión Externa/Interna ligada al riesgo', 'error');
 		} else {
 			const valorForma = this.forma.value;
 			valorForma.cuestiones = listadoFinal;
@@ -172,64 +177,5 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			}
 		}
 	}
-
-	/*async autorizar () {
-		const {value: respuesta} = await swal({
-			title: 'Atención!!!',
-			text: '¿Está seguro que desea autorizar '
-				+ ((this.autoriza === '6' || this.autoriza === '8') ? 'la cancelación del' : 'el') + ' riesgo de gestión?',
-			type: 'question',
-			showCancelButton: true,
-			confirmButtonText: 'Aceptar'
-		});
-		if (respuesta) {
-			this.subscription = this._riesgo.autorizaRiesgoGestion(this.forma.value)
-				.subscribe((data: any) => {
-					swal('Atención!!!', data.message, 'success');
-					this.router.navigate(this.cancelar);
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
-					}
-				});
-		}
-	}
-
-	async rechazar () {
-		const {value: respuesta} = await swal({
-			title: 'Atención!!!',
-			text: '¿Está seguro que desea rechazar '
-				+ ((this.autoriza === '6' || this.autoriza === '8') ? 'la cancelación del' : 'el') + ' riesgo de gestión?',
-			type: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Aceptar',
-			confirmButtonColor: '#B22222'
-		});
-		if (respuesta) {
-			const {value: motivo} = await swal({
-				title: 'Ingrese el motivo de rechazo',
-				input: 'textarea',
-				showCancelButton: true,
-				inputValidator: (value) => {
-					return !value && 'Necesita ingresar el motivo de rechazo';
-				}
-			});
-			if (motivo !== undefined) {
-				this.subscription = this._riesgo.rechazaRiesgoGestion(this.riesgoId, motivo.toUpperCase())
-					.subscribe((data: any) => {
-						swal('Atención!!!', data.message, 'success');
-						this.router.navigate(this.cancelar);
-					},
-					error => {
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._acceso.logout();
-						}
-					});
-			}
-		}
-	}*/
 
 }

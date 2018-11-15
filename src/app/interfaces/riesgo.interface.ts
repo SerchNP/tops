@@ -1,3 +1,8 @@
+export interface Riesgo {
+	proceso: number;
+	riesgo: number;
+}
+
 export interface RiesgoGestion {
 	riesgo?: number;
 	riesgo_desc?:	string;
