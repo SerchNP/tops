@@ -50,6 +50,7 @@ export class AutorizaIndicadoresComponent implements OnInit, OnDestroy {
 					{ columnDef: 'calculo',			 header: 'Cálculo',      	   visible: false, cell: (indicador: any) => `${indicador.calculo}`},
 					// tslint:disable-next-line:max-line-length
 					{ columnDef: 'puesto_resp_desc', header: 'Responsable',   	   visible: false, cell: (indicador: any) => `${indicador.puesto_resp_desc}`},
+					{ columnDef: 'motivo_modif',	 header: 'Motivo del cambio',  visible: false, cell: (indicador: any) => `${indicador.motivo_modif}`},
 					{ columnDef: 'u_cancela',		 header: 'Usuario Cancela',	   visible: false, cell: (indicador: any) => `${indicador.u_cancela}`},
 					{ columnDef: 'f_cancela',		 header: 'Fecha Cancela',	   visible: false, cell: (indicador: any) => `${indicador.f_cancela}`}
 				];
@@ -72,6 +73,7 @@ export class AutorizaIndicadoresComponent implements OnInit, OnDestroy {
 					{ columnDef: 'calculo',			 header: 'Cálculo',      	   visible: false, cell: (indicador: any) => `${indicador.calculo}`},
 					// tslint:disable-next-line:max-line-length
 					{ columnDef: 'puesto_resp_desc', header: 'Responsable',   	   visible: false, cell: (indicador: any) => `${indicador.puesto_resp_desc}`},
+					{ columnDef: 'motivo_modif',	 header: 'Motivo del cambio',  visible: false, cell: (indicador: any) => `${indicador.motivo_modif}`},
 					{ columnDef: 'u_cancela',		 header: 'Usuario Cancela',	   visible: false, cell: (indicador: any) => `${indicador.u_cancela}`},
 					{ columnDef: 'f_cancela',		 header: 'Fecha Cancela',	   visible: false, cell: (indicador: any) => `${indicador.f_cancela}`},
 					{ columnDef: 'motivo_cancela',	 header: 'Motivo Cancelación', visible: false, cell: (indicador: any) => `${indicador.motivo_cancela}`},

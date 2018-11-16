@@ -177,6 +177,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				} else {
 					this.subscription = this._riesgo.modificarRiesgoGestion(valorForma)
 						.subscribe((data: any) => {
+							this._acceso.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
 							this.router.navigate(this.cancelar);
 						},
@@ -190,6 +191,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			} else {
 				this.subscription = this._riesgo.insertarRiesgoGestion(valorForma)
 					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
 						this.ngOnInit();
 					},
