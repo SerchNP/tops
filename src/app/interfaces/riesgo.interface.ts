@@ -1,38 +1,3 @@
-/*export interface RiesgoGestion {
-	riesgo?: number;
-	riesgo_desc?:	string;
-	proceso?: number;
-	proceso_desc?: string;
-	cuestiones?: {
-		proceso: number,
-		foda: number
-	};
-	tipo_riesgo?: string;
-	tipo_riesgo_desc?: string;
-	consecutivo?: string;
-	autoriza?: number;
-	autoriza_desc?: string;
-	estatus?: string;
-	estatus_desc?: string;
-	f_captura?: Date;
-	u_captura?: string;
-	f_propuesta?: Date;
-	u_propuesta?: string;
-	f_preautoriza?: Date;
-	u_preautoriza?: string;
-	f_autoriza?: Date;
-	u_autoriza?: string;
-	f_modifica?: Date;
-	u_modifica?: string;
-	f_cancel?: Date;
-	u_cancela?: string;
-	motivo_cancela?: string;
-	f_rechaza?: Date;
-	u_rechaza?: string;
-	motivo_rechaza?: string;
-	cancelado?: string;
-}*/
-
 export interface Riesgo {
 	riesgo?: number;
 	riesgo_desc?:	string;
