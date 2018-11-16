@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
-import { RiesgoGestion, Riesgo } from '../../interfaces/riesgo.interface';
+import { Riesgo } from '../../interfaces/riesgo.interface';
 
 @Injectable()
 export class RiesgoService {
@@ -43,14 +43,17 @@ export class RiesgoService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	insertarRiesgoGestion(riesgo: RiesgoGestion) {
+	insertarRiesgoGestion(riesgo: Riesgo) {
 		const url = URL_SGC + this.RUTA + 'insertarRiesgoGestion.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(riesgo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	modificarRiesgoGestion(riesgo: RiesgoGestion) {
+	modificarRiesgoGestion(riesgo: Riesgo, motivo?: string) {
+		if (motivo) {
+			riesgo.motivo_modif = motivo.toUpperCase();
+		}
 		const url = URL_SGC + this.RUTA + 'modificarRiesgoGestion.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(riesgo);

@@ -39,7 +39,10 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 					{ columnDef: 'proceso_desc', 	 header: 'Proceso',			   cell: (riesgo: any) => `${riesgo.proceso_desc}`},
 					{ columnDef: 'riesgo',     	 	 header: 'ID riesgo',   	   align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
 					{ columnDef: 'riesgo_desc',	 	 header: 'riesgo',    	   	   cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
+					{ columnDef: 'tipo_riesgo_desc', header: 'Tipo de Riesgo',     cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
+					{ columnDef: 'lista_foda', 		 header: 'Cuestiones Externas e Internas',  cell: (riesgo: any) => `${riesgo.lista_foda}`},
 					{ columnDef: 'autoriza_desc',    header: 'Situación',		   cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
+					{ columnDef: 'motivo_modif',	 header: 'Motivo del cambio',  visible: false, cell: (riesgo: any) => `${riesgo.motivo_modif}`},
 					{ columnDef: 'motivo_cancela',	 header: 'Motivo Cancelación', cell: (riesgo: any) => `${riesgo.motivo_cancela}`},
 					{ columnDef: 'u_cancela',		 header: 'Usuario Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.u_cancela}`},
 					{ columnDef: 'f_cancela',		 header: 'Fecha Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.f_cancela}`}
@@ -47,17 +50,20 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 			} else {
 				this.titulo = 'Rechazados';
 				this.columns = [
-					{ columnDef: 'proceso', 		header: 'ID Proceso',		   align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
-					{ columnDef: 'proceso_desc', 	header: 'Proceso',			   cell: (riesgo: any) => `${riesgo.proceso_desc}`},
-					{ columnDef: 'riesgo',     	 	header: 'ID riesgo',   	   	   align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
-					{ columnDef: 'riesgo_desc',	 	header: 'riesgo',    	   	   cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-					{ columnDef: 'autoriza_desc',   header: 'Situación',		   cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
-					{ columnDef: 'motivo_rechaza',	header: 'Motivo Rechazo',	   cell: (riesgo: any) => `${riesgo.motivo_rechaza}`},
-					{ columnDef: 'u_cancela',		header: 'Usuario Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.u_cancela}`},
-					{ columnDef: 'f_cancela',		header: 'Fecha Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.f_cancela}`},
-					{ columnDef: 'motivo_cancela',	header: 'Motivo Cancelación', visible: false, cell: (riesgo: any) => `${riesgo.motivo_cancela}`},
-					{ columnDef: 'u_rechaza',		header: 'Usuario Rechaza',	   visible: false, cell: (riesgo: any) => `${riesgo.u_rechaza}`},
-					{ columnDef: 'f_rechaza',		header: 'Fecha Rechazo',	   visible: false, cell: (riesgo: any) => `${riesgo.f_rechaza}`}
+					{ columnDef: 'proceso', 		 header: 'ID Proceso',		   align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
+					{ columnDef: 'proceso_desc', 	 header: 'Proceso',			   cell: (riesgo: any) => `${riesgo.proceso_desc}`},
+					{ columnDef: 'riesgo',     	 	 header: 'ID riesgo',   	   	   align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
+					{ columnDef: 'riesgo_desc',	 	 header: 'riesgo',    	   	   cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
+					{ columnDef: 'tipo_riesgo_desc', header: 'Tipo de Riesgo',     cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
+					{ columnDef: 'lista_foda', 		 header: 'Cuestiones Externas e Internas',  cell: (riesgo: any) => `${riesgo.lista_foda}`},
+					{ columnDef: 'autoriza_desc',    header: 'Situación',		   cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
+					{ columnDef: 'motivo_rechaza',	 header: 'Motivo Rechazo',	   cell: (riesgo: any) => `${riesgo.motivo_rechaza}`},
+					{ columnDef: 'motivo_modif',	 header: 'Motivo del cambio',  visible: false, cell: (riesgo: any) => `${riesgo.motivo_modif}`},
+					{ columnDef: 'u_cancela',		 header: 'Usuario Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.u_cancela}`},
+					{ columnDef: 'f_cancela',		 header: 'Fecha Cancela',	   visible: false, cell: (riesgo: any) => `${riesgo.f_cancela}`},
+					{ columnDef: 'motivo_cancela',	 header: 'Motivo Cancelación', visible: false, cell: (riesgo: any) => `${riesgo.motivo_cancela}`},
+					{ columnDef: 'u_rechaza',		 header: 'Usuario Rechaza',	   visible: false, cell: (riesgo: any) => `${riesgo.u_rechaza}`},
+					{ columnDef: 'f_rechaza',		 header: 'Fecha Rechazo',	   visible: false, cell: (riesgo: any) => `${riesgo.f_rechaza}`}
 				];
 			}
 		});
@@ -123,7 +129,7 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 			}
 		} else if (datos.accion === 'E' && this.accion === 'R') {
 			// Manda el form en modo <edicion> con origen <Rechazo>
-			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', datos.row.riesgo, datos.row.autoriza]);
+			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', datos.row.riesgo, datos.row.autoriza, 'R']);
 		}
 	}
 
@@ -138,6 +144,7 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 			if (this.accion === 'A') {
 				this.subscription = this._riesgo.autorizarRiesgos(arreglo)
 					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
 						this.ngOnInit();
 					},
@@ -151,6 +158,7 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 				this.subscription = this._riesgo.reautorizarRiesgos(arreglo)
 					.subscribe(
 						(data: any) => {
+							this._acceso.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
 						},
@@ -187,6 +195,7 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 			if (motivo !== undefined) {
 				this.subscription = this._riesgo.rechazarRiesgo(registro.riesgo, registro.tipo_riesgo, motivo.toUpperCase())
 					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
 						this.ngOnInit();
 					},
