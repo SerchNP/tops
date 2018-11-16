@@ -42,7 +42,8 @@ export class DireccionComponent implements OnInit, OnDestroy {
 	];
 
 
-	constructor(private _acceso: AccesoService,
+	constructor(private router: Router,
+				private _acceso: AccesoService,
 				private _derechos: DerechosService,
 				private _direccion: DireccionService,
 				private dialog: MatDialog) { }
@@ -75,11 +76,11 @@ export class DireccionComponent implements OnInit, OnDestroy {
 		if (datos.accion === 'C') {
 			// this.canceladirest(datos.row);
 		} if (datos.accion === 'E') {
-			// this.editadirest(datos.row);
+			this.editadirest(datos.row);
 		} else if (datos.accion === 'V') {
 			this.openDialog(datos.row);
 		} else if (datos.accion === 'D') {
-			// this.detalledirest(datos.row);
+			this.detalledirest(datos.row);
 		} else if (datos.accion === 'A') {
 			// this.autorizadirest(datos.row);
 		}
@@ -104,12 +105,12 @@ export class DireccionComponent implements OnInit, OnDestroy {
 		});
 	}
 
-}
-
-/*
-
-	detalledirest(direst) {
-		this.router.navigate(['/dirests', 'direst_gestion_form', 'V', direst.direst, direst.autoriza]);
+	editadirest(datos: any) {
+		this.router.navigate(['/contexto', 'submenudirest', 'direccion_form', 'U', datos.regid, datos.autoriza]);
 	}
+
+	detalledirest(datos: any) {
+		this.router.navigate(['/contexto', 'submenudirest', 'direccion_form', 'V', datos.regid, datos.autoriza]);
+	}
+
 }
-*/

@@ -35,14 +35,14 @@
                 <div class="form-group row">
                     <label for="estrategia" class="col-sm-2 col-form-label text-right">Tipo de Estrategia</label>
                     <div class="col-sm-4">
-                        <select class="form-control" name="estrategia" formControlName="estrategia" [ngStyle]="{'border-color': (estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || proceso.value === '' ? 'disabled' : null)">
+                        <select class="form-control" name="estrategia" formControlName="estrategia" [ngStyle]="{'border-color': (estrategia.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
 								<option value="" disabled="disabled" selected="selected">Seleccionar</option>
 								<option value="{{item.clave}}" *ngFor="let item of estrategias">{{item.descripcion}}</option>
 							</select>
-                        <small id="estrategiaHelp" class="form-text text-muted" *ngIf="estrateg">{{ estrateg[0].combinacion_desc }}</small>
+                        <small id="estrategiaHelp" class="form-text text-muted" *ngIf="estrateg !== undefined && estrateg.length > 0">{{ estrateg[0].combinacion_desc }}</small>
                         <div *ngIf="estrategia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                     </div>
-                    <div class="col-sm-5 text-uppercase text-primary text-left" *ngIf="estrateg">
+                    <div class="col-sm-5 text-uppercase text-primary text-left" *ngIf="estrateg !== undefined && estrateg.length > 0">
                         <p>{{ estrateg[0].accion_general }}</p>
                     </div>
                 </div>
@@ -130,9 +130,9 @@
         </div>
         <br/>
         <div class="text-center">
-            <!--<a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'A' || accion === 'V'">
+            <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
                 <i class="far fa-arrow-alt-circle-left"></i> Regresar
-            </a>&nbsp;-->
+            </a>&nbsp;
             <button type="submit" class="btn btn-outline-primary" *ngIf="accion === 'U' || accion === 'I'" [disabled]="!forma.valid">
 					<i class="fa fa-save"></i> Guardar
 				</button>&nbsp;

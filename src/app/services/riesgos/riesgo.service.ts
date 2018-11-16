@@ -47,7 +47,6 @@ export class RiesgoService {
 		const url = URL_SGC + this.RUTA + 'insertarRiesgoGestion.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		const body = JSON.stringify(riesgo);
-		console.log(body);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

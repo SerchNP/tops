@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChange, OnChanges } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
 	templateUrl: './cuestiones-radio.component.html'
 })
 
-export class CuestionesRadioComponent {
+export class CuestionesRadioComponent implements OnChanges {
 
 	@Input() forma: FormGroup;
 	@Input() listFODA: any[];
@@ -16,6 +16,11 @@ export class CuestionesRadioComponent {
 
 
 	constructor() {
+	}
+
+	ngOnChanges(changes): void {
+		if (changes['listFODA']) {
+		}
 	}
 
 }

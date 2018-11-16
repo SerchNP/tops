@@ -6,7 +6,7 @@
     <ul class="list-group" *ngIf="listFODA.length > 0">
         <mat-radio-group [formControlName]="cuestiones_name">
             <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listFODA; let i = index">
-                <mat-radio-button [value]="item.foda" [disabled]="accion === 'I' || accion === 'U'  ? null: 'disabled'">
+                <mat-radio-button [value]="item.foda" [disabled]="accion === 'I' ? null: 'disabled'">
                     <small class="text-muted">{{item.cuestion}}{{item.orden}} Cuestion {{item.tipo_cuestion_desc}}</small>
                     <p style="margin-bottom: 0;">{{item.foda_desc}}</p>
                 </mat-radio-button>

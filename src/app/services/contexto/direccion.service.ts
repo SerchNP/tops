@@ -19,6 +19,12 @@ export class DireccionService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getDireccionEstById(regid: number) {
+		const url = URL_SGC + this.RUTA + 'getDireccionEstById.json?token=' + localStorage.getItem('token') + '&r=' + regid;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getIdFromDireccion(proceso: number, estrategia: number, fodaA: number, fodaB: number) {
 		const url = URL_SGC + this.RUTA + 'getIdFromDireccion.json?token=' + localStorage.getItem('token')
 					+ '&p=' + proceso + '&e=' + estrategia + '&fa=' + fodaA + '&fb=' + fodaB;

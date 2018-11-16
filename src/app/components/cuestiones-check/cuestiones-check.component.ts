@@ -17,7 +17,6 @@ export class CuestionesCheckComponent implements OnInit, OnChanges {
 	ctrlcuestiones: FormArray;
 
 	constructor(private formBuilder: FormBuilder) {
-		console.log(this.listFODA);
 	}
 
 	ngOnChanges(changes): void {

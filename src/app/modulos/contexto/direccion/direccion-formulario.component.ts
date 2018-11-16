@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, FormControl, Validators, FormArray } from '@angular/forms';
 import { AccesoService, ProcesosService, CatalogosService,
 		FodaService, IdentidadService, DireccionService, PuestosService } from '../../../services/services.index';
@@ -40,6 +40,9 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 	listaLineas: any[] = [];
 	listaPuestos: any[] = [];
 
+	registro: any;
+	bandera = false;
+
 	proceso_sel: number;
 	estrategia_sel: number;
 	cuestiona_sel: number;
@@ -47,6 +50,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 
 
 	constructor(private activatedRoute: ActivatedRoute,
+				private router: Router,
 				private formBuilder: FormBuilder,
 				private _acceso: AccesoService,
 				private _catalogos: CatalogosService,
@@ -69,10 +73,6 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		}
 
 		this.titulo = pre + ' de Dirección Estratégica';
-
-		if (this.direccionId !== 0) {
-			this.cargarDireccionEst(this.direccionId);
-		}
 	}
 
 	ngOnInit() {
@@ -89,13 +89,18 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.getProcesos();
 		this.getCatalogos();
+
+		if (Number(this.direccionId) !== 0) {
+			this.cargarDireccionEst(this.direccionId);
+		}
+
 		this.cargando = false;
 
 		this.subscription = this.forma.controls['proceso'].valueChanges
 			.subscribe(procesoSel => {	// "procesoSel" representa la clave del proceso seleccionado
 				if (procesoSel !== null) {
 					this.proceso_sel = procesoSel;
-					this.getCuestiones(procesoSel);
+					this.getCuestiones(this.proceso.value);
 					this.getPuestos(procesoSel);
 				}
 			});
@@ -106,14 +111,14 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 				if (this.estrateg.length > 0) {
 					this.listFODA_a = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_a);
 					this.listFODA_b = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_b);
+					this.foda_a.setValue(this.registro.foda_a);
+					this.foda_b.setValue(this.registro.foda_b);
 				}
 			});
 		this.subscription = this.forma.controls['foda_a'].valueChanges.subscribe(cuestionASel => {
-			console.log(cuestionASel);
 			this.cuestiona_sel = cuestionASel;
 		});
 		this.subscription = this.forma.controls['foda_b'].valueChanges.subscribe(cuestionBSel => {
-			console.log(cuestionBSel);
 			this.cuestionb_sel = cuestionBSel;
 		});
 
@@ -123,9 +128,10 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 			this.forma.get('foda_a').valueChanges,
 			this.forma.get('foda_b').valueChanges
 		).subscribe(() => {
-			console.log(this.proceso_sel, this.estrategia_sel, this.cuestiona_sel, this.cuestionb_sel);
 			if (this.proceso_sel > 0 && this.estrategia_sel > 0 && this.cuestiona_sel > 0 && this.cuestionb_sel > 0) {
-				this.getEjesSeleccionados(this.proceso_sel, this.estrategia_sel, this.cuestiona_sel, this.cuestionb_sel);
+				if (this.bandera === false) {
+					this.getEjesSeleccionados(this.proceso_sel, this.estrategia_sel, this.cuestiona_sel, this.cuestionb_sel);
+				}
 			}
 		});
 	}
@@ -162,7 +168,23 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('lineas') as FormArray;
 	}
 
-	cargarDireccionEst(direcccionId: number) {}
+	cargarDireccionEst(direcccionId: number) {
+		this.subscription = this._direccion.getDireccionEstById(direcccionId)
+			.subscribe(
+				(data: any) => {
+					// this._acceso.guardarStorage(data.token);
+					this.registro = data.direccionest;
+
+					this.regid.setValue(this.registro.regid);
+					this.proceso.setValue(this.registro.proceso);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
 
 	getProcesos() {
 		this.subscription = this._proceso.getProcesosUsuario('direccion')
@@ -192,6 +214,9 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 			(data: any) => {
 				// Filtra foda por estatus de autorizacion
 				this.listFODA = new FiltraFodaAutPipe().transform(data.foda, 3);
+				if (this.registro !== undefined && this.registro.estrategia !== undefined) {
+					this.estrategia.setValue(this.registro.estrategia);
+				}
 			});
 	}
 
@@ -223,7 +248,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	getEjesSeleccionados(idProc, idEst, idFA, idFB) {
-		console.log(this.direccionId);
+		this.bandera = true;
 		if (Number(this.direccionId) === 0) {
 			this.subscription = this._direccion.getIdFromDireccion(idProc, idEst, idFA, idFB)
 				.subscribe(
@@ -256,6 +281,21 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 						this._acceso.logout();
 					}
 				});
+		} else {
+			this.subscription = this._direccion.getEjesFromDireccionEstById(this.regid.value)
+				.subscribe(
+					(dataED: any) => {
+						this.listaEjesSel = dataED.ejes;
+						this._acceso.guardarStorage(dataED.token);
+						this.getEjes();
+						this.getLineas(this.regid.value);
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
 		}
 	}
 
@@ -265,7 +305,9 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 				(data: any) => {
 					this.listaLineas = data.lineas;
 					this._acceso.guardarStorage(data.token);
-					this.listaLineas.forEach((p) => this.addItemLineas(p));
+					this.listaLineas.forEach((p) => {
+						this.addItemLineas(p);
+					});
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -338,11 +380,12 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 						.subscribe(
 							(data: any) => {
 								swal('Atención!!!', data.message, 'success');
-								this.listFODA_a = [];
+								/*this.listFODA_a = [];
 								this.listFODA_b = [];
 								const elemHTML: HTMLElement = document.getElementById('nav-est-tab');
 								elemHTML.click();
-								this.ngOnInit();
+								this.ngOnInit();*/
+								this.router.navigate(['/contexto', 'submenudirest', 'direccion']);
 							},
 							error => {
 								swal('ERROR', error.error.message, 'error');
