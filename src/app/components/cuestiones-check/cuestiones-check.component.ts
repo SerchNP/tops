@@ -44,16 +44,23 @@ export class CuestionesCheckComponent implements OnInit, OnChanges {
 					return;
 				}
 			});
-			// tslint:disable-next-line:max-line-length
-			this.cuestiones.push(this.createItem(p.proceso, bandera, p.foda, p.foda_desc, p.cuestion, p.tipo_cuestion_desc, p.orden));
+			if (this.accion === 'V') {
+				if (bandera) {
+					// tslint:disable-next-line:max-line-length
+					this.cuestiones.push(this.createItem(p.proceso, bandera, p.foda, p.foda_desc, p.cuestion, p.tipo_cuestion_desc, p.orden));
+				}
+			} else {
+				// tslint:disable-next-line:max-line-length
+				this.cuestiones.push(this.createItem(p.proceso, bandera, p.foda, p.foda_desc, p.cuestion, p.tipo_cuestion_desc, p.orden));
+			}
 		}
 	}
 
 	createItem(proceso, b_foda, foda, fodadesc, cuestion, tipo_cuestion, orden): FormGroup {
 		return this.formBuilder.group({
 			proceso: proceso,
-			foda: foda,
 			b_foda: b_foda,
+			foda: foda,
 			foda_desc: fodadesc,
 			cuestion: cuestion,
 			tipo_cuestion_desc: tipo_cuestion,
