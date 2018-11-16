@@ -1,9 +1,4 @@
-export interface Riesgo {
-	proceso: number;
-	riesgo: number;
-}
-
-export interface RiesgoGestion {
+/*export interface RiesgoGestion {
 	riesgo?: number;
 	riesgo_desc?:	string;
 	proceso?: number;
@@ -36,16 +31,16 @@ export interface RiesgoGestion {
 	u_rechaza?: string;
 	motivo_rechaza?: string;
 	cancelado?: string;
-}
+}*/
 
-export interface RiesgoOperativo {
+export interface Riesgo {
 	riesgo?: number;
 	riesgo_desc?:	string;
 	proceso?: number;
 	proceso_desc?: string;
 	cuestiones?: {
-		foda: number,
-		foda_desc: string;
+		proceso: number,
+		foda: number
 	};
 	tipo_riesgo?: string;
 	tipo_riesgo_desc?: string;
@@ -53,15 +48,16 @@ export interface RiesgoOperativo {
 	origen?: string;
 	origen_desc?: string;
 	responsable?: string;
+	puesto_resp?: number;
 	edo_riesgo?: string;
 	edo_riesgo_desc?: string;
 	causas?: {
-		causa: number;
-		causa_desc: string;
+		regid: number;
+		descripcion: string;
 	};
 	consecuencias?: {
-		consecuencia: number;
-		consecuencia_desc: string;
+		regid: number;
+		descripcion: string;
 	};
 	autoriza?: number;
 	autoriza_desc?: string;
@@ -84,4 +80,5 @@ export interface RiesgoOperativo {
 	u_rechaza?: string;
 	motivo_rechaza?: string;
 	cancelado?: string;
+	motivo_modif?: string;
 }

@@ -137,7 +137,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	guardar () {
+	async guardar () {
 		const listadoFinal: any = [];
 		this.cuestiones.value.forEach(element => {
 			if (element.b_foda === true) {
@@ -150,23 +150,48 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			const valorForma = this.forma.value;
 			valorForma.cuestiones = listadoFinal;
 
-			if (this.accion === 'I') {
+			if (this.accion === 'U')  {
+				if (this.autoriza === '3') {
+					const {value: motivo} = await swal({
+						title: 'Ingrese el motivo del cambio',
+						input: 'textarea',
+						showCancelButton: true,
+						inputValidator: (value) => {
+							return !value && 'Necesita ingresar el motivo del cambio';
+						}
+					});
+					if (motivo !== undefined) {
+						this.subscription = this._riesgo.modificarRiesgoGestion(valorForma, motivo.toUpperCase())
+							.subscribe((data: any) => {
+								this._acceso.guardarStorage(data.token);
+								swal('Atención!!!', data.message, 'success');
+								this.router.navigate(this.cancelar);
+							},
+							error => {
+								swal('ERROR', error.error.message, 'error');
+								if (error.error.code === 401) {
+									this._acceso.logout();
+								}
+							});
+					}
+				} else {
+					this.subscription = this._riesgo.modificarRiesgoGestion(valorForma)
+						.subscribe((data: any) => {
+							swal('Atención!!!', data.message, 'success');
+							this.router.navigate(this.cancelar);
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+				}
+			} else {
 				this.subscription = this._riesgo.insertarRiesgoGestion(valorForma)
 					.subscribe((data: any) => {
 						swal('Atención!!!', data.message, 'success');
 						this.ngOnInit();
-					},
-					error => {
-						swal('ERROR', error.error.message, 'error');
-						if (error.error.code === 401) {
-							this._acceso.logout();
-						}
-					});
-			} else if (this.accion === 'U')  {
-				this.subscription = this._riesgo.modificarRiesgoGestion(valorForma)
-					.subscribe((data: any) => {
-						swal('Atención!!!', data.message, 'success');
-						this.router.navigate(this.cancelar);
 					},
 					error => {
 						swal('ERROR', error.error.message, 'error');

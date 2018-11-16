@@ -74,8 +74,6 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 			this.editarIndicador(datos.row);
 		} else if (datos.accion === 'V') {
 			this.openDialog(datos.row);
-		} else if (datos.accion === 'A') {
-			this.autorizarIndicador(datos.row);
 		} else if (datos.accion === 'G') {
 			this.graficasIndicador(datos.row);
 		}
@@ -122,14 +120,6 @@ export class MatrizIndicadoresComponent implements OnInit, OnDestroy {
 		}).catch(error => {
 			console.log(error);
 		});
-	}
-
-	autorizarIndicador(indicador) {
-		if (indicador.pendiente === 'N') {
-			swal('ERROR', 'No es posible autorizar/rechazar el indicador', 'error');
-		} else {
-			this.router.navigate(['/indicadores', 'indicador_form', 'A', indicador.indicador, indicador.autoriza, 'M']);
-		}
 	}
 
 	async cancelarIndicador(indicador: any) {

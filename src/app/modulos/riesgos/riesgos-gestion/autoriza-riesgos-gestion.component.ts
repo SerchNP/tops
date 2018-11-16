@@ -123,7 +123,7 @@ export class AutorizaRiesgosGestionComponent implements OnInit, OnDestroy {
 			}
 		} else if (datos.accion === 'E' && this.accion === 'R') {
 			// Manda el form en modo <edicion> con origen <Rechazo>
-			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', datos.row.riesgo, datos.row.autoriza]);
+			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', datos.row.riesgo, datos.row.autoriza, 'R']);
 		}
 	}
 

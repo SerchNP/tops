@@ -23,7 +23,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 
 	listado: any[] = [];
 	cargando = false;
-	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0];
+	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0, 'M'];
 	ruta_p = ['/riesgos', 'autorizariesgosg_form', 'A'];
 	ruta_r = ['/riesgos', 'autorizariesgosg_form', 'R'];
 	select = false;
@@ -82,8 +82,6 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 			this.openDialog(datos.row);
 		} else if (datos.accion === 'D') {
 			this.detalleRiesgo(datos.row);
-		} else if (datos.accion === 'A') {
-			this.autorizaRiesgo(datos.row);
 		}
 	}
 
@@ -110,14 +108,6 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 						this._acceso.logout();
 					}
 				});
-	}
-
-	autorizaRiesgo(riesgo) {
-		if (riesgo.pendiente === 'N') {
-			swal('ERROR', 'No es posible autorizar/rechazar el riesgo', 'error');
-		} else {
-			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'A', riesgo.riesgo, riesgo.autoriza]);
-		}
 	}
 
 	async cancelaRiesgo(riesgo: any) {
@@ -178,12 +168,12 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 		if (riesgo.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar el riesgo, ya se encuentra cancelado', 'error');
 		} else {
-			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', riesgo.riesgo, riesgo.autoriza]);
+			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', riesgo.riesgo, riesgo.autoriza, 'M']);
 		}
 	}
 
 	detalleRiesgo(riesgo) {
-		this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'V', riesgo.riesgo, riesgo.autoriza]);
+		this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'V', riesgo.riesgo, riesgo.autoriza, 'M']);
 	}
 
 	openDialog(datos: any): void {
