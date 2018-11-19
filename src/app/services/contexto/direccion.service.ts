@@ -59,4 +59,12 @@ export class DireccionService {
 		const body = JSON.stringify(direccion);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	cancelaDireccionEst(regid: number, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'cancelaDireccionEst.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }

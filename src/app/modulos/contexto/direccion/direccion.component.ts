@@ -74,7 +74,7 @@ export class DireccionComponent implements OnInit, OnDestroy {
 
 	detectarAccion(datos: any): void {
 		if (datos.accion === 'C') {
-			// this.canceladirest(datos.row);
+			this.canceladirest(datos.row);
 		} if (datos.accion === 'E') {
 			this.editadirest(datos.row);
 		} else if (datos.accion === 'V') {
@@ -111,6 +111,45 @@ export class DireccionComponent implements OnInit, OnDestroy {
 
 	detalledirest(datos: any) {
 		this.router.navigate(['/contexto', 'submenudirest', 'direccion_form', 'V', datos.regid, datos.autoriza]);
+	}
+
+	async canceladirest(datos: any) {
+		if (datos.autoriza === 7) {
+			swal('ERROR', 'La combinación de Dirección Estratégica ya se encuentra cancelada', 'error');
+		} else {
+			const {value: respuesta} = await swal({
+				title: 'Atención!!!',
+				// tslint:disable-next-line:max-line-length
+				text: 'Está seguro que desea cancelar la combinación de Dirección Estratégica "' + datos.estrategia_desc + '" para el proceso "' + datos.proceso_desc + '"?',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Aceptar',
+				confirmButtonColor: '#B22222'
+			});
+			if (respuesta) {
+				const {value: motivo} = await swal({
+					title: 'Ingrese el motivo de cancelación',
+					input: 'textarea',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return !value && 'Necesita ingresar el motivo de cancelación';
+					}
+				});
+				if (motivo !== undefined) {
+					this.subscription = this._direccion.cancelaDireccionEst(datos.regid, motivo.toUpperCase())
+						.subscribe((data: any) => {
+							swal('Atención!!!', data.message, 'success');
+							this.ngOnInit();
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+				}
+			}
+		}
 	}
 
 }
