@@ -10,6 +10,8 @@ import { AutorizaFodaComponent } from './foda/autoriza-foda.component';
 import { ListadoFodaComponent } from './foda/listado-foda.component';
 import { DireccionComponent } from './direccion/direccion.component';
 import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
+import { LineaAccionComponent } from './direccion/linea-accion.component';
+import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
 
 
 const ContextoRoutes: Routes = [
@@ -36,7 +38,10 @@ const ContextoRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'direccion', component: DireccionComponent, data: {titulo: 'Dirección Estratégica', padre: 'Contexto', opcion: 'Dirección Estratégica'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'direccion_form/:acc/:id/:aut', component: DireccionFormularioComponent, data: {titulo: 'Dirección Estratégica', padre: 'Contexto', opcion: 'Dirección Estratégica'} }
+					{ path: 'direccion_form/:acc/:id/:aut', component: DireccionFormularioComponent, data: {titulo: 'Dirección Estratégica', padre: 'Contexto', opcion: 'Dirección Estratégica'} },
+					{ path: 'lineas_accion', component: LineaAccionComponent, data: {titulo: 'Líneas de Acción', padre: 'Contexto'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'linea_form/:acc/:id/:aut', component: LineaAccionFormularioComponent, data: {titulo: 'Líneas de Acción', padre: 'Contexto', opcion: 'Dirección Estratégica'} },
 				]
 			}
 		]

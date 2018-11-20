@@ -1,0 +1,79 @@
+<h5>{{titulo}}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group row">
+        <label for="proceso_desc" class="col-sm-2 col-form-label text-right">Proceso</label>
+        <div class="col-sm-6">
+            <input class="form-control" type="text" formControlName="proceso_desc" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="estrategia_desc" class="col-sm-2 col-form-label text-right">Estrategia</label>
+        <div class="col-sm-4">
+            <input class="form-control" type="text" formControlName="estrategia_desc" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="cuestion_a_desc" class="col-sm-2 col-form-label text-center">Cuestión Externa/Interna A</label>
+        <div class="col-md-6">
+            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_a_desc" readonly></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="cuestion_b_desc" class="col-sm-2 col-form-label text-center">Cuestión Externa/Interna B</label>
+        <div class="col-md-6">
+            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_b_desc" readonly></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="linea" class="col-sm-2 col-form-label text-right">Clave</label>
+        <div class="col-sm-1">
+            <input class="form-control" type="text" formControlName="linea" readonly>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="linea_desc" class="col-sm-2 col-form-label text-right">Línea de Acción</label>
+        <div class="col-sm-6">
+            <textarea class="form-control" rows="2" cols="40" formControlName="linea_desc" readonly></textarea>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
+        <div class="col-sm-6">
+            <input class="form-control" type="text" formControlName="responsable" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <div *ngIf="responsable.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="puesto_resp" class="col-sm-2 col-form-label text-right">Puesto</label>
+        <div class="col-sm-6">
+            <select class="form-control" formControlName="puesto_resp" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+				<option value="">Seleccionar</option>
+				<option value="{{puesto.puesto}}" *ngFor="let puesto of puestos" >{{puesto.puesto_desc}}</option>
+			</select>
+            <div *ngIf="puesto_resp.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="f_revision" class="col-sm-2 col-form-label text-right">Fecha de revisión</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="date" formControlName="f_revision" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <div *ngIf="f_revision.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="evidencia" class="col-sm-2 col-form-label text-right">Evidencia</label>
+        <div class="col-sm-6">
+            <textarea class="form-control" rows="2" cols="40" formControlName="evidencia" [attr.disabled]="accion === 'V' ? 'disabled' : null"></textarea>
+            <div *ngIf="evidencia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+</form>

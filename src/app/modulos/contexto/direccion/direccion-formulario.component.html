@@ -21,7 +21,6 @@
                 <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
-
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <a class="nav-item nav-link active" id="nav-est-tab" data-toggle="tab" href="#nav-est" role="tab" aria-controls="nav-est" aria-selected="true">Estrategia</a>
@@ -104,20 +103,20 @@
                     <tbody>
                         <tr *ngFor="let item of lineas.controls; let i = index" [formGroupName]="i">
                             <td>
-                                <textarea rows="2" cols="60" formControlName="accion" [attr.disabled]="item.value.clave> 0 ? 'disabled' : null">
+                                <textarea class="form-control" rows="2" cols="50" formControlName="linea_desc" [attr.disabled]="item.value.linea> 0 ? 'disabled' : null">
 								</textarea>
-                                <div *ngIf="lineas.controls[i].controls['accion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                <div *ngIf="lineas.controls[i].controls['linea_desc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <input type="date" formControlName="fecha" style="width: 150px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <input class="form-control" type="date" formControlName="fecha" style="width: 150px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
                                 <div *ngIf="lineas.controls[i].controls['fecha'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <input type="text" formControlName="responsable" style="width: 280px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <input class="form-control" type="text" formControlName="responsable" style="width: 280px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
                                 <div *ngIf="lineas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <select formControlName="puesto" style="width: 350px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <select class="form-control" formControlName="puesto" style="width: 350px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
 									<option value="">Seleccionar</option>
 									<option value="{{puesto.puesto}}" *ngFor="let puesto of listaPuestos" >{{puesto.puesto_desc}}</option>
 								</select>

@@ -172,9 +172,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this._direccion.getDireccionEstById(direcccionId)
 			.subscribe(
 				(data: any) => {
-					// this._acceso.guardarStorage(data.token);
 					this.registro = data.direccionest;
-
 					this.regid.setValue(this.registro.regid);
 					this.proceso.setValue(this.registro.proceso);
 				},
@@ -342,7 +340,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	addItemLineas(p): void {
-		this.lineas.push(this.createItemLineas(p.linea_accion, p.linea_accion_desc, p.f_inicio_d, p.responsable, p.puesto_resp));
+		this.lineas.push(this.createItemLineas(p.linea, p.linea_desc, p.f_inicio_d, p.responsable, p.puesto_resp));
 	}
 
 	addLinea() {
@@ -351,8 +349,8 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 
 	createItemLineas(linea, linea_desc, f_inicio, responsable, puesto): FormGroup {
 		return this.formBuilder.group({
-			clave:			new FormControl(linea, Validators.required),
-			accion:			new FormControl(linea_desc, Validators.required),
+			linea:			new FormControl(linea, Validators.required),
+			linea_desc:		new FormControl(linea_desc, Validators.required),
 			fecha:			new FormControl(f_inicio, Validators.required),
 			responsable:	new FormControl(responsable, Validators.required),
 			puesto:			new FormControl(puesto, Validators.required)

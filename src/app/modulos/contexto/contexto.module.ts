@@ -21,6 +21,8 @@ import { AutorizaFodaComponent } from './foda/autoriza-foda.component';
 import { ListadoFodaComponent } from './foda/listado-foda.component';
 import { DireccionComponent } from './direccion/direccion.component';
 import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
+import { LineaAccionComponent } from './direccion/linea-accion.component';
+import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
 
 
 @NgModule({
@@ -43,7 +45,9 @@ import { DireccionFormularioComponent } from './direccion/direccion-formulario.c
 		AutorizaFodaComponent,
 		ListadoFodaComponent,
 		DireccionComponent,
-		DireccionFormularioComponent
+		DireccionFormularioComponent,
+		LineaAccionComponent,
+		LineaAccionFormularioComponent
 	]
 })
 export class ContextoModule { }

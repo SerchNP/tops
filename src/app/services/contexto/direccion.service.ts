@@ -67,4 +67,30 @@ export class DireccionService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
+	getLineasAccionDireccionEst(menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getLineasAccionDireccionEst.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getLineaById (linea: number) {
+		const url = URL_SGC + this.RUTA + 'getLineaById.json?token=' + localStorage.getItem('token') + '&l=' + linea;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	cancelarLineaAccionDE(regid: number, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'cancelarLineaAccionDE.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"clave": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	editarLineaAccionDE (linea: any) {
+		const url = URL_SGC + this.RUTA + 'editarLineaAccionDE.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(linea);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }
