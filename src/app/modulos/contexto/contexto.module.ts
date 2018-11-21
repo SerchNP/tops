@@ -23,6 +23,7 @@ import { DireccionComponent } from './direccion/direccion.component';
 import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
 import { LineaAccionComponent } from './direccion/linea-accion.component';
 import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
+import { FichaProcesoComponent } from './ficha-proceso/ficha-proceso.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { LineaAccionFormularioComponent } from './direccion/linea-accion-formula
 		DireccionComponent,
 		DireccionFormularioComponent,
 		LineaAccionComponent,
-		LineaAccionFormularioComponent
+		LineaAccionFormularioComponent,
+		FichaProcesoComponent
 	]
 })
 export class ContextoModule { }
