@@ -82,7 +82,7 @@ export class DireccionService {
 	cancelarLineaAccionDE(regid: number, motivo: string) {
 		const url = URL_SGC + this.RUTA + 'cancelarLineaAccionDE.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"clave": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"linea": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

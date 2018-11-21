@@ -34,7 +34,7 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.id = params['id'];
-			this.autoriza = params['aut'];
+			this.autoriza = Number (params['aut']);
 		});
 
 		let pre = '';
@@ -44,21 +44,26 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 			case 'V':	pre = 'Consulta';			  break;
 		}
 
-		this.titulo = pre + ' de Línea de Acción';
+		this.titulo = pre + ' Línea de Acción de Dirección Estratégica';
 	}
 
 	ngOnInit() {
 		this.forma = this.formBuilder.group({
+			autoriza_desc: new FormControl(),
 			linea : new FormControl(),
 			linea_desc : new FormControl('', Validators.required),
 			proceso_desc: new FormControl(),
 			estrategia_desc: new FormControl(),
 			cuestion_a_desc: new FormControl(),
 			cuestion_b_desc: new FormControl(),
+			fecha: new FormControl('', Validators.required),
 			f_revision: new FormControl('', Validators.required),
 			responsable: new FormControl('', Validators.required),
-			puesto_resp: new FormControl('', Validators.required),
-			evidencia: new FormControl('', Validators.required)
+			puesto: new FormControl('', Validators.required),
+			evidencia: new FormControl('', Validators.required),
+			u_cancela: new FormControl(),
+			f_cancela: new FormControl(),
+			motivo_cancela: new FormControl()
 		});
 
 		this.cargando = true;
@@ -80,6 +85,7 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 			.subscribe(
 				(data: any) => {
 					this.registro = data.linea;
+					this.autoriza_desc.setValue(this.registro.autoriza_desc);
 					this.linea.setValue(this.registro.linea);
 					this.linea_desc.setValue(this.registro.linea_desc);
 					this.proceso_desc.setValue(this.registro.proceso_desc);
@@ -87,9 +93,13 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 					this.cuestion_a_desc.setValue(this.registro.cuestion_a_desc);
 					this.cuestion_b_desc.setValue(this.registro.cuestion_b_desc);
 					this.responsable.setValue(this.registro.responsable);
-					this.puesto_resp.setValue(this.registro.puesto_resp);
+					this.puesto.setValue(this.registro.puesto_resp);
+					this.fecha.setValue(this.registro.f_inicio_d);
 					this.f_revision.setValue(this.registro.f_revision_d);
 					this.evidencia.setValue(this.registro.evidencia);
+					this.u_cancela.setValue(this.registro.u_cancela);
+					this.f_cancela.setValue(this.registro.f_cancela);
+					this.motivo_cancela.setValue(this.registro.motivo_cancela);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -101,6 +111,10 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.subscription.unsubscribe();
+	}
+
+	get autoriza_desc() {
+		return this.forma.get('autoriza_desc');
 	}
 
 	get linea() {
@@ -131,8 +145,12 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('responsable');
 	}
 
-	get puesto_resp() {
-		return this.forma.get('puesto_resp');
+	get puesto() {
+		return this.forma.get('puesto');
+	}
+
+	get fecha() {
+		return this.forma.get('fecha');
 	}
 
 	get f_revision() {
@@ -143,6 +161,18 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('evidencia');
 	}
 
+	get u_cancela() {
+		return this.forma.get('u_cancela');
+	}
+
+	get f_cancela() {
+		return this.forma.get('f_cancela');
+	}
+
+	get motivo_cancela() {
+		return this.forma.get('motivo_cancela');
+	}
+
 	getPuestos(idProc) {
 		this._puestos.getPuestosAreaProc(idProc).subscribe(
 			(data: any) => {
@@ -150,22 +180,34 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	guardar() {
-		/*this.subscription = this._direccion.insertaDireccionEst(valorForma)
-			.subscribe((data: any) => {
-					swal('Atención!!!', data.message, 'success');
-					this.listFODA_a = [];
-					this.listFODA_b = [];
-					const elemHTML: HTMLElement = document.getElementById('nav-est-tab');
-					elemHTML.click();
-					this.ngOnInit();
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
-					}
-				});*/
+	async guardar() {
+		if (this.registro.autoriza === 7) {
+			swal('ERROR', 'La Línea de Acción ya se encuentra cancelada', 'error');
+		} else {
+			const {value: respuesta} = await swal({
+				title: 'Atención!!!',
+				text: '¿Está seguro que desea guardar los cambios en la linea de acción "'
+					+ this.registro.linea_desc + '" para el proceso "' + this.registro.proceso_desc + '"?',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Aceptar',
+				confirmButtonColor: '#B22222'
+			});
+			if (respuesta) {
+				this.subscription = this._direccion.editarLineaAccionDE(this.forma.value)
+					.subscribe((data: any) => {
+							this._acceso.guardarStorage(data.token);
+							swal('Atención!!!', data.message, 'success');
+							this.router.navigate(this.cancelar);
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+			}
+		}
 	}
 
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { Opciones } from '../../../interfaces/opciones.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
-import { AccesoService, DerechosService, DireccionService, CatalogosService } from '../../../services/services.index';
+import { AccesoService, DerechosService, DireccionService } from '../../../services/services.index';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -81,8 +81,6 @@ export class DireccionComponent implements OnInit, OnDestroy {
 			this.openDialog(datos.row);
 		} else if (datos.accion === 'D') {
 			this.detalledirest(datos.row);
-		} else if (datos.accion === 'A') {
-			// this.autorizadirest(datos.row);
 		}
 	}
 

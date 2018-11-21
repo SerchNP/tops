@@ -38,6 +38,10 @@
         <div class="col-sm-1">
             <input class="form-control" type="text" formControlName="linea" readonly>
         </div>
+        <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
+        <div class="col-sm-3">
+            <input class="form-control" type="text" formControlName="autoriza_desc" readonly="readonly" [ngClass]="(autoriza === 7) ? 'text-danger' : 'text-success'">
+        </div>
     </div>
     <div class="form-group row">
         <label for="linea_desc" class="col-sm-2 col-form-label text-right">Línea de Acción</label>
@@ -53,27 +57,48 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="puesto_resp" class="col-sm-2 col-form-label text-right">Puesto</label>
+        <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
         <div class="col-sm-6">
-            <select class="form-control" formControlName="puesto_resp" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <select class="form-control" formControlName="puesto" [attr.disabled]="accion === 'V' ? 'disabled' : null">
 				<option value="">Seleccionar</option>
 				<option value="{{puesto.puesto}}" *ngFor="let puesto of puestos" >{{puesto.puesto_desc}}</option>
 			</select>
-            <div *ngIf="puesto_resp.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            <div *ngIf="puesto.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
         </div>
     </div>
     <div class="form-group row">
+        <label for="fecha" class="col-sm-2 col-form-label text-right">Fecha de inicio</label>
+        <div class="col-sm-2">
+            <input class="form-control" type="date" formControlName="fecha" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <div *ngIf="fecha.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
         <label for="f_revision" class="col-sm-2 col-form-label text-right">Fecha de revisión</label>
         <div class="col-sm-2">
             <input class="form-control" type="date" formControlName="f_revision" [attr.disabled]="accion === 'V' ? 'disabled' : null">
-            <div *ngIf="f_revision.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            <div *ngIf="f_revision.invalid && accion === 'U'" class="invalid-feedback" style="display: block">Este campo es requerido</div>
         </div>
     </div>
     <div class="form-group row">
         <label for="evidencia" class="col-sm-2 col-form-label text-right">Evidencia</label>
         <div class="col-sm-6">
-            <textarea class="form-control" rows="2" cols="40" formControlName="evidencia" [attr.disabled]="accion === 'V' ? 'disabled' : null"></textarea>
-            <div *ngIf="evidencia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            <textarea class="form-control" rows="2" cols="40" id="evidencia" formControlName="evidencia" [attr.disabled]="accion === 'V' ? 'disabled' : null"></textarea>
+            <div *ngIf="evidencia.invalid && accion === 'U'" class="invalid-feedback" style="display: block">Este campo es requerido</div>
         </div>
+    </div>
+    <div class="form-group row" *ngIf="accion === 'V' && autoriza === 7">
+        <label for="motivo_cancela" class="col-sm-2 col-form-label text-right">Motivo Cancelación</label>
+        <div class="col-sm-6">
+            <textarea class="form-control" rows="2" cols="40" id="motivo_cancela" formControlName="motivo_cancela" readonly="readonly"></textarea>
+        </div>
+    </div>
+    <div class="text-center">
+        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
+            <i class="far fa-arrow-alt-circle-left"></i> Regresar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion === 'U'">
+			<i class="fa fa-save"></i> Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U'">
+			Cancelar</a>
     </div>
 </form>

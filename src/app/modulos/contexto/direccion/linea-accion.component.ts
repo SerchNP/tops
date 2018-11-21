@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Derechos } from '../../../interfaces/derechos.interface';
+import { Opciones } from '../../../interfaces/opciones.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
-import { AccesoService, DerechosService, DireccionService, CatalogosService } from '../../../services/services.index';
+import { AccesoService, DerechosService, DireccionService } from '../../../services/services.index';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -17,6 +18,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 
 	private _MENU = 'lineas_accion';
 	cargando = false;
+	opciones: Opciones = { detalle: true };
 	derechos: Derechos = {};
 	select = false;
 	allowMultiSelect = false;
@@ -77,6 +79,8 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 			this.cancelaLineaAccDE(datos.row);
 		} else if (datos.accion === 'E') {
 			this.editaLineaAccDE(datos.row);
+		} else if (datos.accion === 'D') {
+			this.consultaLineaAccDE(datos.row);
 		}
 	}
 
@@ -103,6 +107,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
+					console.log(datos);
 					this.subscription = this._direccion.cancelarLineaAccionDE(datos.linea, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
@@ -117,6 +122,10 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 				}
 			}
 		}
+	}
+
+	consultaLineaAccDE(datos: any) {
+		this.router.navigate(['/contexto', 'submenudirest', 'linea_form', 'V', datos.linea, datos.autoriza]);
 	}
 
 	editaLineaAccDE(datos: any) {
