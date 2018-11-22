@@ -18,13 +18,14 @@ export class TResultadosComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {consultar: false, administrar: true, insertar: true, editar: true, cancelar: false};
-	ruta_add = ['/administracion', 'resultados_form', 'I', 0];
+	ruta_add = ['/administracion', 'submenucat', 'tresultados_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
 	columns = [
 		{ columnDef: 'clave', 		header: 'Clave',			cell: (tresultado: any) => `${tresultado.clave}`,	align: 'center'},
 		{ columnDef: 'descripcion', header: 'Descripción',		cell: (tresultado: any) => `${tresultado.descripcion}`},
+		{ columnDef: 'simbolo',		header: 'Símbolo',			cell: (tresultado: any) => `${tresultado.simbolo}`},
 		{ columnDef: 'f_captura',  	header: 'Fecha captura',	cell: (tresultado: any) => `${tresultado.f_captura}`},
 		{ columnDef: 'u_captura',	header: 'Usuario captura',	cell: (tresultado: any) => `${tresultado.u_captura}`}
 	];
@@ -60,16 +61,19 @@ export class TResultadosComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	async editarResultado(resultado: Catalogo) {
+	async editarResultado(resultado: any) {
 		const {value: formValues} = await swal({
 			titleText: 'Actualizar datos del tipo de resultado de medición',
 			html:
 				// tslint:disable-next-line:max-line-length
-				'<div class="form-group"><label for="swal-input1" class="row col"><h5>Tipo Periodo</h5></label><input id="swal-input1" class="form-control" value="' + resultado.tipo_periodo + '"></div>',
+				'<div class="form-group"><label for="swal-input1" class="row col"><h5>Tipo Periodo</h5></label><input id="swal-input1" class="form-control" value="' + resultado.descripcion + '"></div>' +
+				// tslint:disable-next-line:max-line-length
+				'<div class="form-group"><label for="swal-input2" class="row col"><h5>Símbolo</h5></label><input id="swal-input2" class="form-control" value="' + resultado.simbolo + '"></div>',
 			focusConfirm: false,
 			preConfirm: () => {
 				return [
-					(<HTMLInputElement>document.getElementById('swal-input1')).value
+					(<HTMLInputElement>document.getElementById('swal-input1')).value,
+					(<HTMLInputElement>document.getElementById('swal-input2')).value
 				];
 			},
 			showCancelButton: true,
@@ -84,15 +88,17 @@ export class TResultadosComponent implements OnInit, OnDestroy {
 				const {value: respuesta} = await swal({
 					title: 'Atención!!!',
 					text: '¿Está seguro que desea actualizar la descripción del tipo de resultado de medición "'
-						+ resultado.descripcion + '" por "' + formValues[0].toUpperCase() + '"?',
+						+ resultado.descripcion + '" por "' + formValues[0].toUpperCase() + ' y el símbolo "'
+						+ resultado.simbolo + '" por "' + formValues[1].toLowerCase() + '"?',
 					type: 'question',
 					showCancelButton: true,
 					confirmButtonText: 'Aceptar',
 					confirmButtonColor: '#B22222'
 				});
 				if (respuesta) {
-					/*this.subscription = this._catalogos
-						.editaDescresultado(resultado.clave, formValues[0].toUpperCase(), formValues[1].toUpperCase())
+					const resultado_body = JSON.parse('{"clave": ' + resultado.clave + ', "descrip": "' + formValues[0].toUpperCase() + '", "simbolo": "' + formValues[1].toLowerCase() + '", "accion" : "U"}');
+					this.subscription = this._catalogos
+						.mantCatResultados(resultado_body)
 							.subscribe((data: any) => {
 								swal('Atención!!!', data.message, 'success');
 								this.ngOnInit();
@@ -102,7 +108,7 @@ export class TResultadosComponent implements OnInit, OnDestroy {
 								if (error.error.code === 401) {
 									this._acceso.logout();
 								}
-							});*/
+							});
 				}
 			} else {
 				swal('ERROR', 'Debe ingresar todos los datos del tipo de resultado de medición', 'error');

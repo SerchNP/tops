@@ -17,7 +17,7 @@ export class FormulasComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {consultar: false, administrar: true, insertar: true, editar: true, cancelar: false};
-	ruta_add = ['/administracion', 'formulas_form', 'I', 0];
+	ruta_add = ['/administracion', 'submenucat', 'formulas_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
@@ -76,7 +76,8 @@ export class FormulasComponent implements OnInit, OnDestroy {
 				confirmButtonColor: '#B22222'
 			});
 			if (respuesta) {
-				this.subscription = this._catalogosService.editaDescripcion(formula.clave, descripcion.toUpperCase())
+				const resultado_body = JSON.parse('{"clave": ' + formula.clave + ', "descrip": "' + descripcion.toUpperCase() + '", "accion" : "U"}');
+				this.subscription = this._catalogosService.mantCatFormulas(resultado_body)
 					.subscribe((data: any) => {
 						swal('Atención!!!', data.message, 'success');
 						this.ngOnInit();

@@ -40,16 +40,20 @@ export class CatalogosService {
 	}
 
 	editaDescFrecuencia(clave: number, descripcion: string, tipoPeriodo: string) {
-		const url = URL_SGC + this.RUTA + 'editaDescFrecuencia.json?token=' + localStorage.getItem('token');
+		// const url = URL_SGC + this.RUTA + 'editaDescFrecuencia.json?token=' + localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'mantCatFrecuencia.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '", "tp": "' + tipoPeriodo + '"}'));
+		// const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '", "tp": "' + tipoPeriodo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"clave": ' + clave + ', "descrip": "' + descripcion + '", "tipo_periodo": "' + tipoPeriodo + '", "accion" : "U"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	editaDescripcion(clave: number, descripcion: string) {
-		const url = URL_SGC + this.RUTA + 'editaDescripcion.json?token=' + localStorage.getItem('token');
+		// const url = URL_SGC + this.RUTA + 'editaDescripcion.json?token=' + localStorage.getItem('token');
+		const url = URL_SGC + this.RUTA + 'mantCatFormulas.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '"}'));
+		// const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '"}'));
+		const body = JSON.stringify(JSON.parse('{"clave": ' + clave + ', "descrip": "' + descripcion + '", "accion" : "U"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
@@ -93,5 +97,26 @@ export class CatalogosService {
 	getTipoEstrategia() {
 		const cat = 'EST';
 		return this.getCatalogoPromesa(cat);
+	}
+
+	mantCatFrecuencia(frecuencia: any) {
+		const url = URL_SGC + this.RUTA + 'mantCatFrecuencia.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(frecuencia);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	mantCatFormulas(formula: any) {
+		const url = URL_SGC + this.RUTA + 'mantCatFormulas.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(formula);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	mantCatResultados(resultados: any) {
+		const url = URL_SGC + this.RUTA + 'mantCatResultados.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(resultados);
+		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }

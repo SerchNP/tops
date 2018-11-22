@@ -16,8 +16,11 @@ import { IdentidadFormularioComponent } from './identidad/identidad-formulario.c
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
 import { FrecuenciasMedicionComponent } from './catalogos/frecuencias-medicion.component';
+import { FrecuenciasMedicionFormularioComponent } from './catalogos/frecuencias-medicion-formulario.component';
 import { FormulasComponent } from './catalogos/formulas.component';
+import { FormulasFormularioComponent } from './catalogos/formulas-formulario.component';
 import { TResultadosComponent } from './catalogos/tresultados.component';
+import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
 
 // Guards
 import { LoginGuard, TipoUsuarioGuard } from '../../services/services.index';
@@ -37,9 +40,15 @@ const administracionRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'frecuencias', component: FrecuenciasMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencias de Medición'} },
 					// tslint:disable-next-line:max-line-length
+					{ path: 'frecuencias_form/:acc/:id', component: FrecuenciasMedicionFormularioComponent, data: {titulo: 'Mantenimiento de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencias de Medición'} },
+					// tslint:disable-next-line:max-line-length
 					{ path: 'formulas', component: FormulasComponent, data: {titulo: 'Catálogo de Fórmulas', padre: 'Administración', opcion: 'Fórmulas'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'tresultados', component: TResultadosComponent, data: {titulo: 'Catálogo de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} }
+					{ path: 'formulas_form/:acc/:id', component: FormulasFormularioComponent, data: {titulo: 'Mantenimiento de Fórmulas', padre: 'Administración', opcion: 'Fórmulas'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'tresultados', component: TResultadosComponent, data: {titulo: 'Catálogo de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'tresultados_form/:acc/:id', component: TresultadosFormularioComponent, data: {titulo: 'Mantenimiento de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} }
 				]
 			},
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },

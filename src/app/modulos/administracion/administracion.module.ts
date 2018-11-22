@@ -28,8 +28,11 @@ import { IdentidadFormularioComponent } from './identidad/identidad-formulario.c
 import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
 import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
 import { FrecuenciasMedicionComponent } from './catalogos/frecuencias-medicion.component';
+import { FrecuenciasMedicionFormularioComponent } from './catalogos/frecuencias-medicion-formulario.component';
 import { FormulasComponent } from './catalogos/formulas.component';
+import { FormulasFormularioComponent } from './catalogos/formulas-formulario.component';
 import { TResultadosComponent } from './catalogos/tresultados.component';
+import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
 
 
 @NgModule({
@@ -50,8 +53,11 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 		UsuarioProcesoComponent,
 		UsuarioProcesoFormularioComponent,
 		FrecuenciasMedicionComponent,
+		FrecuenciasMedicionFormularioComponent,
 		FormulasComponent,
-		TResultadosComponent
+		FormulasFormularioComponent,
+		TResultadosComponent,
+		TresultadosFormularioComponent
 	],
 	exports: [
 		AdministracionComponent

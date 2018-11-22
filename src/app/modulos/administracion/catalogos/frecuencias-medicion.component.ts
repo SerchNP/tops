@@ -17,7 +17,7 @@ export class FrecuenciasMedicionComponent implements OnInit, OnDestroy {
 	listado: any[] = [];
 	cargando = false;
 	derechos: Derechos = {consultar: false, administrar: true, insertar: true, editar: true, cancelar: false};
-	ruta_add = ['/administracion', 'frecuencias_form', 'I', 0];
+	ruta_add = ['/administracion', 'submenucat', 'frecuencias_form', 'I', 0];
 	select = false;
 	allowMultiSelect = false;
 
@@ -90,8 +90,8 @@ export class FrecuenciasMedicionComponent implements OnInit, OnDestroy {
 					confirmButtonColor: '#B22222'
 				});
 				if (respuesta) {
-					this.subscription = this._catalogosService
-						.editaDescFrecuencia(frecuencia.clave, formValues[0].toUpperCase(), formValues[1].toUpperCase())
+					const resultado_body = JSON.parse('{"clave": ' + frecuencia.clave + ', "descrip": "' + formValues[0].toUpperCase() + '", "tipo_periodo" : "' + formValues[1].toUpperCase() + '", "accion" : "U"}');
+					this.subscription = this._catalogosService.mantCatFrecuencia(resultado_body)
 							.subscribe((data: any) => {
 								swal('Atención!!!', data.message, 'success');
 								this.ngOnInit();
