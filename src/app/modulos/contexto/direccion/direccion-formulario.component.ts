@@ -111,8 +111,11 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 				if (this.estrateg.length > 0) {
 					this.listFODA_a = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_a);
 					this.listFODA_b = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_b);
-					this.foda_a.setValue(this.registro.foda_a);
-					this.foda_b.setValue(this.registro.foda_b);
+					if (this.registro !== undefined) {
+						console.log(this.registro.foda_a);
+						this.foda_a.setValue(this.registro.foda_a);
+						this.foda_b.setValue(this.registro.foda_b);
+					}
 				}
 			});
 		this.subscription = this.forma.controls['foda_a'].valueChanges.subscribe(cuestionASel => {
