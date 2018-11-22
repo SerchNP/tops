@@ -7,10 +7,9 @@ import { CONTEXTO_ROUTES } from './contexto.routes';
 
 // Modulos
 import { ComponentModule } from '../../components/component.module';
+import { MatExpansionModule, MatCheckboxModule } from '@angular/material';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatExpansionModule } from '@angular/material';
 import { PipesModule } from '../../pipes/pipes.module';
-import { MatCheckboxModule } from '@angular/material';
 
 // Componentes
 import { ContextoComponent } from './contexto.component';

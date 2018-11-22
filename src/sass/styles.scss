@@ -5,8 +5,12 @@ footer {
 }
 
 p {
-    word-break: break-all;
+    overflow-wrap: break-word;
     white-space: normal;
+}
+
+.list-group-item {
+    padding: 0.15rem 1rem !important;
 }
 
 header div {

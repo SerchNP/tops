@@ -8,7 +8,7 @@ import { RIESGOS_ROUTES } from './riesgos.routes';
 // Modulos
 import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
-import { MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { MatExpansionModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 
 // Componentes
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
@@ -23,6 +23,7 @@ import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-ries
 		ComponentModule,
 		FormsModule,
 		ReactiveFormsModule,
+		MatExpansionModule,
 		MatCheckboxModule,
 		MatRadioModule
 	],

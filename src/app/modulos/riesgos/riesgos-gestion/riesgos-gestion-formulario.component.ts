@@ -71,7 +71,10 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 			riesgo : new FormControl(),
 			tipo_riesgo : new FormControl('G'),
 			riesgo_desc : new FormControl('', Validators.required),
-			cuestiones : this.formBuilder.array([]),
+			cuestionesA : this.formBuilder.array([]),
+			cuestionesO : this.formBuilder.array([]),
+			cuestionesD : this.formBuilder.array([]),
+			cuestionesF : this.formBuilder.array([]),
 			autoriza_desc: new FormControl('')
 		});
 
@@ -84,8 +87,17 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				// "procesoSel" representa la clave del proceso seleccionado,
 				// por lo que hay que filtrar la lista de procesos para obtener
 				// la clave del sistema a la que pertenece el proceso
-				while (this.cuestiones.length !== 0) {
-					this.cuestiones.removeAt(0);
+				while (this.cuestionesA.length !== 0) {
+					this.cuestionesA.removeAt(0);
+				}
+				while (this.cuestionesO.length !== 0) {
+					this.cuestionesO.removeAt(0);
+				}
+				while (this.cuestionesD.length !== 0) {
+					this.cuestionesD.removeAt(0);
+				}
+				while (this.cuestionesF.length !== 0) {
+					this.cuestionesF.removeAt(0);
 				}
 				this.subscription = this._foda.getFODAByProceso(procesoSel).subscribe(
 					(data: any) => {
@@ -102,8 +114,20 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('proceso');
 	}
 
-	get cuestiones() {
-		return this.forma.get('cuestiones') as FormArray;
+	get cuestionesA() {
+		return this.forma.get('cuestionesA') as FormArray;
+	}
+
+	get cuestionesO() {
+		return this.forma.get('cuestionesO') as FormArray;
+	}
+
+	get cuestionesD() {
+		return this.forma.get('cuestionesD') as FormArray;
+	}
+
+	get cuestionesF() {
+		return this.forma.get('cuestionesF') as FormArray;
 	}
 
 	getProcesos() {
@@ -139,7 +163,22 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 
 	async guardar () {
 		const listadoFinal: any = [];
-		this.cuestiones.value.forEach(element => {
+		this.cuestionesA.value.forEach(element => {
+			if (element.b_foda === true) {
+				listadoFinal.push(element);
+			}
+		});
+		this.cuestionesO.value.forEach(element => {
+			if (element.b_foda === true) {
+				listadoFinal.push(element);
+			}
+		});
+		this.cuestionesD.value.forEach(element => {
+			if (element.b_foda === true) {
+				listadoFinal.push(element);
+			}
+		});
+		this.cuestionesF.value.forEach(element => {
 			if (element.b_foda === true) {
 				listadoFinal.push(element);
 			}

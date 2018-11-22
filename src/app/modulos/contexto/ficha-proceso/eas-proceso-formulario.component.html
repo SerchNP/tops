@@ -9,37 +9,163 @@
 </div>
 <br>
 <form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
-    <div class="form-group row">
-        <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo</label>
-        <div class="col-sm-2">
-            <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (tipo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
-				<option value="" selected="selected" disabled="disabled">Seleccionar</option>
-				<option value="E">Entrada</option>
-				<option value="A">Actividad</option>
-				<option value="S">Salida</option>
-			</select>
-            <div *ngIf="tipo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
+					<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+					<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
+				</select>
+                <small id="procesoHelp" class="form-text text-muted">La Dirección Estratégica pertenece al Proceso</small>
+                <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
-        <div class="col-sm-8">
-            <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
-						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
-						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
-					</select>
-            <small id="procesoHelp" class="form-text text-muted">La Entrada/Actividad/Salida pertenece al Proceso</small>
-            <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active" id="nav-ent-tab" data-toggle="tab" href="#nav-ent" role="tab" aria-controls="nav-ent" aria-selected="true">Entradas</a>
+                <a class="nav-item nav-link" id="nav-act-tab" data-toggle="tab" href="#nav-act" role="tab" aria-controls="nav-act" aria-selected="false" [ngClass]="(proceso.value === '') ? 'disabled' : null">Actividades</a>
+                <a class="nav-item nav-link" id="nav-sal-tab" data-toggle="tab" href="#nav-sal" role="tab" aria-controls="nav-sal" aria-selected="false" [ngClass]="(proceso.value === '') ? 'disabled' : null">Salidas</a>
+            </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-ent" role="tabpanel" aria-labelledby="nav-ent-tab">
+                <br />
+                <div class="row">
+                    <div class=" col-md-12 text-right">
+                        <button [attr.disabled]="(proceso.value === '') ? 'disabled' : null" type="button" class="btn btn-sm btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addEntrada()">
+							<i class="fa fa-plus"></i> Agregar
+						</button>
+                    </div>
+                </div>
+                <table class="table table-sm table-hover" formArrayName="entradas" style="font-size: 14px;">
+                    <thead class="thead-secondary">
+                        <tr>
+                            <th>Entrada</th>
+                            <th>Proveedor</th>
+                            <th>Externo/Interno</th>
+                            <th>Responsable</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of entradas.controls; let i = index" [formGroupName]="i">
+                            <td>
+                                <textarea #edescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="entradas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #edescripcion_pdc class="form-control" rows="2" cols="35" formControlName="descripcion_pdc" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="entradas.controls[i].controls['descripcion_pdc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <select #eint_ext class="form-control" formControlName="int_ext" style="width: 350px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+									<option value="">Seleccionar</option>
+									<option value="E">Externo</option>
+									<option value="I">Interno</option>
+								</select>
+                                <div *ngIf="entradas.controls[i].controls['int_ext'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #eresponsable class="form-control" rows="2" cols="35" formControlName="responsable" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="entradas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-act" role="tabpanel" aria-labelledby="nav-act-tab">
+                <br />
+                <div class="row">
+                    <div class=" col-md-12 text-right">
+                        <button [attr.disabled]="(proceso.value === '') ? 'disabled' : null" type="button" class="btn btn-sm btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addActividad()">
+							<i class="fa fa-plus"></i> Agregar
+						</button>
+                    </div>
+                </div>
+                <table class="table table-sm table-hover" formArrayName="actividades" style="font-size: 14px;">
+                    <thead class="thead-secondary">
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Responsable</th>
+                            <th>Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of actividades.controls; let i = index" [formGroupName]="i">
+                            <td>
+                                <textarea #adescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="actividades.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #aresponsable class="form-control" rows="2" cols="35" formControlName="responsable" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="actividades.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #adescripcion_pdc class="form-control" rows="2" cols="35" formControlName="descripcion_pdc" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="actividades.controls[i].controls['descripcion_pdc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="nav-sal" role="tabpanel" aria-labelledby="nav-sal-tab">
+                <br />
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button [attr.disabled]="(proceso.value === '') ? 'disabled' : null" type="button" class="btn btn-sm btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addSalida()">
+							<i class="fa fa-plus"></i> Agregar
+						</button>
+                    </div>
+                </div>
+                <table class="table table-sm table-hover" formArrayName="salidas" style="font-size: 14px;">
+                    <thead class="thead-secondary">
+                        <tr>
+                            <th>Descripción de la salida esperada</th>
+                            <th>Cliente</th>
+                            <th>Externo/Interno</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of salidas.controls; let i = index" [formGroupName]="i">
+                            <td>
+                                <textarea #sdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="salidas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #sdescripcion_pdc class="form-control" rows="2" cols="35" formControlName="descripcion_pdc" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+									</textarea>
+                                <div *ngIf="salidas.controls[i].controls['descripcion_pdc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <select #sint_ext class="form-control" formControlName="int_ext" style="width: 350px;" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+									<option value="">Seleccionar</option>
+									<option value="E">Externo</option>
+									<option value="I">Interno</option>
+								</select>
+                                <div *ngIf="salidas.controls[i].controls['int_ext'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="text-center">
-        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
-            <i class="far fa-arrow-alt-circle-left"></i> Regresar
-        </a>&nbsp;
-        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion === 'I' || accion === 'U'">
-				<i class="fa fa-save"></i> Guardar
-			</button>&nbsp;
-        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'I' || accion === 'U'">
+        <br/>
+        <div class="text-center">
+            <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
+                <i class="far fa-arrow-alt-circle-left"></i> Regresar
+            </a>&nbsp;
+            <button type="submit" class="btn btn-outline-primary" *ngIf="accion === 'U' || accion === 'I'" [disabled]="!forma.valid">
+					<i class="fa fa-save"></i> Guardar
+				</button>&nbsp;
+            <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'U' || accion === 'I'">
 				Cancelar</a>
+        </div>
     </div>
 </form>

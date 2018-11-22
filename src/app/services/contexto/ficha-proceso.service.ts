@@ -18,4 +18,11 @@ export class FichaProcesoService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	insertarEASProceso (easproc: any) {
+		const url = URL_SGC + this.RUTA + 'insertaEASProceso.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(easproc);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }
