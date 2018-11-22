@@ -12,6 +12,7 @@ import { DireccionComponent } from './direccion/direccion.component';
 import { DireccionFormularioComponent } from './direccion/direccion-formulario.component';
 import { LineaAccionComponent } from './direccion/linea-accion.component';
 import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
+import { FichaProcesoComponent } from './ficha-proceso/ficha-proceso.component';
 
 
 const ContextoRoutes: Routes = [
@@ -42,6 +43,13 @@ const ContextoRoutes: Routes = [
 					{ path: 'lineas_accion', component: LineaAccionComponent, data: {titulo: 'Líneas de Acción', padre: 'Contexto'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'linea_form/:acc/:id/:aut', component: LineaAccionFormularioComponent, data: {titulo: 'Líneas de Acción', padre: 'Contexto', opcion: 'Dirección Estratégica'} },
+				]
+			},
+			{
+				path: 'submenufichaproc',
+				children: [
+					// tslint:disable-next-line:max-line-length
+					{ path: 'eas_proceso', component: FichaProcesoComponent, data: {titulo: 'Entradas, Actividades y Salidas por Proceso', padre: 'Contexto'} }
 				]
 			}
 		]

@@ -17,6 +17,7 @@ export { PuestosService } from './administracion/puestos.service';
 // Contexto
 export { FodaService } from './contexto/foda.service';
 export { DireccionService } from './contexto/direccion.service';
+export { FichaProcesoService } from './contexto/ficha-proceso.service';
 // Indicadores
 export { IndicadoresService } from './indicadores/indicadores.service';
 // Riesgos

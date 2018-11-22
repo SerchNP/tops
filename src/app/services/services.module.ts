@@ -12,6 +12,7 @@ import { DerechosService } from './shared/derechos.service';
 import { IndicadoresService } from './indicadores/indicadores.service';
 import { RiesgoService } from './riesgos/riesgo.service';
 import { DireccionService } from './contexto/direccion.service';
+import { FichaProcesoService } from './contexto/ficha-proceso.service';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { DireccionService } from './contexto/direccion.service';
 		FodaService,
 		IndicadoresService,
 		RiesgoService,
-		DireccionService
+		DireccionService,
+		FichaProcesoService
 	],
 	declarations: []
 })
