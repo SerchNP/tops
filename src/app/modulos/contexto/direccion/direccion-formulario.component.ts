@@ -112,7 +112,6 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 					this.listFODA_a = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_a);
 					this.listFODA_b = new FiltraFodaPipe().transform(this.listFODA, this.estrateg[0].cuestion_b);
 					if (this.registro !== undefined) {
-						console.log(this.registro.foda_a);
 						this.foda_a.setValue(this.registro.foda_a);
 						this.foda_b.setValue(this.registro.foda_b);
 					}
