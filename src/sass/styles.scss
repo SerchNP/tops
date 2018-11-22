@@ -4,6 +4,11 @@ footer {
     background-color: #3e78b2;
 }
 
+p {
+    word-break: break-all;
+    white-space: normal;
+}
+
 header div {
     display: inline-table;
     text-align: center

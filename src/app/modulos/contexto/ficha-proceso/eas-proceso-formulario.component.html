@@ -1,0 +1,45 @@
+<h5>{{titulo}}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group row">
+        <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo</label>
+        <div class="col-sm-2">
+            <select class="form-control" name="tipo" formControlName="tipo" [ngStyle]="{'border-color': (tipo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
+				<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+				<option value="E">Entrada</option>
+				<option value="A">Actividad</option>
+				<option value="S">Salida</option>
+			</select>
+            <div *ngIf="tipo.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+        <div class="col-sm-8">
+            <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'V' || accion === 'U' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
+					</select>
+            <small id="procesoHelp" class="form-text text-muted">La Entrada/Actividad/Salida pertenece al Proceso</small>
+            <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+        </div>
+    </div>
+    <div class="text-center">
+        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
+            <i class="far fa-arrow-alt-circle-left"></i> Regresar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="accion === 'I' || accion === 'U'">
+				<i class="fa fa-save"></i> Guardar
+			</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="accion === 'I' || accion === 'U'">
+				Cancelar</a>
+    </div>
+</form>

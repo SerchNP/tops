@@ -32,8 +32,6 @@ const administracionRoutes: Routes = [
 		component: PagesComponent,
 		canActivate: [LoginGuard, TipoUsuarioGuard],
 		children: [
-			// tslint:disable-next-line:max-line-length
-			// { path: 'frecuencias', component: FrecuenciaMedicionComponent, data: {titulo: 'Catálogo de Frecuencias de Medición', padre: 'Administración', opcion: 'Frecuencia de Medición'} },
 			{
 				path: 'submenucat',
 				children: [
@@ -89,7 +87,7 @@ const administracionRoutes: Routes = [
 				path: 'submenuident',
 				children: [
 					// tslint:disable-next-line:max-line-length
-					{ path: 'identidad_p', component: IdentidadComponent, data: {titulo: 'Catálogo de Políticas de Calidad', padre: 'Administración', opcion: 'Políticas de Calidad'} },
+					{ path: 'identidad_p', component: IdentidadComponent, data: {titulo: 'Catálogo de Política de Calidad', padre: 'Administración', opcion: 'Política de Calidad'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'identidad_a', component: IdentidadComponent, data: {titulo: 'Catálogo de Alcances', padre: 'Administración', opcion: 'Alcance'} },
 					// tslint:disable-next-line:max-line-length
