@@ -85,6 +85,9 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 			ejes : this.formBuilder.array([]),
 			lineas : this.formBuilder.array([])
 		});
+		this.bandera = false;
+		this.regid.setValue(0);
+		this.listaEjesSel = [];
 
 		this.cargando = true;
 		this.getProcesos();
@@ -119,9 +122,11 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 			});
 		this.subscription = this.forma.controls['foda_a'].valueChanges.subscribe(cuestionASel => {
 			this.cuestiona_sel = cuestionASel;
+			this.bandera = false;
 		});
 		this.subscription = this.forma.controls['foda_b'].valueChanges.subscribe(cuestionBSel => {
 			this.cuestionb_sel = cuestionBSel;
+			this.bandera = false;
 		});
 
 		merge(
