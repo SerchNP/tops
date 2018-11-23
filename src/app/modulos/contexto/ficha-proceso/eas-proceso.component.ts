@@ -29,7 +29,7 @@ export class EASProcesoComponent implements OnInit, OnDestroy {
 		{ columnDef: 'proceso',     	header: 'ID Proceso',		align: 'center', cell: (easproc: any) => `${easproc.proceso}`},
 		{ columnDef: 'proceso_desc',   	header: 'Proceso', 	        cell: (easproc: any) => `${easproc.proceso_desc}`},
 		{ columnDef: 'tipo_desc',   	header: 'Tipo', 			cell: (easproc: any) => `${easproc.tipo_desc}`},
-		{ columnDef: 'clave', 	  		header: 'Clave',			cell: (easproc: any) => `${easproc.clave}`},
+		// { columnDef: 'clave', 	  		header: 'Clave',			cell: (easproc: any) => `${easproc.clave}`},
 		{ columnDef: 'consecutivo', 	header: 'No.',				cell: (easproc: any) => `${easproc.consecutivo}`},
 		{ columnDef: 'descripcion', 	header: 'Descripción',		cell: (easproc: any) => `${easproc.descripcion}`},
 		{ columnDef: 'clasif', 		  	header: 'Clasificación',	cell: (easproc: any) => `${easproc.clasif}`},
@@ -48,7 +48,7 @@ export class EASProcesoComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.cargando = true;
 		this.getDerechos();
-		this.subscription = this._fichaproc.getEASProceso(this._MENU)
+		this.subscription = this._fichaproc.getListadoEAS(this._MENU)
 			.subscribe((data: any) => {
 				this.listado = data.easproc;
 				this._acceso.guardarStorage(data.token);

@@ -12,8 +12,14 @@ export class FichaProcesoService {
 	constructor(private http: HttpClient) {
 	}
 
-	getEASProceso (menuID: string) {
-		const url = URL_SGC + this.RUTA + 'getEASProceso.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+	getListadoEAS (menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getListadoEAS.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getEASByProceso(proceso: number) {
+		const url = URL_SGC + this.RUTA + 'getEASByProceso.json?token=' + localStorage.getItem('token') + '&p=' + proceso;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}

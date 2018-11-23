@@ -24,6 +24,7 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	proceso_sel: number;
 	procesos: any [] = [];
+	listaEAS: any [] = [];
 
 	constructor(private activatedRoute: ActivatedRoute,
 				private router: Router,
@@ -54,6 +55,13 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 		});
 		this.cargando = true;
 		this.getProcesos();
+		this.subscription = this.forma.controls['proceso'].valueChanges
+			.subscribe(procesoSel => {	// "procesoSel" representa la clave del proceso seleccionado
+				if (procesoSel !== null) {
+					this.proceso_sel = procesoSel;
+					this.getEASByProceso(this.proceso.value);
+				}
+			});
 		this.cargando = false;
 	}
 
@@ -92,8 +100,36 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	getEASByProceso(idProc) {
+		this.subscription = this._fichaproc.getEASByProceso(idProc)
+			.subscribe(
+				(data: any) => {
+					this.listaEAS = data.easproc;
+					this._acceso.guardarStorage(data.token);
+					this.listaEAS.forEach((reg) => {
+						this.addItem(reg);
+					});
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
+	addItem(reg): void {
+		if (reg.tipo === 'E') {
+			this.entradas.push(this.createItemEAS(reg.clave, reg.tipo, reg.descripcion, reg.descripcion_pdc, reg.responsable, reg.int_ext));
+		} else if (reg.tipo === 'A') {
+			this.actividades.push(this.createItemEAS(reg.clave, reg.tipo, reg.descripcion, reg.descripcion_pdc, reg.responsable, reg.int_ext));
+		} else if (reg.tipo === 'S') {
+			this.salidas.push(this.createItemEAS(reg.clave, reg.tipo, reg.descripcion, reg.descripcion_pdc, reg.responsable, reg.int_ext));
+		}
+	}
+
 	addEntrada() {
-		this.entradas.push(this.createItemEAS(0, 'E', '', '', '', '')); // Las actividades son internas (I)
+		this.entradas.push(this.createItemEAS(0, 'E', '', '', '', ''));
 	}
 
 	addActividad() {
@@ -104,19 +140,22 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 		this.salidas.push(this.createItemEAS(0, 'S', '', '', '', ''));
 	}
 
+	delEntrada(clave: number) {
+		// this.entradas.splice((this.entradas.clave === clave), 1);
+	}
+
 	createItemEAS(clave, tipo, descrip, descrip_pdc, responsable, intext): FormGroup {
 		return this.formBuilder.group({
 			clave:			 new FormControl(clave, Validators.required),
 			tipo:			 new FormControl(tipo, Validators.required), // E-Entrada, A-Actividad, S-Salida
 			descripcion:	 new FormControl(descrip, Validators.required),
 			descripcion_pdc: new FormControl(descrip_pdc, Validators.required),
-			responsable:	 new FormControl(responsable, Validators.required),
+			responsable:	 new FormControl(responsable),
 			int_ext:		 new FormControl(intext, Validators.required), // E-Externo, I-Interno
 		});
 	}
 
 	async guardar() {
-		const listaEAS: any = [];
 		if (this.entradas.length === 0) {
 			swal('ERROR', 'Debe ingresar al menos una entrada para el proceso', 'error');
 		} else if (this.actividades.length === 0) {
@@ -127,8 +166,6 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 			this.subscription = this._fichaproc.insertarEASProceso(this.forma.value)
 				.subscribe((data: any) => {
 						swal('Atención!!!', data.message, 'success');
-						const elemHTML: HTMLElement = document.getElementById('nav-est-tab');
-						elemHTML.click();
 						this.ngOnInit();
 					},
 					error => {

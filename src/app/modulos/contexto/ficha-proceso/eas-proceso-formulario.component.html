@@ -38,13 +38,13 @@
 						</button>
                     </div>
                 </div>
-                <table class="table table-sm table-hover" formArrayName="entradas" style="font-size: 14px;">
+                <table class="table table-sm table-hover" formArrayName="entradas">
                     <thead class="thead-secondary">
                         <tr>
                             <th>Entrada</th>
+                            <th>Responsable</th>
                             <th>Proveedor</th>
                             <th>Externo/Interno</th>
-                            <th>Responsable</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +53,11 @@
                                 <textarea #edescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
 								</textarea>
                                 <div *ngIf="entradas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <textarea #eresponsable class="form-control" rows="2" cols="35" formControlName="responsable" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+								</textarea>
+                                <div *ngIf="entradas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
                                 <textarea #edescripcion_pdc class="form-control" rows="2" cols="35" formControlName="descripcion_pdc" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
@@ -67,11 +72,6 @@
 								</select>
                                 <div *ngIf="entradas.controls[i].controls['int_ext'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
-                            <td>
-                                <textarea #eresponsable class="form-control" rows="2" cols="35" formControlName="responsable" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
-								</textarea>
-                                <div *ngIf="entradas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -85,7 +85,7 @@
 						</button>
                     </div>
                 </div>
-                <table class="table table-sm table-hover" formArrayName="actividades" style="font-size: 14px;">
+                <table class="table table-sm table-hover" formArrayName="actividades">
                     <thead class="thead-secondary">
                         <tr>
                             <th>Actividad</th>
@@ -123,10 +123,10 @@
 						</button>
                     </div>
                 </div>
-                <table class="table table-sm table-hover" formArrayName="salidas" style="font-size: 14px;">
+                <table class="table table-sm table-hover" formArrayName="salidas">
                     <thead class="thead-secondary">
                         <tr>
-                            <th>Descripción de la salida esperada</th>
+                            <th>Salida esperada</th>
                             <th>Cliente</th>
                             <th>Externo/Interno</th>
                         </tr>

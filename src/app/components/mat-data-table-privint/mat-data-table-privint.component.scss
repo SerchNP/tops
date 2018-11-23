@@ -74,6 +74,10 @@
     background-color: #949494 !important;
 }
 
+::ng-deep .mat-header-row {
+    background-image: linear-gradient(to left, rgba(154, 175, 199, 0), rgba(154, 175, 199, .5)) !important;
+}
+
 .detail-row {
     height: 0;
 }
