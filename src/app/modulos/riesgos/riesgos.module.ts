@@ -14,6 +14,9 @@ import { MatExpansionModule, MatCheckboxModule, MatRadioModule } from '@angular/
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
 import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-gestion-formulario.component';
 import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';
+import { RiesgosOperativosComponent } from './riesgos-operativos/riesgos-operativos.component';
+import { RiesgosOperativosFormularioComponent } from './riesgos-operativos/riesgos-operativos-formulario.component';
+
 
 @NgModule({
 	imports: [
@@ -30,7 +33,9 @@ import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-ries
 	declarations: [
 		RiesgosGestionComponent,
 		RiesgosGestionFormularioComponent,
-		AutorizaRiesgosGestionComponent
+		AutorizaRiesgosGestionComponent,
+		RiesgosOperativosComponent,
+		RiesgosOperativosFormularioComponent
 	],
 	providers: []
 })

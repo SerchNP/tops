@@ -11,21 +11,21 @@ import swal from 'sweetalert2';
 
 
 @Component ({
-	selector: 'app-riesgos-gestion',
-	templateUrl: './riesgos-gestion.component.html'
+	selector: 'app-riesgos-operativos',
+	templateUrl: './riesgos-operativos.component.html'
 })
-export class RiesgosGestionComponent implements OnInit, OnDestroy {
+export class RiesgosOperativosComponent implements OnInit, OnDestroy {
 
-	private _MENU = 'riesgo_gestion';
-	private _TIPOR = 'G';
+	private _MENU = 'riesgo_operativo';
+	private _TIPOR = 'O';
 
 	private subscription: Subscription;
 
 	listado: any[] = [];
 	cargando = false;
-	ruta_add =  ['/riesgos', 'riesgo_gestion_form', 'I', 0, 0, 'M'];
-	ruta_p = ['/riesgos', 'autorizariesgosg_form', 'A'];
-	ruta_r = ['/riesgos', 'autorizariesgosg_form', 'R'];
+	ruta_add =  ['/riesgos', 'riesgo_operativo_form', 'I', 0, 0, 'M'];
+	ruta_p = ['/riesgos', 'autorizariesgoso_form', 'A'];
+	ruta_r = ['/riesgos', 'autorizariesgoso_form', 'R'];
 	select = false;
 	allowMultiSelect = false;
 	opciones: Opciones = { detalle: true };
@@ -33,14 +33,20 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	avisos: Aviso = {};
 
 	columns = [
-		{ columnDef: 'proceso',     	 header: 'ID Proceso',		align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
-		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 		cell: (riesgo: any) => `${riesgo.proceso_desc}`},
-		{ columnDef: 'riesgo', 		 	 header: 'ID Riesgo', 		align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
-		{ columnDef: 'riesgo_desc',	 	 header: 'Riesgo',    		cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-		// { columnDef: 'tipo_riesgo_desc', header: 'Tipo de Riesgo',  cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
-		{ columnDef: 'lista_foda', 		 header: 'Cuestiones Externas e Internas',  cell: (riesgo: any) => `${riesgo.lista_foda}`},
-		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
-		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			cell: (riesgo: any) => `${riesgo.estatus_desc}`}
+		{ columnDef: 'proceso',     	    header: 'ID Proceso',		  align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
+		{ columnDef: 'proceso_desc',   	    header: 'Proceso', 			  cell: (riesgo: any) => `${riesgo.proceso_desc}`},
+		{ columnDef: 'origen_desc', 	    header: 'Origen',  			  cell: (riesgo: any) => `${riesgo.origen_desc}`},
+		{ columnDef: 'easproc_desc', 	    header: 'Descripción Origen', cell: (riesgo: any) => `${riesgo.easproc_desc}`},
+		{ columnDef: 'riesgo', 		 	    header: 'ID Riesgo', 		  align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
+		{ columnDef: 'riesgo_desc',	 	    header: 'Riesgo',    		  cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
+		{ columnDef: 'estado_desc',     	header: 'Estado',  			  cell: (riesgo: any) => `${riesgo.predecesor_desc}`},
+		{ columnDef: 'lista_causas', 	    header: 'Causas',  			  cell: (riesgo: any) => `${riesgo.lista_causas}`},
+		{ columnDef: 'lista_consecuencias', header: 'Consecuencias',  	  cell: (riesgo: any) => `${riesgo.lista_consecuencias}`},
+		{ columnDef: 'predecesor_desc',     header: 'Riesgo de Gestión',  visible: false, cell: (riesgo: any) => `${riesgo.predecesor_desc}`},
+		{ columnDef: 'responsable', 	 	header: 'Responsable',  	  visible: false, cell: (riesgo: any) => `${riesgo.responsable}`},
+		{ columnDef: 'puesto_desc', 	 	header: 'Puesto',  			  visible: false, cell: (riesgo: any) => `${riesgo.puesto_desc}`},
+		{ columnDef: 'autoriza_desc', 	 	header: 'Situación',		  cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	 	header: 'Estatus',			  cell: (riesgo: any) => `${riesgo.estatus_desc}`}
 	];
 
 	constructor(private _acceso: AccesoService,
@@ -168,12 +174,12 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 		if (riesgo.autoriza === 7) {
 			swal('ERROR', 'No es posible modificar el riesgo, ya se encuentra cancelado', 'error');
 		} else {
-			this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'U', riesgo.riesgo, riesgo.autoriza, 'M']);
+			this.router.navigate(['/riesgos', 'riesgo_operativo_form', 'U', riesgo.riesgo, riesgo.autoriza, 'M']);
 		}
 	}
 
 	detalleRiesgo(riesgo) {
-		this.router.navigate(['/riesgos', 'riesgo_gestion_form', 'V', riesgo.riesgo, riesgo.autoriza, 'M']);
+		this.router.navigate(['/riesgos', 'riesgo_operativo_form', 'V', riesgo.riesgo, riesgo.autoriza, 'M']);
 	}
 
 	openDialog(datos: any): void {
@@ -181,7 +187,7 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				subtitle: datos.tipo_riesgo_desc,
+				subtitle: 'Riesgo ' + datos.tipo_riesgo_desc + ', ' + datos.estado_desc,
 				texto: datos.riesgo_desc,
 				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,

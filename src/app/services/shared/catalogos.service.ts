@@ -40,19 +40,16 @@ export class CatalogosService {
 	}
 
 	editaDescFrecuencia(clave: number, descripcion: string, tipoPeriodo: string) {
-		// const url = URL_SGC + this.RUTA + 'editaDescFrecuencia.json?token=' + localStorage.getItem('token');
 		const url = URL_SGC + this.RUTA + 'mantCatFrecuencia.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		// const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '", "tp": "' + tipoPeriodo + '"}'));
+		// tslint:disable-next-line:max-line-length
 		const body = JSON.stringify(JSON.parse('{"clave": ' + clave + ', "descrip": "' + descripcion + '", "tipo_periodo": "' + tipoPeriodo + '", "accion" : "U"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
 	editaDescripcion(clave: number, descripcion: string) {
-		// const url = URL_SGC + this.RUTA + 'editaDescripcion.json?token=' + localStorage.getItem('token');
 		const url = URL_SGC + this.RUTA + 'mantCatFormulas.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		// const body = JSON.stringify(JSON.parse('{"c": ' + clave + ', "d": "' + descripcion + '"}'));
 		const body = JSON.stringify(JSON.parse('{"clave": ' + clave + ', "descrip": "' + descripcion + '", "accion" : "U"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
@@ -74,6 +71,11 @@ export class CatalogosService {
 
 	getEstadosRiesgo() {
 		const cat = 'ERI';
+		return this.getCatalogoPromesa(cat);
+	}
+
+	/*getEstadosRiesgo() {
+		const cat = 'ERI';
 		this.getCatalogoService(cat)
 			.subscribe(
 				data => {
@@ -87,7 +89,7 @@ export class CatalogosService {
 						this._accesoService.logout();
 					}
 				});
-	}
+	}*/
 
 	getTipoCuestion() {
 		const cat = 'CEI';

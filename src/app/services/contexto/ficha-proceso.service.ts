@@ -24,6 +24,12 @@ export class FichaProcesoService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getEASProcesoByTipo(proceso: number, tipo: string) {
+		const url = URL_SGC + this.RUTA + 'getEASProcesoByTipo.json?token=' + localStorage.getItem('token') + '&p=' + proceso + '&t=' + tipo;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getEASById (clave: number) {
 		const url = URL_SGC + this.RUTA + 'getEASById.json?token=' + localStorage.getItem('token') + '&eas=' + clave;
 		const headers = HeadersGET;

@@ -19,6 +19,13 @@ export class RiesgoService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getRiesgosProcesoByTipo(tipo_riesgo: string, proceso: number) {
+		const url = URL_SGC + this.RUTA + 'getRiesgosProcesoByTipo.json?token=' + localStorage.getItem('token')
+			+ '&t=' + tipo_riesgo + '&p=' + proceso;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
 	getRiesgosPendientes(tipo_riesgo: string) {
 		const url = URL_SGC + this.RUTA + 'getRiesgosPendientes.json?token=' + localStorage.getItem('token') + '&t=' + tipo_riesgo;
 		const headers = HeadersGET;

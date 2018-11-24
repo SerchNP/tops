@@ -1,6 +1,7 @@
 export interface Riesgo {
 	riesgo?: number;
 	riesgo_desc?:	string;
+	predecesor?: number;
 	proceso?: number;
 	proceso_desc?: string;
 	cuestiones?: {
@@ -8,26 +9,28 @@ export interface Riesgo {
 		foda: number
 	};
 	tipo_riesgo?: string;
-	tipo_riesgo_desc?: string;
+	// tipo_riesgo_desc?: string;
 	consecutivo?: string;
 	origen?: string;
-	origen_desc?: string;
+	easproc?: string;
+	// easproc_desc?: string;
 	responsable?: string;
-	puesto_resp?: number;
+	puesto?: number;
 	edo_riesgo?: string;
-	edo_riesgo_desc?: string;
+	// edo_riesgo_desc?: string;
 	causas?: {
-		regid: number;
+		clave: number;
 		descripcion: string;
 	};
 	consecuencias?: {
-		regid: number;
+		clave: number;
 		descripcion: string;
 	};
+	ent_data?: string;
 	autoriza?: number;
-	autoriza_desc?: string;
+	// autoriza_desc?: string;
 	estatus?: string;
-	estatus_desc?: string;
+	// estatus_desc?: string;
 	f_captura?: Date;
 	u_captura?: string;
 	f_propuesta?: Date;
