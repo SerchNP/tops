@@ -45,6 +45,7 @@
                             <th>Responsable</th>
                             <th>Proveedor</th>
                             <th>Externo/Interno</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,6 +73,11 @@
 								</select>
                                 <div *ngIf="entradas.controls[i].controls['int_ext'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
+                            <td>
+                                <button type="button" (click)="delItem(i, 'E')" *ngIf="item.value.clave === 0" class="btn btn-outline-danger" title="Borrar registro de entrada">
+									<i class="fas fa-backspace"></i>
+								</button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -91,6 +97,7 @@
                             <th>Actividad</th>
                             <th>Responsable</th>
                             <th>Documento</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,6 +116,11 @@
                                 <textarea #adescripcion_pdc class="form-control" rows="2" cols="35" formControlName="descripcion_pdc" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
 								</textarea>
                                 <div *ngIf="actividades.controls[i].controls['descripcion_pdc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <button type="button" (click)="delItem(i, 'A')" *ngIf="item.value.clave === 0" class="btn btn-outline-danger" title="Borrar registro de actividad">
+									<i class="fas fa-backspace"></i>
+								</button>
                             </td>
                         </tr>
                     </tbody>
@@ -129,6 +141,7 @@
                             <th>Salida esperada</th>
                             <th>Cliente</th>
                             <th>Externo/Interno</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -150,6 +163,11 @@
 									<option value="I">Interno</option>
 								</select>
                                 <div *ngIf="salidas.controls[i].controls['int_ext'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                            </td>
+                            <td>
+                                <button type="button" (click)="delItem(i, 'S')" *ngIf="item.value.clave === 0" class="btn btn-outline-danger" title="Borrar registro de salida">
+									<i class="fas fa-backspace"></i>
+								</button>
                             </td>
                         </tr>
                     </tbody>

@@ -140,8 +140,34 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 		this.salidas.push(this.createItemEAS(0, 'S', '', '', '', ''));
 	}
 
-	delEntrada(clave: number) {
-		// this.entradas.splice((this.entradas.clave === clave), 1);
+	async delItem(pos: number, tipo: string) {
+		let etiqueta = '';
+
+		if (tipo === 'E') {
+			etiqueta = 'ENTRADAS';
+		} else if (tipo === 'A') {
+			etiqueta = 'ACTIVIDADES';
+		} else if (tipo === 'S') {
+			etiqueta = 'SALIDAS';
+		}
+
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea eliminar el renglón número ' + (pos + 1) + ' de la sección de ' + etiqueta + '?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			if (tipo === 'E') {
+				this.entradas.removeAt(pos);
+			} else if (tipo === 'A') {
+				this.actividades.removeAt(pos);
+			} else if (tipo === 'S') {
+				this.salidas.removeAt(pos);
+			}
+		}
 	}
 
 	createItemEAS(clave, tipo, descrip, descrip_pdc, responsable, intext): FormGroup {
