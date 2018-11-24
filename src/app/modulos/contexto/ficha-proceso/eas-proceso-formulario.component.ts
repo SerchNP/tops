@@ -59,6 +59,15 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 			.subscribe(procesoSel => {	// "procesoSel" representa la clave del proceso seleccionado
 				if (procesoSel !== null) {
 					this.proceso_sel = procesoSel;
+					while (this.entradas.length > 0) {
+						this.entradas.removeAt(0);
+					}
+					while (this.actividades.length > 0) {
+						this.actividades.removeAt(0);
+					}
+					while (this.salidas.length > 0) {
+						this.salidas.removeAt(0);
+					}
 					this.getEASByProceso(this.proceso.value);
 				}
 			});
