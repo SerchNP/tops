@@ -53,26 +53,6 @@ export class FrecuenciasMedicionFormularioComponent implements OnInit, OnDestroy
 		this.subscription.unsubscribe();
 	}
 
-	/*cargarPuesto(idPuesto: number) {
-		let bandera = false;
-		this.subscription = this._puestosService.getPuestoById(idPuesto)
-			.subscribe(
-				(data: any) => {
-					this.puesto = data.puesto;
-					this.formaPuestos.patchValue(this.puesto);
-					const token: string = data.token;
-					this._accesoService.guardarStorage(token);
-				},
-				error => {
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._accesoService.logout();
-					}
-					bandera = false;
-				});
-		return bandera;
-	}*/
-
 	guardar() {
 		this.subscription = this._catalogos.mantCatFrecuencia(this.forma.value)
 			.subscribe((data: any) => {

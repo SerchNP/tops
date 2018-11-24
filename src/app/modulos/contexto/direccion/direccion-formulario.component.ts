@@ -385,12 +385,15 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 						.subscribe(
 							(data: any) => {
 								swal('Atención!!!', data.message, 'success');
-								/*this.listFODA_a = [];
-								this.listFODA_b = [];
-								const elemHTML: HTMLElement = document.getElementById('nav-est-tab');
-								elemHTML.click();
-								this.ngOnInit();*/
-								this.router.navigate(['/contexto', 'submenudirest', 'direccion']);
+								if (this.accion === 'I') {
+									this.listFODA_a = [];
+									this.listFODA_b = [];
+									const elemHTML: HTMLElement = document.getElementById('nav-est-tab');
+									elemHTML.click();
+									this.ngOnInit();
+								} else {
+									this.router.navigate(['/contexto', 'submenudirest', 'direccion']);
+								}
 							},
 							error => {
 								swal('ERROR', error.error.message, 'error');

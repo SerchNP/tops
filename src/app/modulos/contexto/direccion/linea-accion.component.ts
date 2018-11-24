@@ -107,7 +107,6 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					console.log(datos);
 					this.subscription = this._direccion.cancelarLineaAccionDE(datos.linea, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');

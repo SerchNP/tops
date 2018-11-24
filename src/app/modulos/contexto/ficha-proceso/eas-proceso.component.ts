@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { Opciones } from '../../../interfaces/opciones.interface';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { AccesoService, DerechosService, FichaProcesoService } from '../../../services/services.index';
 import { MatDialog } from '@angular/material';
@@ -18,7 +17,6 @@ export class EASProcesoComponent implements OnInit, OnDestroy {
 
 	private _MENU = 'eas_proceso';
 	cargando = false;
-	opciones: Opciones = { detalle: true };
 	derechos: Derechos = {};
 	select = false;
 	allowMultiSelect = false;
@@ -26,17 +24,17 @@ export class EASProcesoComponent implements OnInit, OnDestroy {
 	ruta_add = ['/contexto', 'submenufichaproc', 'eas_proceso_form', 'I'];
 
 	columns = [
-		{ columnDef: 'proceso',     	header: 'ID Proceso',		align: 'center', cell: (easproc: any) => `${easproc.proceso}`},
-		{ columnDef: 'proceso_desc',   	header: 'Proceso', 	        cell: (easproc: any) => `${easproc.proceso_desc}`},
-		{ columnDef: 'tipo_desc',   	header: 'Tipo', 			cell: (easproc: any) => `${easproc.tipo_desc}`},
-		// { columnDef: 'clave', 	  		header: 'Clave',			cell: (easproc: any) => `${easproc.clave}`},
-		{ columnDef: 'consecutivo', 	header: 'No.',				cell: (easproc: any) => `${easproc.consecutivo}`},
-		{ columnDef: 'descripcion', 	header: 'Descripción',		cell: (easproc: any) => `${easproc.descripcion}`},
-		{ columnDef: 'clasif', 		  	header: 'Clasificación',	cell: (easproc: any) => `${easproc.clasif}`},
-		{ columnDef: 'descripcion_pdc',	header: 'P/D/C',			cell: (easproc: any) => `${easproc.descripcion_pdc}`},
-		{ columnDef: 'responsable', 	header: 'Responsable',	    visible: false, cell: (easproc: any) => `${easproc.responsable}`},
-		{ columnDef: 'autoriza_desc', 	header: 'Situación',		cell: (easproc: any) => `${easproc.autoriza_desc}`},
-		{ columnDef: 'estatus_desc', 	header: 'Estatus',			cell: (easproc: any) => `${easproc.estatus_desc}`}
+		{ columnDef: 'proceso',     	header: 'ID Proceso',		 align: 'center', cell: (easproc: any) => `${easproc.proceso}`},
+		{ columnDef: 'proceso_desc',   	header: 'Proceso', 	         cell: (easproc: any) => `${easproc.proceso_desc}`},
+		{ columnDef: 'clave', 	  		header: 'Clave',			 cell: (easproc: any) => `${easproc.clave}`},
+		{ columnDef: 'tipo_desc',   	header: 'Tipo', 			 cell: (easproc: any) => `${easproc.tipo_desc}`},
+		{ columnDef: 'consecutivo', 	header: 'No.',				 cell: (easproc: any) => `${easproc.consecutivo}`},
+		{ columnDef: 'descripcion', 	header: 'Descripción',		 cell: (easproc: any) => `${easproc.descripcion}`},
+		{ columnDef: 'responsable', 	header: 'Responsable',	     visible: false, cell: (easproc: any) => `${easproc.responsable}`},
+		{ columnDef: 'descripcion_pdc',	header: 'Descripción P/D/C', visible: false, cell: (easproc: any) => `${easproc.descripcion_pdc}`},
+		{ columnDef: 'clasif', 		  	header: 'Clasificación',	 visible: false, cell: (easproc: any) => `${easproc.clasif}`},
+		{ columnDef: 'autoriza_desc', 	header: 'Situación',		 cell: (easproc: any) => `${easproc.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	header: 'Estatus',			 cell: (easproc: any) => `${easproc.estatus_desc}`}
 	];
 
 	constructor(private router: Router,
@@ -73,11 +71,55 @@ export class EASProcesoComponent implements OnInit, OnDestroy {
 		if (datos.accion === 'V') {
 			this.openDialog(datos.row);
 		} else if (datos.accion === 'C') {
-			// this.cancelaLineaAccDE(datos.row);
+			this.cancelarEAS(datos.row);
 		} else if (datos.accion === 'E') {
-			// this.editaLineaAccDE(datos.row);
-		} else if (datos.accion === 'D') {
-			// this.consultaLineaAccDE(datos.row);
+			this.editarEAS(datos.row);
+		}
+	}
+
+	editarEAS (datos: any) {
+		if (datos.autoriza === 7) {
+			swal('ERROR', 'No es posible editar, la ' + datos.tipo_desc + ' ya se encuentra cancelada', 'error');
+		} else {
+			this.router.navigate(['/contexto', 'submenufichaproc', 'eas_proceso_edicion', 'U', datos.clave, datos.tipo]);
+		}
+	}
+
+	async cancelarEAS(datos: any) {
+		if (datos.autoriza === 7) {
+			swal('ERROR', 'La ' + datos.tipo_desc + ' ya se encuentra cancelada', 'error');
+		} else {
+			const {value: respuesta} = await swal({
+				title: 'Atención!!!',
+				text: '¿Está seguro que desea cancelar la ' + datos.tipo_desc + ' "' + datos.descripcion + '"?',
+				type: 'warning',
+				showCancelButton: true,
+				confirmButtonText: 'Aceptar',
+				confirmButtonColor: '#B22222'
+			});
+			if (respuesta) {
+				const {value: motivo} = await swal({
+					title: 'Ingrese el motivo de cancelación',
+					input: 'textarea',
+					showCancelButton: true,
+					inputValidator: (value) => {
+						return !value && 'Necesita ingresar el motivo de cancelación';
+					}
+				});
+				if (motivo !== undefined) {
+					this.subscription = this._fichaproc.cancelarEASProceso(datos.clave, motivo.toUpperCase())
+						.subscribe((data: any) => {
+							swal('Atención!!!', data.message, 'success');
+							this.ngOnInit();
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
+				}
+			}
 		}
 	}
 

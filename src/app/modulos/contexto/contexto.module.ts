@@ -24,6 +24,7 @@ import { LineaAccionComponent } from './direccion/linea-accion.component';
 import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
 import { EASProcesoComponent } from './ficha-proceso/eas-proceso.component';
 import { EASProcesoFormularioComponent } from './ficha-proceso/eas-proceso-formulario.component';
+import { EASProcesoEdicionComponent } from './ficha-proceso/eas-proceso-edicion.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { EASProcesoFormularioComponent } from './ficha-proceso/eas-proceso-formu
 		LineaAccionComponent,
 		LineaAccionFormularioComponent,
 		EASProcesoComponent,
-		EASProcesoFormularioComponent
+		EASProcesoFormularioComponent,
+		EASProcesoEdicionComponent
 	]
 })
 export class ContextoModule { }

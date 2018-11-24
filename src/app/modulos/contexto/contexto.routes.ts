@@ -14,6 +14,7 @@ import { LineaAccionComponent } from './direccion/linea-accion.component';
 import { LineaAccionFormularioComponent } from './direccion/linea-accion-formulario.component';
 import { EASProcesoComponent } from './ficha-proceso/eas-proceso.component';
 import { EASProcesoFormularioComponent } from './ficha-proceso/eas-proceso-formulario.component';
+import { EASProcesoEdicionComponent } from './ficha-proceso/eas-proceso-edicion.component';
 
 
 const ContextoRoutes: Routes = [
@@ -52,7 +53,9 @@ const ContextoRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'eas_proceso', component: EASProcesoComponent, data: {titulo: 'Entradas, Actividades, Salidas por Proceso', padre: 'Contexto'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'eas_proceso_form/:acc', component: EASProcesoFormularioComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} }
+					{ path: 'eas_proceso_form/:acc', component: EASProcesoFormularioComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'eas_proceso_edicion/:acc/:id/:t', component: EASProcesoEdicionComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} }
 				]
 			}
 		]
