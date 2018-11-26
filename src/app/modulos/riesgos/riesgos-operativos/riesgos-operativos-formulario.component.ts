@@ -86,12 +86,14 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 			causas : this.formBuilder.array([]),
 			consecuencias : this.formBuilder.array([]),
 			responsable : new FormControl('', Validators.required),
-			puesto : new FormControl('', Validators.required),
-			estado : new FormControl('', Validators.required),
+			puesto_resp : new FormControl('', Validators.required),
+			edo_riesgo : new FormControl('', Validators.required),
 			autoriza_desc: new FormControl('')
 		});
 
 		this.cargando = true;
+		this.listEASProc = [];
+		this.listRiesgosG = [];
 		this.getProcesos();
 		this.getCatalogos();
 		this.cargando = false;
@@ -142,16 +144,16 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('proceso');
 	}
 
-	get estado() {
-		return this.forma.get('estado');
+	get edo_riesgo() {
+		return this.forma.get('edo_riesgo');
 	}
 
 	get responsable() {
 		return this.forma.get('responsable');
 	}
 
-	get puesto() {
-		return this.forma.get('puesto');
+	get puesto_resp() {
+		return this.forma.get('puesto_resp');
 	}
 
 	get causas() {
@@ -236,6 +238,12 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 					// this.proceso.setValue(data.riesgo.proceso);
 					this.forma.patchValue(data.riesgo);
+					data.riesgo.causas.forEach(element => {
+						this.causas.push(this.createItemCC(element.regid, element.descrip));
+					});
+					data.riesgo.consecuencias.forEach(element => {
+						this.consecuencias.push(this.createItemCC(element.regid, element.descrip));
+					});
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
@@ -316,8 +324,8 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 								}
 							});*/
 					}
-				} else {
-					/*this.subscription = this._riesgo.modificarRiesgoOperativo(this.forma.value)
+				/*} else {
+					this.subscription = this._riesgo.modificarRiesgoOperativo(this.forma.value)
 						.subscribe((data: any) => {
 							this._acceso.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
@@ -331,7 +339,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 						});*/
 				}
 			} else {
-				/*this.subscription = this._riesgo.insertarRiesgoOperativo(this.forma.value)
+				this.subscription = this._riesgo.insertarRiesgoOperativo(this.forma.value)
 					.subscribe((data: any) => {
 						this._acceso.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
@@ -342,7 +350,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 						if (error.error.code === 401) {
 							this._acceso.logout();
 						}
-					});*/
+					});
 			}
 		}
 	}

@@ -96,4 +96,14 @@ export class RiesgoService {
 		const body = JSON.stringify(arreglo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	insertarRiesgoOperativo(riesgo: Riesgo) {
+		if (riesgo.riesgo === null) {
+			delete riesgo['riesgo'];
+		}
+		const url = URL_SGC + this.RUTA + 'insertaRiesgoOperativo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(riesgo);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
 }

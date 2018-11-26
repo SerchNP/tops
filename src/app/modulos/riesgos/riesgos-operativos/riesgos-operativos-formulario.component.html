@@ -191,24 +191,24 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
+            <label for="puesto_resp" class="col-sm-2 col-form-label text-right">Puesto</label>
             <div class="col-sm-8">
-                <select class="form-control" name="puesto" formControlName="puesto" [ngStyle]="{'border-color': (puesto.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="puesto_resp" formControlName="puesto_resp" [ngStyle]="{'border-color': (puesto_resp.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
 						<option value="{{item.puesto}}" *ngFor="let item of listaPuestos">{{item.puesto_desc}}</option>
 					</select>
                 <small id="puestoHelp" class="form-text text-muted">Puesto del responsable del Riesgo Operativo</small>
-                <div *ngIf="forma.controls['puesto'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <div *ngIf="forma.controls['puesto_resp'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">
-            <label for="estado" class="col-sm-2 col-form-label text-right">Estado del Riesgo</label>
+            <label for="edo_riesgo" class="col-sm-2 col-form-label text-right">Estado del Riesgo</label>
             <div class="col-sm-3">
-                <select class="form-control" name="estado" formControlName="estado" [ngStyle]="{'border-color': (estado.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
+                <select class="form-control" name="edo_riesgo" formControlName="edo_riesgo" [ngStyle]="{'border-color': (edo_riesgo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
 					<option value="" selected="selected">Seleccionar</option>
 					<option value="{{item.clave}}" *ngFor="let item of listEstadosR">{{item.descripcion}}</option>
 				</select>
-                <div *ngIf="forma.controls['estado'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <div *ngIf="forma.controls['edo_riesgo'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
     </div>
