@@ -24,6 +24,8 @@ import { TresultadosFormularioComponent } from './catalogos/tresultados-formular
 
 // Guards
 import { LoginGuard, TipoUsuarioGuard } from '../../services/services.index';
+import { PeriodosComponent } from './catalogos/periodos.component';
+import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.component';
 
 
 const administracionRoutes: Routes = [
@@ -46,7 +48,11 @@ const administracionRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'tresultados', component: TResultadosComponent, data: {titulo: 'Catálogo de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'tresultados_form/:acc/:id', component: TresultadosFormularioComponent, data: {titulo: 'Mantenimiento de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} }
+					{ path: 'tresultados_form/:acc/:id', component: TresultadosFormularioComponent, data: {titulo: 'Mantenimiento de Tipo de Resultados', padre: 'Administración', opcion: 'Tipo de Resultados'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'periodos', component: PeriodosComponent, data: {titulo: 'Catálogo de Periodos', padre: 'Administración', opcion: 'Periodos'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'periodos_form', component: PeriodosFormularioComponent, data: {titulo: 'Alta de Periodos', padre: 'Administración', opcion: 'Periodos'} },
 				]
 			},
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },

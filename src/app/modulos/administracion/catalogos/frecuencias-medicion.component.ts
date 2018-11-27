@@ -90,6 +90,7 @@ export class FrecuenciasMedicionComponent implements OnInit, OnDestroy {
 					confirmButtonColor: '#B22222'
 				});
 				if (respuesta) {
+					// tslint:disable-next-line:max-line-length
 					const resultado_body = JSON.parse('{"clave": ' + frecuencia.clave + ', "descrip": "' + formValues[0].toUpperCase() + '", "tipo_periodo" : "' + formValues[1].toUpperCase() + '", "accion" : "U"}');
 					this.subscription = this._catalogosService.mantCatFrecuencia(resultado_body)
 							.subscribe((data: any) => {

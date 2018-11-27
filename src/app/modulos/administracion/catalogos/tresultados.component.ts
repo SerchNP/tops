@@ -96,6 +96,7 @@ export class TResultadosComponent implements OnInit, OnDestroy {
 					confirmButtonColor: '#B22222'
 				});
 				if (respuesta) {
+					// tslint:disable-next-line:max-line-length
 					const resultado_body = JSON.parse('{"clave": ' + resultado.clave + ', "descrip": "' + formValues[0].toUpperCase() + '", "simbolo": "' + formValues[1].toLowerCase() + '", "accion" : "U"}');
 					this.subscription = this._catalogos
 						.mantCatResultados(resultado_body)
