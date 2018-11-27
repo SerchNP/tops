@@ -116,4 +116,10 @@ export class RiesgoService {
 		const body = JSON.stringify(riesgo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	getMatrizRiesgos (menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getMatrizRiesgos.json?token=' + localStorage.getItem('token') + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
 }

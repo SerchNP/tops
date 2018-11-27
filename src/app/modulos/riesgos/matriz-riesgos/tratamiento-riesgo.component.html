@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-11">
+        <h5>
+            <small>Riesgo Identificado</small>
+            <p>No. {{registro.consecutivo}} {{registro.riesgo_desc}}</p>
+        </h5>
+        <h6 class="text-muted">{{registro.proceso_desc}}</h6>
+    </div>
+    <div class="col-1 text-right">
+        <a [routerLink]="cancelar" class="btn btn-outline-dark">Regresar</a>
+    </div>
+</div>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<div class="card text-center">
+    <div class="card-header">
+        <nav>
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav-med-tab" data-toggle="tab" href="#nav-med" aria-controls="nav-med" aria-selected="true">Medición del Riesgo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-acc-tab" data-toggle="tab" href="#nav-acc" aria-controls="nav-acc" aria-selected="false">Implementación de Acciones</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="card-body">
+        texto
+    </div>
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
+            <br>
+        </div>
+        <div class="tab-pane fade show active" id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
+            <br>
+        </div>
+    </div>
+</div>
