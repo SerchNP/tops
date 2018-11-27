@@ -1,3 +1,27 @@
-<p>
-  periodos-formulario works!
-</p>
+<h5>Creación de Periodos</h5>
+<hr>
+<br/>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="anio" class="col-sm-2 col-form-label text-right">Año</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="anio" aria-describedby="anioHelp" [ngClass]="{'is-invalid': forma.controls['anio'].invalid}">
+				<div *ngIf="forma.controls['anio'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+				<div *ngIf="forma.controls['anio'].errors?.min" class="invalid-feedback">Este campo debe ser mayor a {{forma.controls['anio'].errors.min.min}}</div>
+				<div *ngIf="forma.controls['anio'].errors?.max" class="invalid-feedback">Este campo NO debe ser mayor a {{forma.controls['anio'].errors.max.max}}</div>
+            </div>
+            <div class="col-sm-8">
+				<small id="anioHelp" class="form-text text-muted">Ingrese el año a 4 dígitos para el cual desea crear los periodos</small>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" ><!--[disabled]="!forma.valid"-->
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
+{{forma.valid}}

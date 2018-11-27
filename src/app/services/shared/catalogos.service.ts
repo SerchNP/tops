@@ -121,4 +121,16 @@ export class CatalogosService {
 		const body = JSON.stringify(resultados);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	crearPeriodos(periodo: any) {
+		const url = URL_SGC + this.RUTA + 'crearPeriodos.json?anio=' + periodo.anio + '&token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		return this.http.post(url, {}, { headers }).map(resp => resp);
+	}
+
+	abrirCerrarPeriodos(periodo: string) {
+		const url = URL_SGC + this.RUTA + 'acPeriodos.json?per=' + periodo + '&token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		return this.http.post(url, {}, { headers }).map(resp => resp);
+	}
 }

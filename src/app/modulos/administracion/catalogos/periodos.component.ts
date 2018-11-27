@@ -62,7 +62,36 @@ export class PeriodosComponent implements OnInit, OnDestroy {
 	}
 
 	async editarPeriodo(periodo: any) {
-		console.log(periodo);
+		let pregunta = '';
+		if (periodo.estatus === 'CERRADO') {
+			pregunta = 'ABRIR';
+		} else {
+			pregunta = 'CERRAR';
+		}
+
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: '¿Está seguro que desea ' + pregunta + ' el periodo "'
+				+ periodo.periodo + '" con fechas del ' + periodo.f_inicial
+				+ ' al ' + periodo.f_final + '?',
+			type: 'question',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			this.subscription = this._catalogos.abrirCerrarPeriodos(periodo.periodo)
+				.subscribe((data: any) => {
+					swal('Atención!!!', data.message, 'success');
+					this.ngOnInit();
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+		}
 	}
 
 }
