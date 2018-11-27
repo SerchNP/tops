@@ -106,4 +106,14 @@ export class RiesgoService {
 		const body = JSON.stringify(riesgo);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	editarRiesgoOperativo(riesgo: Riesgo, motivo?: string) {
+		if (motivo) {
+			riesgo.motivo_modif = motivo.toUpperCase();
+		}
+		const url = URL_SGC + this.RUTA + 'editaRiesgoOperativo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(riesgo);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
 }
