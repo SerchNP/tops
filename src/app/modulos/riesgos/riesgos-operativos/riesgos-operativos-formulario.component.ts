@@ -117,7 +117,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 			.subscribe(origenSel => {	// "origenSel" es la clave del tipo de origen seleccionado
 				if (origenSel !== null) {
 					this.origen_sel = origenSel;
-					if (this.proceso_sel !== null || this.proceso_sel !== undefined) {
+					if (this.proceso_sel !== null && this.proceso_sel !== undefined && this.proceso_sel !== undefined) {
 						this.getEASProceso(this.proceso_sel, this.origen_sel);
 					}
 				}
@@ -195,6 +195,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -246,6 +247,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 					});
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -301,6 +303,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 			swal('ERROR', 'Debe ingresar al menos una Consecuencia del riesgo', 'error');
 		} else {
 			if (this.accion === 'U')  {
+				console.log(this.forma);
 				if (this.autoriza === '3') {
 					const {value: motivo} = await swal({
 						title: 'Ingrese el motivo del cambio',
@@ -311,7 +314,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 						}
 					});
 					if (motivo !== undefined) {
-						/*this.subscription = this._riesgo.modificarRiesgoOperativo(this.forma.value, motivo.toUpperCase())
+						this.subscription = this._riesgo.editarRiesgoOperativo(this.forma.value, motivo.toUpperCase())
 							.subscribe((data: any) => {
 								this._acceso.guardarStorage(data.token);
 								swal('Atención!!!', data.message, 'success');
@@ -322,10 +325,10 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 								if (error.error.code === 401) {
 									this._acceso.logout();
 								}
-							});*/
+							});
 					}
-				/*} else {
-					this.subscription = this._riesgo.modificarRiesgoOperativo(this.forma.value)
+				} else {
+					this.subscription = this._riesgo.editarRiesgoOperativo(this.forma.value)
 						.subscribe((data: any) => {
 							this._acceso.guardarStorage(data.token);
 							swal('Atención!!!', data.message, 'success');
@@ -336,7 +339,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 							if (error.error.code === 401) {
 								this._acceso.logout();
 							}
-						});*/
+						});
 				}
 			} else {
 				this.subscription = this._riesgo.insertarRiesgoOperativo(this.forma.value)
