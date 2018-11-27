@@ -16,6 +16,7 @@ import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-ges
 import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';
 import { RiesgosOperativosComponent } from './riesgos-operativos/riesgos-operativos.component';
 import { RiesgosOperativosFormularioComponent } from './riesgos-operativos/riesgos-operativos-formulario.component';
+import { AutorizaRiesgosOperativosComponent } from './riesgos-operativos/autoriza-riesgos-operativos.component';
 import { MatrizRiesgosComponent } from './matriz-riesgos/matriz-riesgos.component';
 import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.component';
 
@@ -38,6 +39,7 @@ import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.
 		AutorizaRiesgosGestionComponent,
 		RiesgosOperativosComponent,
 		RiesgosOperativosFormularioComponent,
+		AutorizaRiesgosOperativosComponent,
 		MatrizRiesgosComponent,
 		TratamientoRiesgoComponent
 	],

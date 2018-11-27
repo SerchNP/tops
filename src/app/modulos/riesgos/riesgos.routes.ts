@@ -9,6 +9,7 @@ import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-ges
 import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';
 import { RiesgosOperativosComponent } from './riesgos-operativos/riesgos-operativos.component';
 import { RiesgosOperativosFormularioComponent } from './riesgos-operativos/riesgos-operativos-formulario.component';
+import { AutorizaRiesgosOperativosComponent } from './riesgos-operativos/autoriza-riesgos-operativos.component';
 import { MatrizRiesgosComponent } from './matriz-riesgos/matriz-riesgos.component';
 import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.component';
 
@@ -27,6 +28,8 @@ const RiesgosRoutes: Routes = [
 			{ path: 'riesgo_operativo', component: RiesgosOperativosComponent, data: {titulo: 'Riesgos Operativos', padre: 'Riesgos'}},
 			// tslint:disable-next-line:max-line-length
 			{ path: 'riesgo_operativo_form/:acc/:id/:aut/:o', component: RiesgosOperativosFormularioComponent, data: {titulo: 'Gestión de Riesgos', padre: 'Riesgos'}},
+			// tslint:disable-next-line:max-line-length
+			{ path: 'autorizariesgoso_form/:acc', component: AutorizaRiesgosOperativosComponent, data: {titulo: 'Revisión de Riesgos Operativos', padre: 'Riesgos Operativos'}},
 			{ path: 'matriz_riesgos', component: MatrizRiesgosComponent, data: {titulo: 'Matriz de Riesgos', padre: 'Riesgos'}},
 			// tslint:disable-next-line:max-line-length
 			{ path: 'trata_riesgo_form/:acc/:id', component: TratamientoRiesgoComponent, data: {titulo: 'Acciones y Tratamiento del Riesgo', padre: 'Riesgos'}}
