@@ -19,9 +19,10 @@ export class CatalogosService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getCatalogoPromesa (cat: string) {
+	getCatalogoPromesa (cat: string, param?: number) {
 		const promesa = new Promise((resolve, reject) => {
-			const url = URL_SGC + this.RUTA + 'getCatalogo.json?token=' + localStorage.getItem('token') + '&c=' + cat;
+			const url = URL_SGC + this.RUTA + 'getCatalogo.json?token=' + localStorage.getItem('token')
+				+ '&c=' + cat + '&p=' + (param !== undefined ? param : 0);
 			const headers = HeadersGET;
 			this.http.get(url, {headers}).toPromise()
 				.then(
@@ -38,7 +39,7 @@ export class CatalogosService {
 		return promesa;
 	}
 
-	getTipoAccionPromesa (pred: number) {
+	/*getTipoAccionPromesa (pred: number) {
 		const promesa = new Promise((resolve, reject) => {
 			const url = URL_SGC + this.RUTA + 'getTipoAccion.json?token=' + localStorage.getItem('token') + '&p=' + pred;
 			const headers = HeadersGET;
@@ -55,7 +56,7 @@ export class CatalogosService {
 				);
 		});
 		return promesa;
-	}
+	}*/
 
 	editaDescFrecuencia(clave: number, descripcion: string, tipoPeriodo: string) {
 		const url = URL_SGC + this.RUTA + 'mantCatFrecuencia.json?token=' + localStorage.getItem('token');
@@ -93,7 +94,9 @@ export class CatalogosService {
 	}
 
 	getTipoAccion(pred: number) {
-		return this.getTipoAccionPromesa(pred);
+		const cat = 'ARI';
+		return this.getCatalogoPromesa(cat, pred);
+		// return this.getTipoAccionPromesa(pred);
 	}
 
 	getTipoCuestion() {
@@ -108,6 +111,16 @@ export class CatalogosService {
 
 	getImpactoRiesgo() {
 		const cat = 'IRI';
+		return this.getCatalogoPromesa(cat);
+	}
+
+	getOcurrenciaRiesgo(estado: number) {
+		const cat = 'ORI';
+		return this.getCatalogoPromesa(cat, estado);
+	}
+
+	getNivelesRiesgo() {
+		const cat = 'NRI';
 		return this.getCatalogoPromesa(cat);
 	}
 

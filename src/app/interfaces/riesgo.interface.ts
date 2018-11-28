@@ -9,15 +9,12 @@ export interface Riesgo {
 		foda: number
 	};
 	tipo_riesgo?: string;
-	// tipo_riesgo_desc?: string;
 	consecutivo?: string;
 	origen?: string;
 	easproc?: string;
-	// easproc_desc?: string;
 	responsable?: string;
 	puesto?: number;
 	edo_riesgo?: string;
-	// edo_riesgo_desc?: string;
 	causas?: {
 		clave: number;
 		descripcion: string;
@@ -28,9 +25,7 @@ export interface Riesgo {
 	};
 	ent_data?: string;
 	autoriza?: number;
-	// autoriza_desc?: string;
 	estatus?: string;
-	// estatus_desc?: string;
 	f_captura?: Date;
 	u_captura?: string;
 	f_propuesta?: Date;

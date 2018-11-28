@@ -19,7 +19,7 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	private _MENU = 'matriz_riesgos';
 
 	riesgoID: number;
-	registro: Riesgo = {};
+	registro: any = {};
 	cargando = false;
 	titulo: string;
 	cancelar = ['/riesgos', 'matriz_riesgos'];
@@ -102,7 +102,7 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	}
 
 	cargarRiesgo(riesgoID: number) {
-		this.subscription = this._riesgo.getRiesgoById(riesgoID, 'O')
+		this.subscription = this._riesgo.getRiesgoById(riesgoID, '0')
 			.subscribe(
 				(data: any) => {
 					this.registro = data.riesgo;
@@ -133,7 +133,7 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	}
 
 	cargarAcciones(riesgoID: number) {
-		this.subscription = this._riesgo.getAccionesByRiesgoId(riesgoID)
+		this.subscription = this._riesgo.getAccionesByRiesgoId(riesgoID, this._MENU)
 			.subscribe(
 				(data: any) => {
 					this.listadoAcciones = data.acciones;

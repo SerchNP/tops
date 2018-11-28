@@ -6,6 +6,7 @@ import { FiltraProcesosPipe } from '../pipes/filtra-procesos.pipe';
 import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
 import { FiltraFodaPipe } from '../pipes/filtra-foda.pipe';
 import { FiltraTipoEstrategiaPipe } from '../pipes/filtra-tipo-estrategia.pipe';
+import { FiltraClavePipe } from '../pipes/filtra-clave.pipe';
 
 @NgModule ({
 	declarations: [
@@ -14,7 +15,8 @@ import { FiltraTipoEstrategiaPipe } from '../pipes/filtra-tipo-estrategia.pipe';
 		FiltraProcesosPipe,
 		FiltraColumnsPipe,
 		FiltraFodaPipe,
-		FiltraTipoEstrategiaPipe
+		FiltraTipoEstrategiaPipe,
+		FiltraClavePipe
 	],
 	imports: [
 	],
@@ -24,7 +26,8 @@ import { FiltraTipoEstrategiaPipe } from '../pipes/filtra-tipo-estrategia.pipe';
 		FiltraProcesosPipe,
 		FiltraColumnsPipe,
 		FiltraFodaPipe,
-		FiltraTipoEstrategiaPipe
+		FiltraTipoEstrategiaPipe,
+		FiltraClavePipe
 	]
 })
 

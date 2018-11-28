@@ -1,7 +1,4 @@
 <h5>{{titulo}}</h5>
-<div class="col-1 text-right">
-    <a [routerLink]="cancelar" class="btn btn-outline-dark">Regresar</a>
-</div>
 <hr>
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">
@@ -11,3 +8,126 @@
     </div>
 </div>
 <br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="'disabled'">
+                <small id="procesoHelp" class="form-text text-muted">Clave del Proceso</small>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="'disabled'">
+                <small id="proceso_descHelp" class="form-text text-muted">Descripción del Proceso al que pertenece el Riesgo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="riesgo" class="col-sm-2 col-form-label text-right">Riesgo</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="riesgo" aria-describedby="riesgoHelp" [attr.disabled]="'disabled'">
+                <small id="riesgoHelp" class="form-text text-muted">Clave del riesgo</small>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="riesgo_desc" aria-describedby="riesgo_descHelp" [attr.disabled]="'disabled'">
+                <small id="riesgo_descHelp" class="form-text text-muted">Riesgo identificado</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="estado_desc" class="col-sm-2 col-form-label text-right">Estado</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="text" formControlName="estado_desc" aria-describedby="estado_descHelp" [attr.disabled]="'disabled'">
+                <small id="estado_descHelp" class="form-text text-muted">Estado del riesgo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="ocurrencia" class="col-sm-2 col-form-label text-right">Probabilidad o Frecuencia</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="ocurrencia" formControlName="ocurrencia" [ngStyle]="{'border-color': (ocurrencia.invalid ? '#dc3545' : '#ced4da')}">
+					<option value="">Seleccionar</option>
+					<option [value]="item.clave" *ngFor="let item of ocurrencias">{{item.descripcion}}</option>
+				</select>
+                <small id="ocurrenciaHelp" class="form-text text-muted"> Experiencia o Históricos </small>
+                <div *ngIf="ocurrencia.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" min="0" max="100" formControlName="valorc_o" aria-describedby="valorc_oHelp" [ngStyle]="{'border-color': (valorc_o.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="valorc_oHelp" class="form-text text-muted">Valor cuantitativo </small>
+                <div *ngIf="valorc_o.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-3 text-primary text-left" *ngIf="ocurre !== undefined && ocurre.length > 0">
+                {{ ocurre[0].texto | titlecase }} ({{ocurre[0].li}} - {{ocurre[0].ls}})
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="impacto" class="col-sm-2 col-form-label text-right">Impacto</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="impacto" formControlName="impacto" [ngStyle]="{'border-color': (impacto.invalid ? '#dc3545' : '#ced4da')}">
+						<option value="">Seleccionar</option>	
+						<option [value]="item.clave" *ngFor="let item of impactos">{{item.descripcion}}</option>
+					</select>
+                <small id="impactoHelp" class="form-text text-muted">Impacto del Riesgo</small>
+                <div *ngIf="impacto.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" min="1" max="5" formControlName="valorc_i" aria-describedby="valorc_iHelp" [attr.disabled]="'disabled'" [ngStyle]="{'border-color': (valorc_i.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="valorc_iHelp" class="form-text text-muted">Valor cuantitativo</small>
+                <div *ngIf="valorc_i.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-5 text-primary text-left" *ngIf="imp !== undefined && imp.length > 0">
+                {{ imp[0].impacto}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="valorc_t" class="col-sm-2 col-form-label text-right">Valor cuantitativo</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" min="0" max="100" formControlName="valorc_t" aria-describedby="valorc_tHelp" [attr.disabled]="'disabled'" [ngStyle]="{'border-color': (valorc_t.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="valorc_tHelp" class="form-text text-muted">Valor cuantitativo ponderado total</small>
+                <div *ngIf="valorc_t.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-1">
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modalME">
+					Método de Evaluación
+				</button>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="nivel" class="col-sm-2 col-form-label text-right">Nivel</label>
+            <div class="col-sm-2">
+                <select class="form-control" name="nivel" formControlName="nivel" [ngStyle]="{'border-color': (nivel.invalid ? '#dc3545' : '#ced4da')}">
+						<option value="">Seleccionar</option>	
+						<option [value]="item.clave" *ngFor="let item of niveles">{{item.descripcion}}</option>
+					</select>
+                <small id="nivelHelp" class="form-text text-muted">Nivel de Riesgo</small>
+                <div *ngIf="nivel.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+            <div class="col-sm-5 text-primary text-left" *ngIf="nivl !== undefined && nivl.length > 0">
+                {{ nivl[0].tipo_accion_desc | titlecase }} <br> {{ nivl[0].accion }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="observaciones" class="col-sm-2 col-form-label text-right">Observaciones</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" row="2" col="35" formControlName="observaciones" aria-describedby="observacionesHelp" [ngStyle]="{'border-color': (observaciones.invalid ? '#dc3545' : '#ced4da')}"></textarea>
+                <small id="observacionesHelp" class="form-text text-muted">Riesgo identificado</small>
+                <div *ngIf="observaciones.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+				<i class="fa fa-save"></i>
+				Guardar
+			</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="modalME" #modalME tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <app-grafica-metodo-evaluacion></app-grafica-metodo-evaluacion>
+            </div>
+        </div>
+    </div>
+</div>

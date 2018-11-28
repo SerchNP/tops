@@ -35,9 +35,9 @@ export class RiesgosGestionComponent implements OnInit, OnDestroy {
 	columns = [
 		{ columnDef: 'proceso',     	 header: 'ID Proceso',		align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
 		{ columnDef: 'proceso_desc',   	 header: 'Proceso', 		cell: (riesgo: any) => `${riesgo.proceso_desc}`},
+		{ columnDef: 'tipo_riesgo_desc', header: 'Tipo',  			cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
 		{ columnDef: 'riesgo', 		 	 header: 'ID Riesgo', 		align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
 		{ columnDef: 'riesgo_desc',	 	 header: 'Riesgo',    		cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-		// { columnDef: 'tipo_riesgo_desc', header: 'Tipo de Riesgo',  cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
 		{ columnDef: 'lista_foda', 		 header: 'Cuestiones Externas e Internas',  cell: (riesgo: any) => `${riesgo.lista_foda}`},
 		{ columnDef: 'autoriza_desc', 	 header: 'Situación',		cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
 		{ columnDef: 'estatus_desc', 	 header: 'Estatus',			cell: (riesgo: any) => `${riesgo.estatus_desc}`}

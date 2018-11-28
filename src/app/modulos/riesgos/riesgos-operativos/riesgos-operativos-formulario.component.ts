@@ -303,7 +303,6 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 			swal('ERROR', 'Debe ingresar al menos una Consecuencia del riesgo', 'error');
 		} else {
 			if (this.accion === 'U')  {
-				console.log(this.forma);
 				if (this.autoriza === '3') {
 					const {value: motivo} = await swal({
 						title: 'Ingrese el motivo del cambio',

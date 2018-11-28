@@ -4,6 +4,7 @@ import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { Router } from '@angular/router';
 import 'rxjs/add/operator/map';
 import { Riesgo } from '../../interfaces/riesgo.interface';
+import { MedicionRiesgo } from '../../interfaces/medicion-riesgo.interface';
 
 @Injectable()
 export class RiesgoService {
@@ -130,9 +131,17 @@ export class RiesgoService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getAccionesByRiesgoId (riesgoID: number) {
-		const url = URL_SGC + this.RUTA + 'getAccionesByRiesgoId.json?token=' + localStorage.getItem('token') + '&r=' + riesgoID;
+	getAccionesByRiesgoId (riesgoID: number, menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getAccionesByRiesgoId.json?token=' + localStorage.getItem('token')
+			+ '&r=' + riesgoID + '&m=' + menuID;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	insertarMedicionRiesgo (medicion: MedicionRiesgo) {
+		const url = URL_SGC + this.RUTA + 'insertarMedicionRiesgo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(medicion);
+		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 }
