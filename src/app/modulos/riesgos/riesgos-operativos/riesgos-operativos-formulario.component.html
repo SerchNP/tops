@@ -130,7 +130,7 @@
                         <tbody>
                             <tr *ngFor="let item of causas.controls; let i = index" [formGroupName]="i">
                                 <td>
-                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="accion === 'V' ? 'disabled' : null">
 									</textarea>
                                     <div *ngIf="causas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                                 </td>
@@ -167,7 +167,7 @@
                         <tbody>
                             <tr *ngFor="let item of consecuencias.controls; let i = index" [formGroupName]="i">
                                 <td>
-                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="accion === 'V' ? 'disabled' : null">
 									</textarea>
                                     <div *ngIf="consecuencias.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                                 </td>
