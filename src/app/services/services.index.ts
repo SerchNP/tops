@@ -22,3 +22,4 @@ export { FichaProcesoService } from './contexto/ficha-proceso.service';
 export { IndicadoresService } from './indicadores/indicadores.service';
 // Riesgos
 export { RiesgoService } from './riesgos/riesgo.service';
+export { MetodoEvaluacionService } from './riesgos/metodo-evaluacion.service';

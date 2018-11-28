@@ -1,4 +1,4 @@
-<div style="display: block">
+<div style="display: block" *ngIf="barChartData.length > 0">
     <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
 </div>
 <!--<table class="table table-bordered border-dark">

@@ -6,10 +6,10 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td style="background-color: #1E9224"></td>
-            <td style="color: #1E9224">TOLERABLE</td>
-            <td>No Necesita acciones</td>
+        <tr *ngFor="let item of tabla">
+            <td [ngStyle]="{'background-color': item.color, 'width': '2em'}"></td>
+            <th [ngStyle]="{'color': item.color, 'text-align': 'center'}">{{item.tipo_riesgo}}</th>
+            <td><span [ngStyle]="{'color': item.clave !== 1 ? 'red' : ''}">{{item.tipo_accion}}: </span> {{item.accion}}</td>
         </tr>
     </tbody>
 </table>

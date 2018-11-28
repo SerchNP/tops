@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MetodoEvaluacionService, AccesoService } from '../../services/services.index';
+import { Subscription } from 'rxjs';
+import swal from 'sweetalert2';
 
 @Component({
 	selector: 'app-tabla-metodo-evaluacion',
@@ -6,10 +9,35 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./tabla-metodo-evaluacion.component.scss']
 })
 
-export class TablaMetodoEvaluacionComponent implements OnInit {
+export class TablaMetodoEvaluacionComponent implements OnInit, OnDestroy {
 
-	constructor() { }
+	private subscription: Subscription;
 
-	ngOnInit() { }
+	cargando = false;
+	tabla: any[] = [];
+
+	constructor(private _acceso: AccesoService,
+				private _mevaluacion: MetodoEvaluacionService) { }
+
+	ngOnInit() {
+		this.cargando = true;
+		this.subscription = this._mevaluacion.getTabla()
+			.subscribe(
+				(data: any) => {
+					this.tabla = data.tabla;
+					this._acceso.guardarStorage(data.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
+	ngOnDestroy() {
+		this.subscription.unsubscribe();
+	}
 
 }

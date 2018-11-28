@@ -13,6 +13,7 @@ import { IndicadoresService } from './indicadores/indicadores.service';
 import { RiesgoService } from './riesgos/riesgo.service';
 import { DireccionService } from './contexto/direccion.service';
 import { FichaProcesoService } from './contexto/ficha-proceso.service';
+import { MetodoEvaluacionService } from './riesgos/metodo-evaluacion.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { FichaProcesoService } from './contexto/ficha-proceso.service';
 		IndicadoresService,
 		RiesgoService,
 		DireccionService,
-		FichaProcesoService
+		FichaProcesoService,
+		MetodoEvaluacionService
 	],
 	declarations: []
 })
