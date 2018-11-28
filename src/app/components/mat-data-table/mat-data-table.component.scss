@@ -82,23 +82,27 @@
     background-color: #949494 !important;
 }
 
+::ng-deep .mat-header-row {
+    background-image: linear-gradient(to left, rgba(154, 175, 199, 0), rgba(154, 175, 199, .5)) !important;
+}
+
 tr.example-detail-row {
     height: 0;
 }
 
-tr.example-element-row:not(.example-expanded-row):hover {
+tr.element-row:not(.example-expanded-row):hover {
     background: #f5f5f5;
 }
 
-tr.example-element-row:not(.example-expanded-row):active {
+tr.element-row:not(.example-expanded-row):active {
     background: #efefef;
 }
 
-.example-element-row td {
+.element-row td {
     border-bottom-width: 0;
 }
 
-.example-element-detail {
+.element-detail {
     overflow: hidden;
     display: flex;
 }

@@ -122,4 +122,17 @@ export class RiesgoService {
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
+
+	getMedicionesByRiesgoId (riesgoID: number, menuID: string) {
+		const url = URL_SGC + this.RUTA + 'getMedicionesByRiesgoId.json?token=' + localStorage.getItem('token')
+			+ '&r=' + riesgoID + '&m=' + menuID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
+
+	getAccionesByRiesgoId (riesgoID: number) {
+		const url = URL_SGC + this.RUTA + 'getAccionesByRiesgoId.json?token=' + localStorage.getItem('token') + '&r=' + riesgoID;
+		const headers = HeadersGET;
+		return this.http.get(url, {headers}).map(resp => resp);
+	}
 }

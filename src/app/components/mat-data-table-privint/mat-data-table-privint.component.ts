@@ -64,7 +64,8 @@ export class MatDataTablePrivIntComponent implements OnInit, AfterViewInit, OnCh
 			this.length = this.dataSource.data.length;
 			this.dataSource.paginator = this.paginator;
 			this.dataSource.sort = this.sort;
-		} else if (changes['derechos']) {
+		}
+		if (this.displayedColumns !== undefined) {
 			if (this.derechos.consultar) {
 				if (this.displayedColumns.indexOf('consultar') === -1) {
 					this.displayedColumns.push('consultar');

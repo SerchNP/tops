@@ -1,0 +1,13 @@
+<h5>{{titulo}}</h5>
+<div class="col-1 text-right">
+    <a [routerLink]="cancelar" class="btn btn-outline-dark">Regresar</a>
+</div>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<br>

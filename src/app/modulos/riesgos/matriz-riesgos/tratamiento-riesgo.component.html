@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-<div class="card text-center">
+<div class="card">
     <div class="card-header">
         <nav>
             <ul class="nav nav-pills card-header-pills">
@@ -31,15 +31,16 @@
             </ul>
         </nav>
     </div>
-    <div class="card-body">
-        texto
-    </div>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-med" role="tabpanel" aria-labelledby="nav-med-tab">
-            <br>
+            <br/>
+            <app-mat-data-table-privint (registro)="detectarAccionM($event)" [derechos]="derechosM" [columns]="columnsM" [data]="listadoMediciones" [select]="select" [allowMultiSelect]="allowMultiSelect" [ruta_add]="ruta_addM">
+            </app-mat-data-table-privint>
         </div>
-        <div class="tab-pane fade show active" id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
-            <br>
+        <div class="tab-pane fade show" id="nav-acc" role="tabpanel" aria-labelledby="nav-acc-tab">
+            <br/>
+            <app-mat-data-table-privint (registro)="detectarAccionA($event)" [derechos]="derechosA" [columns]="columnsA" [data]="listadoAcciones" [select]="select" [allowMultiSelect]="allowMultiSelect" [ruta_add]="ruta_addA">
+            </app-mat-data-table-privint>
         </div>
     </div>
 </div>

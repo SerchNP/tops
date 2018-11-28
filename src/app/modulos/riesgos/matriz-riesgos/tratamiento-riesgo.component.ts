@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RiesgoService, AccesoService, DerechosService } from '../../../services/services.index';
-import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { RiesgoService, AccesoService, DerechosService, CatalogosService } from '../../../services/services.index';
+import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { Riesgo } from '../../../interfaces/riesgo.interface';
+import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,27 +16,47 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
+	private _MENU = 'matriz_riesgos';
+
 	riesgoID: number;
 	registro: Riesgo = {};
-	listado: any[] = [];
 	cargando = false;
 	titulo: string;
-	insertar: boolean;
 	cancelar = ['/riesgos', 'matriz_riesgos'];
+	ruta_addM: any [];
+	ruta_addA: any [];
 	select = false;
 	allowMultiSelect = false;
 	derechos: Derechos = {};
+	derechosM: Derechos = {};
+	derechosA: Derechos = {};
 	accion: string;
 
-	columns = [
-		{ columnDef: 'frecuencia_desc', header: 'Frecuencia',      cell: (medicion: any) => `${medicion.frecuencia_desc}`},
-		{ columnDef: 'formula_desc', 	header: 'Formula',    	   cell: (medicion: any) => `${medicion.formula_desc}`},
-		{ columnDef: 'f_inicial', 		header: 'Fecha inicial',   cell: (medicion: any) => `${medicion.f_inicial}`},
-		{ columnDef: 'f_final',   		header: 'Fecha final',     cell: (medicion: any) => `${medicion.f_final}`},
-		{ columnDef: 'meta', 			header: 'Meta',  		   cell: (medicion: any) => `${medicion.meta}`},
-		{ columnDef: 'medicion',   		header: 'Medicion',        cell: (medicion: any) => `${medicion.medicion}`},
-		{ columnDef: 'u_captura',   	header: 'Usuario captura', visible: false, cell: (medicion: any) => `${medicion.u_captura}`},
-		{ columnDef: 'f_captura',   	header: 'Fecha captura',   visible: false, cell: (medicion: any) => `${medicion.f_captura}`}
+	listadoMediciones: any [] = [];
+	listadoAcciones: any [] = [];
+
+	columnsM = [
+		{ columnDef: 'fecha_evalua_t',   header: 'Fecha Evaluación',   align: 'center', cell: (medicionR: any) => `${medicionR.fecha_evalua_t}`},
+		// tslint:disable-next-line:max-line-length
+		{ columnDef: 'ocurre_desc',      header: 'Probabilidad o Frecuencia', align: 'center', cell: (medicionR: any) => `${medicionR.ocurre_desc}`},
+		{ columnDef: 'valorc_o',     	 header: 'Valor Cuantitativo', cell: (medicionR: any) => `${medicionR.valorc_o}`},
+		{ columnDef: 'impacto_desc',     header: 'Impacto', 			  cell: (medicionR: any) => `${medicionR.impacto_desc}`},
+		{ columnDef: 'valorc_i',     	 header: 'Valor Cuantitativo', cell: (medicionR: any) => `${medicionR.valorc_i}`},
+		{ columnDef: 'valorc_total',     header: 'Valor Cuantitativo Ponderado Total', cell: (medicionR: any) => `${medicionR.valorc_total}`},
+		// tslint:disable-next-line:max-line-length
+		{ columnDef: 'nivel_desc',     	 header: 'Nivel de Riesgo',	   color: true, align: 'center', cell: (medicionR: any) => `${medicionR.nivel_desc}`},
+		{ columnDef: 'tipo_accion_desc', header: 'Acción',	           cell: (medicionR: any) => `${medicionR.tipo_accion_desc}`},
+		{ columnDef: 'impacto_texto', 	 header: 'Impacto del Riesgo', visible: false, cell: (medicionR: any) => `${medicionR.impacto_texto}`},
+		// tslint:disable-next-line:max-line-length
+		{ columnDef: 'accion', 			 header: 'Acción a Tomar', 	   visible: false, cell: (medicionR: any) => `${medicionR.accion}` }
+	];
+
+	columnsA = [
+		{ columnDef: 'accion_desc',     header: 'Acción', align: 'center', cell: (accionR: any) => `${accionR.accion_desc}`},
+		{ columnDef: 'f_inicio',     	header: 'Fecha de implementación de acción', cell: (accionR: any) => `${accionR.f_inicio}`},
+		{ columnDef: 'responsable',     header: 'Responsable',	cell: (accionR: any) => `${accionR.responsable}`},
+		{ columnDef: 'puesto_desc',     header: 'Puesto', 		cell: (accionR: any) => `${accionR.puesto_desc}`},
+		{ columnDef: 'autoriza_desc',  	header: 'Situación', 	cell: (accionR: any) => `${accionR.autoriza_desc}`}
 	];
 
 	constructor(private activatedRoute: ActivatedRoute,
@@ -47,6 +68,8 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.riesgoID = Number(params['id']);
 			this.accion = params['acc'];
+			this.ruta_addM = ['/riesgos', 'medicion_riesgo_form', 'I', this.riesgoID];
+			this.ruta_addA = ['/riesgos', 'accion_riesgo_form', 'I', this.riesgoID];
 		});
 		if (this.riesgoID !== 0) {
 			this.cargarRiesgo(this.riesgoID);
@@ -55,31 +78,27 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.cargando = true;
-		this.derechos = JSON.parse(localStorage.getItem('actionsMR'));
-		this.insertar = this.derechos.insertar;
-		this.derechos.consultar = false;
-		this.derechos.insertar = this.derechos.administrar;
-		this.derechos.editar = false;
-		this.derechos.cancelar = this.derechos.administrar;
-		// this.subscription = this._riesgo.getMedicionesIndicador(this.riesgoID)
-		// 	.subscribe(
-		// 		(data: any) => {
-		// 			this.listado = data.mediciones;
-		// 			this._acceso.guardarStorage(data.token);
-		// 			this.cargando = false;
-		// 		},
-		// 		error => {
-		// 			swal('ERROR', error.error.message, 'error');
-		// 			if (error.error.code === 401) {
-		// 				this._acceso.logout();
-		// 			}
-		// 		});
+		this.getDerechos();
+		this.cargarMediciones(this.riesgoID);
+		this.cargarAcciones(this.riesgoID);
+		this.cargando = false;
 	}
 
 	ngOnDestroy() {
-		localStorage.removeItem('actionsMR');
 		// unsubscribe to ensure no memory leaks
 		this.subscription.unsubscribe();
+	}
+
+	getDerechos() {
+		this._derechos.getDerechosGlobalMenuPromesa(this._MENU).then((data: any) => {
+			this.derechos = data;
+			this.derechosM = data;
+			this.derechosM.consultar = false;
+			this.derechosA = data;
+			this.derechosM.editar = false;
+		}).catch(error => {
+			console.log(error);
+		});
 	}
 
 	cargarRiesgo(riesgoID: number) {
@@ -96,5 +115,69 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 						this._acceso.logout();
 					}
 				});
+	}
+
+	cargarMediciones(riesgoID: number) {
+		this.subscription = this._riesgo.getMedicionesByRiesgoId(riesgoID, this._MENU)
+			.subscribe(
+				(data: any) => {
+					this.listadoMediciones = data.mediciones;
+					this._acceso.guardarStorage(data.token);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
+	cargarAcciones(riesgoID: number) {
+		this.subscription = this._riesgo.getAccionesByRiesgoId(riesgoID)
+			.subscribe(
+				(data: any) => {
+					this.listadoAcciones = data.acciones;
+					this._acceso.guardarStorage(data.token);
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
+	}
+
+	detectarAccionM(datos: any): void {
+		if (datos.accion === 'C') {
+			// this.cancelaMedicion(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
+		}
+	}
+
+	detectarAccionA(datos: any): void {
+		if (datos.accion === 'C') {
+			// this.cancelaMedicion(datos.row);
+		} else if (datos.accion === 'V') {
+			this.openDialog(datos.row);
+		}
+	}
+
+	openDialog(datos: any): void {
+		const dialogRef = this.dialog.open(DialogDetalleComponent, {
+			width: '550px',
+			data: {
+				title: 'Información de la medición ',
+				// subtitle: datos.nivel_desc,
+				situacion: datos.autoriza_desc,
+				u_captura: datos.u_captura,
+				f_captura: datos.f_captura,
+				u_modifica: datos.u_modifica,
+				f_modifica: datos.f_modifica,
+				u_cancela: datos.u_cancela,
+				f_cancela: datos.f_cancela,
+				motivo_cancela: datos.motivo_cancela
+			}
+		});
 	}
 }

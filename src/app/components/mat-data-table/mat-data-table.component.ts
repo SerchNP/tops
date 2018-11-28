@@ -31,7 +31,7 @@ export class MatDataTableComponent implements OnInit, AfterViewInit, OnChanges {
 	@Input() accion: string;
 	@Input() derechos: Derechos;
 	@Input() allowMultiSelect;
-	@Input() ruta_add: any[]
+	@Input() ruta_add: any[];
 
 	expandedElement;
 

@@ -19,6 +19,8 @@ import { RiesgosOperativosFormularioComponent } from './riesgos-operativos/riesg
 import { AutorizaRiesgosOperativosComponent } from './riesgos-operativos/autoriza-riesgos-operativos.component';
 import { MatrizRiesgosComponent } from './matriz-riesgos/matriz-riesgos.component';
 import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.component';
+import { MedicionRiesgoFormularioComponent } from './matriz-riesgos/medicion-riesgo-formulario.component';
+import { AccionRiesgoFormularioComponent } from './matriz-riesgos/accion-riesgo-formulario.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.
 		RiesgosOperativosFormularioComponent,
 		AutorizaRiesgosOperativosComponent,
 		MatrizRiesgosComponent,
-		TratamientoRiesgoComponent
+		TratamientoRiesgoComponent,
+		MedicionRiesgoFormularioComponent,
+		AccionRiesgoFormularioComponent
 	],
 	providers: []
 })
