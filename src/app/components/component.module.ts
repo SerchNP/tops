@@ -10,6 +10,7 @@ import { MatTableModule, MatSortModule, MatCheckboxModule,
 		MatProgressSpinnerModule, MatRadioModule} from '@angular/material';
 import { PipesModule } from '../pipes/pipes.module';
 import { MatBadgeModule } from '@angular/material/badge';
+import { ChartsModule } from 'ng2-charts';
 
 // Componentes
 import { ArbolComponent } from '../components/arbol/arbol.component';
@@ -17,6 +18,8 @@ import { MatDataTableComponent } from './mat-data-table/mat-data-table.component
 import { MatDataTablePrivIntComponent } from './mat-data-table-privint/mat-data-table-privint.component';
 import { CuestionesCheckComponent } from './cuestiones-check/cuestiones-check.component';
 import { CuestionesRadioComponent } from './cuestiones-radio/cuestiones-radio.component';
+import { GraficaMetodoEvaluacionComponent } from './grafica-metodo-evaluacion/grafica-metodo-evaluacion.component';
+import { TablaMetodoEvaluacionComponent } from './tabla-metodo-evaluacion/tabla-metodo-evaluacion.component';
 
 
 @NgModule({
@@ -25,14 +28,18 @@ import { CuestionesRadioComponent } from './cuestiones-radio/cuestiones-radio.co
 		MatDataTableComponent,
 		MatDataTablePrivIntComponent,
 		CuestionesCheckComponent,
-		CuestionesRadioComponent
+		CuestionesRadioComponent,
+		GraficaMetodoEvaluacionComponent,
+		TablaMetodoEvaluacionComponent
 	],
 	exports: [
 		ArbolComponent,
 		MatDataTableComponent,
 		MatDataTablePrivIntComponent,
 		CuestionesCheckComponent,
-		CuestionesRadioComponent
+		CuestionesRadioComponent,
+		GraficaMetodoEvaluacionComponent,
+		TablaMetodoEvaluacionComponent
 	],
 	imports: [
 		PipesModule,
@@ -49,7 +56,8 @@ import { CuestionesRadioComponent } from './cuestiones-radio/cuestiones-radio.co
 		MatPaginatorModule,
 		MatFormFieldModule,
 		MatInputModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		ChartsModule
 	]
 })
 

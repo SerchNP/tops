@@ -14,6 +14,7 @@ import { MatrizRiesgosComponent } from './matriz-riesgos/matriz-riesgos.componen
 import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.component';
 import { MedicionRiesgoFormularioComponent } from './matriz-riesgos/medicion-riesgo-formulario.component';
 import { AccionRiesgoFormularioComponent } from './matriz-riesgos/accion-riesgo-formulario.component';
+import { MetodoEvaluacionComponent } from './matriz-riesgos/metodo-evaluacion.component';
 
 
 const RiesgosRoutes: Routes = [
@@ -38,7 +39,9 @@ const RiesgosRoutes: Routes = [
 			// tslint:disable-next-line:max-line-length
 			{ path: 'medicion_riesgo_form/:acc/:id', component: MedicionRiesgoFormularioComponent, data: {titulo: 'Tratamiento del Riesgo', padre: 'Riesgos'}},
 			// tslint:disable-next-line:max-line-length
-			{ path: 'accion_riesgo_form/:acc/:id', component: AccionRiesgoFormularioComponent, data: {titulo: 'Implementación de Acciones', padre: 'Riesgos'}}
+			{ path: 'accion_riesgo_form/:acc/:id', component: AccionRiesgoFormularioComponent, data: {titulo: 'Implementación de Acciones', padre: 'Riesgos'}},
+			// tslint:disable-next-line:max-line-length
+			{ path: 'metodo_evaluacion', component: MetodoEvaluacionComponent, data: {titulo: 'Método de Evaluación', padre: 'Evaluación de Riesgos'}}
 		]
 	}
 ];

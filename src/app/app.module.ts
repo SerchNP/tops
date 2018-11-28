@@ -10,6 +10,7 @@ import { TreeModule } from 'angular-tree-component';
 import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
+import { ChartsModule } from 'ng2-charts';
 
 // Services
 import { ServicesModule } from './services/services.module';
@@ -39,7 +40,8 @@ import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detal
 		SharedModule,
 		ServicesModule,
 		BrowserAnimationsModule,
-		MatDialogModule
+		MatDialogModule,
+		ChartsModule
 	],
 	exports: [
 		MatDialogModule

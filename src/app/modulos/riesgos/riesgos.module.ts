@@ -9,6 +9,7 @@ import { RIESGOS_ROUTES } from './riesgos.routes';
 import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { MatExpansionModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
+import { ChartsModule } from 'ng2-charts';
 
 // Componentes
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
@@ -21,6 +22,7 @@ import { MatrizRiesgosComponent } from './matriz-riesgos/matriz-riesgos.componen
 import { TratamientoRiesgoComponent } from './matriz-riesgos/tratamiento-riesgo.component';
 import { MedicionRiesgoFormularioComponent } from './matriz-riesgos/medicion-riesgo-formulario.component';
 import { AccionRiesgoFormularioComponent } from './matriz-riesgos/accion-riesgo-formulario.component';
+import { MetodoEvaluacionComponent } from './matriz-riesgos/metodo-evaluacion.component';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { AccionRiesgoFormularioComponent } from './matriz-riesgos/accion-riesgo-
 		ReactiveFormsModule,
 		MatExpansionModule,
 		MatCheckboxModule,
-		MatRadioModule
+		MatRadioModule,
+		ChartsModule
 	],
 	declarations: [
 		RiesgosGestionComponent,
@@ -45,7 +48,8 @@ import { AccionRiesgoFormularioComponent } from './matriz-riesgos/accion-riesgo-
 		MatrizRiesgosComponent,
 		TratamientoRiesgoComponent,
 		MedicionRiesgoFormularioComponent,
-		AccionRiesgoFormularioComponent
+		AccionRiesgoFormularioComponent,
+		MetodoEvaluacionComponent
 	],
 	providers: []
 })
