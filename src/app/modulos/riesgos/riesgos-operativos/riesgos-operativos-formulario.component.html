@@ -135,7 +135,7 @@
                                     <div *ngIf="causas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                                 </td>
                                 <td>
-                                    <button type="button" (click)="delItem(i, 'CA')" *ngIf="item.value.clave === 0" class="btn btn-outline-danger" title="Borrar causa">
+                                    <button type="button" (click)="delItem(i, 'CA')" *ngIf="accion !== 'V'" class="btn btn-outline-danger" title="Borrar causa">
 										<i class="fas fa-backspace"></i>
 									</button>
                                 </td>
@@ -172,7 +172,7 @@
                                     <div *ngIf="consecuencias.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                                 </td>
                                 <td>
-                                    <button type="button" (click)="delItem(i, 'CO')" *ngIf="item.value.clave === 0" class="btn btn-outline-danger" title="Borrar causa">
+                                    <button type="button" (click)="delItem(i, 'CO')" *ngIf="accion !== 'V'" class="btn btn-outline-danger" title="Borrar consecuencia">
 										<i class="fas fa-backspace"></i>
 									</button>
                                 </td>
