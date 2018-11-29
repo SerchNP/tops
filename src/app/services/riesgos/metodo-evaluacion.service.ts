@@ -28,4 +28,22 @@ export class MetodoEvaluacionService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	getNivelRiesgo(ocurrencia: number, impacto: number) {
+		const promesa = new Promise((resolve, reject) => {
+			const url = URL_SGC + this.RUTA + 'getNivelRiesgo.json?token=' + localStorage.getItem('token')
+						+ '&oc=' + ocurrencia + '&im=' + impacto;
+			const headers = HeadersGET;
+			this.http.get(url, {headers}).toPromise()
+				.then(
+					(res: any) => {
+						resolve(res.riesgo);
+					},
+					msg => {
+						reject(msg.error.message);
+					}
+				);
+		});
+		return promesa;
+	}
+
 }
