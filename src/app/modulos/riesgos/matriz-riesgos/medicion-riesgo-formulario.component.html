@@ -52,7 +52,8 @@
             <div class="col-sm-2">
                 <input class="form-control" type="number" min="0" max="100" formControlName="valorc_o" aria-describedby="valorc_oHelp" [ngStyle]="{'border-color': (valorc_o.invalid ? '#dc3545' : '#ced4da')}">
                 <small id="valorc_oHelp" class="form-text text-muted">Valor cuantitativo </small>
-                <div *ngIf="valorc_o.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <div *ngIf="forma.controls['valorc_o'].errors?.required" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                <div *ngIf="!forma.controls['valorc_o'].errors?.required && valorc_o.invalid" class="invalid-feedback" style="display: block">El valor está fuera del rango</div>
             </div>
             <div class="col-sm-3 text-primary text-left" *ngIf="ocurre !== undefined && ocurre.length > 0">
                 {{ ocurre[0].texto | titlecase }} ({{ocurre[0].li}} - {{ocurre[0].ls}})
@@ -93,7 +94,7 @@
         <div class="form-group row">
             <label for="nivel" class="col-sm-2 col-form-label text-right">Nivel</label>
             <div class="col-sm-2">
-                <select class="form-control" name="nivel" formControlName="nivel" [ngStyle]="{'border-color': (nivel.invalid ? '#dc3545' : '#ced4da')}">
+                <select class="form-control" name="nivel" formControlName="nivel" [ngStyle]="{'border-color': (nivel.invalid ? '#dc3545' : '#ced4da')}" [attr.disabled]="'disabled'">
 						<option value="">Seleccionar</option>	
 						<option [value]="item.clave" *ngFor="let item of niveles">{{item.descripcion}}</option>
 					</select>
@@ -102,6 +103,14 @@
             </div>
             <div class="col-sm-5 text-primary text-left" *ngIf="nivl !== undefined && nivl.length > 0">
                 {{ nivl[0].tipo_accion_desc | titlecase }} <br> {{ nivl[0].accion }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="fecha" class="col-sm-2 col-form-label text-right">Fecha de Evaluación</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="date" formControlName="fecha" aria-describedby="fechaHelp" [ngStyle]="{'border-color': (fecha.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="fechaHelp" class="form-text text-muted">Fecha de Evaluación del Riesgo</small>
+                <div *ngIf="fecha.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
         <div class="form-group row">

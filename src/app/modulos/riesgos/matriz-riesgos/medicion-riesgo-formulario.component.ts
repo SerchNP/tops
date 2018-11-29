@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { RiesgoService, AccesoService, DerechosService, CatalogosService } from '../../../services/services.index';
+import { RiesgoService, AccesoService, DerechosService, CatalogosService, MetodoEvaluacionService } from '../../../services/services.index';
 import { FiltraClavePipe } from '../../../pipes/filtra-clave.pipe';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { MatDialog } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, merge } from 'rxjs';
 import swal from 'sweetalert2';
 
 @Component({
@@ -44,6 +44,7 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 				private _riesgo: RiesgoService,
 				private _acceso: AccesoService,
 				private _catalogos: CatalogosService,
+				private _mevaluacion: MetodoEvaluacionService,
 				private formBuilder: FormBuilder,
 				private router: Router,
 				public dialog: MatDialog) {
@@ -68,12 +69,15 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 			estado_desc : new FormControl(''),
 			ocurrencia : new FormControl('', Validators.required),
 			impacto : new FormControl('', Validators.required),
-			valorc_o : new FormControl('', Validators.required),
+			valorc_o : new FormControl('', [Validators.required], this.dentroLimites.bind(this)),
 			valorc_i : new FormControl('', Validators.required),
 			valorc_t : new FormControl('', Validators.required),
 			nivel : new FormControl('', Validators.required),
-			observaciones: new FormControl('', Validators.required)
+			fecha : new FormControl('', Validators.required),
+			observaciones : new FormControl('', Validators.required)
 		});
+
+		// this.forma.controls['valorc_o'].setAsyncValidators(this.dentroLimites.bind(this));
 
 		this.cargando = true;
 		this.subscription = this.forma.controls['riesgo'].valueChanges
@@ -86,6 +90,7 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 			.subscribe(ocurreSel => {
 				if (ocurreSel !== null && ocurreSel !== undefined) {
 					this.ocurre = new FiltraClavePipe().transform(this.ocurrencias, Number(ocurreSel));
+					this.valorc_o.updateValueAndValidity();
 				}
 			});
 		this.subscription = this.forma.controls['impacto'].valueChanges
@@ -101,6 +106,31 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 					this.nivl = new FiltraClavePipe().transform(this.niveles, Number(nivSel));
 				}
 			});
+
+		merge(
+				this.forma.get('valorc_o').valueChanges,
+				this.forma.get('valorc_i').valueChanges,
+		).subscribe(() => {
+			const c_o = this.forma.controls['valorc_o'].value;
+			const c_i = this.forma.controls['valorc_i'].value;
+			const valor = ((c_o * c_i) / 100);
+			this.forma.controls['valorc_t'].setValue(valor);
+		});
+
+		merge(
+			this.forma.get('ocurrencia').valueChanges,
+			this.forma.get('impacto').valueChanges,
+		).subscribe(() => {
+			const oc = this.forma.controls['ocurrencia'].value;
+			const im = this.forma.controls['impacto'].value;
+			if (oc !== '' && im !== '') {
+				this._mevaluacion.getNivelRiesgo(oc, im).then((data: any) => {
+					this.nivel.setValue(data);
+				}).catch(error => {
+					console.log(error);
+				});
+			}
+		});
 		this.cargando = false;
 
 	}
@@ -145,12 +175,16 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('valorc_t');
 	}
 
-	get observaciones () {
-		return this.forma.get('observaciones');
-	}
-
 	get nivel () {
 		return this.forma.get('nivel');
+	}
+
+	get fecha() {
+		return this.forma.get('fecha');
+	}
+
+	get observaciones () {
+		return this.forma.get('observaciones');
 	}
 
 	ngOnDestroy() {
@@ -218,5 +252,19 @@ export class MedicionRiesgoFormularioComponent implements OnInit, OnDestroy {
 					}
 				});
 		}
+	}
+
+	dentroLimites(control: FormControl): Promise<any> | Observable<any> {
+		const promesa = new Promise((resolve, reject) => {
+			if (this.ocurre !== undefined && this.ocurre.length > 0) {
+				if (control.value < this.ocurre[0].li || control.value > this.ocurre[0].ls) {
+					resolve({limite: false});
+				} else {
+					resolve(null);
+				}
+			}
+			resolve(null);
+		});
+		return promesa;
 	}
 }
