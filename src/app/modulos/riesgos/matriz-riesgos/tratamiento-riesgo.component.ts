@@ -147,11 +147,12 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	detectarAccionM(datos: any): void {
-		if (datos.accion === 'C') {
-			// this.cancelaMedicion(datos.row);
-		} else if (datos.accion === 'V') {
-			this.openDialog(datos.row);
+	detectarAccionM(datosM: any): void {
+		console.log(datosM);
+		if (datosM.accion === 'C') {
+			this.cancelaMedicion(datosM.row);
+		} else if (datosM.accion === 'V') {
+			this.openDialog(datosM.row);
 		}
 	}
 
@@ -160,6 +161,42 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 			// this.cancelaMedicion(datos.row);
 		} else if (datos.accion === 'V') {
 			this.openDialog(datos.row);
+		}
+	}
+
+	async cancelaMedicion(registro: any) {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea cancelar la medición del riesgo con fecha del ' + registro.fecha_evalua_t + '?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			const {value: motivo} = await swal({
+				title: 'Ingrese el motivo de cancelación de la medición del riesgo',
+				input: 'textarea',
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return !value && 'Necesita ingresar el motivo de cancelación';
+				}
+			});
+			if (motivo !== undefined) {
+				console.log('aqui');
+				this.subscription = this._riesgo.cancelarMedicionRiesgo(registro.riesgo, registro.regid, motivo.toUpperCase())
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.ngOnInit();
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
 		}
 	}
 
