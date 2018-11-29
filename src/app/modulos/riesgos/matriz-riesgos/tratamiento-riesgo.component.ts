@@ -148,7 +148,6 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	}
 
 	detectarAccionM(datosM: any): void {
-		console.log(datosM);
 		if (datosM.accion === 'C') {
 			this.cancelaMedicion(datosM.row);
 		} else if (datosM.accion === 'V') {
@@ -183,7 +182,6 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 				}
 			});
 			if (motivo !== undefined) {
-				console.log('aqui');
 				this.subscription = this._riesgo.cancelarMedicionRiesgo(registro.riesgo, registro.regid, motivo.toUpperCase())
 					.subscribe((data: any) => {
 						this._acceso.guardarStorage(data.token);
