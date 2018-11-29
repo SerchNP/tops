@@ -144,4 +144,11 @@ export class RiesgoService {
 		const body = JSON.stringify(medicion);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	cancelarMedicionRiesgo(riesgoID: number, regid: number, motivo: string) {
+		const url = URL_SGC + this.RUTA + 'cancelarMedicionRiesgo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"riesgo": ' + riesgoID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
 }
