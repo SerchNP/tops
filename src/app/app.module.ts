@@ -21,8 +21,6 @@ import { HomeComponent } from './home/home.component';
 import { DetalleComponent } from './home/detalle.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detalle.component';
-import { OportunidadesFormularioComponent } from './modulos/contexto/ficha-proceso/oportunidades-formulario.component';
-import { AutorizaOportunidadesComponent } from './modulos/contexto/ficha-proceso/autoriza-oportunidades.component';
 
 
 @NgModule({
@@ -30,9 +28,7 @@ import { AutorizaOportunidadesComponent } from './modulos/contexto/ficha-proceso
 		AppComponent,
 		HomeComponent,
 		DetalleComponent,
-		DialogDetalleComponent,
-		OportunidadesFormularioComponent,
-		AutorizaOportunidadesComponent
+		DialogDetalleComponent
 	],
 	imports: [
 		BrowserModule,
