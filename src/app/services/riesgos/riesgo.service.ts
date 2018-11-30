@@ -151,4 +151,19 @@ export class RiesgoService {
 		const body = JSON.stringify(JSON.parse('{"riesgo": ' + riesgoID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
+
+	insertarAccionRiesgo (accion: any) {
+		const url = URL_SGC + this.RUTA + 'insertarAccionRiesgo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(accion);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
+	cancelarAccionRiesgo(riesgoID: number, regid: number, motivo: string) {
+		console.log(riesgoID, regid, motivo);
+		const url = URL_SGC + this.RUTA + 'cancelarAccionRiesgo.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(JSON.parse('{"riesgo": ' + riesgoID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
 }
