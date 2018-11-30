@@ -155,11 +155,11 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	detectarAccionA(datos: any): void {
-		if (datos.accion === 'C') {
-			// this.cancelaMedicion(datos.row);
-		} else if (datos.accion === 'V') {
-			this.openDialog(datos.row);
+	detectarAccionA(datosA: any): void {
+		if (datosA.accion === 'C') {
+			this.cancelaAccion(datosA.row);
+		} else if (datosA.accion === 'V') {
+			this.openDialog(datosA.row);
 		}
 	}
 
@@ -183,6 +183,42 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 			});
 			if (motivo !== undefined) {
 				this.subscription = this._riesgo.cancelarMedicionRiesgo(registro.riesgo, registro.regid, motivo.toUpperCase())
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.ngOnInit();
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
+		}
+	}
+
+	async cancelaAccion(registro: any) {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea cancelar la acción del riesgo "' + registro.accion_desc + '"?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			const {value: motivo} = await swal({
+				title: 'Ingrese el motivo de cancelación de la acción del riesgo',
+				input: 'textarea',
+				showCancelButton: true,
+				inputValidator: (value) => {
+					return !value && 'Necesita ingresar el motivo de cancelación';
+				}
+			});
+			if (motivo !== undefined) {
+				console.log(registro);
+				this.subscription = this._riesgo.cancelarAccionRiesgo(registro.riesgo, registro.accion_id, motivo.toUpperCase())
 					.subscribe((data: any) => {
 						this._acceso.guardarStorage(data.token);
 						swal('Atención!!!', data.message, 'success');
