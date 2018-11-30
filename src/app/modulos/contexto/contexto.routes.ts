@@ -15,6 +15,9 @@ import { LineaAccionFormularioComponent } from './direccion/linea-accion-formula
 import { EASProcesoComponent } from './ficha-proceso/eas-proceso.component';
 import { EASProcesoFormularioComponent } from './ficha-proceso/eas-proceso-formulario.component';
 import { EASProcesoEdicionComponent } from './ficha-proceso/eas-proceso-edicion.component';
+import { OportunidadesComponent } from './ficha-proceso/oportunidades.component';
+import { OportunidadesFormularioComponent } from './ficha-proceso/oportunidades-formulario.component';
+import { AutorizaOportunidadesComponent } from './ficha-proceso/autoriza-oportunidades.component';
 
 
 const ContextoRoutes: Routes = [
@@ -55,7 +58,13 @@ const ContextoRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'eas_proceso_form/:acc', component: EASProcesoFormularioComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'eas_proceso_edicion/:acc/:id/:t', component: EASProcesoEdicionComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} }
+					{ path: 'eas_proceso_edicion/:acc/:id/:t', component: EASProcesoEdicionComponent, data: {titulo: 'Ficha de Proceso', padre: 'Contexto'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'oportunidades', component: OportunidadesComponent, data: {titulo: 'Oportunidades', padre: 'Contexto'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'oportunidades_form/:acc/:id/:aut/:o', component: OportunidadesFormularioComponent, data: {titulo: 'Oportunidades', padre: 'Contexto'}},
+					// tslint:disable-next-line:max-line-length
+					{ path: 'autoriza_oportunidades/:acc', component: AutorizaOportunidadesComponent, data: {titulo: 'Revisión de Oportunidades', padre: 'Contexto'}}
 				]
 			}
 		]
