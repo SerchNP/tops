@@ -1,7 +1,4 @@
 <h5>{{titulo}}</h5>
-<div class="col-1 text-right">
-    <a [routerLink]="cancelar" class="btn btn-outline-dark">Regresar</a>
-</div>
 <hr>
 <div class="row" *ngIf="cargando">
     <div class="col-sm-12">
@@ -11,3 +8,97 @@
     </div>
 </div>
 <br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="proceso" aria-describedby="procesoHelp" [attr.disabled]="'disabled'">
+                <small id="procesoHelp" class="form-text text-muted">Clave del Proceso</small>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="proceso_desc" aria-describedby="proceso_descHelp" [attr.disabled]="'disabled'">
+                <small id="proceso_descHelp" class="form-text text-muted">Descripción del Proceso al que pertenece el Riesgo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="riesgo" class="col-sm-2 col-form-label text-right">Riesgo</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="riesgo" aria-describedby="riesgoHelp" [attr.disabled]="'disabled'">
+                <small id="riesgoHelp" class="form-text text-muted">Clave del riesgo</small>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="riesgo_desc" aria-describedby="riesgo_descHelp" [attr.disabled]="'disabled'">
+                <small id="riesgo_descHelp" class="form-text text-muted">Riesgo identificado</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="estado_desc" class="col-sm-2 col-form-label text-right">Estado</label>
+            <div class="col-sm-3">
+                <input class="form-control" type="text" formControlName="estado_desc" aria-describedby="estado_descHelp" [attr.disabled]="'disabled'">
+                <small id="estado_descHelp" class="form-text text-muted">Estado del riesgo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="tipo_accion" class="col-sm-2 col-form-label text-right">Tipo de Acción</label>
+            <div class="col-sm-4">
+                <select class="form-control" name="tipo_accion" formControlName="tipo_accion" [ngStyle]="{'border-color': (tipo_accion.invalid ? '#dc3545' : '#ced4da')}">
+					<option value="">Seleccionar</option>
+					<option [value]="item.clave" *ngFor="let item of cat_acciones">{{item.descripcion}}</option>
+				</select>
+                <small id="tipo_accionHelp" class="form-text text-muted">Tipo de Acción para el Riesgo</small>
+                <div *ngIf="tipo_accion.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="accion" class="col-sm-2 col-form-label text-right">Accion</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" row="2" col="35" formControlName="accion" aria-describedby="accionHelp" [ngStyle]="{'border-color': (accion.invalid ? '#dc3545' : '#ced4da')}"></textarea>
+                <small id="accionHelp" class="form-text text-muted">Acciones para el Riesgo identificado</small>
+                <div *ngIf="accion.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="fecha_inicio" class="col-sm-2 col-form-label text-right">Fecha de Inicio</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="date" formControlName="fecha_inicio" aria-describedby="fecha_inicioHelp" [ngStyle]="{'border-color': (fecha_inicio.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="fecha_inicioHelp" class="form-text text-muted">Fecha de Inicio de la Acción</small>
+                <div *ngIf="fecha_inicio.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="responsable_linea" class="col-sm-2 col-form-label text-right">Responsable</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" formControlName="responsable_linea" aria-describedby="responsable_lineaHelp" [ngStyle]="{'border-color': (responsable_linea.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="responsableHelp" class="form-text text-muted">Responsable de la Acción</small>
+                <div *ngIf="responsable_linea.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="puesto_linea" class="col-sm-2 col-form-label text-right">Puesto</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="puesto_linea" formControlName="puesto_linea" [ngStyle]="{'border-color': (puesto_linea.invalid ? '#dc3545' : '#ced4da')}">
+					<option value="">Seleccionar</option>
+					<option [value]="item.puesto" *ngFor="let item of cat_puestos">{{item.puesto_desc}}</option>
+				</select>
+                <small id="puestoHelp" class="form-text text-muted">Puesto del Responsable</small>
+                <div *ngIf="puesto_linea.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="observaciones" class="col-sm-2 col-form-label text-right">Observaciones</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" row="2" col="35" formControlName="observaciones" aria-describedby="observacionesHelp" [ngStyle]="{'border-color': (observaciones.invalid ? '#dc3545' : '#ced4da')}"></textarea>
+                <small id="observacionesHelp" class="form-text text-muted">Observaciones de la Acción</small>
+                <div *ngIf="observaciones.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+			<i class="fa fa-save"></i>
+			Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+    </div>
+</form>
