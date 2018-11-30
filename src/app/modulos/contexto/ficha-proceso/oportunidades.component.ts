@@ -32,21 +32,17 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 	avisos: Aviso = {};
 
 	columns = [
-		{ columnDef: 'proceso',     	    header: 'ID Proceso',		   align: 'center', cell: (riesgo: any) => `${riesgo.proceso}`},
-		{ columnDef: 'proceso_desc',   	    header: 'Proceso', 			   cell: (riesgo: any) => `${riesgo.proceso_desc}`},
-		{ columnDef: 'tipo_riesgo_desc', 	header: 'Tipo',  			   cell: (riesgo: any) => `${riesgo.tipo_riesgo_desc}`},
-		{ columnDef: 'origen_desc', 	    header: 'Origen',  			   cell: (riesgo: any) => `${riesgo.origen_desc}`},
-		{ columnDef: 'easproc_desc', 	    header: 'Descripción Origen',  cell: (riesgo: any) => `${riesgo.easproc_desc}`},
-		{ columnDef: 'riesgo', 		 	    header: 'ID Riesgo', 		   align: 'center', cell: (riesgo: any) => `${riesgo.riesgo}`},
-		{ columnDef: 'riesgo_desc',	 	    header: 'Riesgo Identificado', cell: (riesgo: any) => `${riesgo.riesgo_desc}`},
-		{ columnDef: 'estado_desc',     	header: 'Estado',  			   cell: (riesgo: any) => `${riesgo.predecesor_desc}`},
-		{ columnDef: 'predecesor_desc',     header: 'Riesgo de Gestión',   visible: false, cell: (riesgo: any) => `${riesgo.predecesor_desc}`},
-		{ columnDef: 'lista_causas', 	    header: 'Causas',  			   visible: false, cell: (riesgo: any) => `${riesgo.lista_causas}`},
-		{ columnDef: 'lista_consecuencias', header: 'Consecuencias',  	   visible: false, cell: (riesgo: any) => `${riesgo.lista_consecuencias}`},
-		{ columnDef: 'responsable', 	 	header: 'Responsable',  	   visible: false, cell: (riesgo: any) => `${riesgo.responsable}`},
-		{ columnDef: 'puesto_desc', 	 	header: 'Puesto',  			   visible: false, cell: (riesgo: any) => `${riesgo.puesto_desc}`},
-		{ columnDef: 'autoriza_desc', 	 	header: 'Situación',		   cell: (riesgo: any) => `${riesgo.autoriza_desc}`},
-		{ columnDef: 'estatus_desc', 	 	header: 'Estatus',			   cell: (riesgo: any) => `${riesgo.estatus_desc}`}
+		{ columnDef: 'proceso',     	    header: 'ID Proceso',		   align: 'center', cell: (oportunidad: any) => `${oportunidad.proceso}`},
+		{ columnDef: 'proceso_desc',   	    header: 'Proceso', 			   cell: (oportunidad: any) => `${oportunidad.proceso_desc}`},
+		{ columnDef: 'origen_desc', 	    header: 'Origen',  			   cell: (oportunidad: any) => `${oportunidad.origen_desc}`},
+		{ columnDef: 'easproc_desc', 	    header: 'Descripción Origen',  cell: (oportunidad: any) => `${oportunidad.easproc_desc}`},
+		{ columnDef: 'oportunidad', 		header: 'ID Oportunidad', 	   align: 'center', cell: (oportunidad: any) => `${oportunidad.oportunidad}`},
+		{ columnDef: 'oportunidad_desc',	header: 'Oportunidad',		   cell: (oportunidad: any) => `${oportunidad.oportunidad_desc}`},
+		{ columnDef: 'lista_foda', 	    	header: 'Cuestiones',  		   visible: false, cell: (oportunidad: any) => `${oportunidad.lista_foda}`},
+		{ columnDef: 'responsable', 	 	header: 'Responsable',  	   visible: false, cell: (oportunidad: any) => `${oportunidad.responsable}`},
+		{ columnDef: 'puesto_desc', 	 	header: 'Puesto',  			   visible: false, cell: (oportunidad: any) => `${oportunidad.puesto_desc}`},
+		{ columnDef: 'autoriza_desc', 	 	header: 'Situación',		   cell: (oportunidad: any) => `${oportunidad.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	 	header: 'Estatus',			   cell: (oportunidad: any) => `${oportunidad.estatus_desc}`}
 	];
 
 	constructor(private _acceso: AccesoService,

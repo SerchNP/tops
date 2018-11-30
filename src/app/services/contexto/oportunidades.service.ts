@@ -17,4 +17,11 @@ export class OportunidadesService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
+	insertaOportunidad(oportunidad: any) {
+		const url = URL_SGC + this.RUTA + 'insertaOportunidad.json?token=' + localStorage.getItem('token');
+		const headers = HeadersPOST;
+		const body = JSON.stringify(oportunidad);
+		return this.http.post(url, body, { headers }).map(resp => resp);
+	}
+
 }

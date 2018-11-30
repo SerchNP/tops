@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators, FormBuilder } from '@angular/forms';
-import { AccesoService, CatalogosService, ProcesosService,
-		PuestosService, FichaProcesoService, FodaService } from '../../../services/services.index';
+import { AccesoService, ProcesosService, PuestosService,
+		FichaProcesoService, FodaService, OportunidadesService } from '../../../services/services.index';
 import { FiltraFodaAutPipe } from '../../../pipes/filtra-foda.pipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -29,6 +29,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 	listEASProc: any [] = [];
 	listPuestos: any[] = [];
 	listFODA: any [] = [];
+	listFODASel: any [] = [];
 
 	proceso_sel: number;
 	origen_sel: string;
@@ -39,16 +40,11 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 				private router: Router,
 				private formBuilder: FormBuilder,
 				private _acceso: AccesoService,
-				private _catalogos: CatalogosService,
 				private _proceso: ProcesosService,
 				private _puestos: PuestosService,
 				private _fichaproc: FichaProcesoService,
-				private _foda: FodaService
-				 /*,
-		private _riesgo: RiesgoService,
-		,
-		*/
-		) {
+				private _foda: FodaService,
+				private _oportunidades: OportunidadesService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
 			this.registroId = params['id'];
@@ -90,7 +86,8 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 			oportunidad_desc : new FormControl('', Validators.required),
 			responsable : new FormControl('', Validators.required),
 			puesto : new FormControl('', Validators.required),
-			fecha : new FormControl('', Validators.required)
+			fecha : new FormControl('', Validators.required),
+			acciones : this.formBuilder.array([])
 		});
 
 		this.cargando = true;
@@ -116,13 +113,23 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 				if (procesoSel !== null) {
 					this.proceso_sel = procesoSel;
 					this.getPuestos(this.proceso_sel);
-					if (this.origen_sel !== null || this.origen_sel !== undefined) {
+					if (this.origen_sel !== null && this.origen_sel !== undefined) {
 						this.getEASProceso(this.proceso_sel, this.origen_sel);
 					}
 					this.subscription = this._foda.getFODAByProceso(procesoSel).subscribe(
 						(data: any) => {
 							this.listFODA = new FiltraFodaAutPipe().transform(data.foda, 3);
 						});
+				}
+			});
+
+		this.subscription = this.forma.controls['origen'].valueChanges
+			.subscribe(origenSel => {	// "origenSel" es la clave del tipo de origen seleccionado
+				if (origenSel !== null) {
+					this.origen_sel = origenSel;
+					if (this.proceso_sel !== null && this.proceso_sel !== undefined) {
+						this.getEASProceso(this.proceso_sel, this.origen_sel);
+					}
 				}
 			});
 	}
@@ -140,7 +147,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 			.subscribe(
 				(data: any) => {
 					this.procesos = data.procesos;
-					console.log(this.procesos);
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
@@ -180,8 +186,70 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
+	addAccion() {
+		const resp = (this.responsable.value !== null && this.responsable.value !== undefined ? this.responsable.value : '');
+		const pues = (this.puesto.value !== null && this.puesto.value !== undefined ? this.puesto.value : '');
+		this.acciones.push(this.createItem(0, '', '', resp, pues, ''));
+	}
+
+	createItem(clave, descrip, fecha_ini, responsable, puesto, observacion): FormGroup {
+		return this.formBuilder.group({
+			regid:				new FormControl(clave, Validators.required),
+			accion:				new FormControl(descrip, Validators.required),
+			fecha_inicio:		new FormControl(fecha_ini, Validators.required),
+			responsable_linea:	new FormControl(responsable, Validators.required),
+			puesto_linea:		new FormControl(puesto, Validators.required),
+			observaciones:		new FormControl(observacion, Validators.required)
+		});
+	}
+
+	async delItem(pos: number) {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea eliminar la acción número ' + (pos + 1) + '?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			this.acciones.removeAt(pos);
+		}
+	}
+
 	guardar() {
 		console.log(this.forma.value);
+		const listadoFinal: any = [];
+		this.cuestionesO.value.forEach(element => {
+			if (element.b_foda === true) {
+				listadoFinal.push(element);
+			}
+		});
+		if (listadoFinal.length === 0) {
+			swal('ERROR', 'Debe seleccionar al menos una Cuestión Externa/Interna ligada a la oportunidad', 'error');
+		} else {
+			const valorForma = this.forma.value;
+			valorForma.cuestiones = listadoFinal;
+			if (this.accion === 'U')  {
+				if (this.autoriza === '3') {
+				} else {
+
+				}
+			} else {
+				this.subscription = this._oportunidades.insertaOportunidad(valorForma)
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.ngOnInit();
+					},
+					error => {
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
+			}
+		}
 	}
 
 	get proceso() {
@@ -218,6 +286,14 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 
 	get puesto() {
 		return this.forma.get('puesto');
+	}
+
+	get fecha() {
+		return this.forma.get('fecha');
+	}
+
+	get acciones() {
+		return this.forma.get('acciones') as FormArray;
 	}
 
 }
