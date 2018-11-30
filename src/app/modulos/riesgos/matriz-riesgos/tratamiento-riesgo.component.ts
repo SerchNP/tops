@@ -217,7 +217,6 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 				}
 			});
 			if (motivo !== undefined) {
-				console.log(registro);
 				this.subscription = this._riesgo.cancelarAccionRiesgo(registro.riesgo, registro.accion_id, motivo.toUpperCase())
 					.subscribe((data: any) => {
 						this._acceso.guardarStorage(data.token);
