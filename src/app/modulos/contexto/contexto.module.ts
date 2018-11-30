@@ -7,7 +7,7 @@ import { CONTEXTO_ROUTES } from './contexto.routes';
 
 // Modulos
 import { ComponentModule } from '../../components/component.module';
-import { MatExpansionModule, MatCheckboxModule } from '@angular/material';
+import { MatExpansionModule, MatCheckboxModule, MatRadioModule } from '@angular/material';
 import { MatBadgeModule } from '@angular/material/badge';
 import { PipesModule } from '../../pipes/pipes.module';
 
@@ -40,7 +40,8 @@ import { AutorizaOportunidadesComponent } from './ficha-proceso/autoriza-oportun
 		MatExpansionModule,
 		MatBadgeModule,
 		PipesModule,
-		MatCheckboxModule
+		MatCheckboxModule,
+		MatRadioModule
 	],
 	declarations: [
 		ContextoComponent,

@@ -1,3 +1,275 @@
-<p>
-  oportunidades-formulario works!
-</p>
+<h5>{{titulo}}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row alert alert-warning" *ngIf="accion === 'A'">
+            <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
+            <div class="col-sm-3">
+                <input type="text" readonly class="form-control" formControlName="autoriza_desc" aria-describedby="autoriza_descHelp">
+            </div>
+            <label for="motivo_cancela" *ngIf="autoriza === '6' || autoriza === '8'" class="col-sm-1 col-form-label text-right">Motivo</label>
+            <div class="col-sm-4" *ngIf="autoriza === '6' || autoriza === '8'">
+                <textarea readonly class="form-control" formControlName="motivo_cancela" aria-describedby="motivo_cancelaHelp"></textarea>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' || accion === 'U' ? 'disabled' : null)">
+					<option value="" selected="selected">Seleccionar</option>
+					<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion">{{item.proceso_desc}}</option>
+				</select>
+                <small id="procesoHelp" class="form-text text-muted">La Oportunidad pertenece al Proceso</small>
+                <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="origen" class="col-sm-2 col-form-label text-right">Origen</label>
+            <div class="col-sm-2">
+                <select class="form-control" formControlName="origen" style="width: 350px;" [attr.disabled]="accion === 'V' || accion === 'U' ? 'disabled' : null">
+					<option value="">Seleccionar</option>
+					<option value="E">Entrada</option>
+					<option value="A">Actividad</option>
+				</select>
+                <small id="origenHelp" class="form-text text-muted">Origen de la Oportunidad</small>
+                <div *ngIf="forma.controls['origen'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="easproc" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-list-ul"></i> Entradas/Actividades</h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="list-group" *ngIf="listEASProc.length === 0">
+                        <li class="list-group-item invalid-feedback">No hay datos para mostrar.
+                        </li>
+                    </ul>
+                    <ul class="list-group" *ngIf="listEASProc.length > 0">
+                        <mat-radio-group formControlName="easproc">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listEASProc">
+                                <mat-radio-button [value]="item.clave" [disabled]="accion === 'I' ? null: 'disabled'">
+                                    <p style="margin-top: .25em; margin-bottom: 0;">{{item.descripcion}}</p>
+                                </mat-radio-button>
+                            </li>
+                        </mat-radio-group>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+        </div>
+		<div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">Cuestiones Externas/Internas</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-sm-5">
+                        <mat-expansion-panel [expanded]="true" class="bg-light">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h6 class="text-primary"><i class="fas fa-exclamation-triangle"></i> Amenazas</h6>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <app-cuestiones-check #fodaCheckA [forma]="forma" [listFODA]="listFODA | filtraFoda: 'A'" [listFODASel]="listfodaSel" [accion]="accion" [cuestiones_name]="'cuestionesA'"></app-cuestiones-check>
+                        </mat-expansion-panel>
+                    </div>
+                    <div class="col-sm-5">
+                        <mat-expansion-panel [expanded]="true" class="bg-light">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h6 class="text-primary"><i class="far fa-check-circle"></i> Oportunidades</h6>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <app-cuestiones-check #fodaCheckO [forma]="forma" [listFODA]="listFODA | filtraFoda: 'O'" [listFODASel]="listfodaSel" [accion]="accion" [cuestiones_name]="'cuestionesO'"></app-cuestiones-check>
+                        </mat-expansion-panel>
+                    </div>
+                </div><br />
+                <div class="row">
+                    <div class="col-sm-5">
+                        <mat-expansion-panel [expanded]="true" class="bg-light">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h6 class="text-primary"><i class="far fa-thumbs-down"></i> Debilidades</h6>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <app-cuestiones-check #fodaCheckD [forma]="forma" [listFODA]="listFODA | filtraFoda: 'D'" [listFODASel]="listfodaSel" [accion]="accion" [cuestiones_name]="'cuestionesD'"></app-cuestiones-check>
+                        </mat-expansion-panel>
+                    </div>
+                    <div class="col-sm-5">
+                        <mat-expansion-panel [expanded]="true" class="bg-light">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h6 class="text-primary"><i class="far fa-lightbulb"></i> Fortalezas</h6>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <app-cuestiones-check #fodaCheckF [forma]="forma" [listFODA]="listFODA | filtraFoda: 'F'" [listFODASel]="listfodaSel" [accion]="accion" [cuestiones_name]="'cuestionesF'"></app-cuestiones-check>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="form-group row">
+            <label for="predecesor" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-list-ul"></i> Riesgos de Gestión</h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="list-group" *ngIf="listRiesgosG.length === 0">
+                        <li class="list-group-item invalid-feedback">No hay datos para mostrar.
+                        </li>
+                    </ul>
+                    <ul class="list-group" *ngIf="listRiesgosG.length > 0">
+                        <mat-radio-group formControlName="predecesor">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listRiesgosG">
+                                <mat-radio-button [value]="item.clave" [disabled]="accion === 'I' ? null: 'disabled'">
+                                    <p style="margin-top: .25em; margin-bottom: 0;">{{item.descripcion}}</p>
+                                </mat-radio-button>
+                            </li>
+                        </mat-radio-group>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="riesgo" class="col-sm-2 col-form-label text-right">Clave</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="riesgo" aria-describedby="riesgoHelp" [attr.disabled]="true">
+                <small id="riesgoHelp" class="form-text text-muted">Clave del riesgo</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="riesgo_desc" class="col-sm-2 col-form-label text-right">Descripción del Riesgo Operativo</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" formControlName="riesgo_desc" aria-describedby="riesgo_descHelp" [ngClass]="{'is-invalid': forma.controls['riesgo_desc'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="riesgo_descHelp" class="form-text text-muted">Descripción del riesgo</small>
+                <div *ngIf="forma.controls['riesgo_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="causas" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-question"></i> Causas</h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table class="table table-sm table-hover" formArrayName="causas">
+                        <thead class="thead-secondary">
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <button [attr.disabled]="(proceso.value === '') ? 'disabled' : null" type="button" class="btn btn-sm btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addCausa()">
+										<i class="fa fa-plus"></i> Agregar
+									</button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of causas.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+									</textarea>
+                                    <div *ngIf="causas.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
+                                <td>
+                                    <button type="button" (click)="delItem(i, 'CA')" *ngIf="accion !== 'V'" class="btn btn-outline-danger" title="Borrar causa">
+										<i class="fas fa-backspace"></i>
+									</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="consecuencias" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-exclamation"></i> Consecuencias</h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <table class="table table-sm table-hover" formArrayName="consecuencias">
+                        <thead class="thead-secondary">
+                            <tr>
+                                <td colspan="2" class="text-right">
+                                    <button [attr.disabled]="(proceso.value === '') ? 'disabled' : null" type="button" class="btn btn-sm btn-outline-success" *ngIf="accion==='U' || accion==='I'" (click)="addConsecuencia()">
+										<i class="fa fa-plus"></i> Agregar
+									</button>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of consecuencias.controls; let i = index" [formGroupName]="i">
+                                <td>
+                                    <textarea #cdescripcion class="form-control" rows="2" cols="35" formControlName="descripcion" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+									</textarea>
+                                    <div *ngIf="consecuencias.controls[i].controls['descripcion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
+                                <td>
+                                    <button type="button" (click)="delItem(i, 'CO')" *ngIf="accion !== 'V'" class="btn btn-outline-danger" title="Borrar consecuencia">
+										<i class="fas fa-backspace"></i>
+									</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </mat-expansion-panel>
+            </div>
+        </div>-->
+        <!--<div class="form-group row">
+            <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp">-->
+                <!--[ngClass]="{'is-invalid': forma.controls['responsable'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)"-->
+                <!--<small id="responsableHelp" class="form-text text-muted">Responsable de la Oportunidad</small>-->
+                <!--<div *ngIf="responsable.invalid" class="invalid-feedback">Este campo es requerido</div>-->
+            <!--</div>
+        </div>-->
+        <div class="form-group row">
+            <label for="puesto_resp" class="col-sm-2 col-form-label text-right">Puesto</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="puesto_resp" formControlName="puesto_resp" [ngStyle]="{'border-color': (puesto_resp.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
+						<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+						<option value="{{item.puesto}}" *ngFor="let item of listPuestos">{{item.puesto_desc}}</option>
+					</select>
+                <small id="puestoHelp" class="form-text text-muted">Puesto del responsable del Riesgo Operativo</small>
+                <div *ngIf="forma.controls['puesto_resp'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <!--<div class="form-group row">
+            <label for="edo_riesgo" class="col-sm-2 col-form-label text-right">Estado del Riesgo</label>
+            <div class="col-sm-3">
+                <select class="form-control" name="edo_riesgo" formControlName="edo_riesgo" [ngStyle]="{'border-color': (edo_riesgo.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
+					<option value="" selected="selected">Seleccionar</option>
+					<option value="{{item.clave}}" *ngFor="let item of listEstadosR">{{item.descripcion}}</option>
+				</select>
+                <div *ngIf="forma.controls['edo_riesgo'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>-->
+    </div>
+    <div class="text-center">
+        <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
+            <i class="far fa-arrow-alt-circle-left"></i> Regresar
+        </a>&nbsp;
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid" *ngIf="s_guardar">
+			<i class="fa fa-save"></i> Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger" *ngIf="s_guardar">
+			Cancelar</a>
+    </div>
+</form>
