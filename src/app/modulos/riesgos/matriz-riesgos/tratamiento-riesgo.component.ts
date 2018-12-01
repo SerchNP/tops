@@ -52,7 +52,7 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	];
 
 	columnsA = [
-		{ columnDef: 'accion_desc',     header: 'Acción', align: 'center', cell: (accionR: any) => `${accionR.accion_desc}`},
+		{ columnDef: 'accion_desc',     header: 'Acción',		cell: (accionR: any) => `${accionR.accion_desc}`},
 		{ columnDef: 'f_inicio',     	header: 'Fecha de implementación de acción', cell: (accionR: any) => `${accionR.f_inicio}`},
 		{ columnDef: 'responsable',     header: 'Responsable',	cell: (accionR: any) => `${accionR.responsable}`},
 		{ columnDef: 'puesto_desc',     header: 'Puesto', 		cell: (accionR: any) => `${accionR.puesto_desc}`},
@@ -90,15 +90,17 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	}
 
 	getDerechos() {
-		this._derechos.getDerechosGlobalMenuPromesa(this._MENU).then((data: any) => {
-			this.derechos = data;
-			this.derechosM = data;
-			this.derechosM.consultar = false;
-			this.derechosA = data;
-			this.derechosM.editar = false;
-		}).catch(error => {
-			console.log(error);
-		});
+		if (this.accion !== 'V') {
+			this._derechos.getDerechosGlobalMenuPromesa(this._MENU).then((data: any) => {
+				this.derechos = data;
+				this.derechosM = data;
+				this.derechosM.consultar = false;
+				this.derechosA = data;
+				this.derechosM.editar = false;
+			}).catch(error => {
+				console.log(error);
+			});
+		}
 	}
 
 	cargarRiesgo(riesgoID: number) {
