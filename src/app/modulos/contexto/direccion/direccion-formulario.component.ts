@@ -184,9 +184,18 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 					this.proceso.setValue(this.registro.proceso);
 				},
 				error => {
-					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
+						swal('ERROR', error.error.message, 'error');
 						this._acceso.logout();
+					} else if (error.error.code === 403) {
+						swal({
+							title: 'Atención!!!',
+							html: '<img src="/assets/images/ysnp.png" style="width: 250px;">' +
+									'<br><h2>' + error.error.message + '</h2>'
+						});
+						this.router.navigate(this.cancelar);
+					} else {
+						swal('ERROR', error.error.message, 'error');
 					}
 				});
 	}
