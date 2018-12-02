@@ -48,7 +48,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 				private _oportunidades: OportunidadesService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.registroId = params['id'];
+			this.registroId = Number(params['id']);
 			this.autoriza = params['aut'];
 			this.invocador = params['o'];
 		});
@@ -147,14 +147,9 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this.listFODASel = data.oportunidad.cuestiones;
 					this.forma.patchValue(data.oportunidad);
 					this.fecha.setValue(data.oportunidad.f_inicio_d);
-					/*this.listAcciones = data.oportunidad.acciones;
-					this.listAcciones.forEach((reg) => {
-						console.log(reg);
-						// tslint:disable-next-line:max-line-length
-						this.acciones.push(this.createItem(reg.accion_id, reg.desc_accion, reg.f_inicio_d, reg.responsable, reg.puesto_resp, reg.observaciones));
-					});*/
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -170,6 +165,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -183,6 +179,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this.listPuestos = data.puestos;
 				},
 				error => {
+					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -259,6 +256,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 							this.router.navigate(this.cancelar);
 						},
 						error => {
+							console.log(error);
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
 								this._acceso.logout();
@@ -273,6 +271,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 						this.ngOnInit();
 					},
 					error => {
+						console.log(error);
 						swal('ERROR', error.error.message, 'error');
 						if (error.error.code === 401) {
 							this._acceso.logout();
