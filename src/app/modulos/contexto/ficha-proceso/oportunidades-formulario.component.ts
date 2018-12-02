@@ -30,6 +30,7 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 	listPuestos: any[] = [];
 	listFODA: any [] = [];
 	listFODASel: any [] = [];
+	listAcciones: any[] = [];
 
 	proceso_sel: number;
 	origen_sel: string;
@@ -139,7 +140,26 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	cargaRegistro(registroID) {
-
+		this.subscription = this._oportunidades.getOportunidadById(registroID)
+			.subscribe(
+				(data: any) => {
+					this._acceso.guardarStorage(data.token);
+					this.listFODASel = data.oportunidad.cuestiones;
+					this.forma.patchValue(data.oportunidad);
+					this.fecha.setValue(data.oportunidad.f_inicio_d);
+					/*this.listAcciones = data.oportunidad.acciones;
+					this.listAcciones.forEach((reg) => {
+						console.log(reg);
+						// tslint:disable-next-line:max-line-length
+						this.acciones.push(this.createItem(reg.accion_id, reg.desc_accion, reg.f_inicio_d, reg.responsable, reg.puesto_resp, reg.observaciones));
+					});*/
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
 	}
 
 	getProcesos() {
@@ -218,7 +238,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	guardar() {
-		console.log(this.forma.value);
 		const listadoFinal: any = [];
 		this.cuestionesO.value.forEach(element => {
 			if (element.b_foda === true) {
@@ -233,7 +252,18 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 			if (this.accion === 'U')  {
 				if (this.autoriza === '3') {
 				} else {
-
+					this.subscription = this._oportunidades.editaOportunidad(valorForma)
+						.subscribe((data: any) => {
+							this._acceso.guardarStorage(data.token);
+							swal('Atención!!!', data.message, 'success');
+							this.router.navigate(this.cancelar);
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+							if (error.error.code === 401) {
+								this._acceso.logout();
+							}
+						});
 				}
 			} else {
 				this.subscription = this._oportunidades.insertaOportunidad(valorForma)

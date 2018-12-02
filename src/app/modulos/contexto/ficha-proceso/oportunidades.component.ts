@@ -83,7 +83,7 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 	}
 
 	getAviso() {
-		/*this.subscription = this._riesgo.getAvisoRiesgos(this._TIPOR, this._MENU)
+		this.subscription = this._oportunidades.getAvisoOportunidades(this._MENU)
 			.subscribe(
 				(data: any) => {
 					this.avisos.pendientes = data.aviso.pendientes;
@@ -96,38 +96,38 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 					if (error.error.code === 401) {
 						this._acceso.logout();
 					}
-				});*/
+				});
 	}
 
 	detectarAccion(datos: any): void {
-		/*if (datos.accion === 'C') {
-			this.cancelaRiesgo(datos.row);
-		} if (datos.accion === 'E') {
-			this.editaRiesgo(datos.row);
+		if (datos.accion === 'C') {
+			this.cancelaOportunidad(datos.row);
+		} else if (datos.accion === 'E') {
+			this.editaOportunidad(datos.row);
 		} else if (datos.accion === 'V') {
 			this.openDialog(datos.row);
 		} else if (datos.accion === 'D') {
-			this.detalleRiesgo(datos.row);
-		}*/
+			this.detalleOportunidad(datos.row);
+		}
 	}
 
-	async cancelaRiesgo(riesgo: any) {
-		if (riesgo.autoriza === 7) {
-			swal('ERROR', 'El riesgo ya se encuentra cancelado', 'error');
+	async cancelaOportunidad(oportunidad: any) {
+		if (oportunidad.autoriza === 7) {
+			swal('ERROR', 'La oportunidad ya se encuentra cancelado', 'error');
 		} else {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				// tslint:disable-next-line:max-line-length
-				text: 'Está seguro que desea cancelar el riesgo "' + riesgo.riesgo_desc + '"?',
+				text: 'Está seguro que desea cancelar la oportunidad "' + oportunidad.oportunidad_desc + '"?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
 				confirmButtonColor: '#B22222'
 			});
 			if (respuesta) {
-				/*if (riesgo.autoriza === 1) {
+				if (oportunidad.autoriza === 1) {
 					// Si esta capturado, se borra, por lo que no se pedirá el motivo
-					this.subscription = this._riesgo.cancelarRiesgo(riesgo.riesgo, riesgo.tipo_riesgo, '')
+					this.subscription = this._oportunidades.cancelaOportunidad(oportunidad.oportunidad, '')
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -148,7 +148,7 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 						}
 					});
 					if (motivo !== undefined) {
-						this.subscription = this._riesgo.cancelarRiesgo(riesgo.riesgo, riesgo.tipo_riesgo, motivo.toUpperCase())
+						this.subscription = this._oportunidades.cancelaOportunidad(oportunidad.oportunidad, motivo.toUpperCase())
 							.subscribe((data: any) => {
 								swal('Atención!!!', data.message, 'success');
 								this.ngOnInit();
@@ -160,21 +160,21 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 								}
 							});
 					}
-				}*/
+				}
 			}
 		}
 	}
 
-	editaRiesgo(riesgo) {
-		/*if (riesgo.autoriza === 7) {
-			swal('ERROR', 'No es posible modificar el riesgo, ya se encuentra cancelado', 'error');
+	editaOportunidad(oportunidad) {
+		if (oportunidad.autoriza === 7) {
+			swal('ERROR', 'No es posible modificar la oportunidad, ya se encuentra cancelado', 'error');
 		} else {
-			this.router.navigate(['/riesgos', 'riesgo_operativo_form', 'U', riesgo.riesgo, riesgo.autoriza, 'M']);
-		}*/
+			this.router.navigate(['/contexto', 'submenufichaproc', 'oportunidades_form', 'U', oportunidad.oportunidad, oportunidad.autoriza, 'M']);
+		}
 	}
 
-	detalleRiesgo(riesgo) {
-		// this.router.navigate(['/riesgos', 'riesgo_operativo_form', 'V', riesgo.riesgo, riesgo.autoriza, 'M']);
+	detalleOportunidad(oportunidad) {
+		this.router.navigate(['/contexto', 'submenufichaproc', 'oportunidades_form', 'V', oportunidad.oportunidad, oportunidad.autoriza, 'M']);
 	}
 
 	openDialog(datos: any): void {
@@ -182,7 +182,7 @@ export class OportunidadesComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				subtitle: 'Riesgo ' + datos.tipo_riesgo_desc + ', ' + datos.estado_desc,
+				subtitle: 'Oportunidad "' + datos.oportunidad_desc + '"',
 				texto: datos.riesgo_desc,
 				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,

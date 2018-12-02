@@ -1,3 +1,24 @@
-<p>
-  autoriza-oportunidades works!
-</p>
+<div class="row">
+    <div class="col-11">
+        <h5>{{titulo}}</h5>
+    </div>
+    <div class="col-1 text-right">
+        <a [routerLink]="cancelar" class="btn btn-outline-dark">Regresar</a>
+    </div>
+</div>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+
+        </div>
+    </div>
+</div>
+<app-mat-data-table (registro)="detectarAccion($event)" (seleccionados)="detectarRegistros($event)" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect" [accion]="accion"></app-mat-data-table>
+<div class="text-center">
+    <button type="submit" (click)="guardar()" class="btn btn-outline-primary">
+		<i class="fa fa-save"></i> Guardar
+	</button>&nbsp;
+    <a [routerLink]="cancelar" class="btn btn-outline-danger">Cancelar</a>
+</div>

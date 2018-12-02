@@ -43,37 +43,37 @@
                 <div *ngIf="forma.controls['origen'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
-	
-		<div class="form-group row">
-			<label for="easproc" class="col-sm-2 col-form-label text-right"></label>
-			<div class="col-sm-8">
-				<mat-expansion-panel [expanded]="true" class="bg-light">
-					<mat-expansion-panel-header>
-						<mat-panel-title>
-							<h6 class="text-primary"><i class="fas fa-list-ul"></i> Entradas/Actividades</h6>
-						</mat-panel-title>
-					</mat-expansion-panel-header>
-					<ul class="list-group" *ngIf="listEASProc.length === 0">
-						<li class="list-group-item invalid-feedback">No hay datos para mostrar.
-						</li>
-					</ul>
-					<ul class="list-group" *ngIf="listEASProc.length > 0">
-						<mat-radio-group formControlName="easproc">
-							<li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listEASProc">
-								<mat-radio-button [value]="item.clave" [disabled]="accion === 'I' ? null: 'disabled'">
-									<p style="margin-top: .25em; margin-bottom: 0;">{{item.descripcion}}</p>
-								</mat-radio-button>
-							</li>
-						</mat-radio-group>
-					</ul>
-				</mat-expansion-panel>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label class="col-sm-2 col-form-label text-right">Cuestiones Externas/Internas</label>
-			<div class="col-sm-10">
-				<div class="row">
-					<!--<div class="col-sm-5">
+
+        <div class="form-group row">
+            <label for="easproc" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-list-ul"></i> Entradas/Actividades</h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="list-group" *ngIf="listEASProc.length === 0">
+                        <li class="list-group-item invalid-feedback">No hay datos para mostrar.
+                        </li>
+                    </ul>
+                    <ul class="list-group" *ngIf="listEASProc.length > 0">
+                        <mat-radio-group formControlName="easproc">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of listEASProc">
+                                <mat-radio-button [value]="item.clave" [disabled]="accion === 'I' ? null: 'disabled'">
+                                    <p style="margin-top: .25em; margin-bottom: 0;">{{item.descripcion}}</p>
+                                </mat-radio-button>
+                            </li>
+                        </mat-radio-group>
+                    </ul>
+                </mat-expansion-panel>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label text-right">Cuestiones Externas/Internas</label>
+            <div class="col-sm-10">
+                <div class="row">
+                    <!--<div class="col-sm-5">
 						<mat-expansion-panel [expanded]="true" class="bg-light">
 							<mat-expansion-panel-header>
 								<mat-panel-title>
@@ -83,18 +83,18 @@
 							<app-cuestiones-check #fodaCheckA [forma]="forma" [listFODA]="listFODA | filtraFoda: 'A'" [listFODASel]="listFODASel" [accion]="accion" [cuestiones_name]="'cuestionesA'"></app-cuestiones-check>
 						</mat-expansion-panel>
 					</div>-->
-					<div class="col-sm-5">
-						<mat-expansion-panel [expanded]="true" class="bg-light">
-							<mat-expansion-panel-header>
-								<mat-panel-title>
-									<h6 class="text-primary"><i class="far fa-check-circle"></i> Oportunidades</h6>
-								</mat-panel-title>
-							</mat-expansion-panel-header>
-							<app-cuestiones-check #fodaCheckO [forma]="forma" [listFODA]="listFODA | filtraFoda: 'O'" [listFODASel]="listFODASel" [accion]="accion" [cuestiones_name]="'cuestionesO'"></app-cuestiones-check>
-						</mat-expansion-panel>
-					</div>
-				</div>
-				<!--<br/>
+                    <div class="col-sm-5">
+                        <mat-expansion-panel [expanded]="true" class="bg-light">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h6 class="text-primary"><i class="far fa-check-circle"></i> Oportunidades</h6>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <app-cuestiones-check #fodaCheckO [forma]="forma" [listFODA]="listFODA | filtraFoda: 'O'" [listFODASel]="listFODASel" [accion]="accion" [cuestiones_name]="'cuestionesO'"></app-cuestiones-check>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+                <!--<br/>
 				<div class="row">
 					<div class="col-sm-5">
 						<mat-expansion-panel [expanded]="true" class="bg-light">
@@ -117,32 +117,32 @@
 						</mat-expansion-panel>
 					</div>
 				</div>-->
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="oportunidad" class="col-sm-2 col-form-label text-right">Clave</label>
-			<div class="col-sm-2">
-				<input class="form-control" type="number" formControlName="oportunidad" aria-describedby="oportunidadHelp" [attr.disabled]="true">
-				<small id="oportunidadHelp" class="form-text text-muted">Clave de la Oportunidad</small>
-			</div>
-		</div>
-		<div class="form-group row">
-			<label for="oprtunidad_desc" class="col-sm-2 col-form-label text-right">Descripción de la Oportunidad</label>
-			<div class="col-sm-8">
-				<textarea class="form-control" formControlName="oportunidad_desc" aria-describedby="oportunidad_descHelp" [ngClass]="{'is-invalid': forma.controls['oportunidad_desc'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
-				<small id="oportunidad_descHelp" class="form-text text-muted">Descripción detallada de la Oportunidad</small>
-				<div *ngIf="forma.controls['oportunidad_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
-			</div>
-		</div>
-		<div class="form-group row">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="oportunidad" class="col-sm-2 col-form-label text-right">Clave</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="number" formControlName="oportunidad" aria-describedby="oportunidadHelp" [attr.disabled]="true">
+                <small id="oportunidadHelp" class="form-text text-muted">Clave de la Oportunidad</small>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="oprtunidad_desc" class="col-sm-2 col-form-label text-right">Descripción de la Oportunidad</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" formControlName="oportunidad_desc" aria-describedby="oportunidad_descHelp" [ngClass]="{'is-invalid': forma.controls['oportunidad_desc'].invalid}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)"></textarea>
+                <small id="oportunidad_descHelp" class="form-text text-muted">Descripción detallada de la Oportunidad</small>
+                <div *ngIf="forma.controls['oportunidad_desc'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
             <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
             <div class="col-sm-8">
                 <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="responsableHelp" class="form-text text-muted">Responsable de la Oportunidad</small>
                 <div *ngIf="responsable.invalid" class="invalid-feedback">Este campo es requerido</div>
             </div>
-		</div>
-		<div class="form-group row">
+        </div>
+        <div class="form-group row">
             <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
             <div class="col-sm-8">
                 <select class="form-control" name="puesto" formControlName="puesto" [ngStyle]="{'border-color': (puesto.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
@@ -152,22 +152,22 @@
                 <small id="puestoHelp" class="form-text text-muted">Puesto del responsable de la Oportunidad</small>
                 <div *ngIf="puesto.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-		</div>
-		<div class="form-group row">
+        </div>
+        <div class="form-group row">
             <label for="fecha" class="col-sm-2 col-form-label text-right">Fecha de Inicio</label>
             <div class="col-sm-2">
-                <input class="form-control" type="date" formControlName="fecha" aria-describedby="fechaHelp" [ngStyle]="{'border-color': (fecha.invalid ? '#dc3545' : '#ced4da')}">
+                <input class="form-control" type="date" formControlName="fecha" aria-describedby="fechaHelp" [ngStyle]="{'border-color': (fecha.invalid ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
                 <small id="fechaHelp" class="form-text text-muted">Fecha de Inicio de la Acción</small>
                 <div *ngIf="fecha.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
-		</div>
-		<div class="form-group row">
-            <label for="acciones" class="col-sm-2 col-form-label text-right"></label>
-            <div class="col-sm-10">
+        </div>
+        <!--<div class="form-group row">
+             <label for="acciones" class="col-sm-2 col-form-label text-right"></label>
+            <div class="col-sm-12">
                 <mat-expansion-panel [expanded]="true" class="bg-light">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <h6 class="text-primary"><i class="fas fa-question"></i> Acciones</h6>
+                            <h6 class="text-primary"><i class="fas fa-list-ul"></i> Acciones</h6>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <table class="table table-sm table-hover" formArrayName="acciones">
@@ -178,40 +178,39 @@
 										<i class="fa fa-plus"></i> Agregar
 									</button>
                                 </td>
-							</tr>
-							<tr>
-								<th>Descripción</th>
-								<th>Fecha de Inicio</th>
-								<th>Responsable</th>
-								<th>Puesto</th>
-								<th>Observación</th>
-								<th></th>
-							</tr>
+                            </tr>
+                            <tr>
+                                <th>Descripción</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Responsable</th>
+                                <th>Puesto</th>
+                                <th>Observación</th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr *ngFor="let item of acciones.controls; let i = index" [formGroupName]="i">
-								<td>
-									<textarea class="form-control" rows="2" cols="35" formControlName="accion" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
-									</textarea>
-									<div *ngIf="acciones.controls[i].controls['accion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-								</td>
-								<td>
-									<input class="form-control" type="date" formControlName="fecha_inicio" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
-									<div *ngIf="acciones.controls[i].controls['fecha_inicio'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-								</td>
-								<td>
-									<input class="form-control" type="text" formControlName="responsable_linea" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
-									<div *ngIf="acciones.controls[i].controls['responsable_linea'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-								</td>
-								<td>
-										<select class="form-control" formControlName="puesto_linea" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                <td>
+                                    <textarea class="form-control" rows="2" cols="35" formControlName="accion" [attr.disabled]="item.value.regid > 0 ? 'disabled' : null"></textarea>
+                                    <div *ngIf="acciones.controls[i].controls['accion'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="date" formControlName="fecha_inicio" [attr.disabled]="item.value.regid > 0 ? 'disabled' : null">
+                                    <div *ngIf="acciones.controls[i].controls['fecha_inicio'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
+                                <td>
+                                    <textarea class="form-control" rows="2" cols="35" formControlName="responsable_linea" [attr.disabled]="item.value.regid > 0 ? 'disabled' : null"></textarea>
+                                    <div *ngIf="acciones.controls[i].controls['responsable_linea'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
+                                <td>
+                                    <select class="form-control" formControlName="puesto_linea" [attr.disabled]="item.value.regid > 0 ? 'disabled' : null">
 											<option value="" selected="selected" disabled="disabled">Seleccionar</option>
 											<option value="{{itemp.puesto}}" *ngFor="let itemp of listPuestos">{{itemp.puesto_desc}}</option>
 										</select>
-									<div *ngIf="acciones.controls[i].controls['puesto_linea'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-								</td>
+                                    <div *ngIf="acciones.controls[i].controls['puesto_linea'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                </td>
                                 <td>
-                                    <textarea class="form-control" rows="2" cols="35" formControlName="observaciones" [attr.disabled]="item.value.clave > 0 ? 'disabled' : null">
+                                    <textarea class="form-control" rows="2" cols="35" formControlName="observaciones" [attr.disabled]="item.value.regid > 0 ? 'disabled' : null">
 									</textarea>
                                     <div *ngIf="acciones.controls[i].controls['observaciones'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                                 </td>
@@ -225,7 +224,7 @@
                     </table>
                 </mat-expansion-panel>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="text-center">
         <a [routerLink]="cancelar" class="btn btn-outline-secondary" *ngIf="accion === 'V'">
