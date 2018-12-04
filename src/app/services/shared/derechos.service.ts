@@ -85,7 +85,6 @@ export class DerechosService {
 						resolve(derechos);
 					},
 					msg => {
-						console.log(msg);
 						reject(msg.error.message);
 					}
 				);

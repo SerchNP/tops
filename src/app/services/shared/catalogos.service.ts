@@ -31,7 +31,6 @@ export class CatalogosService {
 						resolve(res.catalogo);
 					},
 					msg => {
-						console.log(msg);
 						reject(msg.error.message);
 					}
 				);

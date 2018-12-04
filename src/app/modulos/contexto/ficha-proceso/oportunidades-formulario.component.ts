@@ -149,7 +149,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this.fecha.setValue(data.oportunidad.f_inicio_d);
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -165,7 +164,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -179,7 +177,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this.listPuestos = data.puestos;
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -195,7 +192,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -278,7 +274,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 							this.router.navigate(this.cancelar);
 						},
 						error => {
-							console.log(error);
 							swal('ERROR', error.error.message, 'error');
 							if (error.error.code === 401) {
 								this._acceso.logout();
@@ -293,7 +288,6 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 						this.ngOnInit();
 					},
 					error => {
-						console.log(error);
 						swal('ERROR', error.error.message, 'error');
 						if (error.error.code === 401) {
 							this._acceso.logout();

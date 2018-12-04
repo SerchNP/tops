@@ -146,7 +146,6 @@ export class AccionRiesgoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	async guardar() {
-		console.log(this.forma.value);
 		const {value: respuesta} = await swal({
 			title: 'Atención!!!',
 			// tslint:disable-next-line:max-line-length
