@@ -135,6 +135,7 @@ export class AccionOportunidadFormularioComponent implements OnInit, OnDestroy {
 					this.registro = data.accion;
 					this._acceso.guardarStorage(data.token);
 					this.forma.patchValue(data.accion);
+					this.regid.setValue(data.accion.accion_id);
 					this.getPuestos(data.accion.proceso);
 					this.fecha_inicio.setValue(data.accion.f_inicio_d);
 				},
