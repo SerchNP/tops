@@ -49,7 +49,7 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 				private formBuilder: FormBuilder) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.riesgoId = params['id'];
+			this.riesgoId = Number(params['id']);
 			this.autoriza = params['aut'];
 			this.invocador = params['o'];
 		});
@@ -195,7 +195,6 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 					this._acceso.guardarStorage(data.token);
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
@@ -246,7 +245,6 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 					});
 				},
 				error => {
-					console.log(error);
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
 						this._acceso.logout();
