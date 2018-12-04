@@ -157,7 +157,7 @@
             <label for="fecha" class="col-sm-2 col-form-label text-right">Fecha de Inicio</label>
             <div class="col-sm-2">
                 <input class="form-control" type="date" formControlName="fecha" aria-describedby="fechaHelp" [ngStyle]="{'border-color': (fecha.invalid ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'A' || accion === 'V' ? 'disabled' : null)">
-                <small id="fechaHelp" class="form-text text-muted">Fecha de Inicio de la Acción</small>
+                <small id="fechaHelp" class="form-text text-muted">Fecha de Inicio de la Oportunidad</small>
                 <div *ngIf="fecha.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
