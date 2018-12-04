@@ -123,7 +123,7 @@ export class OportunidadesService {
 		const url = URL_SGC + this.RUTA + 'cancelarAccionOportunidad.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
 		// tslint:disable-next-line:max-line-length
-		const body = JSON.stringify(JSON.parse('{"oportunidad": ' + oportunidadID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"origen_id": ' + oportunidadID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
