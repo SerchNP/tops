@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AccesoService, FodaService } from '../../../services/services.index';
+import { AccesoService, FodaService, ProcesosService } from '../../../services/services.index';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 	proceso: number;
-	proceso_desc: string;
+	// proceso_desc: string;
 	titulo: string;
 	cargando = true;
 	listado: any[] = [];
@@ -23,16 +23,17 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 	allowMultiSelect = true;
 	accion: string;
 	seleccionados: any[];
-
+	registro: any = {};
 	columns = [];
 
 	constructor(private activatedRoute: ActivatedRoute,
 				private _acceso: AccesoService,
+				private _proceso: ProcesosService,
 				private _foda: FodaService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.proceso = params['p'];
-			this.proceso_desc = params['d'];
 			this.accion = params['acc'];
+			this.getProceso(this.proceso);
 
 			if (this.accion === 'A') {
 				this.titulo = 'Pendientes';
@@ -102,6 +103,22 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		// unsubscribe to ensure no memory leaks
 		this.subscription.unsubscribe();
+	}
+
+	getProceso (proceso: number) {
+		this.subscription = this._proceso.getProcesoById(proceso)
+			.subscribe(
+				(data: any) => {
+					this.registro = data.proceso;
+					this._acceso.guardarStorage(data.token);
+					this.cargando = false;
+				},
+				error => {
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
 	}
 
 	detectarRegistros(rows): void {

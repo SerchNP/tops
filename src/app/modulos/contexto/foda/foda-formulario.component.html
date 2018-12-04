@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-11">
-        <h5>{{titulo}}</h5>
+        <h5>{{ titulo | titlecase}}</h5>
+        <h6>{{ registro.sistema_desc | titlecase }}</h6>
     </div>
     <div class="col-1 text-right">
         <a [routerLink]="['/contexto', 'submenufoda', 'foda']" class="btn btn-outline-dark">Regresar</a>

@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { RiesgoService, AccesoService, DerechosService, CatalogosService } from '../../../services/services.index';
+import { ActivatedRoute } from '@angular/router';
+import { RiesgoService, AccesoService, DerechosService } from '../../../services/services.index';
 import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { MatDialog } from '@angular/material';
 import { Derechos } from '../../../interfaces/derechos.interface';
-import { Riesgo } from '../../../interfaces/riesgo.interface';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
 
@@ -36,34 +35,34 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	listadoAcciones: any [] = [];
 
 	columnsM = [
-		{ columnDef: 'fecha_evalua_t',   header: 'Fecha Evaluación',   align: 'center', cell: (medicionR: any) => `${medicionR.fecha_evalua_t}`},
+		{ columnDef: 'fecha_evalua_t',   header: 'Fecha Evaluación', align: 'center', cell: (medicionR: any) => `${medicionR.fecha_evalua_t}`},
+		{ columnDef: 'ocurre_desc',      header: 'PF', 			align: 'center', cell: (medicionR: any) => `${medicionR.ocurre_desc}`},
+		{ columnDef: 'valorc_o',     	 header: 'Valor CPF', 	cell: (medicionR: any) => `${medicionR.valorc_o}`},
+		{ columnDef: 'impacto_desc',     header: 'Impacto', 	cell: (medicionR: any) => `${medicionR.impacto_desc}`},
+		{ columnDef: 'valorc_i',     	 header: 'Valor CI', 	cell: (medicionR: any) => `${medicionR.valorc_i}`},
+		{ columnDef: 'valorc_total',     header: 'Valor CPT', 	cell: (medicionR: any) => `${medicionR.valorc_total}`},
+		{ columnDef: 'valor_compara',    header: 'Valor RR', 	align: 'center', cell: (medicionR: any) => `${medicionR.valor_compara}`},
+		{ columnDef: 'cm_desc',     	 header: 'Valor CM', 	align: 'center', cell: (medicionR: any) => `${medicionR.cm_desc}`},
 		// tslint:disable-next-line:max-line-length
-		{ columnDef: 'ocurre_desc',      header: 'Probabilidad o Frecuencia', align: 'center', cell: (medicionR: any) => `${medicionR.ocurre_desc}`},
-		{ columnDef: 'valorc_o',     	 header: 'Valor Cuantitativo', cell: (medicionR: any) => `${medicionR.valorc_o}`},
-		{ columnDef: 'impacto_desc',     header: 'Impacto', 			  cell: (medicionR: any) => `${medicionR.impacto_desc}`},
-		{ columnDef: 'valorc_i',     	 header: 'Valor Cuantitativo', cell: (medicionR: any) => `${medicionR.valorc_i}`},
-		{ columnDef: 'valorc_total',     header: 'Valor Cuantitativo Ponderado Total', cell: (medicionR: any) => `${medicionR.valorc_total}`},
-		// tslint:disable-next-line:max-line-length
-		{ columnDef: 'nivel_desc',     	 header: 'Nivel de Riesgo',	   color: true, align: 'center', cell: (medicionR: any) => `${medicionR.nivel_desc}`},
+		{ columnDef: 'nivel_desc',     	 header: 'Nivel de Riesgo',    color: true, align: 'center', cell: (medicionR: any) => `${medicionR.nivel_desc}`},
 		{ columnDef: 'tipo_accion_desc', header: 'Acción',	           cell: (medicionR: any) => `${medicionR.tipo_accion_desc}`},
 		{ columnDef: 'impacto_texto', 	 header: 'Impacto del Riesgo', visible: false, cell: (medicionR: any) => `${medicionR.impacto_texto}`},
-		// tslint:disable-next-line:max-line-length
 		{ columnDef: 'accion', 			 header: 'Acción a Tomar', 	   visible: false, cell: (medicionR: any) => `${medicionR.accion}` }
 	];
 
 	columnsA = [
-		{ columnDef: 'accion_desc',     header: 'Acción',		cell: (accionR: any) => `${accionR.accion_desc}`},
-		{ columnDef: 'f_inicio',     	header: 'Fecha de implementación de acción', cell: (accionR: any) => `${accionR.f_inicio}`},
-		{ columnDef: 'responsable',     header: 'Responsable',	cell: (accionR: any) => `${accionR.responsable}`},
-		{ columnDef: 'puesto_desc',     header: 'Puesto', 		cell: (accionR: any) => `${accionR.puesto_desc}`},
-		{ columnDef: 'autoriza_desc',  	header: 'Situación', 	cell: (accionR: any) => `${accionR.autoriza_desc}`}
+		{ columnDef: 'accion_desc',        header: 'Acción',			cell: (accionR: any) => `${accionR.accion_desc}`},
+		{ columnDef: 'f_inicio_t',     	   header: 'Fecha de Inicio',	cell: (accionR: any) => `${accionR.f_inicio_t}`},
+		{ columnDef: 'responsable',        header: 'Responsable',		cell: (accionR: any) => `${accionR.responsable}`},
+		{ columnDef: 'puesto_desc',        header: 'Puesto', 			cell: (accionR: any) => `${accionR.puesto_desc}`},
+		{ columnDef: 'autoriza_desc',  	   header: 'Situación', 		cell: (accionR: any) => `${accionR.autoriza_desc}`},
+		{ columnDef: 'estatus_desc', 	   header: 'Estatus',			cell: (accionR: any) => `${accionR.estatus_desc}`}
 	];
 
 	constructor(private activatedRoute: ActivatedRoute,
 				public _derechos: DerechosService,
 				private _riesgo: RiesgoService,
 				private _acceso: AccesoService,
-				private router: Router,
 				public dialog: MatDialog) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.riesgoID = Number(params['id']);

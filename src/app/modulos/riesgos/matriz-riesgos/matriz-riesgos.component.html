@@ -9,7 +9,9 @@
 <br>
 <div class="row">
     <div class="col-md-12 text-center">
-        <button type="button" class="btn btn-outline-info" [routerLink]="['/riesgos', 'metodo_evaluacion']">Ver Método de Evaluación</button>
+        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#modalME">
+			Método de Evaluación
+		</button>
     </div>
 </div>
 <br>
@@ -57,3 +59,14 @@
 </div>
 <app-mat-data-table-privint (registro)="detectarAccion($event)" [opciones]="opciones" [derechos]="derechos" [columns]="columns" [data]="listado" [select]="select" [allowMultiSelect]="allowMultiSelect">
 </app-mat-data-table-privint>
+<!-- Modal -->
+<div class="modal fade" id="modalME" #modalME tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <app-grafica-metodo-evaluacion></app-grafica-metodo-evaluacion>
+                <app-tabla-metodo-evaluacion></app-tabla-metodo-evaluacion>
+            </div>
+        </div>
+    </div>
+</div>

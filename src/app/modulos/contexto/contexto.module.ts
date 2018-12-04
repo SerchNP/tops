@@ -28,6 +28,8 @@ import { EASProcesoEdicionComponent } from './ficha-proceso/eas-proceso-edicion.
 import { OportunidadesComponent } from './ficha-proceso/oportunidades.component';
 import { OportunidadesFormularioComponent } from './ficha-proceso/oportunidades-formulario.component';
 import { AutorizaOportunidadesComponent } from './ficha-proceso/autoriza-oportunidades.component';
+import { OportunidadesAccionesComponent } from './ficha-proceso/oportunidades-acciones.component';
+import { AccionOportunidadFormularioComponent } from './ficha-proceso/accion-oportunidad-formulario.component';
 
 
 @NgModule({
@@ -59,7 +61,9 @@ import { AutorizaOportunidadesComponent } from './ficha-proceso/autoriza-oportun
 		EASProcesoEdicionComponent,
 		OportunidadesComponent,
 		OportunidadesFormularioComponent,
-		AutorizaOportunidadesComponent
+		AutorizaOportunidadesComponent,
+		OportunidadesAccionesComponent,
+		AccionOportunidadFormularioComponent
 	]
 })
 export class ContextoModule { }

@@ -18,6 +18,8 @@ import { EASProcesoEdicionComponent } from './ficha-proceso/eas-proceso-edicion.
 import { OportunidadesComponent } from './ficha-proceso/oportunidades.component';
 import { OportunidadesFormularioComponent } from './ficha-proceso/oportunidades-formulario.component';
 import { AutorizaOportunidadesComponent } from './ficha-proceso/autoriza-oportunidades.component';
+import { OportunidadesAccionesComponent } from './ficha-proceso/oportunidades-acciones.component';
+import { AccionOportunidadFormularioComponent } from './ficha-proceso/accion-oportunidad-formulario.component';
 
 
 const ContextoRoutes: Routes = [
@@ -31,9 +33,9 @@ const ContextoRoutes: Routes = [
 				children: [
 					{ path: 'foda', component: FodaComponent, data: {titulo: 'Cuestiones Externas e Internas', padre: 'FODA'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'fodamovs_form/:p/:d', component: FodaFormularioComponent, data: {titulo: 'Cuestiones Externas e Internas', padre: 'FODA'} },
+					{ path: 'fodamovs_form/:p', component: FodaFormularioComponent, data: {titulo: 'Cuestiones Externas e Internas', padre: 'FODA'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'autorizafoda_form/:p/:d/:acc', component: AutorizaFodaComponent, data: {titulo: 'Revisión de FODA', padre: 'FODA'} },
+					{ path: 'autorizafoda_form/:p/:acc', component: AutorizaFodaComponent, data: {titulo: 'Revisión de FODA', padre: 'FODA'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'listado_foda', component: ListadoFodaComponent, data: {titulo: 'Listado de Cuestiones Externas e Internas', padre: 'FODA'} },
 				]
@@ -64,7 +66,11 @@ const ContextoRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'oportunidades_form/:acc/:id/:aut/:o', component: OportunidadesFormularioComponent, data: {titulo: 'Oportunidades', padre: 'Contexto'}},
 					// tslint:disable-next-line:max-line-length
-					{ path: 'autoriza_oportunidades/:acc', component: AutorizaOportunidadesComponent, data: {titulo: 'Revisión de Oportunidades', padre: 'Contexto'}}
+					{ path: 'autoriza_oportunidades/:acc', component: AutorizaOportunidadesComponent, data: {titulo: 'Revisión de Oportunidades', padre: 'Contexto'}},
+					// tslint:disable-next-line:max-line-length
+					{ path: 'acciones_oportunidad', component: OportunidadesAccionesComponent, data: {titulo: 'Acciones para abordar Oportunidades', padre: 'Contexto'}},
+					// tslint:disable-next-line:max-line-length
+					{ path: 'accion_oportunidad_form/:acc/:id', component: AccionOportunidadFormularioComponent, data: {titulo: 'Acción para abordar Oportunidad', padre: 'Contexto'}},
 				]
 			}
 		]

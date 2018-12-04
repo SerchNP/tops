@@ -14,7 +14,6 @@ export class EASProcesoFormularioComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 
 	accion: string;
-	id: number;
 	autoriza: number;
 	titulo: string;
 	private _MENU = 'eas_proceso';

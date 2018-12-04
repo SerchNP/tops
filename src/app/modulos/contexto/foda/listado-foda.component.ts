@@ -20,7 +20,6 @@ export class ListadoFodaComponent implements OnInit, OnDestroy {
 	cargando = false;
 	listado: any[] = [];
 	listadoFiltrado: any[] = [];
-	jsonData: any;
 	derechos: Derechos = {consultar: true, administrar: true, insertar: false, editar: true, cancelar: false};
 	select = false;
 	allowMultiSelect = false;
@@ -46,10 +45,9 @@ export class ListadoFodaComponent implements OnInit, OnDestroy {
 		this.cargando = true;
 		this.subscription = this._foda.getListadoFODA(this.tipo_user)
 		.subscribe(
-			data => {
-					this.jsonData = data;
-					this.listado = this.jsonData.listado;
-					this._acceso.guardarStorage(this.jsonData.token);
+			(data: any) => {
+					this.listado = data.listado;
+					this._acceso.guardarStorage(data.token);
 					this.cargando = false;
 					this.listadoFiltrado = this.listado;
 				},

@@ -40,7 +40,7 @@ export class MatrizRiesgosComponent implements OnInit, OnDestroy {
 		// tslint:disable-next-line:max-line-length
 		{ columnDef: 'nivel_desc',     		header: 'Nivel',    		  color: true, align: 'center', cell: (riesgo: any) => `${riesgo.nivel_desc}`},
 		// tslint:disable-next-line:max-line-length
-		{ columnDef: 'situacion_riesgo_desc',	header: 'Situación Riesgo',	visible: false, cell: (riesgo: any) => `${riesgo.situacion_riesgo_desc}`},
+		{ columnDef: 'situacion_riesgo_desc', header: 'Situación Riesgo', visible: false, cell: (riesgo: any) => `${riesgo.situacion_riesgo_desc}`},
 		{ columnDef: 'lista_causas', 	    header: 'Causas',  			  visible: false, cell: (riesgo: any) => `${riesgo.lista_causas}`},
 		{ columnDef: 'lista_consecuencias', header: 'Consecuencias',  	  visible: false,  cell: (riesgo: any) => `${riesgo.lista_consecuencias}`},
 		{ columnDef: 'responsable', 	 	header: 'Responsable',  	  visible: false, cell: (riesgo: any) => `${riesgo.responsable}`},
@@ -92,8 +92,6 @@ export class MatrizRiesgosComponent implements OnInit, OnDestroy {
 			this.derechos.consultar = false;
 			this.derechos.insertar = false;
 			this.derechos.cancelar = false;
-			// this._derechos.PRIVILEGIOS = data;
-			// localStorage.setItem('actionsMR', JSON.stringify(this.derechos));*/
 		}).catch(error => {
 			console.log(error);
 		});

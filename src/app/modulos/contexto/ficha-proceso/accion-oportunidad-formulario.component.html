@@ -1,0 +1,101 @@
+<h5>{{titulo}}</h5>
+<hr>
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+        </div>
+    </div>
+</div>
+<br>
+<form novalidate="novalidate" [formGroup]="forma" (ngSubmit)="guardar()">
+    <div class="form-group">
+        <div class="form-group row">
+            <label for="proceso" class="col-sm-2 col-form-label text-right">Proceso</label>
+            <div class="col-sm-8">
+                <select class="form-control" name="proceso" formControlName="proceso" [ngStyle]="{'border-color': (proceso.invalid ? '#dc3545' : 'rgb(169, 169, 169)' )}" [attr.disabled]="(accion_form === 'I' ? null : 'disabled')">
+						<option value="" selected="selected">Seleccionar</option>
+						<option value="{{item.proceso}}" *ngFor="let item of procesos | filtraProcesos: accion_form">{{item.proceso_desc}}</option>
+					</select>
+                <small id="procesoHelp" class="form-text text-muted">La Oportunidad pertenece al Proceso</small>
+                <div *ngIf="proceso.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="origen_id" class="col-sm-2 col-form-label text-right">Oportunidad</label>
+            <div class="col-sm-8">
+                <mat-expansion-panel [expanded]="true" class="bg-light">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h6 class="text-primary"><i class="fas fa-list-ul"></i>Oportunidades de Entradas y Actividades </h6>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <ul class="list-group" *ngIf="oportunidades.length === 0">
+                        <li class="list-group-item invalid-feedback">No hay datos para mostrar.
+                        </li>
+                    </ul>
+                    <ul class="list-group" *ngIf="oportunidades.length > 0">
+                        <mat-radio-group formControlName="origen_id">
+                            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let item of oportunidades">
+                                <mat-radio-button [value]="item.clave" [disabled]="accion_form === 'I' ? null: 'disabled'">
+                                    <p style="margin-top: .25em; margin-bottom: 0;">{{item.descripcion}} <br> {{ item.origen_desc | titlecase }} : {{ item.easproc_desc }}</p>
+                                </mat-radio-button>
+                            </li>
+                        </mat-radio-group>
+                    </ul>
+                </mat-expansion-panel>
+                <div *ngIf="origen_id.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="accion_desc" class="col-sm-2 col-form-label text-right">Accion</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" row="2" col="35" formControlName="accion_desc" aria-describedby="accion_descHelp" [ngStyle]="{'border-color': (accion_desc.invalid ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion_form === 'I' ? null : 'disabled')"></textarea>
+                <small id="accion_descHelp" class="form-text text-muted">Acción para abordar la oportunidad</small>
+                <div *ngIf="accion_desc.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="fecha_inicio" class="col-sm-2 col-form-label text-right">Fecha de Inicio</label>
+            <div class="col-sm-2">
+                <input class="form-control" type="date" formControlName="fecha_inicio" aria-describedby="fecha_inicioHelp" [ngStyle]="{'border-color': (fecha_inicio.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="fecha_inicioHelp" class="form-text text-muted">Fecha de Inicio de la Acción</small>
+                <div *ngIf="fecha_inicio.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="responsable" class="col-sm-2 col-form-label text-right">Responsable</label>
+            <div class="col-sm-4">
+                <input class="form-control" type="text" formControlName="responsable" aria-describedby="responsableHelp" [ngStyle]="{'border-color': (responsable.invalid ? '#dc3545' : '#ced4da')}">
+                <small id="responsableHelp" class="form-text text-muted">Responsable de la Acción</small>
+                <div *ngIf="responsable.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
+            <div class="col-sm-6">
+                <select class="form-control" name="puesto" formControlName="puesto" [ngStyle]="{'border-color': (puesto.invalid ? '#dc3545' : '#ced4da')}">
+					<option value="">Seleccionar</option>
+					<option [value]="item.puesto" *ngFor="let item of puestos">{{item.puesto_desc}}</option>
+				</select>
+                <small id="puestoHelp" class="form-text text-muted">Puesto del Responsable</small>
+                <div *ngIf="puesto.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="observaciones" class="col-sm-2 col-form-label text-right">Observaciones</label>
+            <div class="col-sm-8">
+                <textarea class="form-control" row="2" col="35" formControlName="observaciones" aria-describedby="observacionesHelp" [ngStyle]="{'border-color': (observaciones.invalid ? '#dc3545' : '#ced4da')}"></textarea>
+                <small id="observacionesHelp" class="form-text text-muted">Observaciones de la Acción</small>
+                <div *ngIf="observaciones.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" [disabled]="!forma.valid">
+			<i class="fa fa-save"></i> Guardar
+		</button>&nbsp;
+        <a [routerLink]="cancelar" class="btn btn-outline-danger">
+			Cancelar</a>
+    </div>
+</form>

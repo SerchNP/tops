@@ -237,7 +237,6 @@ export class RiesgosOperativosFormularioComponent implements OnInit, OnDestroy {
 				(data: any) => {
 					this.registro = data.riesgo;
 					this._acceso.guardarStorage(data.token);
-					// this.proceso.setValue(data.riesgo.proceso);
 					this.forma.patchValue(data.riesgo);
 					data.riesgo.causas.forEach(element => {
 						this.causas.push(this.createItemCC(element.regid, element.descrip));
