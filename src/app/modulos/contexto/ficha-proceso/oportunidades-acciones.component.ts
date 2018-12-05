@@ -107,7 +107,7 @@ export class OportunidadesAccionesComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this.subscription = this._oportunidades.cancelarAccionOportunidad(datos.origen_id, datos.accion_id, motivo.toUpperCase())
+					this.subscription = this._oportunidades.cancelarAccionOportunidad(datos.accion_id, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();

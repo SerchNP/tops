@@ -94,7 +94,7 @@
                 <table class="table table-sm table-hover" formArrayName="lineas">
                     <thead class="thead-secondary">
                         <tr>
-                            <th>Líneas de Acción</th>
+                            <th>Línea de Acción</th>
                             <th>Fecha de Inicio</th>
                             <th>Nombre del Responsable</th>
                             <th>Puesto del Responsable</th>
@@ -103,20 +103,20 @@
                     <tbody>
                         <tr *ngFor="let item of lineas.controls; let i = index" [formGroupName]="i">
                             <td>
-                                <textarea class="form-control" rows="2" cols="50" formControlName="linea_desc" [attr.disabled]="item.value.linea> 0 ? 'disabled' : null">
+                                <textarea class="form-control" rows="2" cols="50" formControlName="accion_desc" [attr.disabled]="item.value.accion_id> 0 ? 'disabled' : null">
 								</textarea>
-                                <div *ngIf="lineas.controls[i].controls['linea_desc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                <div *ngIf="lineas.controls[i].controls['accion_desc'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <input class="form-control" type="date" formControlName="fecha" style="width: 150px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
-                                <div *ngIf="lineas.controls[i].controls['fecha'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+                                <input class="form-control" type="date" formControlName="fecha_inicio" style="width: 150px;" [attr.disabled]="item.value.accion_id > 0 ? 'disabled' : null">
+                                <div *ngIf="lineas.controls[i].controls['fecha_inicio'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <input class="form-control" type="text" formControlName="responsable" style="width: 280px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
+                                <input class="form-control" type="text" formControlName="responsable" style="width: 280px;" [attr.disabled]="item.value.accion_id > 0 ? 'disabled' : null">
                                 <div *ngIf="lineas.controls[i].controls['responsable'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
                             </td>
                             <td>
-                                <select class="form-control" formControlName="puesto" style="width: 350px;" [attr.disabled]="item.value.linea > 0 ? 'disabled' : null">
+                                <select class="form-control" formControlName="puesto" style="width: 350px;" [attr.disabled]="item.value.accion_id > 0 ? 'disabled' : null">
 									<option value="">Seleccionar</option>
 									<option value="{{puesto.puesto}}" *ngFor="let puesto of listaPuestos" >{{puesto.puesto_desc}}</option>
 								</select>

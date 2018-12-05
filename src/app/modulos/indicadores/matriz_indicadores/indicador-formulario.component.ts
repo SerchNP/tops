@@ -16,7 +16,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 
 	cargando: boolean;
-	id: number;
+	indicadorID: number;
 	accion: string;
 	autoriza: string;
 	cambia = 'N';
@@ -49,7 +49,7 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 				) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.id = params['id'];
+			this.indicadorID = Number(params['id']);
 			this.autoriza = params['aut'];
 			this.origen = params['o'];
 		});
@@ -69,8 +69,8 @@ export class IndicadorFormularioComponent implements OnInit, OnDestroy {
 			this.cancelar = ['/indicadores', 'autorizaindica_form', 'R']; // La edicion se habilita solo en el rechazo
 		}
 
-		if (this.id !== 0) {
-			this.cargarIndicador(this.id);
+		if (this.indicadorID !== 0) {
+			this.cargarIndicador(this.indicadorID);
 		}
 	}
 

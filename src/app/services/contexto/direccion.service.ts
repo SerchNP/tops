@@ -3,6 +3,7 @@ import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/map';
+import { Accion } from '../../interfaces/accion.interface';
 
 @Injectable()
 export class DireccionService {
@@ -71,8 +72,8 @@ export class DireccionService {
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
 
-	getLineaById (linea: number) {
-		const url = URL_SGC + this.RUTA + 'getLineaById.json?token=' + localStorage.getItem('token') + '&l=' + linea;
+	getLineaById (accionID: number) {
+		const url = URL_SGC + this.RUTA + 'getLineaById.json?token=' + localStorage.getItem('token') + '&l=' + accionID;
 		const headers = HeadersGET;
 		return this.http.get(url, {headers}).map(resp => resp);
 	}
@@ -80,14 +81,14 @@ export class DireccionService {
 	cancelarLineaAccionDE(regid: number, motivo: string) {
 		const url = URL_SGC + this.RUTA + 'cancelarLineaAccionDE.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(JSON.parse('{"linea": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"accion_id": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	editarLineaAccionDE (linea: any) {
+	editarLineaAccionDE (accion: Accion) {
 		const url = URL_SGC + this.RUTA + 'editarLineaAccionDE.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		const body = JSON.stringify(linea);
+		const body = JSON.stringify(accion);
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

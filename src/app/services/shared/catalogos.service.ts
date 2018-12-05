@@ -38,25 +38,6 @@ export class CatalogosService {
 		return promesa;
 	}
 
-	/*getTipoAccionPromesa (pred: number) {
-		const promesa = new Promise((resolve, reject) => {
-			const url = URL_SGC + this.RUTA + 'getTipoAccion.json?token=' + localStorage.getItem('token') + '&p=' + pred;
-			const headers = HeadersGET;
-			this.http.get(url, {headers}).toPromise()
-				.then(
-					(res: any) => {
-						this._accesoService.guardarStorage(res.token);
-						resolve(res.catalogo);
-					},
-					msg => {
-						console.log(msg);
-						reject(msg.error.message);
-					}
-				);
-		});
-		return promesa;
-	}*/
-
 	editaDescFrecuencia(clave: number, descripcion: string, tipoPeriodo: string) {
 		const url = URL_SGC + this.RUTA + 'mantCatFrecuencia.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;

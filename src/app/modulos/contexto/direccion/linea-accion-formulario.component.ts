@@ -14,7 +14,7 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 	private subscription: Subscription;
 
 	accion: string;
-	id: number;
+	accionID: number;
 	autoriza: number;
 	titulo: string;
 
@@ -33,7 +33,7 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 				private _direccion: DireccionService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.id = params['id'];
+			this.accionID = Number (params['id']);
 			this.autoriza = Number (params['aut']);
 		});
 
@@ -50,14 +50,14 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.forma = this.formBuilder.group({
 			autoriza_desc: new FormControl(),
-			linea : new FormControl(),
-			linea_desc : new FormControl('', Validators.required),
+			accion_id : new FormControl(),
+			accion_desc : new FormControl('', Validators.required),
 			proceso_desc: new FormControl(),
 			estrategia_desc: new FormControl(),
 			cuestion_a_desc: new FormControl(),
 			cuestion_b_desc: new FormControl(),
-			fecha: new FormControl('', Validators.required),
-			f_revision: new FormControl('', Validators.required),
+			fecha_inicio: new FormControl('', Validators.required),
+			fecha_revision: new FormControl('', Validators.required),
 			responsable: new FormControl('', Validators.required),
 			puesto: new FormControl('', Validators.required),
 			evidencia: new FormControl('', Validators.required),
@@ -67,9 +67,9 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		});
 
 		this.cargando = true;
-		if (Number(this.id) !== 0) {
-			this.cargaLineaAccionDE(this.id);
-			this.subscription = this.forma.controls['linea'].valueChanges
+		if (this.accionID !== 0) {
+			this.cargaLineaAccionDE(this.accionID);
+			this.subscription = this.forma.controls['accion_id'].valueChanges
 				.subscribe(reg => {
 					if (reg !== null) {
 						this.getPuestos(this.registro.proceso);
@@ -86,16 +86,16 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 				(data: any) => {
 					this.registro = data.linea;
 					this.autoriza_desc.setValue(this.registro.autoriza_desc);
-					this.linea.setValue(this.registro.linea);
-					this.linea_desc.setValue(this.registro.linea_desc);
+					this.accion_id.setValue(this.registro.accion_id);
+					this.accion_desc.setValue(this.registro.accion_desc);
 					this.proceso_desc.setValue(this.registro.proceso_desc);
 					this.estrategia_desc.setValue(this.registro.estrategia_desc);
 					this.cuestion_a_desc.setValue(this.registro.cuestion_a_desc);
 					this.cuestion_b_desc.setValue(this.registro.cuestion_b_desc);
 					this.responsable.setValue(this.registro.responsable);
-					this.puesto.setValue(this.registro.puesto_resp);
-					this.fecha.setValue(this.registro.f_inicio_d);
-					this.f_revision.setValue(this.registro.f_revision_d);
+					this.puesto.setValue(this.registro.puesto);
+					this.fecha_inicio.setValue(this.registro.f_inicio_d);
+					this.fecha_revision.setValue(this.registro.f_revision_d);
 					this.evidencia.setValue(this.registro.evidencia);
 					this.u_cancela.setValue(this.registro.u_cancela);
 					this.f_cancela.setValue(this.registro.f_cancela);
@@ -117,12 +117,12 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('autoriza_desc');
 	}
 
-	get linea() {
-		return this.forma.get('linea');
+	get accion_id() {
+		return this.forma.get('accion_id');
 	}
 
-	get linea_desc() {
-		return this.forma.get('linea_desc');
+	get accion_desc() {
+		return this.forma.get('accion_desc');
 	}
 
 	get proceso_desc() {
@@ -149,12 +149,12 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 		return this.forma.get('puesto');
 	}
 
-	get fecha() {
-		return this.forma.get('fecha');
+	get fecha_inicio() {
+		return this.forma.get('fecha_inicio');
 	}
 
-	get f_revision() {
-		return this.forma.get('f_revision');
+	get fecha_revision() {
+		return this.forma.get('fecha_revision');
 	}
 
 	get evidencia() {
@@ -187,7 +187,7 @@ export class LineaAccionFormularioComponent implements OnInit, OnDestroy {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				text: '¿Está seguro que desea guardar los cambios en la linea de acción "'
-					+ this.registro.linea_desc + '" para el proceso "' + this.registro.proceso_desc + '"?',
+					+ this.registro.accion_desc + '" para el proceso "' + this.registro.proceso_desc + '"?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',

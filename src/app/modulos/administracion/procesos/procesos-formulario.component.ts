@@ -57,7 +57,7 @@ export class ProcesosFormularioComponent implements OnInit, OnDestroy {
 				private _home: HomeService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.idProceso = params['id'];
+			this.idProceso = Number(params['id']);
 		});
 
 		let pre = '';

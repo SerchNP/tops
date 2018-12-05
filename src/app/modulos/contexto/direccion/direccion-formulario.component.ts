@@ -61,7 +61,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 				private _direccion: DireccionService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.direccionId = params['id'];
+			this.direccionId = Number(params['id']);
 			this.autoriza = params['aut'];
 		});
 
@@ -93,7 +93,7 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		this.getProcesos();
 		this.getCatalogos();
 
-		if (Number(this.direccionId) !== 0) {
+		if (this.direccionId !== 0) {
 			this.cargarDireccionEst(this.direccionId);
 		}
 
@@ -356,20 +356,22 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	addItemLineas(p): void {
-		this.lineas.push(this.createItemLineas(p.linea, p.linea_desc, p.f_inicio_d, p.responsable, p.puesto_resp));
+		this.lineas.push(this.createItemLineas(p.accion_id, p.accion_desc, 0, p.f_inicio_d, p.responsable, p.puesto));
 	}
 
 	addLinea() {
-		this.lineas.push(this.createItemLineas(0, '', '', '', ''));
+		this.lineas.push(this.createItemLineas(0, '', 0, '', '', ''));
 	}
 
-	createItemLineas(linea, linea_desc, f_inicio, responsable, puesto): FormGroup {
+	createItemLineas(accion_id, accion_desc, tipo_acc, f_inicio, responsable, puesto): FormGroup {
 		return this.formBuilder.group({
-			linea:			new FormControl(linea, Validators.required),
-			linea_desc:		new FormControl(linea_desc, Validators.required),
-			fecha:			new FormControl(f_inicio, Validators.required),
+			accion_id:		new FormControl(accion_id, Validators.required),
+			accion_desc:	new FormControl(accion_desc, Validators.required),
+			tipo_accion:	new FormControl(tipo_acc),
+			fecha_inicio:	new FormControl(f_inicio, Validators.required),
 			responsable:	new FormControl(responsable, Validators.required),
-			puesto:			new FormControl(puesto, Validators.required)
+			puesto:			new FormControl(puesto, Validators.required),
+			observaciones:	new FormControl('')
 		});
 	}
 

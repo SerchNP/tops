@@ -31,7 +31,7 @@ export class AutorizaFodaComponent implements OnInit, OnDestroy {
 				private _proceso: ProcesosService,
 				private _foda: FodaService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
-			this.proceso = params['p'];
+			this.proceso = Number(params['p']);
 			this.accion = params['acc'];
 			this.getProceso(this.proceso);
 

@@ -32,7 +32,7 @@ export class AreaProcesoFormularioComponent implements OnInit, OnDestroy {
 				private _areasService: AreasService) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.clave = params['id'];
+			this.clave = Number(params['id']);
 			this.titulo = 'Asignación de Áreas a Procesos';
 		});
 	}

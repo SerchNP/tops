@@ -12,41 +12,41 @@
     <div class="form-group row">
         <label for="proceso_desc" class="col-sm-2 col-form-label text-right">Proceso</label>
         <div class="col-sm-6">
-            <input class="form-control" type="text" formControlName="proceso_desc" readonly>
+            <input class="form-control" type="text" formControlName="proceso_desc" [attr.disabled]="'disabled'">
         </div>
     </div>
     <div class="form-group row">
         <label for="estrategia_desc" class="col-sm-2 col-form-label text-right">Estrategia</label>
         <div class="col-sm-4">
-            <input class="form-control" type="text" formControlName="estrategia_desc" readonly>
+            <input class="form-control" type="text" formControlName="estrategia_desc" [attr.disabled]="'disabled'">
         </div>
     </div>
     <div class="form-group row">
         <label for="cuestion_a_desc" class="col-sm-2 col-form-label text-center">Cuestión Externa/Interna A</label>
         <div class="col-md-6">
-            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_a_desc" readonly></textarea>
+            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_a_desc" [attr.disabled]="'disabled'"></textarea>
         </div>
     </div>
     <div class="form-group row">
         <label for="cuestion_b_desc" class="col-sm-2 col-form-label text-center">Cuestión Externa/Interna B</label>
         <div class="col-md-6">
-            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_b_desc" readonly></textarea>
+            <textarea class="form-control" rows="2" cols="40" formControlName="cuestion_b_desc" [attr.disabled]="'disabled'"></textarea>
         </div>
     </div>
     <div class="form-group row">
-        <label for="linea" class="col-sm-2 col-form-label text-right">Clave</label>
+        <label for="accion_id" class="col-sm-2 col-form-label text-right">Clave</label>
         <div class="col-sm-1">
-            <input class="form-control" type="text" formControlName="linea" readonly>
+            <input class="form-control" type="text" formControlName="accion_id" [attr.disabled]="'disabled'">
         </div>
         <label for="autoriza_desc" class="col-sm-2 col-form-label text-right">Situación</label>
         <div class="col-sm-3">
-            <input class="form-control" type="text" formControlName="autoriza_desc" readonly="readonly" [ngClass]="(autoriza === 7) ? 'text-danger' : 'text-success'">
+            <input class="form-control" type="text" formControlName="autoriza_desc" [attr.disabled]="'disabled'" [ngClass]="(autoriza === 7) ? 'text-danger' : 'text-success'">
         </div>
     </div>
     <div class="form-group row">
-        <label for="linea_desc" class="col-sm-2 col-form-label text-right">Línea de Acción</label>
+        <label for="accion_desc" class="col-sm-2 col-form-label text-right">Línea de Acción</label>
         <div class="col-sm-6">
-            <textarea class="form-control" rows="2" cols="40" formControlName="linea_desc" readonly></textarea>
+            <textarea class="form-control" rows="2" cols="40" formControlName="accion_desc" [attr.disabled]="'disabled'"></textarea>
         </div>
     </div>
     <div class="form-group row">
@@ -67,15 +67,15 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="fecha" class="col-sm-2 col-form-label text-right">Fecha de inicio</label>
+        <label for="fecha_inicio" class="col-sm-2 col-form-label text-right">Fecha de inicio</label>
         <div class="col-sm-2">
-            <input class="form-control" type="date" formControlName="fecha" [attr.disabled]="accion === 'V' ? 'disabled' : null">
-            <div *ngIf="fecha.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            <input class="form-control" type="date" formControlName="fecha_inicio" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <div *ngIf="fecha_inicio.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
         </div>
-        <label for="f_revision" class="col-sm-2 col-form-label text-right">Fecha de revisión</label>
+        <label for="fecha_revision" class="col-sm-2 col-form-label text-right">Fecha de revisión</label>
         <div class="col-sm-2">
-            <input class="form-control" type="date" formControlName="f_revision" [attr.disabled]="accion === 'V' ? 'disabled' : null">
-            <div *ngIf="f_revision.invalid && accion === 'U'" class="invalid-feedback" style="display: block">Este campo es requerido</div>
+            <input class="form-control" type="date" formControlName="fecha_revision" [attr.disabled]="accion === 'V' ? 'disabled' : null">
+            <div *ngIf="fecha_revision.invalid && accion === 'U'" class="invalid-feedback" style="display: block">Este campo es requerido</div>
         </div>
     </div>
     <div class="form-group row">

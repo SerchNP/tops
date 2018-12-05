@@ -56,7 +56,7 @@ export class AccionOportunidadFormularioComponent implements OnInit, OnDestroy {
 	ngOnInit() {
 		this.forma = this.formBuilder.group({
 			// FormControl ---> Valor default, Reglas de Validacion, Reglas de validación asíncronas
-			regid:  new FormControl(0, Validators.required),
+			accion_id:  new FormControl(0, Validators.required),
 			proceso : new FormControl('', Validators.required),
 			origen_id : new FormControl('', Validators.required),
 			accion_desc : new FormControl('', Validators.required),
@@ -96,8 +96,8 @@ export class AccionOportunidadFormularioComponent implements OnInit, OnDestroy {
 		this.subscription.unsubscribe();
 	}
 
-	get regid () {
-		return this.forma.get('regid');
+	get accion_id () {
+		return this.forma.get('accion_id');
 	}
 
 	get proceso () {
@@ -135,7 +135,6 @@ export class AccionOportunidadFormularioComponent implements OnInit, OnDestroy {
 					this.registro = data.accion;
 					this._acceso.guardarStorage(data.token);
 					this.forma.patchValue(data.accion);
-					this.regid.setValue(data.accion.accion_id);
 					this.getPuestos(data.accion.proceso);
 					this.fecha_inicio.setValue(data.accion.f_inicio_d);
 				},

@@ -33,7 +33,7 @@ export class IdentidadFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.tipo_i = params['tipo'];
 			this.accion = params['acc'];
-			this.clave = params['id'];
+			this.clave = Number(params['id']);
 
 			switch (this.tipo_i) {
 				case 'P' :

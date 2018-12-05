@@ -119,11 +119,10 @@ export class OportunidadesService {
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 
-	cancelarAccionOportunidad(oportunidadID: number, regid: number, motivo: string) {
+	cancelarAccionOportunidad(accionID: number, motivo: string) {
 		const url = URL_SGC + this.RUTA + 'cancelarAccionOportunidad.json?token=' + localStorage.getItem('token');
 		const headers = HeadersPOST;
-		// tslint:disable-next-line:max-line-length
-		const body = JSON.stringify(JSON.parse('{"origen_id": ' + oportunidadID + ', "regid": ' + regid + ', "motivo_cancela": "' + motivo + '"}'));
+		const body = JSON.stringify(JSON.parse('{"accion_id": ' + accionID + ', "motivo_cancela": "' + motivo + '"}'));
 		return this.http.post(url, body, { headers }).map(resp => resp);
 	}
 

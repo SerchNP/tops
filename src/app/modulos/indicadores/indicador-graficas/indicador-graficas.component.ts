@@ -33,6 +33,8 @@ export class IndicadorGraficasComponent implements OnInit, OnDestroy {
 		{ columnDef: 'f_final',   		header: 'Fecha final',     cell: (medicion: any) => `${medicion.f_final}`},
 		{ columnDef: 'meta', 			header: 'Meta',  		   cell: (medicion: any) => `${medicion.meta}`},
 		{ columnDef: 'medicion',   		header: 'Medicion',        cell: (medicion: any) => `${medicion.medicion}`},
+		{ columnDef: 'autoriza_desc',  	header: 'Situación',       cell: (medicion: any) => `${medicion.autoriza_desc}`},
+		{ columnDef: 'estatus_desc',  	header: 'Estatus',         cell: (medicion: any) => `${medicion.estatus_desc}`},
 		{ columnDef: 'u_captura',   	header: 'Usuario captura', visible: false, cell: (medicion: any) => `${medicion.u_captura}`},
 		{ columnDef: 'f_captura',   	header: 'Fecha captura',   visible: false, cell: (medicion: any) => `${medicion.f_captura}`}
 	];
@@ -44,7 +46,7 @@ export class IndicadorGraficasComponent implements OnInit, OnDestroy {
 				private router: Router,
 				public dialog: MatDialog) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
-			this.indicadorID = params['id'];
+			this.indicadorID = Number(params['id']);
 		});
 		if (this.indicadorID !== 0) {
 			this.cargarIndicador(this.indicadorID);

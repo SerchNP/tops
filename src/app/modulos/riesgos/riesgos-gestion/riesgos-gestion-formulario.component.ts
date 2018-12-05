@@ -40,7 +40,7 @@ export class RiesgosGestionFormularioComponent implements OnInit, OnDestroy {
 				private formBuilder: FormBuilder) {
 		this.subscription = this.activatedRoute.params.subscribe(params => {
 			this.accion = params['acc'];
-			this.riesgoId = params['id'];
+			this.riesgoId = Number(params['id']);
 			this.autoriza = params['aut'];
 			this.origen = params['o'];
 		});

@@ -1,7 +1,7 @@
 export interface Accion {
 	proceso: number;
 	regid: number;
-	accion: string;
+	accion_desc: string;
 	origen?: string; // DE, RI, OP
 	origen_id: string; // ID Dir. Estrateg., Riesgo, Oportunidad
 	tipo_accion?: number; // 0-Default

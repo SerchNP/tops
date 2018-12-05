@@ -16,7 +16,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
 
-	private _MENU = 'lineas_accion';
+	private _MENU = 'direccion';
 	cargando = false;
 	opciones: Opciones = { detalle: true };
 	derechos: Derechos = {};
@@ -29,12 +29,12 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 		{ columnDef: 'proceso_desc',   	  header: 'Proceso', 	        cell: (direst: any) => `${direst.proceso_desc}`},
 		{ columnDef: 'cuestion_a_desc',   header: 'Cuestion Externa/Interna A', cell: (direst: any) => `${direst.cuestion_a_desc}`},
 		{ columnDef: 'cuestion_b_desc',   header: 'Cuestion Externa/Interna B', cell: (direst: any) => `${direst.cuestion_b_desc}`},
-		{ columnDef: 'linea', 	  		  header: 'Clave',				cell: (direst: any) => `${direst.linea}`},
-		{ columnDef: 'linea_desc', 	  	  header: 'Línea de Acción',	cell: (direst: any) => `${direst.linea_desc}`},
-		{ columnDef: 'f_inicio', 		  header: 'Fecha inicio',		cell: (direst: any) => `${direst.f_inicio}`},
-		{ columnDef: 'f_revision', 		  header: 'Fecha revisión',		cell: (direst: any) => `${direst.f_revision}`},
+		// { columnDef: 'accion_id', 	  	  header: 'Clave',				cell: (direst: any) => `${direst.accion_id}`},
+		{ columnDef: 'accion_desc', 	  header: 'Línea de Acción',	cell: (direst: any) => `${direst.accion_desc}`},
+		{ columnDef: 'f_inicio_t', 		  header: 'Fecha inicio',		cell: (direst: any) => `${direst.f_inicio_t}`},
+		{ columnDef: 'f_revision_t', 	  header: 'Fecha revisión',		cell: (direst: any) => `${direst.f_revision_t}`},
 		{ columnDef: 'responsable', 	  header: 'Responsable',	    visible: false, cell: (direst: any) => `${direst.responsable}`},
-		{ columnDef: 'puesto_resp_desc',  header: 'Puesto Responsable',	visible: false, cell: (direst: any) => `${direst.puesto_resp_desc}`},
+		{ columnDef: 'puesto_desc',  	  header: 'Puesto Responsable',	visible: false, cell: (direst: any) => `${direst.puesto_desc}`},
 		{ columnDef: 'evidencia',  		  header: 'evidencia',			visible: false, cell: (direst: any) => `${direst.evidencia}`},
 		{ columnDef: 'autoriza_desc', 	  header: 'Situación',		    cell: (direst: any) => `${direst.autoriza_desc}`},
 		{ columnDef: 'estatus_desc', 	  header: 'Estatus',			cell: (direst: any) => `${direst.estatus_desc}`}
@@ -91,7 +91,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 			const {value: respuesta} = await swal({
 				title: 'Atención!!!',
 				// tslint:disable-next-line:max-line-length
-				text: '¿Está seguro que desea cancelar la linea de acción "' + datos.linea_desc + '" para el proceso "' + datos.proceso_desc + '"?',
+				text: '¿Está seguro que desea cancelar la linea de acción "' + datos.accion_desc + '" para el proceso "' + datos.proceso_desc + '"?',
 				type: 'warning',
 				showCancelButton: true,
 				confirmButtonText: 'Aceptar',
@@ -107,7 +107,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 					}
 				});
 				if (motivo !== undefined) {
-					this.subscription = this._direccion.cancelarLineaAccionDE(datos.linea, motivo.toUpperCase())
+					this.subscription = this._direccion.cancelarLineaAccionDE(datos.accion_id, motivo.toUpperCase())
 						.subscribe((data: any) => {
 							swal('Atención!!!', data.message, 'success');
 							this.ngOnInit();
@@ -124,14 +124,14 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 	}
 
 	consultaLineaAccDE(datos: any) {
-		this.router.navigate(['/contexto', 'submenudirest', 'linea_form', 'V', datos.linea, datos.autoriza]);
+		this.router.navigate(['/contexto', 'submenudirest', 'linea_form', 'V', datos.accion_id, datos.autoriza]);
 	}
 
 	editaLineaAccDE(datos: any) {
 		if (datos.autoriza === 7) {
 			swal('ERROR', 'La Línea de Acción ya se encuentra cancelada', 'error');
 		} else {
-			this.router.navigate(['/contexto', 'submenudirest', 'linea_form', 'U', datos.linea, datos.autoriza]);
+			this.router.navigate(['/contexto', 'submenudirest', 'linea_form', 'U', datos.accion_id, datos.autoriza]);
 		}
 	}
 
@@ -140,7 +140,7 @@ export class LineaAccionComponent implements OnInit, OnDestroy {
 			width: '550px',
 			data: {
 				title: datos.proceso_desc,
-				subtitle: datos.linea_desc,
+				subtitle: datos.accion_desc,
 				texto: datos.cuestion_a_desc + ' | ' + datos.cuestion_b_desc,
 				situacion: datos.autoriza_desc,
 				u_captura: datos.u_captura,
