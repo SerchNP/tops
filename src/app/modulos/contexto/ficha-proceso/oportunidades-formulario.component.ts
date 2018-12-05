@@ -92,6 +92,8 @@ export class OportunidadesFormularioComponent implements OnInit, OnDestroy {
 		});
 
 		this.cargando = true;
+		this.proceso_sel = null;
+		this.origen_sel = null;
 		this.listEASProc = [];
 		this.listFODA = [];
 		this.getProcesos();
