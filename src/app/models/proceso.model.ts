@@ -17,6 +17,7 @@ export class Proceso {
 		public objetivo?: string,
 		public apartados?: string,
 		public responsable?: string,
+		public puesto?: number,
 
 		public f_autoriza?: Date,
 		public u_autoriza?: string,

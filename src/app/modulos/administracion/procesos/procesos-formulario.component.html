@@ -18,15 +18,23 @@
         <div class="form-group row">
             <label for="predecesor" class="col-sm-2 col-form-label text-right">Predecesor</label>
             <div class="col-sm-2">
-                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="accion === 'U'">
+                <input class="form-control" type="number" formControlName="predecesor" aria-describedby="predecesorHelp" [attr.disabled]="'disabled'">
                 <small id="predecesorHelp" class="form-text text-muted">Proceso Predecesor</small>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal" *ngIf="accion === 'I'">
-					Seleccionar Predecesor
-				</button>
             </div>
             <div class="col-sm-8">
-                <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="accion === 'U'">
+                <input class="form-control" type="text" formControlName="predecesor_desc" aria-describedby="predecesor_descHelp" [attr.disabled]="'disabled'">
                 <small id="predecesorHelp" class="form-text text-muted">Descripción del Proceso Predecesor</small>
+            </div>
+        </div>
+        <div class="form-group row" *ngIf="accion === 'I'">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#treeModal">
+					Seleccionar Predecesor
+				</button>&nbsp;
+                <button type="button" class="btn btn-danger" (click)="borrarPredecesor()" *ngIf="forma.controls['predecesor'].value !== null">
+					Borrar Predecesor
+				</button>
             </div>
         </div>
         <div class="form-group row">
@@ -62,6 +70,25 @@
                 <input type="text" class="form-control" formControlName="responsable" aria-describedby="responsableHelp" [ngClass]="{'is-invalid': forma.controls['responsable'].invalid}" [attr.disabled]="(accion === 'V' ? 'disabled' : null)">
                 <small id="responsableHelp" class="form-text text-muted">Responsable del Proceso</small>
                 <div *ngIf="forma.controls['responsable'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="puesto" class="col-sm-2 col-form-label text-right">Puesto</label>
+            <div class="col-sm-3">
+                <div class="input-group">
+                    <input class="form-control" type="number" formControlName="puesto" aria-describedby="puestoHelp" [ngClass]="{'is-invalid': forma.controls['puesto'].invalid}" [attr.disabled]="'disabled'" />&nbsp;
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#puestoModal">
+						<i class="fas fa-search"></i> Seleccionar Puesto
+						</button>
+                    </div>
+                    <div *ngIf="forma.controls['puesto'].errors?.required" class="invalid-feedback">Este campo es requerido</div>
+                </div>
+                <small id="puestoHelp" class="form-text text-muted">Puesto del Responsable del Proceso</small>
+            </div>
+            <div class="col-sm-7">
+                <input class="form-control" type="text" formControlName="puesto_desc" aria-describedby="puesto_descHelp" [attr.disabled]="'disabled'">
+                <small id="puestoHelp" class="form-text text-muted">Descripción del Puesto del Responsable del Proceso</small>
             </div>
         </div>
         <div class="form-group row">
@@ -108,11 +135,31 @@
 			  </button>
             </div>
             <div class="modal-body">
-                <app-arbol [nodes]="items" (seleccionado)="seleccionado = $event"></app-arbol>
+                <app-arbol [nodes]="items" (seleccionado)="procesoSel = $event"></app-arbol>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-primary" (click)="asignarPredecesor(treeModal)">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="puestoModal" #puestoModal tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Seleccionar Puesto</h5>
+                <button type="button" id="closePuesto" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+            </div>
+            <div class="modal-body">
+                <app-arbol [nodes]="puestos" (seleccionado)="puestoSel = $event"></app-arbol>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="asignarPuesto(puestoModal)">Seleccionar</button>
             </div>
         </div>
     </div>

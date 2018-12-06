@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProcesosService, AccesoService } from '../../../services/services.index';
+import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { Proceso } from '../../../models/proceso.model';
-import { Router } from '@angular/router';
-import swal from 'sweetalert2';
-import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
-import { DialogDetalleComponent } from '../../../components/dialog-detalle/dialog-detalle.component';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import swal from 'sweetalert2';
 
 
 @Component({
@@ -29,7 +29,7 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 	columns = [
 		{ columnDef: 'proceso',     	header: 'ID Proceso',			 visible: true,  cell: (proceso: any) => `${proceso.proceso}`},
 		{ columnDef: 'proceso_desc',   	header: 'Proceso', 				 visible: true,  cell: (proceso: any) => `${proceso.proceso_desc}`},
-		{ columnDef: 'predecesor',		header: 'ID Predecesor',		 visible: true,  align: 'center', cell: (proceso: any) => `${proceso.predecesor}`},	
+		{ columnDef: 'predecesor',		header: 'ID Predecesor',		 visible: true,  align: 'center', cell: (proceso: any) => `${proceso.predecesor}`},
 		{ columnDef: 'predecesor_desc', header: 'Predecesor',			 visible: true,  cell: (proceso: any) => `${proceso.predecesor_desc}`},
 		{ columnDef: 'sistema',			header: 'ID Sistema',			 visible: true,  align: 'center', cell: (proceso: any) => `${proceso.sistema}`},
 		{ columnDef: 'sistema_desc',	header: 'Sistema',				 visible: true,  cell: (proceso: any) => `${proceso.sistema_desc}`},
@@ -38,7 +38,8 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 		{ columnDef: 'autoriza_desc',	header: 'Situación',			 visible: true,  cell: (proceso: any) => `${proceso.autoriza_desc}`},
 		{ columnDef: 'objetivo',		header: 'Objetivo',				 visible: false, cell: (proceso: any) => `${proceso.objetivo}`},
 		{ columnDef: 'apartados',		header: 'Apartados de la Norma', visible: false, cell: (proceso: any) => `${proceso.apartados}`},
-		{ columnDef: 'responsable',		header: 'Responsable',			 visible: false, cell: (proceso: any) => `${proceso.responsable}`}
+		{ columnDef: 'responsable',		header: 'Responsable',			 visible: false, cell: (proceso: any) => `${proceso.responsable}`},
+		{ columnDef: 'puesto_desc',		header: 'Puesto',			 	 visible: false, cell: (proceso: any) => `${proceso.puesto_desc}`}
 
 	];
 
@@ -75,7 +76,6 @@ export class ProcesosComponent implements OnInit, OnDestroy {
 		} else if (datos.accion === 'C') {
 			this.borrarProceso(datos.row);
 		} else if (datos.accion === 'V') {
-			// this.consultarProceso(datos.row);
 			this.openDialog(datos.row);
 		}
 	}
