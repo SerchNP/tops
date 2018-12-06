@@ -34,6 +34,7 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
 import { PeriodosComponent } from './catalogos/periodos.component';
 import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.component';
+import { ArchivosComponent } from './archivos/archivos.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.com
 		TResultadosComponent,
 		TresultadosFormularioComponent,
 		PeriodosComponent,
-		PeriodosFormularioComponent
+		PeriodosFormularioComponent,
+		ArchivosComponent
 	],
 	exports: [
 		AdministracionComponent
