@@ -14,6 +14,7 @@ export { IdentidadService } from './administracion/identidad.service';
 export { ProcesosService } from './administracion/procesos.service';
 export { AreasService } from './administracion/areas.service';
 export { PuestosService } from './administracion/puestos.service';
+export { ArchivosService } from './administracion/archivos.service';
 // Contexto
 export { FodaService } from './contexto/foda.service';
 export { DireccionService } from './contexto/direccion.service';

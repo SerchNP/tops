@@ -15,6 +15,7 @@ import { DireccionService } from './contexto/direccion.service';
 import { FichaProcesoService } from './contexto/ficha-proceso.service';
 import { MetodoEvaluacionService } from './riesgos/metodo-evaluacion.service';
 import { OportunidadesService } from './contexto/oportunidades.service';
+import { ArchivosService } from './administracion/archivos.service';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { OportunidadesService } from './contexto/oportunidades.service';
 		DireccionService,
 		FichaProcesoService,
 		MetodoEvaluacionService,
-		OportunidadesService
+		OportunidadesService,
+		ArchivosService
 	],
 	declarations: []
 })

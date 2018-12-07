@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
-import { AccesoService, FodaService, DerechosService, ProcesosService } from '../../../services/services.index';
+import { AccesoService, FodaService, DerechosService, ProcesosService, ArchivosService } from '../../../services/services.index';
 import { Derechos } from '../../../interfaces/derechos.interface';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
@@ -26,7 +26,8 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 				private _derechos: DerechosService,
 				private _acceso: AccesoService,
 				private _proceso: ProcesosService,
-				private _foda: FodaService) {
+				private _foda: FodaService,
+				private _archivo: ArchivosService) {
 		this.subscription = this.activatesRoute.params.subscribe(params => {
 			this.proceso = params['p'];
 			this.getProceso(this.proceso);
@@ -74,6 +75,16 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 						this._acceso.logout();
 					}
 				});
+	}
+
+	visualizar() {
+		console.log('q');
+		this._archivo.verFODA(this.proceso)
+			.subscribe(res => {
+				console.log(res);
+				const fileURL = URL.createObjectURL(res);
+				window.open(fileURL, '_blank');
+			});
 	}
 
 }
