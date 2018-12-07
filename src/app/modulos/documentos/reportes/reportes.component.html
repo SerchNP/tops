@@ -1,0 +1,47 @@
+<div class="row" *ngIf="cargando">
+    <div class="col-sm-12">
+        <div class="alert alert-warning text-left">
+            <strong><i class="fas fa-sync-alt fa-spin fa-1x"></i> Cargando, Espere por favor</strong>
+
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="!cargando">
+    <div class="col-md-5 input-group">
+        <input #filtro class="form-control" placeholder="Buscar" (keyup)="filtraProcesos(filtro.value);" />
+        <div class="input-group-btn">
+            <button class="btn btn-xs btn-secondary" type="button" (click)="clearFilter()">
+				<i class="fas fa-search-minus"></i>
+			</button>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row text-center">
+    <div class="col-md-12">
+        <div class="list-group">
+            <li class="list-group-item list-group-item-action flex-column align-items-start" *ngFor="let proceso of procesosMostrar">
+                <div class="d-flex w-100 justify-content-between" style="margin-top: 10px;">
+                    <h4 class="mb-1">{{proceso.proceso_desc}}</h4>
+                    <small>
+						<div class="dropdown dropleft">
+							<button class="btn btn-outline-info dropdown-toggle" type="button" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="far fa-file-pdf"></i> Visualizar PDF
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenu">
+								<h6 class="dropdown-header">Contexto</h6>
+								<button class="dropdown-item" type="button" (click)="visualizar(proceso.proceso, 'foda')">Cuestiones Externas e Internas</button>
+								<div class="dropdown-divider"></div>
+								<h6 class="dropdown-header">Gestión de Riesgos</h6>
+								<button class="dropdown-item" type="button" (click)="visualizar(proceso.proceso, 'riesgosg')">Riesgos de Gestión</button>
+							</div>
+						</div>
+					</small>
+                </div>
+                <small>
+					<h6 class="mb-2 text-muted">{{proceso.sistema_desc | titlecase}}</h6>
+				</small>
+            </li>
+        </div>
+    </div>
+</div>

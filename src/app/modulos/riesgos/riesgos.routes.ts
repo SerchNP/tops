@@ -4,6 +4,8 @@ import { PagesComponent } from '../../pages/pages.component';
 
 // Guards
 import { LoginGuard } from '../../services/services.index';
+
+// Modulos
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
 import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-gestion-formulario.component';
 import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';

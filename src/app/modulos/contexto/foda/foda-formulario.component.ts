@@ -77,14 +77,4 @@ export class FodaFormularioComponent implements OnInit, OnDestroy {
 				});
 	}
 
-	visualizar() {
-		console.log('q');
-		this._archivo.verFODA(this.proceso)
-			.subscribe(res => {
-				console.log(res);
-				const fileURL = URL.createObjectURL(res);
-				window.open(fileURL, '_blank');
-			});
-	}
-
 }
