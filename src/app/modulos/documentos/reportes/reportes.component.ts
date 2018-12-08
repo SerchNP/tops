@@ -71,12 +71,18 @@ export class ReportesComponent implements OnInit, OnDestroy {
 					const fileURL = URL.createObjectURL(res);
 					window.open(fileURL, '_blank');
 				});
-		} else if (reporte === 'riesgosg') {
-			this._archivos.verRiesgos(proceso)
+		} else if (reporte === 'direccion') {
+			this._archivos.verDireccionEstrategica(proceso)
 				.subscribe(res => {
 					const fileURL = URL.createObjectURL(res);
 					window.open(fileURL, '_blank');
 				});
-		}
+			} else if (reporte === 'riesgosg') {
+				this._archivos.verRiesgos(proceso)
+					.subscribe(res => {
+						const fileURL = URL.createObjectURL(res);
+						window.open(fileURL, '_blank');
+					});
+			}
 	}
 }

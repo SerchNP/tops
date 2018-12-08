@@ -45,6 +45,16 @@ export class ArchivosService {
 			});
 	}
 
+	verDireccionEstrategica(proceso: number): any {
+		const url = URL_SGC + this.RUTA + 'direccion/generar.json?token=' + localStorage.getItem('token') + '&pr=' + proceso;
+		const headers = HeadersGET;
+		const options = {headers, responseType: 'blob' as 'blob'};
+		return this.http.get(url, options).map(
+			(res: any) => {
+				return new Blob([res], { type: 'application/pdf' });
+			});
+	}
+
 	verRiesgos(proceso: number): any {
 		const url = URL_SGC + this.RUTA + 'riesgos/generar.json?token=' + localStorage.getItem('token') + '&pr=' + proceso;
 		const headers = HeadersGET;
