@@ -1,32 +1,46 @@
 import { RouterModule, Routes } from '@angular/router';
 
 import { PagesComponent } from '../../pages/pages.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { UsuariosFormularioComponent } from './usuarios/usuarios-formulario.component';
-import { ProcesosComponent } from './procesos/procesos.component';
-import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
-import { AreaProcesoFormularioComponent } from './area-proceso/area-proceso-formulario.component';
-import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
-import { AreasComponent } from './areas/areas.component';
-import { AreasFormularioComponent } from './areas/areas-formulario.component';
-import { PuestosComponent } from './puestos/puestos.component';
-import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
-import { IdentidadComponent } from './identidad/identidad.component';
-import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
-import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
-import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
+
+// Guards
+import { LoginGuard, TipoUsuarioGuard } from '../../services/services.index';
+
+// Catálogos
 import { FrecuenciasMedicionComponent } from './catalogos/frecuencias-medicion.component';
 import { FrecuenciasMedicionFormularioComponent } from './catalogos/frecuencias-medicion-formulario.component';
 import { FormulasComponent } from './catalogos/formulas.component';
 import { FormulasFormularioComponent } from './catalogos/formulas-formulario.component';
 import { TResultadosComponent } from './catalogos/tresultados.component';
 import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
-
-// Guards
-import { LoginGuard, TipoUsuarioGuard } from '../../services/services.index';
 import { PeriodosComponent } from './catalogos/periodos.component';
 import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.component';
 
+// Areas
+import { AreasComponent } from './areas/areas.component';
+import { AreasFormularioComponent } from './areas/areas-formulario.component';
+
+// Procesos
+import { ProcesosComponent } from './procesos/procesos.component';
+import { ProcesosFormularioComponent } from './procesos/procesos-formulario.component';
+import { AreaProcesoFormularioComponent } from './area-proceso/area-proceso-formulario.component';
+import { AreaProcesoComponent } from './area-proceso/area-proceso.component';
+
+// Puestos
+import { PuestosComponent } from './puestos/puestos.component';
+import { PuestosFormularioComponent } from './puestos/puestos-formulario.component';
+
+// Usuarios
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { UsuariosFormularioComponent } from './usuarios/usuarios-formulario.component';
+import { UsuarioProcesoComponent } from './usuario-proceso/usuario-proceso.component';
+import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-proceso-formulario.component';
+
+// Identidad
+import { IdentidadComponent } from './identidad/identidad.component';
+import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
+
+// Archivos
+import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
 
 const administracionRoutes: Routes = [
 	{
@@ -111,7 +125,16 @@ const administracionRoutes: Routes = [
 			// tslint:disable-next-line:max-line-length
 			{ path: 'identidad_e', component: IdentidadComponent, data: {titulo: 'Catálogo de Ejes Estratégicos', padre: 'Administración', opcion: 'Ejes Estratégicos'} },
 			// tslint:disable-next-line:max-line-length
-			{ path: 'ejes_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Ejes Estratégicos', padre: 'Administración', opcion: 'Ejes Estratégicos'} }
+			{ path: 'ejes_form/:tipo/:acc/:id', component: IdentidadFormularioComponent, data: {titulo: 'Mantenimiento de Ejes Estratégicos', padre: 'Administración', opcion: 'Ejes Estratégicos'} },
+			{
+				path: 'archivos',
+				children: [
+					// tslint:disable-next-line:max-line-length
+					{ path: 'archivo_genera', component: ArchivoGeneraComponent, data: {titulo: 'Generación de Archivos', padre: 'Administración', opcion: 'Archivos'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'archivo_descarga', component: ProcesosFormularioComponent, data: {titulo: 'Mantenimiento de Procesos', padre: 'Administración', opcion: 'Procesos'} }
+				]
+			},
 		]
 	}
 ];

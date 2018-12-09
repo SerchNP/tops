@@ -1,0 +1,21 @@
+<div class="row">
+		<label for="proceso" class="col-sm-2 col-form-label text-right">Periodo</label>
+		<div class="col-sm-8">
+			<select class="form-control" name="periodo">
+				<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+				<option value="{{item.periodo}}" *ngFor="let item of periodos">{{item.periodo}}</option>
+			</select>
+		</div>
+	</div>
+<div class="col-md-12 text-center">
+	Seleccione el o los procesos a los que desea generar los archivos
+</div>
+<br>
+<app-mat-data-table [columns]="columns" [derechos]="derechos" (seleccionados)="detectarRegistros($event)" [data]="procesos" [select]="select" [allowMultiSelect]="allowMultiSelect">
+</app-mat-data-table>
+<div class="text-center">
+	<button type="submit" class="btn btn-outline-primary" (click)="generar()">
+		<i class="fas fa-cogs"></i>
+		Generar
+	</button>
+</div>

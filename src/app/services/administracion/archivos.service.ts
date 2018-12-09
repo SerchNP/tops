@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { URL_SGC, HeadersGET } from '../../config/config';
+import { URL_SGC, HeadersGET, HeadersPOST } from '../../config/config';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -9,31 +9,14 @@ export class ArchivosService {
 
 	constructor(private http: HttpClient) { }
 
-	generarArchivos(periodo: string, proceso?: string) {
-		let url = URL_SGC + this.RUTA + 'generar.json?token=' + localStorage.getItem('token') + '&pe=' + periodo;
-		if (proceso !== null && proceso !== '') {
-			url = url + '&pr=' + proceso;
-		}
-		console.log(url);
-		const headers = HeadersGET;
-		return this.http.get(url, {headers}).map(resp => resp);
+	generarArchivos(periodo: string, procesos: any[]) {
+		const arreglo: any[] = [];
+		const url = URL_SGC + this.RUTA + 'generar.json?token=' + localStorage.getItem('token');
+		procesos.forEach((p) => arreglo.push(p.procoeso));
+		const body = JSON.parse('{"periodo" : "' + periodo + '", "procesos" : ' + arreglo + '}');
+		const headers = HeadersPOST;
+		return this.http.post(url, body, {headers}).map(resp => resp);
 	}
-
-	/*generarArchivoFODA(periodo: string, proceso?: string) {
-		let url = URL_SGC + this.RUTA + 'foda/generar.json?token=' + localStorage.getItem('token') + '&pe=' + periodo;
-		if (proceso !== null && proceso !== '') {
-			url = url + '&pr=' + proceso;
-		}
-		console.log(url);
-		const headers = HeadersGET;
-		return this.http.get(url, {
-			responseType: ResponseContentType.Blob}).map(res => {
-				return {
-					filename: 'filename.pdf',
-					data: res.blob()
-				};
-			})
-	}*/
 
 	verFODA(proceso: number): any {
 		const url = URL_SGC + this.RUTA + 'foda/generar.json?token=' + localStorage.getItem('token') + '&pr=' + proceso;
