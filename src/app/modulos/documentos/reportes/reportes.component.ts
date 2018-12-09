@@ -65,24 +65,42 @@ export class ReportesComponent implements OnInit, OnDestroy {
 	}
 
 	visualizar(proceso, reporte) {
-		if (reporte === 'foda') {
-			this._archivos.verFODA(proceso)
-				.subscribe(res => {
-					const fileURL = URL.createObjectURL(res);
-					window.open(fileURL, '_blank');
-				});
-		} else if (reporte === 'direccion') {
-			this._archivos.verDireccionEstrategica(proceso)
-				.subscribe(res => {
-					const fileURL = URL.createObjectURL(res);
-					window.open(fileURL, '_blank');
-				});
-			} else if (reporte === 'riesgosg') {
+		switch (reporte) {
+			case 'foda': {
+				this._archivos.verFODA(proceso)
+					.subscribe(res => {
+						const fileURL = URL.createObjectURL(res);
+						window.open(fileURL, '_blank');
+					});
+				} break;
+			case 'direccion': {
+				this._archivos.verDireccionEstrategica(proceso)
+					.subscribe(res => {
+						const fileURL = URL.createObjectURL(res);
+						window.open(fileURL, '_blank');
+					});
+				} break;
+			case 'riesgosg': {
 				this._archivos.verRiesgos(proceso)
 					.subscribe(res => {
 						const fileURL = URL.createObjectURL(res);
 						window.open(fileURL, '_blank');
 					});
-			}
+				} break;
+			case 'matriz': {
+				this._archivos.verMatrizRiesgos(proceso)
+					.subscribe(res => {
+						const fileURL = URL.createObjectURL(res);
+						window.open(fileURL, '_blank');
+					});
+				} break;
+			case 'ficha': {
+				this._archivos.verFichaProceso(proceso)
+					.subscribe(res => {
+						const fileURL = URL.createObjectURL(res);
+						window.open(fileURL, '_blank');
+					});
+				} break;
+		}
 	}
 }

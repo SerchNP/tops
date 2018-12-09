@@ -64,4 +64,24 @@ export class ArchivosService {
 				return new Blob([res], { type: 'application/pdf' });
 			});
 	}
+
+	verMatrizRiesgos(proceso: number): any {
+		const url = URL_SGC + this.RUTA + 'matriz/generar.json?token=' + localStorage.getItem('token') + '&pr=' + proceso;
+		const headers = HeadersGET;
+		const options = {headers, responseType: 'blob' as 'blob'};
+		return this.http.get(url, options).map(
+			(res: any) => {
+				return new Blob([res], { type: 'application/pdf' });
+			});
+	}
+
+	verFichaProceso(proceso: number): any {
+		const url = URL_SGC + this.RUTA + 'ficha/generar.json?token=' + localStorage.getItem('token') + '&pr=' + proceso;
+		const headers = HeadersGET;
+		const options = {headers, responseType: 'blob' as 'blob'};
+		return this.http.get(url, options).map(
+			(res: any) => {
+				return new Blob([res], { type: 'application/pdf' });
+			});
+	}
 }
