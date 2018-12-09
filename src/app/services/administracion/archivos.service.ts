@@ -12,8 +12,8 @@ export class ArchivosService {
 	generarArchivos(periodo: string, procesos: any[]) {
 		const arreglo: any[] = [];
 		const url = URL_SGC + this.RUTA + 'generar.json?token=' + localStorage.getItem('token');
-		procesos.forEach((p) => arreglo.push(p.procoeso));
-		const body = JSON.parse('{"periodo" : "' + periodo + '", "procesos" : ' + arreglo + '}');
+		procesos.forEach((p) => arreglo.push(p.proceso));
+		const body = JSON.parse('{"periodo" : "' + periodo + '", "procesos" : [' + arreglo + ']}');
 		const headers = HeadersPOST;
 		return this.http.post(url, body, {headers}).map(resp => resp);
 	}

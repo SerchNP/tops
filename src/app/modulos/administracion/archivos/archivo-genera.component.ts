@@ -85,16 +85,18 @@ export class ArchivoGeneraComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	generar() {
-		console.log('aqui');
+		// Bloquear pantalla
 		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
 			swal('ERROR', 'Debe seleccionar al menos un proceso', 'error');
 		} else {
+			console.log(this.seleccionados);
+			// Recuperar periodo seleccionado
 			this._archivo.generarArchivos('TM201804', this.seleccionados)
 				.subscribe((data: any) => {
-					console.log(data);
-			/*this._accesoService.guardarStorage(data.token);
-			swal('Atención!!!', data.message, 'success');
-			this.forma.get('area').setValue('');*/
+					this._acceso.guardarStorage(data.token);
+					swal('Atención!!!', data.message, 'success');
+					// Desbloquear pantalla
+					this.ngOnInit();
 				},
 				error => {
 					console.log(error);
