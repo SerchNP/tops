@@ -89,20 +89,21 @@ export class ArchivoGeneraComponent implements OnInit, OnDestroy, OnChanges {
 		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
 			swal('ERROR', 'Debe seleccionar al menos un proceso', 'error');
 		} else {
-			this._archivo.generarArchivos('TM201804', this.seleccionado).subscribe((data: any) => {
-			console.log(data);
+			this._archivo.generarArchivos('TM201804', this.seleccionados)
+				.subscribe((data: any) => {
+					console.log(data);
 			/*this._accesoService.guardarStorage(data.token);
 			swal('Atención!!!', data.message, 'success');
 			this.forma.get('area').setValue('');*/
-		},
-		error => {
-			console.log(error);
-			swal('ERROR', error.error.message, 'error');
-			if (error.error.code === 401) {
-				this._acceso.logout();
+				},
+				error => {
+					console.log(error);
+					swal('ERROR', error.error.message, 'error');
+					if (error.error.code === 401) {
+						this._acceso.logout();
+					}
+				});
 			}
-		});
-	}
 	}
 
 }
