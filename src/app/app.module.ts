@@ -11,6 +11,7 @@ import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/d
 import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { ChartsModule } from 'ng2-charts';
+import { BlockUIModule } from 'ng-block-ui';
 
 // Services
 import { ServicesModule } from './services/services.module';
@@ -41,7 +42,8 @@ import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detal
 		ServicesModule,
 		BrowserAnimationsModule,
 		MatDialogModule,
-		ChartsModule
+		ChartsModule,
+		BlockUIModule.forRoot()
 	],
 	exports: [
 		MatDialogModule
