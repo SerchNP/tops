@@ -14,6 +14,13 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
 import { PeriodosComponent } from './catalogos/periodos.component';
 import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.component';
+import { AccionesComponent } from './catalogos/acciones.component';
+import { CuestionesComponent } from './catalogos/cuestiones.component';
+import { EdosRiesgoComponent } from './catalogos/edos-riesgo.component';
+import { EstrategiasComponent } from './catalogos/estrategias.component';
+import { ImpactoComponent } from './catalogos/impacto.component';
+import { NivelRiesgoComponent } from './catalogos/nivel-riesgo.component';
+import { OcurrenciaComponent } from './catalogos/ocurrencia.component';
 
 // Areas
 import { AreasComponent } from './areas/areas.component';
@@ -67,6 +74,20 @@ const administracionRoutes: Routes = [
 					{ path: 'periodos', component: PeriodosComponent, data: {titulo: 'Catálogo de Periodos', padre: 'Administración', opcion: 'Periodos'} },
 					// tslint:disable-next-line:max-line-length
 					{ path: 'periodos_form', component: PeriodosFormularioComponent, data: {titulo: 'Alta de Periodos', padre: 'Administración', opcion: 'Periodos'} },
+					// tslint:disable-next-line:max-line-length
+					// { path: 'acciones', component: AccionesComponent, data: {titulo: 'Catálogo de Acciones a Tomar', padre: 'Administración', opcion: 'Acciones'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'cuestiones', component: CuestionesComponent, data: {titulo: 'Catálogo de Cuestiones para FODA', padre: 'Administración', opcion: 'Cuestiones'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'edos_riesgo', component: EdosRiesgoComponent, data: {titulo: 'Catálogo de Estados de Riesgos', padre: 'Administración', opcion: 'Estados de Riesgos'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'estrategias', component: EstrategiasComponent, data: {titulo: 'Catálogo de Estrategias', padre: 'Administración', opcion: 'Etrategias'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'impacto', component: ImpactoComponent, data: {titulo: 'Catálogo de Nivel de Impacto', padre: 'Administración', opcion: 'Nivel de Impacto del Riesgo'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'nivel_riesgo', component: NivelRiesgoComponent, data: {titulo: 'Catálogo de Nivel de Riesgos', padre: 'Administración', opcion: 'Nivel del Riesgo'} },
+					// tslint:disable-next-line:max-line-length
+					{ path: 'ocurrencia', component: OcurrenciaComponent, data: {titulo: 'Catálogo de Ocurrencia del Riesgo', padre: 'Administración', opcion: 'Ocurrencia del Riesgo'} },
 				]
 			},
 			{ path: 'areas', component: AreasComponent, data: {titulo: 'Catálogo de Áreas', padre: 'Administración', opcion: 'Áreas'} },

@@ -8,6 +8,8 @@ import { ADMINISTRACION_ROUTES } from './administracion.routes';
 // Modulos
 import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { MatRadioModule } from '@angular/material';
+import { BlockUIModule } from 'ng-block-ui';
 
 // Componentes
 import { AdministracionComponent } from './administracion.component';
@@ -21,6 +23,13 @@ import { TResultadosComponent } from './catalogos/tresultados.component';
 import { TresultadosFormularioComponent } from './catalogos/tresultados-formulario.component';
 import { PeriodosComponent } from './catalogos/periodos.component';
 import { PeriodosFormularioComponent } from './catalogos/periodos-formulario.component';
+import { AccionesComponent } from './catalogos/acciones.component';
+import { CuestionesComponent } from './catalogos/cuestiones.component';
+import { EdosRiesgoComponent } from './catalogos/edos-riesgo.component';
+import { EstrategiasComponent } from './catalogos/estrategias.component';
+import { ImpactoComponent } from './catalogos/impacto.component';
+import { NivelRiesgoComponent } from './catalogos/nivel-riesgo.component';
+import { OcurrenciaComponent } from './catalogos/ocurrencia.component';
 import { AreasComponent } from './areas/areas.component';
 import { AreasFormularioComponent } from './areas/areas-formulario.component';
 import { ProcesosComponent } from './procesos/procesos.component';
@@ -36,7 +45,6 @@ import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-pro
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
-import { MatRadioModule } from '@angular/material';
 
 
 @NgModule({
@@ -50,6 +58,13 @@ import { MatRadioModule } from '@angular/material';
 		TresultadosFormularioComponent,
 		PeriodosComponent,
 		PeriodosFormularioComponent,
+		AccionesComponent,
+		CuestionesComponent,
+		EdosRiesgoComponent,
+		EstrategiasComponent,
+		ImpactoComponent,
+		NivelRiesgoComponent,
+		OcurrenciaComponent,
 		AreasComponent,
 		AreasFormularioComponent,
 		ProcesosComponent,
@@ -76,7 +91,8 @@ import { MatRadioModule } from '@angular/material';
 		FormsModule,
 		ReactiveFormsModule,
 		ComponentModule,
-		MatRadioModule
+		MatRadioModule,
+		BlockUIModule.forRoot()
 	]
 })
 
