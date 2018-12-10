@@ -1,23 +1,27 @@
-import { Component, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
 import { AccesoService, ArchivosService, ProcesosService, CatalogosService } from '../../../services/services.index';
 import { Derechos } from '../../../interfaces/derechos.interface';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { Subscription } from 'rxjs';
 import swal from 'sweetalert2';
-import { filter } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-archivo-genera',
 	templateUrl: './archivo-genera.component.html'
 })
 
-export class ArchivoGeneraComponent implements OnInit, OnDestroy, OnChanges {
+export class ArchivoGeneraComponent implements OnInit, OnDestroy {
 
 	private subscription: Subscription;
+
+	@ViewChild('periodo') cmb_periodo: ElementRef;
+
+	@BlockUI() blockUI: NgBlockUI;
 
 	cargando = false;
 	procesos: any[] = [];
 	periodos: any[] = [];
-	tipo: string;
+	periodo: string;
 
 	derechos: Derechos = {consultar: false, administrar: false, insertar: false, editar: false, cancelar: false};
 	select = true;
@@ -43,10 +47,8 @@ export class ArchivoGeneraComponent implements OnInit, OnDestroy, OnChanges {
 		this.subscription.unsubscribe();
 	}
 
-	ngOnChanges(changes): void {
-		if (changes['tipogen']) {
-			console.log(this.tipo);
-		}
+	cambio() {
+		this.periodo = this.cmb_periodo.nativeElement.value;
 	}
 
 	getProcesos() {
@@ -85,27 +87,29 @@ export class ArchivoGeneraComponent implements OnInit, OnDestroy, OnChanges {
 	}
 
 	generar() {
-		// Bloquear pantalla
-		if (this.seleccionados === undefined || this.seleccionados.length === 0) {
-			swal('ERROR', 'Debe seleccionar al menos un proceso', 'error');
+		if (this.periodo === '' || this.periodo === undefined) {
+			swal('ERROR', 'Debe seleccionar el periodo', 'error');
 		} else {
-			console.log(this.seleccionados);
-			// Recuperar periodo seleccionado
-			this._archivo.generarArchivos('TM201804', this.seleccionados)
-				.subscribe((data: any) => {
-					this._acceso.guardarStorage(data.token);
-					swal('Atención!!!', data.message, 'success');
-					// Desbloquear pantalla
-					this.ngOnInit();
-				},
-				error => {
-					console.log(error);
-					swal('ERROR', error.error.message, 'error');
-					if (error.error.code === 401) {
-						this._acceso.logout();
-					}
-				});
+			if (this.seleccionados === undefined || this.seleccionados.length === 0) {
+				swal('ERROR', 'Debe seleccionar al menos un proceso', 'error');
+			} else {
+				this.blockUI.start('Espere un momento por favor...');
+				this._archivo.generarArchivos(this.periodo, this.seleccionados)
+					.subscribe((data: any) => {
+						this._acceso.guardarStorage(data.token);
+						swal('Atención!!!', data.message, 'success');
+						this.blockUI.stop();
+						this.ngOnInit();
+					},
+					error => {
+						console.log(error);
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					});
 			}
+		}
 	}
 
 }
