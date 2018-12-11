@@ -21,7 +21,6 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 
 	titulo: string;
 	forma: FormGroup;
-	userprocs: FormArray;
 	cancelar: any[] = ['/administracion', 'submenuusu', 'usuario_proceso'];
 
 	usuariosTemp: any[];
@@ -51,6 +50,10 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 			userprocs: this.formBuilder.array([])
 		});
 		this.cargarUsuarios(this.usuario);
+	}
+
+	get userprocs() {
+		return this.forma.get('userprocs') as FormArray;
 	}
 
 	createItem(user, idproc, procdesc, idmenu, menudesc, padm, padmbol, paut, pautbol): FormGroup {
@@ -160,7 +163,6 @@ export class UsuarioProcesoFormularioComponent implements OnInit, OnDestroy {
 	}
 
 	addItem(usuario, p): void {
-		this.userprocs = this.forma.get('userprocs') as FormArray;
 		if (this.proceso !== undefined) {
 			if (p.proceso === Number(this.proceso)) {
 				// tslint:disable-next-line:max-line-length
