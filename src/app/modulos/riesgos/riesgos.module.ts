@@ -12,6 +12,7 @@ import { MatExpansionModule, MatCheckboxModule, MatRadioModule } from '@angular/
 import { ChartsModule } from 'ng2-charts';
 
 // Componentes
+import { RiesgosComponent } from './riesgos.component';
 import { RiesgosGestionComponent } from './riesgos-gestion/riesgos-gestion.component';
 import { RiesgosGestionFormularioComponent } from './riesgos-gestion/riesgos-gestion-formulario.component';
 import { AutorizaRiesgosGestionComponent } from './riesgos-gestion/autoriza-riesgos-gestion.component';
@@ -39,6 +40,7 @@ import { MetodoEvaluacionComponent } from './matriz-riesgos/metodo-evaluacion.co
 		ChartsModule
 	],
 	declarations: [
+		RiesgosComponent,
 		RiesgosGestionComponent,
 		RiesgosGestionFormularioComponent,
 		AutorizaRiesgosGestionComponent,

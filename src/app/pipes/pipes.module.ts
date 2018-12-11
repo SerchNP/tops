@@ -5,6 +5,7 @@ import { FiltraObjetivoPipe } from '../pipes/filtra-objetivo.pipe';
 import { FiltraProcesosPipe } from '../pipes/filtra-procesos.pipe';
 import { FiltraColumnsPipe } from '../pipes/filtra-columns.pipe';
 import { FiltraFodaPipe } from '../pipes/filtra-foda.pipe';
+import { FiltraFodaAutPipe } from './filtra-foda.pipe';
 import { FiltraTipoEstrategiaPipe } from '../pipes/filtra-tipo-estrategia.pipe';
 import { FiltraClavePipe } from '../pipes/filtra-clave.pipe';
 
@@ -15,6 +16,7 @@ import { FiltraClavePipe } from '../pipes/filtra-clave.pipe';
 		FiltraProcesosPipe,
 		FiltraColumnsPipe,
 		FiltraFodaPipe,
+		FiltraFodaAutPipe,
 		FiltraTipoEstrategiaPipe,
 		FiltraClavePipe
 	],
