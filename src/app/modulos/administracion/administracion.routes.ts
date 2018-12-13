@@ -48,6 +48,7 @@ import { IdentidadFormularioComponent } from './identidad/identidad-formulario.c
 
 // Archivos
 import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
+import { ArchivoVisuaizarComponent } from './archivos/archivo-visuaizar.component';
 
 const administracionRoutes: Routes = [
 	{
@@ -153,7 +154,7 @@ const administracionRoutes: Routes = [
 					// tslint:disable-next-line:max-line-length
 					{ path: 'archivo_genera', component: ArchivoGeneraComponent, data: {titulo: 'Generación de Archivos', padre: 'Administración', opcion: 'Archivos'} },
 					// tslint:disable-next-line:max-line-length
-					{ path: 'archivo_descarga', component: ProcesosFormularioComponent, data: {titulo: 'Mantenimiento de Procesos', padre: 'Administración', opcion: 'Procesos'} }
+					{ path: 'archivo_visualizar', component: ArchivoVisuaizarComponent, data: {titulo: 'Visualización de Archivos', padre: 'Administración', opcion: 'Archivos'} }
 				]
 			},
 		]

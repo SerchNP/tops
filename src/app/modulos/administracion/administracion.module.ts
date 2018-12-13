@@ -6,10 +6,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ADMINISTRACION_ROUTES } from './administracion.routes';
 
 // Modulos
+import { BrowserModule } from '@angular/platform-browser';
 import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { MatRadioModule } from '@angular/material';
 import { BlockUIModule } from 'ng-block-ui';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Componentes
 import { AdministracionComponent } from './administracion.component';
@@ -45,6 +47,7 @@ import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-pro
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
+import { ArchivoVisuaizarComponent } from './archivos/archivo-visuaizar.component';
 
 
 @NgModule({
@@ -79,12 +82,14 @@ import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
 		UsuarioProcesoFormularioComponent,
 		IdentidadComponent,
 		IdentidadFormularioComponent,
-		ArchivoGeneraComponent
+		ArchivoGeneraComponent,
+		ArchivoVisuaizarComponent
 	],
 	exports: [
 		AdministracionComponent
 	],
 	imports: [
+		BrowserModule,
 		PipesModule,
 		CommonModule,
 		ADMINISTRACION_ROUTES,
@@ -92,7 +97,8 @@ import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
 		ReactiveFormsModule,
 		ComponentModule,
 		MatRadioModule,
-		BlockUIModule.forRoot()
+		BlockUIModule.forRoot(),
+		PdfViewerModule
 	]
 })
 

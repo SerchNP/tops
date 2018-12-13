@@ -12,6 +12,7 @@ import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { ChartsModule } from 'ng2-charts';
 import { BlockUIModule } from 'ng-block-ui';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Services
 import { ServicesModule } from './services/services.module';
@@ -43,7 +44,8 @@ import { DialogDetalleComponent } from './components/dialog-detalle/dialog-detal
 		BrowserAnimationsModule,
 		MatDialogModule,
 		ChartsModule,
-		BlockUIModule.forRoot()
+		BlockUIModule.forRoot(),
+		PdfViewerModule
 	],
 	exports: [
 		MatDialogModule
