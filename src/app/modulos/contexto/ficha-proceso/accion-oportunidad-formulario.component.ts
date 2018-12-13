@@ -66,6 +66,7 @@ export class AccionOportunidadFormularioComponent implements OnInit, OnDestroy {
 			observaciones : new FormControl('', Validators.required)
 		});
 		this.cargando = true;
+		this.oportunidades = [];
 		this.getProcesos();
 		this.cargando = false;
 

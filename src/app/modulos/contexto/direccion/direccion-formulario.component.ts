@@ -363,6 +363,20 @@ export class DireccionFormularioComponent implements OnInit, OnDestroy {
 		this.lineas.push(this.createItemLineas(0, '', 0, '', '', ''));
 	}
 
+	async delItem(pos: number) {
+		const {value: respuesta} = await swal({
+			title: 'Atención!!!',
+			text: 'Está seguro que desea eliminar la línea de acción número ' + (pos + 1) + '?',
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Aceptar',
+			confirmButtonColor: '#B22222'
+		});
+		if (respuesta) {
+			this.lineas.removeAt(pos);
+		}
+	}
+
 	createItemLineas(accion_id, accion_desc, tipo_acc, f_inicio, responsable, puesto): FormGroup {
 		return this.formBuilder.group({
 			accion_id:		new FormControl(accion_id, Validators.required),

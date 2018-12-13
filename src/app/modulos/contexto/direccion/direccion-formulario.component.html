@@ -97,7 +97,8 @@
                             <th>Línea de Acción</th>
                             <th>Fecha de Inicio</th>
                             <th>Nombre del Responsable</th>
-                            <th>Puesto del Responsable</th>
+							<th>Puesto del Responsable</th>
+							<th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -121,7 +122,12 @@
 									<option value="{{puesto.puesto}}" *ngFor="let puesto of listaPuestos" >{{puesto.puesto_desc}}</option>
 								</select>
                                 <div *ngIf="lineas.controls[i].controls['puesto'].invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
-                            </td>
+							</td>
+							<td>
+								<button type="button" (click)="delItem(i)" *ngIf="item.value.accion_id === 0" class="btn btn-outline-danger" title="Borrar registro">
+									<i class="fas fa-backspace"></i>
+								</button>
+							</td>
                         </tr>
                     </tbody>
                 </table>

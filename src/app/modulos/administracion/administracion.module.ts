@@ -47,7 +47,7 @@ import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-pro
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
-import { ArchivoVisuaizarComponent } from './archivos/archivo-visuaizar.component';
+import { ArchivoVisualizarComponent } from './archivos/archivo-visualizar.component';
 
 
 @NgModule({
@@ -83,7 +83,7 @@ import { ArchivoVisuaizarComponent } from './archivos/archivo-visuaizar.componen
 		IdentidadComponent,
 		IdentidadFormularioComponent,
 		ArchivoGeneraComponent,
-		ArchivoVisuaizarComponent
+		ArchivoVisualizarComponent
 	],
 	exports: [
 		AdministracionComponent
