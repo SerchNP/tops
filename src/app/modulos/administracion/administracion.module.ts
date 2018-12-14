@@ -11,7 +11,6 @@ import { ComponentModule } from '../../components/component.module';
 import { PipesModule } from '../../pipes/pipes.module';
 import { MatRadioModule } from '@angular/material';
 import { BlockUIModule } from 'ng-block-ui';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 // Componentes
 import { AdministracionComponent } from './administracion.component';
@@ -47,7 +46,6 @@ import { UsuarioProcesoFormularioComponent } from './usuario-proceso/usuario-pro
 import { IdentidadComponent } from './identidad/identidad.component';
 import { IdentidadFormularioComponent } from './identidad/identidad-formulario.component';
 import { ArchivoGeneraComponent } from './archivos/archivo-genera.component';
-import { ArchivoVisualizarComponent } from './archivos/archivo-visualizar.component';
 
 
 @NgModule({
@@ -82,8 +80,7 @@ import { ArchivoVisualizarComponent } from './archivos/archivo-visualizar.compon
 		UsuarioProcesoFormularioComponent,
 		IdentidadComponent,
 		IdentidadFormularioComponent,
-		ArchivoGeneraComponent,
-		ArchivoVisualizarComponent
+		ArchivoGeneraComponent
 	],
 	exports: [
 		AdministracionComponent
@@ -97,8 +94,7 @@ import { ArchivoVisualizarComponent } from './archivos/archivo-visualizar.compon
 		ReactiveFormsModule,
 		ComponentModule,
 		MatRadioModule,
-		BlockUIModule.forRoot(),
-		PdfViewerModule
+		BlockUIModule.forRoot()
 	]
 })
 

@@ -5,6 +5,7 @@ import { PagesComponent } from '../../pages/pages.component';
 // Guards
 import { LoginGuard } from '../../services/services.index';
 import { ReportesComponent } from './reportes/reportes.component';
+import { HistoricoComponent } from './historico/historico.component';
 
 
 const DocumentosRoutes: Routes = [
@@ -14,6 +15,7 @@ const DocumentosRoutes: Routes = [
 		canActivate: [LoginGuard],
 		children: [
 			{ path: 'reportes', component: ReportesComponent, data: {titulo: 'Reportes por Proceso', padre: 'Documentos'}},
+			{ path: 'historico', component: HistoricoComponent, data: {titulo: 'Reportes Históricos', padre: 'Documentos'}},
 		]
 	}
 ];

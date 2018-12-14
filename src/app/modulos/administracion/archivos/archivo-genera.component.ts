@@ -52,7 +52,7 @@ export class ArchivoGeneraComponent implements OnInit, OnDestroy {
 	}
 
 	getProcesos() {
-		this.subscription = this._proceso.getProcesosUsuario('riesgo_operativo')
+		this.subscription = this._proceso.getProcesosUsuario('archivo_genera')
 			.subscribe(
 				(data: any) => {
 					this.procesos = data.procesos;
