@@ -7,18 +7,6 @@
     </div>
 </div>
 <div class="row" *ngIf="!cargando">
-	<div class="col-md-3 text-center"></div>
-	<div class="col-md-2 text-right">Periodo Histórico</div>
-	<div class="col-sm-4 text-center">
-		<select #periodo class="form-control" (change)="cambio()" [ngClass]="{'is-invalid': periodo === ''}">
-			<option value="" selected="selected" disabled="disabled">Seleccionar</option>
-			<option value="{{item.periodo}}" *ngFor="let item of periodos">{{item.periodo}}</option>
-		</select>
-	</div>
-	<div class="col-md-3 text-center"></div>
-</div>
-<br/>
-<div class="row" *ngIf="!cargando">
     <div class="col-md-5 input-group">
         <input #filtro class="form-control" placeholder="Buscar" (keyup)="filtraProcesos(filtro.value);" />
         <div class="input-group-btn">
@@ -28,7 +16,17 @@
         </div>
     </div>
 </div>
-<br />
+<br/>
+<div class="row" *ngIf="!cargando">
+	<div class="col-md-2 text-right text-primary"><h5>Periodo Histórico</h5></div>
+	<div class="col-sm-4 text-center">
+		<select #periodo class="form-control" (change)="cambio()" [ngClass]="{'is-invalid': bandera}">
+			<option value="" selected="selected" disabled="disabled">Seleccionar</option>
+			<option value="{{item.periodo}}" *ngFor="let item of periodos">{{item.periodo}}</option>
+		</select>
+	</div>
+</div>
+<br/>
 <div class="row text-center">
     <div class="col-md-12">
         <div class="list-group">

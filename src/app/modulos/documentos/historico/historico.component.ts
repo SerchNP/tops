@@ -21,6 +21,7 @@ export class HistoricoComponent implements OnInit, OnDestroy {
 	procesos: any[] = [];
 	procesosMostrar: any[] = [];
 
+	bandera = false;
 	periodos: any[] = [];
 	periodo: string;
 
@@ -34,6 +35,7 @@ export class HistoricoComponent implements OnInit, OnDestroy {
 		this.getPeriodos();
 		this.getProcesos();
 		this.periodo = '';
+		this.bandera = true;
 		this.cargando = false;
 	}
 
@@ -94,6 +96,9 @@ export class HistoricoComponent implements OnInit, OnDestroy {
 
 	cambio() {
 		this.periodo = this.cmb_periodo.nativeElement.value;
+		if (this.periodo !== '') {
+			this.bandera = false;
+		}
 	}
 
 	visualizar(proceso, reporte) {
@@ -133,7 +138,7 @@ export class HistoricoComponent implements OnInit, OnDestroy {
 						if (error.status === 200) {
 							window.open(ruta, '_blank');
 						} else {
-							swal('ERROR', 'No existe en el Histrórico el archivo deseado', 'error');
+							swal('ERROR', 'No existe en el Histórico el archivo deseado', 'error');
 						}
 					});
 			} catch (Exception) {
