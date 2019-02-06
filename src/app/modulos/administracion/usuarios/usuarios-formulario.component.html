@@ -9,7 +9,13 @@
                 <input class="form-control" type="text" formControlName="username" [ngClass]="{'is-invalid': (formaUsuarios.touched && formaUsuarios.get('username').invalid)}" [attr.disabled]="(accion === 'U' || accion === 'V' ? 'disabled' : null)">
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['username'].errors?.required)" class="invalid-feedback">Este campo es requerido</div>
                 <div *ngIf="(formaUsuarios.touched && formaUsuarios.controls['username'].errors?.minlength)" class="invalid-feedback">Debe tener al menos {{formaUsuarios.controls['username'].errors.minlength.requiredLength}} carcateres</div>
-            </div>
+			</div>
+			<div class="col-sm-3">
+				<button type="button" class="btn btn-outline-success" (click)="cambiaPassADM()" *ngIf="accion === 'U'">
+					<i class="fas fa-key"></i>
+					Actualizar Contraseña
+				</button>
+			</div>
         </div>
         <div class="form-group row">
             <label for="nombre" class="col-sm-2 col-form-label text-right">Nombre</label>
@@ -74,7 +80,7 @@
             <label for="tipo" class="col-sm-2 col-form-label text-right">Tipo de Usuario</label>
             <div class="col-sm-4">
                 <select class="form-control" name="tipo" formControlName="tipo" aria-describedby="tipoHelp" [ngStyle]="{'border-color': ((formaUsuarios.touched && tipo.invalid) ? '#dc3545' : '#ced4da')}" [attr.disabled]="(accion === 'U' || accion === 'V' ? 'disabled' : null)">
-					<option value="S" *ngIf="_accesoService.tipoUsuario() === 'S'">Super Usuario</option>
+					<option value="S" *ngIf="_acceso.tipoUsuario() === 'S'">Super Usuario</option>
 					<option value="A">Auditor</option>
 					<option value="C">Coordinador de Calidad</option>
 					<option value="N">Normal</option>

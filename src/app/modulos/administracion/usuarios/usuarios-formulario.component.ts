@@ -6,6 +6,7 @@ import { Usuario } from '../../../interfaces/usuarios.interface';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { compilePipeFromMetadata } from '@angular/compiler';
 
 @Component({
 	selector: 'app-usuarios-formulario',
@@ -28,7 +29,7 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 
 	constructor(private router: Router,
 				private activated: ActivatedRoute,
-				public _accesoService: AccesoService,
+				public _acceso: AccesoService,
 				private _usuario: UsuarioService,
 				private _areas: AreasService,
 				private _puestos: PuestosService) {
@@ -110,12 +111,12 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this._areas.getAreas()
 			.subscribe((data: any) => {
 					this.areas = data.areas;
-					this._accesoService.guardarStorage(data.token);
+					this._acceso.guardarStorage(data.token);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 	}
@@ -124,12 +125,12 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 		this.subscription = this._puestos.getPuestos()
 			.subscribe((data: any) => {
 					this.puestos = data.puestos;
-					this._accesoService.guardarStorage(data.token);
+					this._acceso.guardarStorage(data.token);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 	}
@@ -143,12 +144,12 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 					this.banderasMatriz(this.usuario);
 					this.formaUsuarios.patchValue(this.usuario);
 					const token: string = data.token;
-					this._accesoService.guardarStorage(token);
+					this._acceso.guardarStorage(token);
 				},
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 					bandera = false;
 				});
@@ -184,7 +185,7 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
 		} else {
@@ -196,9 +197,85 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 				error => {
 					swal('ERROR', error.error.message, 'error');
 					if (error.error.code === 401) {
-						this._accesoService.logout();
+						this._acceso.logout();
 					}
 				});
+		}
+	}
+
+	async cambiaPassADM() {
+		// Primero se solicita la contraseña del administrador (por cuestiones de seguridad)
+		const {value: formValuesADM} = await swal({
+			title: 'Actualización de Contraseña',
+			html:
+				'<label for="input1ADM">Contraseña del Administrador</label>' +
+				'<input id="input1ADM" class="swal2-input" type="password" autocomplete="off">',
+			focusConfirm: false,
+			preConfirm: () => {
+				return [
+					(<HTMLInputElement>document.getElementById('input1ADM')).value
+				];
+			}
+		});
+		if (formValuesADM) {
+			console.log(formValuesADM[0]);
+			this._usuario.validarPassword(this._acceso.getUsername(), formValuesADM[0])
+				.subscribe(
+					(data: any) => {
+						localStorage.setItem('token', data.token);
+						if (data.valido) {
+							this.cambiaPassUSR();
+						} else {
+							swal('ERROR', 'La contraseña del administrador es INCORRECTA', 'error');
+						}
+					},
+					error => {
+						console.log(error);
+						swal('ERROR', error.error.message, 'error');
+						if (error.error.code === 401) {
+							this._acceso.logout();
+						}
+					}
+				);
+		}
+	}
+
+	async cambiaPassUSR() {
+		// Una vez confirmada la contraseña del administrador, se solicita la contraseña nueva
+		// del usuario y su confirmación
+		const {value: formValuesUSR} = await swal({
+			title: 'Actualización de Contraseña',
+			html:
+				'<label for="input1USR">Contraseña Nueva del Usuario</label>' +
+				'<input id="input1USR" class="swal2-input" type="password" autocomplete="off">' +
+				'<label for="input2USR">Confirmar Contraseña Nueva del Usuario</label>' +
+				'<input id="input2USR" class="swal2-input" type="password" autocomplete="off">',
+			focusConfirm: false,
+			preConfirm: () => {
+				return [
+					(<HTMLInputElement>document.getElementById('input1USR')).value,
+					(<HTMLInputElement>document.getElementById('input2USR')).value
+				];
+			}
+		});
+		if (formValuesUSR) {
+			if (formValuesUSR[0] !== formValuesUSR[1]) {
+				swal('Atención!', 'La contraseña nueva y su confirmación no coinciden', 'error');
+			} else {
+				this._usuario.actualizarPassword(this.usuario.username, formValuesUSR[0])
+					.subscribe(
+						(data: any) => {
+							localStorage.setItem('token', data.token);
+							swal('Atención!!!', 'Contraseña Actualizada con Éxito!!!', 'success');
+						},
+						error => {
+							swal('ERROR', error.error.message, 'error');
+								if (error.error.code === 401) {
+									this._acceso.logout();
+								}
+						}
+					);
+			}
 		}
 	}
 
