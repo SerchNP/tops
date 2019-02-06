@@ -117,7 +117,7 @@
             <label for="observaciones" class="col-sm-2 col-form-label text-right">Observaciones</label>
             <div class="col-sm-6">
                 <textarea class="form-control" row="2" col="35" formControlName="observaciones" aria-describedby="observacionesHelp" [ngStyle]="{'border-color': (observaciones.invalid ? '#dc3545' : '#ced4da')}"></textarea>
-                <small id="observacionesHelp" class="form-text text-muted">Riesgo identificado</small>
+                <small id="observacionesHelp" class="form-text text-muted">Observaciones de la Medición</small>
                 <div *ngIf="observaciones.invalid" class="invalid-feedback" style="display: block">Este campo es requerido</div>
             </div>
         </div>
