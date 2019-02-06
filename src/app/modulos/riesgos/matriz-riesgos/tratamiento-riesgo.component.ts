@@ -35,19 +35,23 @@ export class TratamientoRiesgoComponent implements OnInit, OnDestroy {
 	listadoAcciones: any [] = [];
 
 	columnsM = [
-		{ columnDef: 'fecha_evalua_t',   header: 'Fecha Evaluación', align: 'center', cell: (medicionR: any) => `${medicionR.fecha_evalua_t}`},
-		{ columnDef: 'ocurre_desc',      header: 'PF', 			align: 'center', cell: (medicionR: any) => `${medicionR.ocurre_desc}`},
-		{ columnDef: 'valorc_o',     	 header: 'Valor CPF', 	cell: (medicionR: any) => `${medicionR.valorc_o}`},
-		{ columnDef: 'impacto_desc',     header: 'Impacto', 	cell: (medicionR: any) => `${medicionR.impacto_desc}`},
-		{ columnDef: 'valorc_i',     	 header: 'Valor CI', 	cell: (medicionR: any) => `${medicionR.valorc_i}`},
-		{ columnDef: 'valorc_total',     header: 'Valor CPT', 	cell: (medicionR: any) => `${medicionR.valorc_total}`},
-		{ columnDef: 'valor_compara',    header: 'Valor RR', 	align: 'center', cell: (medicionR: any) => `${medicionR.valor_compara}`},
-		{ columnDef: 'cm_desc',     	 header: 'Valor CM', 	align: 'center', cell: (medicionR: any) => `${medicionR.cm_desc}`},
+		{ columnDef: 'fecha_evalua_t',		header: 'Fecha Evaluación',		align: 'center',				cell: (medicionR: any) => `${medicionR.fecha_evalua_t}`},
+		{ columnDef: 'ocurre_desc',			header: 'PF',					align: 'center',				cell: (medicionR: any) => `${medicionR.ocurre_desc}`},
+		{ columnDef: 'valorc_o',			header: 'Valor CPF',											cell: (medicionR: any) => `${medicionR.valorc_o}`},
+		{ columnDef: 'impacto_desc',		header: 'Impacto',												cell: (medicionR: any) => `${medicionR.impacto_desc}`},
+		{ columnDef: 'valorc_i',			header: 'Valor CI',												cell: (medicionR: any) => `${medicionR.valorc_i}`},
+		{ columnDef: 'valorc_total',		header: 'Valor CPT',											cell: (medicionR: any) => `${medicionR.valorc_total}`},
+		{ columnDef: 'valor_compara',		header: 'Valor RR',				align: 'center',				cell: (medicionR: any) => `${medicionR.valor_compara}`},
+		{ columnDef: 'cm_desc',				header: 'Valor CM',				align: 'center',				cell: (medicionR: any) => `${medicionR.cm_desc}`},
 		// tslint:disable-next-line:max-line-length
-		{ columnDef: 'nivel_desc',     	 header: 'Nivel de Riesgo',    color: true, align: 'center', cell: (medicionR: any) => `${medicionR.nivel_desc}`},
-		{ columnDef: 'tipo_accion_desc', header: 'Acción',	           cell: (medicionR: any) => `${medicionR.tipo_accion_desc}`},
-		{ columnDef: 'impacto_texto', 	 header: 'Impacto del Riesgo', visible: false, cell: (medicionR: any) => `${medicionR.impacto_texto}`},
-		{ columnDef: 'accion', 			 header: 'Acción a Tomar', 	   visible: false, cell: (medicionR: any) => `${medicionR.accion}` }
+		{ columnDef: 'nivel_desc',			header: 'Nivel de Riesgo',		align: 'center', color: true,	cell: (medicionR: any) => `${medicionR.nivel_desc}`},
+		{ columnDef: 'tipo_accion_desc',	header: 'Acción',												cell: (medicionR: any) => `${medicionR.tipo_accion_desc}`},
+		{ columnDef: 'autoriza_desc',		header: 'Situación',											cell: (medicionR: any) => `${medicionR.autoriza_desc}` },
+		{ columnDef: 'impacto_texto',		header: 'Impacto del Riesgo',	visible: false,					cell: (medicionR: any) => `${medicionR.impacto_texto}`},
+		{ columnDef: 'accion',				header: 'Acción a Tomar',		visible: false,					cell: (medicionR: any) => `${medicionR.accion}` },
+		{ columnDef: 'u_cancela',			header: 'Usuario Cancela',		visible: false,					cell: (medicionR: any) => `${medicionR.u_cancela}` },
+		{ columnDef: 'f_cancela',			header: 'Fecha Cancela',		visible: false,					cell: (medicionR: any) => `${medicionR.f_cancela}` },
+		{ columnDef: 'motivo_cancela',		header: 'Motivo Cancela',		visible: false,					cell: (medicionR: any) => `${medicionR.motivo_cancela}` }
 	];
 
 	columnsA = [
