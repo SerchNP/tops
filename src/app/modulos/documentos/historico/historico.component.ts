@@ -105,7 +105,7 @@ export class HistoricoComponent implements OnInit, OnDestroy {
 		if (this.periodo === '') {
 			swal('ERROR', 'Debe seleccionar el periodo histórico a consultar', 'error');
 		} else {
-			let ruta = 'http://sgc.ujed.mx/SGCRPT/' + this.periodo + '/' + proceso + '/';
+			let ruta = 'http://sgc.ujed.mx:81/SGCRPT/' + this.periodo + '/' + proceso + '/';
 
 			switch (reporte) {
 				case 'foda': {
