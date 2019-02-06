@@ -4,7 +4,7 @@ export interface UsuarioLogin {
 }
 
 export interface Usuario {
-	usuario: string;
+	username: string;
 	titulo: string;
 	nombre: string;
 	paterno: string;
