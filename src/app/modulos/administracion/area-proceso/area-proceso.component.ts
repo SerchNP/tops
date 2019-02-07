@@ -84,7 +84,7 @@ export class AreaProcesoComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				const {value: motivo} = await swal({
 					title: 'Ingrese el motivo de cancelación',
-					input: 'text',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
 						return !value && 'Necesita ingresar el motivo de cancelación';
