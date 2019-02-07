@@ -211,6 +211,7 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 				'<label for="input1ADM">Contraseña del Administrador</label>' +
 				'<input id="input1ADM" class="swal2-input" type="password" autocomplete="off">',
 			focusConfirm: false,
+			showCancelButton: true,
 			preConfirm: () => {
 				return [
 					(<HTMLInputElement>document.getElementById('input1ADM')).value
@@ -251,6 +252,7 @@ export class UsuariosFormularioComponent implements OnInit, OnDestroy {
 				'<label for="input2USR">Confirmar Contraseña Nueva del Usuario</label>' +
 				'<input id="input2USR" class="swal2-input" type="password" autocomplete="off">',
 			focusConfirm: false,
+			showCancelButton: true,
 			preConfirm: () => {
 				return [
 					(<HTMLInputElement>document.getElementById('input1USR')).value,
