@@ -102,7 +102,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 			if (respuesta) {
 				const {value: motivo} = await swal({
 					title: 'Ingrese el motivo de bloqueo del usuario ' + usuario.usuario,
-					input: 'text',
+					input: 'textarea',
 					showCancelButton: true,
 					inputValidator: (value) => {
 						return !value && 'Necesita ingresar el motivo de bloqueo';
